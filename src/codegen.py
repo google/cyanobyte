@@ -105,10 +105,10 @@ def gen(argv):
     elif opt == '-d':
       _DEBUG = True
     
-    if _DEBUG:
-      print("Generating " + str(len(inputFiles)) + " file(s)")
-    for templateFile in templateFiles:
-      generateSourceFilesForTemplate(templateFile, inputFiles, outputDir)
+  if _DEBUG:
+    print("Generating " + str(len(inputFiles)) + " file(s)")
+  for templateFile in templateFiles:
+    generateSourceFilesForTemplate(templateFile, inputFiles, outputDir)
 
 if __name__ == "__main__":
     gen(sys.argv[1:])
