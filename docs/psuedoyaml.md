@@ -40,13 +40,13 @@ triangleAreaMinSize:
 
 ```yaml
 exampleIfStatement:
-	input:
-		- x: int32
-	logic:
-		- if: x > 2
-			- return: x
-		- else:
-			- return: 0
+    input:
+        - x: int32
+    logic:
+        - if: x > 2
+            - return: x
+        - else:
+            - return: 0
 ```
 
 #### Else If Statements
@@ -89,71 +89,71 @@ exampleForLoop:
 
 ```yaml
 exampleWhileLoop:
-	input:
-		- x: int32
-	variables:
-		- i: int32
-		- acc: int32
-	logic:
-		- i:= 0
-		- while: i < 10
-			- acc := acc + i
-			- i := 1
-		- return: acc
+    input:
+        - x: int32
+    variables:
+        - i: int32
+        - acc: int32
+    logic:
+        - i:= 0
+        - while: i < 10
+            - acc := acc + i
+            - i := 1
+        - return: acc
 ```
 
 #### Assignment
 
 ```yaml
 exampleAssignment:
-	input:
-		- x: int32
-	variables:
-		- y: int32
-	logic:
-		- y := x
-		- return: y
+    input:
+        - x: int32
+    variables:
+        - y: int32
+    logic:
+        - y := x
+        - return: y
 ```
 
 #### Types
 
 ```yaml
 exampleTypes:
-	variables:
-		- testInt8: int8
-		- testInt16: int16
-		- testInt32: int32
-		- testInt64: int64
-		- testUint8: uint8
-		- testUint16: uint16
-		- testUint32: uint32
-		- testUint64: uint64
-		- testFloat16: float16
-		- testFloat32: float32
-		- testBool: bool
-		- testChar: char
-		- testString: str
-		- testEnum: enum
-			- option1
-			- option2
-		- testArray:
-			- type: int16
-			- length: 10
-	logic:
-		- return: testInt8
+    variables:
+        - testInt8: int8
+        - testInt16: int16
+        - testInt32: int32
+        - testInt64: int64
+        - testUint8: uint8
+        - testUint16: uint16
+        - testUint32: uint32
+        - testUint64: uint64
+        - testFloat16: float16
+        - testFloat32: float32
+        - testBool: bool
+        - testChar: char
+        - testString: str
+        - testEnum: enum
+            - option1
+            - option2
+        - testArray:
+            - type: int16
+            - length: 10
+    logic:
+        - return: testInt8
 ```
 
 #### Type Conversion
 
 ```yaml
 exampleTypeConversion:
-	input:
-		- x: int32
-	variables:
-		- y: float16
-	logic:
-		- y := (float16) x
-		- return: y
+    input:
+        - x: int32
+    variables:
+        - y: float16
+    logic:
+        - y := (float16) x
+        - return: y
 ```
 
 #### Operators
