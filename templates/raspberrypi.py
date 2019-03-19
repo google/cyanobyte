@@ -12,8 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Auto-generated file for {{ name }}.
-# Generated from {{ fileName }} using PROJECT_NAME v{{ version }}
+# Auto-generated file for {{ info.title }} v{{ info.version }}.
+# Generated from {{ fileName }} using Cyanobyte Codegen v{{ version }}
+
+{% macro objectKey(yamlObject) %}
+{% for prop, val in yamlObject.items() %}
+{% if val == None -%}
+{{prop}}
+{%- endif %}
+{% endfor %}
+{% endmacro %}
 
 import sys
 try:
@@ -22,51 +30,50 @@ except ImportError:
     print("Fatal error! Make sure to install smbus!")
     sys.exit(1)
 
-class {{ name }}
-    DEVICE_ADDRESS = {{address}}
+class {{ info.title }}
+    """
+    {{ info.description }}
+    """
+    DEVICE_ADDRESS = {{i2c.address}}
     {% for register in registers %}
-    REGISTER_{{register.name.upper()}} = {{register.address}}
+    REGISTER_{{objectKey(register).upper()}} = {{register.address}}
     {% endfor %}
 
     def __init__(self):
         # Initialize connection to peripheral
         self.bus = smbus.SMBus(1)
 
-    {% if little_endian %}
+    {% if i2c.endian == 'little' %}
     def _swap_endian(val):
         # short data type only
         return val >> 8 | val << 8
     {% endif %}
-    
-    {% for register in registers %}
-    {% if register.getter %}
 
-    def get{{register.name}}():
+    {% for register in registers %}
+
+    def get{{objectKey(register)}}():
         """
         {{register.description}}
         """
         val = bus.read_i2c_block_data(
             DEVICE_ADDRESS,
-            REGISTER_{{register.name.upper()}}
+            REGISTER_{{objectKey(register).upper()}}
         )
-        {% if little_endian %}
+        {% if i2c.endian == 'little' %}
         val = self._swap_endian(val)
         {% endif %}
         return val
-    {% endif %}
-    {% if register.setter %}
 
-    def set{{register.name}}(data):
+    def set{{objectKey(register)}}(data):
         """
         {{register.description}}
         """
-        {% if little_endian %}
+        {% if i2c.endian == 'little' %}
         data = self._swap_endian(data)
         {% endif %}
         bus.write_i2c_block_data(
             DEVICE_ADDRESS,
-            REGISTER_{{register.name.upper()}},
+            REGISTER_{{objectKey(register).upper()}},
             data
         )
-    {% endif %}
     {% endfor %}
