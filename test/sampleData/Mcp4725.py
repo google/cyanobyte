@@ -13,79 +13,66 @@
 # limitations under the License.
 #
 # Auto-generated file for Mcp4725.
-# Generated from peripherals/Mcp4725.yaml using PROJECT_NAME v0.0.1
+# Generated from peripherals/Mcp4725.yaml using PROJECT_NAME v0.1.0
 
 import sys
 try:
     import smbus
 except ImportError:
-    print("Fatal error! Make sure to run `pip install smbus`")
+    print("Fatal error! Make sure to install smbus!")
     sys.exit(1)
 
 class Mcp4725
-    device_address = 98
+    DEVICE_ADDRESS = 98
+    REGISTER_VOUT = 64
+    REGISTER_EEPROM = 96
 
     def __init__(self):
         # Initialize connection to peripheral
         self.bus = smbus.SMBus(1)
 
-    
     def _swap_endian(val):
         # short data type only
         return val >> 8 | val << 8
     
-    
-    
-    
-    
-    """
-    VOut = (Vcc * value) / 4096
+
+    def setVOut(data):
+        """
+        VOut = (Vcc * value) / 4096
 The output is a range between 0 and Vcc with
 steps of Vcc/4096.
 In a 3.3v system, each step is 800 microvolts.
 
-    """
-    def setVOut(data):
-        
+        """
         data = self._swap_endian(data)
-        
         bus.write_i2c_block_data(
-            device_address,
-            64,
+            DEVICE_ADDRESS,
+            REGISTER_VOUT,
             data
         )
-    
-    
-    
-    """
-    If EEPROM is set, the saved voltage output will
-be loaded from power-on.
 
-    """
     def getEEPROM():
-        val = bus.read_i2c_block_data(
-            device_address,
-            96
-        )
-        
-        val = self._swap_endian(val)
-        
-        return val
-    
-    
-    """
-    If EEPROM is set, the saved voltage output will
+        """
+        If EEPROM is set, the saved voltage output will
 be loaded from power-on.
 
-    """
+        """
+        val = bus.read_i2c_block_data(
+            DEVICE_ADDRESS,
+            REGISTER_EEPROM
+        )
+        val = self._swap_endian(val)
+        return val
+
     def setEEPROM(data):
-        
+        """
+        If EEPROM is set, the saved voltage output will
+be loaded from power-on.
+
+        """
         data = self._swap_endian(data)
-        
         bus.write_i2c_block_data(
-            device_address,
-            96,
+            DEVICE_ADDRESS,
+            REGISTER_EEPROM,
             data
         )
-    
-    

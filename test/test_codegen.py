@@ -20,17 +20,15 @@ import os
 class TestCodegen(unittest.TestCase):
     def compareFiles(self, filePath1, filePath2):
         print('Comparing', filePath1, 'and', filePath2)
-        file1 = open(filePath1)
-        fileContents1 = file1.read()
-        file2 = open(filePath2)
-        fileContents2 = file2.read()
-        self.assertEqual(
-            fileContents1,
-            fileContents2,
-            msg="{0} and {1} are not the same".format(filePath1, filePath2)
-        )
-        file1.close()
-        file2.close()
+        with open(filePath1) as file1:
+            with open(filePath2) as file2:
+                fileContents1 = file1.read()
+                fileContents2 = file2.read()
+                self.assertEqual(
+                    fileContents1,
+                    fileContents2,
+                    msg="{0} and {1} are not the same".format(filePath1, filePath2)
+                )
 
     def setUp(self):
         # Clear out existing files

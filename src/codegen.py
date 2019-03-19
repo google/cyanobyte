@@ -19,64 +19,96 @@ except ImportError:
     from yaml import Loader, Dumper
 from jinja2 import Template
 
-VERSION = '0.0.1'
+_VERSION = '0.1.0'
+_DEBUG = False
+
+def generateSourceFile(template, peripheral, templateExtension, outputDir):
+  """
+  Generates a source file for a provided Jinja2 template.
+  """
+  # Open peripheral file
+  with open(peripheral, 'r') as peripheralFile:
+    peripheralData = load(peripheralFile, Loader=Loader)
+    # Add additional metadata to the spec data
+    peripheralData['version'] = _VERSION
+    peripheralData['fileName'] = peripheral
+
+    if _DEBUG:
+      print(peripheralData)
+    
+    # Render file
+    peripheralGen = template.render(peripheralData)
+    # Get file path
+    # Take into consideration the package
+    if _DEBUG:
+      print(peripheralData['name'])
+    outputFilePath = outputDir + '/' + peripheralData['package'].replace('.', '/')
+    if not os.path.exists(outputFilePath):
+      try:
+        os.makedirs(outputFilePath)
+      except:
+        print('Could not make directory', outputFilePath)
+        sys.exit(1)
+
+    peripheralOutputPath = outputFilePath + '/' + peripheralData['name'] + templateExtension
+    with open(peripheralOutputPath, 'x') as peripheralOutputFile:
+      peripheralOutputFile.write(peripheralGen)
+
+def generateSourceFilesForTemplate(templateFile, inputFiles, outputDir):
+  """
+  Generates a series of source files for a provided template file.
+  """
+  # Open template
+  with open(templateFile, 'r') as templateContents:
+    templateObject = Template(
+      templateContents.read(),
+      trim_blocks=True,
+      lstrip_blocks=True
+    )
+    _, templateExtension = os.path.splitext(templateFile)
+    
+    # Create output dir
+    if not os.path.exists(outputDir):
+      try:
+        os.makedirs(outputDir)
+      except:
+        print('Could not make directory', outputDir)
+        sys.exit(1)
+
+    for peripheral in inputFiles:
+      generateSourceFile(templateObject, peripheral, templateExtension, outputDir)
 
 def gen(argv):
-    inputFiles = []
-    templateFiles = []
-    outputDir = ''
-    debug = False
-    try:
-        opts, args = getopt.getopt(
-            argv,
-            "t:o:i:d",
-        )
-    except getopt.GetoptError:
-        print('Error parsing CLI')
-        sys.exit(2)
-    for opt, arg in opts:
-        if opt == '-t':
-            templateFiles.append(arg)
-        elif opt == '-o':
-            outputDir = arg
-        elif opt == '-i':
-            inputFiles.append(arg)
-        elif opt == '-d':
-            debug = True
+  """
+  Takes command line arguments and generates source files for every peripheral
+  to each template file.
+  """
+  global _DEBUG
+  inputFiles = []
+  templateFiles = []
+  outputDir = ''
+  try:
+    opts, args = getopt.getopt(
+      argv,
+      "t:o:i:d",
+    )
+  except getopt.GetoptError:
+    print('Error parsing CLI')
+    sys.exit(2)
+  for opt, arg in opts:
+    if opt == '-t':
+      templateFiles.append(arg)
+    elif opt == '-o':
+      outputDir = arg
+    elif opt == '-i':
+      inputFiles.append(arg)
+    elif opt == '-d':
+      _DEBUG = True
     
-    if debug:
-        print("Generating " + str(len(inputFiles)) + " file(s)")
+    if _DEBUG:
+      print("Generating " + str(len(inputFiles)) + " file(s)")
     for templateFile in templateFiles:
-        # Open template
-        templateContents = open(templateFile, "r")
-        templateObject = Template(templateContents.read())
-        _, templateExtension = os.path.splitext(templateFile)
-        # Create output dir
-        if not os.path.exists(outputDir):
-            os.makedirs(outputDir)
-
-        for peripheral in inputFiles:
-            # Open peripheral file
-            peripheralFile = open(peripheral, "r")
-            peripheralData = load(peripheralFile, Loader=Loader)
-            peripheralData['version'] = VERSION
-            peripheralData['fileName'] = peripheral
-            if debug:
-                print(peripheralData)
-            # Render file
-            peripheralGen = templateObject.render(peripheralData)
-            # Get file path
-            # Take into consideration the package
-            if debug:
-                print(peripheralData['name'])
-            outputFilePath = outputDir + "/" + peripheralData['package'].replace('.', '/')
-            if not os.path.exists(outputFilePath):
-                os.makedirs(outputFilePath)
-
-            peripheralOutputPath = outputFilePath + "/" + peripheralData['name'] + templateExtension
-            peripheralOutputFile = open(peripheralOutputPath, "x")
-            peripheralOutputFile.write(peripheralGen)
-            print("Wrote " + peripheralOutputPath)
+      generateSourceFilesForTemplate(templateFile, inputFiles, outputDir)
 
 if __name__ == "__main__":
     gen(sys.argv[1:])

@@ -19,11 +19,14 @@ import sys
 try:
     import smbus
 except ImportError:
-    print("Fatal error! Make sure to run `pip install smbus`")
+    print("Fatal error! Make sure to install smbus!")
     sys.exit(1)
 
 class {{ name }}
-    device_address = {{address}}
+    DEVICE_ADDRESS = {{address}}
+    {% for register in registers %}
+    REGISTER_{{register.name.upper()}} = {{register.address}}
+    {% endfor %}
 
     def __init__(self):
         # Initialize connection to peripheral
@@ -37,13 +40,14 @@ class {{ name }}
     
     {% for register in registers %}
     {% if register.getter %}
-    """
-    {{register.description}}
-    """
+
     def get{{register.name}}():
+        """
+        {{register.description}}
+        """
         val = bus.read_i2c_block_data(
-            device_address,
-            {{register.address}}
+            DEVICE_ADDRESS,
+            REGISTER_{{register.name.upper()}}
         )
         {% if little_endian %}
         val = self._swap_endian(val)
@@ -51,16 +55,17 @@ class {{ name }}
         return val
     {% endif %}
     {% if register.setter %}
-    """
-    {{register.description}}
-    """
+
     def set{{register.name}}(data):
+        """
+        {{register.description}}
+        """
         {% if little_endian %}
         data = self._swap_endian(data)
         {% endif %}
         bus.write_i2c_block_data(
-            device_address,
-            {{register.address}},
+            DEVICE_ADDRESS,
+            REGISTER_{{register.name.upper()}},
             data
         )
     {% endif %}
