@@ -3,12 +3,12 @@ This project is an example of how to describe peripherals with an intermediary l
 
 It can also generate reference documentation for a periphreal, useful for embedding into datasheets.
 
-This is not an officially Google product.
+This is not an official Google product.
 
 ## Setup
 Note: This project requires Python3.
 s
-`pip install -r requirements.txt`
+`pip install -r requirements.txt --user`
 
 ## Run
 `python3 src/codegen.py -t templates/doc.md -o ./build -i peripherals/Mcp4725.yaml`
@@ -40,7 +40,7 @@ registers:
 ```
 
 ## Test
-`python3 -m unittest test.codegen`
+`python3 -m unittest test.test_codegen`
 
 ## Templates
 The `templates` directory includes a set of canonical templates which can be used with this codegen tool.
