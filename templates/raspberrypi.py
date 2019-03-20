@@ -1,27 +1,8 @@
-# Copyright (C) 2019 Google Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+{% import 'macros.jinja2' as utils %}
+{{ utils.pad_string('# ', utils.license('Google Inc.', '2019', info.license.name)) -}}
 #
 # Auto-generated file for {{ info.title }} v{{ info.version }}.
 # Generated from {{ fileName }} using Cyanobyte Codegen v{{ version }}
-
-{% macro objectKey(yamlObject) %}
-{% for prop, val in yamlObject.items() %}
-{% if val == None -%}
-{{prop}}
-{%- endif %}
-{% endfor %}
-{% endmacro %}
 
 import sys
 try:
@@ -32,11 +13,11 @@ except ImportError:
 
 class {{ info.title }}
     """
-    {{ info.description }}
+{{utils.pad_string("    ", info.description)}}
     """
     DEVICE_ADDRESS = {{i2c.address}}
     {% for register in registers %}
-    REGISTER_{{objectKey(register).upper()}} = {{register.address}}
+    REGISTER_{{utils.object_key(register).upper()}} = {{register.address}}
     {% endfor %}
 
     def __init__(self):
@@ -51,29 +32,29 @@ class {{ info.title }}
 
     {% for register in registers %}
 
-    def get{{objectKey(register)}}():
+    def get_{{utils.object_key(register).lower()}}():
         """
-        {{register.description}}
+{{utils.pad_string("        ", register.description)}}
         """
         val = bus.read_i2c_block_data(
             DEVICE_ADDRESS,
-            REGISTER_{{objectKey(register).upper()}}
+            REGISTER_{{utils.object_key(register).upper()}}
         )
         {% if i2c.endian == 'little' %}
         val = self._swap_endian(val)
         {% endif %}
         return val
 
-    def set{{objectKey(register)}}(data):
+    def set_{{utils.object_key(register).lower()}}(data):
         """
-        {{register.description}}
+{{utils.pad_string("        ", register.description)}}
         """
         {% if i2c.endian == 'little' %}
         data = self._swap_endian(data)
         {% endif %}
         bus.write_i2c_block_data(
             DEVICE_ADDRESS,
-            REGISTER_{{objectKey(register).upper()}},
+            REGISTER_{{utils.object_key(register).upper()}},
             data
         )
     {% endfor %}
