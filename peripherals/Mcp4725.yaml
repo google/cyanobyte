@@ -11,25 +11,33 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-name: Mcp4725
-address: 0x62
-package: com.example
-little_endian: true
+cyanobyte: 0.1.0
+info:
+  package: com.cyanobyte
+  title: Mcp4725
+  description: Microchip 4725 Digital-to-Analog Converter
+  license:
+    name: Apache-2.0
+  version: 0.1.0
+i2c:
+  addressType: 8-bit
+  address: 0x62
+  addressMask: 0x60
+  endian: little
 registers:
-  - name: VOut
+  - VOut:
+    address: 0x40
+    length: 12
+    title: Output voltage
     description: |
       VOut = (Vcc * value) / 4096
       The output is a range between 0 and Vcc with
       steps of Vcc/4096.
       In a 3.3v system, each step is 800 microvolts.
-    address: 0x40
-    size: 12
-    setter: true
-  - name: EEPROM
+  - EEPROM:
+    address: 0x60
+    length: 12
+    title: EEPROM
     description: |
       If EEPROM is set, the saved voltage output will
       be loaded from power-on.
-    address: 0x60
-    size: 12
-    setter: true
-    getter: true # We can read value back from EEPROM  

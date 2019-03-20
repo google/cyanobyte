@@ -41,16 +41,16 @@ def generateSourceFile(template, peripheral, templateExtension, outputDir):
     # Get file path
     # Take into consideration the package
     if _DEBUG:
-      print(peripheralData['name'])
-    outputFilePath = outputDir + '/' + peripheralData['package'].replace('.', '/')
+      print(peripheralData['info']['title'])
+    outputFilePath = outputDir + '/' + peripheralData['info']['package'].replace('.', '/')
     if not os.path.exists(outputFilePath):
       try:
         os.makedirs(outputFilePath)
       except:
-        print('Could not make directory', outputFilePath)
+        print('Could not make file directory', outputFilePath)
         sys.exit(1)
 
-    peripheralOutputPath = outputFilePath + '/' + peripheralData['name'] + templateExtension
+    peripheralOutputPath = outputFilePath + '/' + peripheralData['info']['title'] + templateExtension
     with open(peripheralOutputPath, 'x') as peripheralOutputFile:
       peripheralOutputFile.write(peripheralGen)
 
@@ -72,7 +72,7 @@ def generateSourceFilesForTemplate(templateFile, inputFiles, outputDir):
       try:
         os.makedirs(outputDir)
       except:
-        print('Could not make directory', outputDir)
+        print('Could not make output directory', outputDir)
         sys.exit(1)
 
     for peripheral in inputFiles:

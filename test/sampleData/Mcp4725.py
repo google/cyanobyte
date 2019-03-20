@@ -12,8 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Auto-generated file for Mcp4725.
-# Generated from peripherals/Mcp4725.yaml using PROJECT_NAME v0.1.0
+# Auto-generated file for Mcp4725 v0.1.0.
+# Generated from peripherals/Mcp4725.yaml using Cyanobyte Codegen v0.1.0
+
 
 import sys
 try:
@@ -23,6 +24,9 @@ except ImportError:
     sys.exit(1)
 
 class Mcp4725
+    """
+    Microchip 4725 Digital-to-Analog Converter
+    """
     DEVICE_ADDRESS = 98
     REGISTER_VOUT = 64
     REGISTER_EEPROM = 96
@@ -34,7 +38,22 @@ class Mcp4725
     def _swap_endian(val):
         # short data type only
         return val >> 8 | val << 8
-    
+
+
+    def getVOut():
+        """
+        VOut = (Vcc * value) / 4096
+The output is a range between 0 and Vcc with
+steps of Vcc/4096.
+In a 3.3v system, each step is 800 microvolts.
+
+        """
+        val = bus.read_i2c_block_data(
+            DEVICE_ADDRESS,
+            REGISTER_VOUT
+        )
+        val = self._swap_endian(val)
+        return val
 
     def setVOut(data):
         """
