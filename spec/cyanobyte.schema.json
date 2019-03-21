@@ -7,31 +7,30 @@
   "properties": {
     "cyanobyte": {
       "description": "The version of the CyanoByte specification this file follows.",
-      "type": "string",
-      "pattern": "^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$"
+      "type": "string"
     },
     "info": {
       "description": "Info block of the file",
       "type": "object",
       "properties": {
         "title": {
-          "description": "The title of the document. This should be used as the class name in the auto-generated code and therefore should be short (e.g. the part name)."
+          "description": "The title of the document. This should be used as the class name in the auto-generated code and therefore should be short (e.g. the part name).",
           "type": "string"
         },
         "description": {
-          "description": "A description of the document."
+          "description": "A description of the document.",
           "type": "string"
         },
         "contact": {
-          "description": "Contact info for the maintainer."
+          "description": "Contact info for the maintainer.",
           "type": "object",
           "properties": {
             "name": {
-              "description": "Name of the maintainer."
+              "description": "Name of the maintainer.",
               "type": "string"
             },
             "url": {
-              "description": "URL of the maintainer organization."
+              "description": "URL of the maintainer organization.",
               "type": "string",
               "format": "uri"
             },
@@ -41,7 +40,11 @@
               "format": "email"
             }
           },
-          "required": [ "name", "url", "email" ]
+          "required": [
+            "name",
+            "url",
+            "email"
+          ]
         },
         "license": {
           "description": "License this document uses. TODO: Add validation other than it being a string.",
@@ -49,11 +52,165 @@
         },
         "version": {
           "description": "Version number for this document using kind of SymVer.",
-          "type": "string",
-          "pattern": "^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$"
+          "type": "string"
         }
       },
-      "required": [ "title", "description", "contact", "license", "version" ]
+      "required": [
+        "title",
+        "description",
+        "contact",
+        "license",
+        "version"
+      ]
     },
-    "required": [ "cyanobyte", "info" ]
+    "i2c": {
+      "description": "I2C settings",
+      "type": "object",
+      "properties": {
+        "addressType": {
+          "description": "Addressing type of the component.",
+          "type": "string",
+          "enum": [
+            "7-bit",
+            "10-bit"
+          ]
+        },
+        "address": {
+          "description": "I2C Address of the component",
+          "type": "integer"
+        },
+        "addressMask": {
+          "description": "Address mask for addresses that can be altered"
+        }
+      },
+      "required": [
+        "addressType",
+        "address",
+        "addressMask"
+      ]
+    },
+    "registers": {
+      "description": "Chip registers",
+      "type": "array",
+      "items": {
+        "description": "Outer object",
+        "type": "object",
+        "patternProperties": {
+          "^.*$": {
+            "description": "Chip register",
+            "type": "object",
+            "properties": {
+              "title": {
+                "description": "Title of the register",
+                "type": "string"
+              },
+              "description": {
+                "description": "Description of the register",
+                "type": "string"
+              },
+              "address": {
+                "description": "Address of the register",
+                "type": "integer"
+              },
+              "length": {
+                "description": "Length of the register in bits.",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "title",
+              "description",
+              "address",
+              "length"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "functions": {
+      "description": "Chip functions",
+      "type": "array",
+      "items": {
+        "description": "Outer object",
+        "type": "object",
+        "patternProperties": {
+          "^.*$": {
+            "description": "Chip function",
+            "type": "object",
+            "properties": {
+              "title": {
+                "description": "Title of the function",
+                "type": "string"
+              },
+              "description": {
+                "description": "Description of the function",
+                "type": "string"
+              },
+              "register": {
+                "description": "Register of the function",
+                "type": "string"
+              },
+              "readWrite": {
+                "description": "Can you read or write to this register",
+                "type": "string",
+                "enum": [
+                  "R",
+                  "R/W",
+                  "W",
+                  "n"
+                ]
+              },
+              "bitStart": {
+                "description": "What is the starting bit?",
+                "type": "integer"
+              },
+              "bitEnd": {
+                "description": "What is the ending bit?",
+                "type": "integer"
+              },
+              "type": {
+                "description": "What type of value is this?",
+                "type": "string",
+                "enum": [
+                  "enum"
+                ]
+              },
+              "enum": {
+                "description": "List of values",
+                "type": "array",
+                "items": {
+                  "description": "Enum value",
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "description": "Enum title",
+                      "type": "string"
+                    },
+                    "value": {
+                      "description": "Enum value",
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "required": [
+              "title",
+              "description",
+              "register",
+              "readWrite",
+              "bitStart",
+              "bitEnd",
+              "type"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "cyanobyte",
+    "info"
+  ]
 }
