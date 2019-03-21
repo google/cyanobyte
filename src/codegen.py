@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import getopt, os, sys
+import click
 from yaml import load, dump
 try:
     from yaml import CLoader as Loader, CDumper as Dumper
@@ -80,32 +81,18 @@ def generateSourceFilesForTemplate(env, templateFile, inputFiles, outputDir):
     for peripheral in inputFiles:
       generateSourceFile(templateObject, peripheral, templateExtension, outputDir)
 
-def gen(argv):
+@click.command()
+@click.option('-i', '--input', 'inputFiles', multiple=True)
+@click.option('-t', '--template', 'templateFiles', multiple=True)
+@click.option('-o', '--output', 'outputDir', default='./build', show_default=True)
+@click.option('-d', '--debug', 'debug', default=False)
+def gen(inputFiles, templateFiles, outputDir, debug):
   """
   Takes command line arguments and generates source files for every peripheral
   to each template file.
   """
   global _DEBUG
-  inputFiles = []
-  templateFiles = []
-  outputDir = ''
-  try:
-    opts, args = getopt.getopt(
-      argv,
-      "t:o:i:d",
-    )
-  except getopt.GetoptError:
-    print('Error parsing CLI')
-    sys.exit(2)
-  for opt, arg in opts:
-    if opt == '-t':
-      templateFiles.append(arg)
-    elif opt == '-o':
-      outputDir = arg
-    elif opt == '-i':
-      inputFiles.append(arg)
-    elif opt == '-d':
-      _DEBUG = True
+  _DEBUG = debug
 
   if _DEBUG:
     print("Generating " + str(len(inputFiles)) + " file(s)")
