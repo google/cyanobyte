@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://github.com/cyanobyte/cyanobyte.schema.json",
+  "$id": "http://github.com/cyanobyte/spec/cyanobyte.schema.json",
   "title": "CyanoByte Specification Validator",
   "description": "This file is used to validate whether a given document meets the CyanoByte specification.",
   "type": "object",
@@ -51,7 +51,7 @@
           "type": "string"
         },
         "version": {
-          "description": "Version number for this document using kind of SymVer.",
+          "description": "Version number for this document using kind of semver.",
           "type": "string"
         }
       },
@@ -80,7 +80,8 @@
           "type": "integer"
         },
         "addressMask": {
-          "description": "Address mask for addresses that can be altered"
+          "description": "Address mask for addresses that can be altered",
+          "type": "integer"
         }
       },
       "required": [
@@ -113,7 +114,7 @@
                 "type": "integer"
               },
               "length": {
-                "description": "Length of the register in bits.",
+                "description": "Length of the register in bits",
                 "type": "integer"
               }
             },
@@ -152,7 +153,7 @@
                 "type": "string"
               },
               "readWrite": {
-                "description": "Can you read or write to this register",
+                "description": "Can you read and/or write to this register",
                 "type": "string",
                 "enum": [
                   "R",
