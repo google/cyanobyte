@@ -18,7 +18,7 @@ try:
     from yaml import CLoader as Loader, CDumper as Dumper
 except ImportError:
     from yaml import Loader, Dumper
-from jinja2 import Template
+from jinja2 import Environment, FileSystemLoader
 
 _VERSION = '0.1.0'
 _DEBUG = False
@@ -43,7 +43,8 @@ def generateSourceFile(template, peripheral, templateExtension, outputDir):
     # Take into consideration the package
     if _DEBUG:
       print(peripheralData['info']['title'])
-    outputFilePath = outputDir + '/' + peripheralData['info']['package'].replace('.', '/')
+    packagePath = peripheralData['info']['package'].replace('.', '/')
+    outputFilePath = os.path.join(outputDir, os.path.normpath(packagePath))
     if not os.path.exists(outputFilePath):
       try:
         os.makedirs(outputFilePath)
@@ -51,20 +52,21 @@ def generateSourceFile(template, peripheral, templateExtension, outputDir):
         print('Could not make file directory', outputFilePath)
         sys.exit(1)
 
-    peripheralOutputPath = outputFilePath + '/' + peripheralData['info']['title'] + templateExtension
+    peripheralOutputPath = os.path.join(
+      outputFilePath, 
+      peripheralData['info']['title'] + templateExtension
+    )
     with open(peripheralOutputPath, 'x') as peripheralOutputFile:
       peripheralOutputFile.write(peripheralGen)
 
-def generateSourceFilesForTemplate(templateFile, inputFiles, outputDir):
+def generateSourceFilesForTemplate(env, templateFile, inputFiles, outputDir):
   """
   Generates a series of source files for a provided template file.
   """
   # Open template
   with open(templateFile, 'r') as templateContents:
-    templateObject = Template(
-      templateContents.read(),
-      trim_blocks=True,
-      lstrip_blocks=True
+    templateObject = env.from_string(
+      templateContents.read()
     )
     _, templateExtension = os.path.splitext(templateFile)
     
@@ -91,11 +93,18 @@ def gen(inputFiles, templateFiles, outputDir, debug):
   """
   global _DEBUG
   _DEBUG = debug
-    
+
   if _DEBUG:
     print("Generating " + str(len(inputFiles)) + " file(s)")
+
+  # Setup Jinja environment
+  env = Environment(
+    loader=FileSystemLoader('./templates'),
+    trim_blocks=True,
+    lstrip_blocks=True
+  )
   for templateFile in templateFiles:
-    generateSourceFilesForTemplate(templateFile, inputFiles, outputDir)
+    generateSourceFilesForTemplate(env, templateFile, inputFiles, outputDir)
 
 if __name__ == "__main__":
     gen(sys.argv[1:])
