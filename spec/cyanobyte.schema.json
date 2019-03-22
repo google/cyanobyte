@@ -92,6 +92,14 @@
         "addressMask": {
           "description": "Address mask for addresses that can be altered",
           "type": "integer"
+        },
+        "endian": {
+          "description": "Endianness of the component",
+          "type": "string",
+          "enum": [
+            "little",
+            "big"
+          ]
         }
       },
       "required": [
