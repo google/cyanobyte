@@ -43,6 +43,7 @@ i2c:
     addressType: '7-bit' # Could be '7-bit', '8-bit', or '10-bit'
     address: 0x18
     addressMask: 0x78 # This specifys which address bits are configurable
+    endian: 'big' # Could be 'little' or 'big' endian
 
 registers:
     - configuration:
