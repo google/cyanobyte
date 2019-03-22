@@ -1,5 +1,5 @@
 {% import 'macros.jinja2' as utils %}
-{{ utils.pad_string('# ', utils.license('Google Inc.', '2019', info.license.name)) -}}
+{{ utils.pad_string('# ', utils.license(info.copyright.name, info.copyright.date, info.license.name)) -}}
 #
 # Auto-generated file for {{ info.title }} v{{ info.version }}.
 # Generated from {{ fileName }} using Cyanobyte Codegen v{{ version }}
