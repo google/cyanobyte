@@ -40,6 +40,11 @@ registers:
 ```
 
 ## Test
+### Litn
+`python3 -m pylint --rcfile=test/pylintrc src/*.py`
+`python3 -m pylint --rcfile=test/pylintrc test/sampleData/*.py`
+
+### Unit test
 `python3 -m unittest test.test_codegen`
 
 ## Templates

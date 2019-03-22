@@ -42,7 +42,11 @@
 
 {% macro pad_string(padding, contentString) %}
 {% for line in contentString.splitlines() %}
-{{padding}}{{line}}
+{% if line|length > 0 %}
+{{padding}}{{line|trim}}
+{% else %}
+{{padding|trim}}
+{% endif %}
 {% endfor %}
 {% endmacro %}
 
