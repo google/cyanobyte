@@ -1,3 +1,4 @@
 click
 pyyaml
 Jinja2
+jsonschema
