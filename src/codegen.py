@@ -11,14 +11,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import getopt, os, sys
+"""
+Command-line tool to generate source files from Jinja templates.
+"""
+import os
+import sys
 import click
-from yaml import load, dump
+from yaml import load
 
 try:
-    from yaml import CLoader as Loader, CDumper as Dumper
+    from yaml import CLoader as Loader
 except ImportError:
-    from yaml import Loader, Dumper
+    from yaml import Loader
 from jinja2 import Environment, FileSystemLoader
 
 _VERSION = "0.1.0"
@@ -52,22 +56,26 @@ def generate_source_file(template, peripheral, template_extension, output_dir):
         if _DEBUG:
             print(peripheral_data["info"]["title"])
         package_path = peripheral_data["info"]["package"].replace(".", "/")
-        output_file_path = os.path.join(output_dir, os.path.normpath(package_path))
+        output_file_path = os.path.join(
+            output_dir,
+            os.path.normpath(package_path)
+        )
         if not os.path.exists(output_file_path):
             try:
                 os.makedirs(output_file_path)
-            except:
+            except OSError:
                 print("Could not make file directory", output_file_path)
                 sys.exit(1)
 
         peripheral_output_path = os.path.join(
-            output_file_path, peripheral_data["info"]["title"] + template_extension
+            output_file_path,
+            peripheral_data["info"]["title"] + template_extension
         )
         with open(peripheral_output_path, "x") as peripheral_output_file:
             peripheral_output_file.write(peripheral_gen)
 
 
-def generate_source_files_for_template(env, template_file, input_files, output_dir):
+def generate_files_for_template(env, template_file, input_files, output_dir):
     """
     Generates a series of source files for a provided template file.
 
@@ -86,7 +94,7 @@ def generate_source_files_for_template(env, template_file, input_files, output_d
         if not os.path.exists(output_dir):
             try:
                 os.makedirs(output_dir)
-            except:
+            except OSError:
                 print("Could not make output directory", output_dir)
                 sys.exit(1)
 
@@ -99,12 +107,13 @@ def generate_source_files_for_template(env, template_file, input_files, output_d
 @click.command()
 @click.option("-i", "--input", "input_files", multiple=True)
 @click.option("-t", "--template", "template_files", multiple=True)
-@click.option("-o", "--output", "output_dir", default="./build", show_default=True)
+@click.option("-o", "--output", "output_dir", default="./build",
+              show_default=True)
 @click.option("-d", "--debug", "debug", default=False)
-def gen(input_files, template_files, output_dir, debug):
+def gen(input_files, template_files=None, output_dir='./build', debug=False):
     """
-    Takes command line arguments and generates source files for every peripheral
-    to each template file.
+    Takes command line arguments and generates source files for every
+    peripheral to each template file.
 
     Args:
         input_files: A list of CyanoByte documents to generate.
@@ -112,6 +121,7 @@ def gen(input_files, template_files, output_dir, debug):
         output_dir: The directory to output the generated files.
         debug: Print debug messages?
     """
+    #pylint: disable=global-statement
     global _DEBUG
     _DEBUG = debug
 
@@ -120,10 +130,17 @@ def gen(input_files, template_files, output_dir, debug):
 
     # Setup Jinja2 environment
     env = Environment(
-        loader=FileSystemLoader("./templates"), trim_blocks=True, lstrip_blocks=True
+        loader=FileSystemLoader("./templates"),
+        trim_blocks=True,
+        lstrip_blocks=True
     )
     for template_file in template_files:
-        generate_source_files_for_template(env, template_file, input_files, output_dir)
+        generate_files_for_template(
+            env,
+            template_file,
+            input_files,
+            output_dir
+        )
 
 
 if __name__ == "__main__":
