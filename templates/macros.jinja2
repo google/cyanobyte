@@ -76,3 +76,19 @@ limitations under the License.
 {% endif %}
 {% endmacro %}
 
+{#
+    Macro mask
+
+    Generates a bitmask based on the start and end bits
+#}
+
+{% macro mask(startBit, endBit) -%}
+0b
+{%- for bit in range(16, 0, -1) -%}
+{% if bit > startBit or bit < endBit -%}
+0
+{%- else -%}
+1
+{%- endif %}
+{%- endfor %}
+{%- endmacro %}
