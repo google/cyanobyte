@@ -3,9 +3,11 @@
 
 ## Registers
 {% for register in registers %}
+{% for key in register.keys() %}
 
-### {{ register.title }}
-{{ register.description }}
+### {{ register[key].title }}
+{{ register[key].description }}
+{% endfor %}
 {% endfor %}
 
 ## License

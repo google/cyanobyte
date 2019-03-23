@@ -40,7 +40,7 @@ registers:
 ```
 
 ## Test
-### Litn
+### Lint
 `python3 -m pylint --rcfile=test/pylintrc src/*.py`
 `python3 -m pylint --rcfile=test/pylintrc test/sampleData/*.py`
 
