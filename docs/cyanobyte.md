@@ -30,6 +30,7 @@ NOTE: This is designed as an example to uncover the spirit of the documentation 
 cyanobyte: 0.1.0
 info:
     title: MCP9808
+    package: com.cyanobyte
     description: This is a test description
     contact:
         name: 'Joe Smith'

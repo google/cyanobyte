@@ -17,6 +17,10 @@
           "description": "The title of the document. This should be used as the class name in the auto-generated code and therefore should be short (e.g. the part name).",
           "type": "string"
         },
+        "package": {
+          "description": "Logical hierarchy of this device, typically organized as a reverse domain name.",
+          "type": "string"
+        },
         "description": {
           "description": "A description of the document.",
           "type": "string"
