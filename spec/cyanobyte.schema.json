@@ -196,7 +196,8 @@
                 "description": "What type of value is this?",
                 "type": "string",
                 "enum": [
-                  "enum"
+                  "enum",
+                  "number"
                 ]
               },
               "enum": {

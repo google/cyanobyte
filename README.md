@@ -29,21 +29,7 @@ s
 * `-i` - A CyanoByte document. You can provide multiple input files.
 
 ## Peripheral YAML file
-The current spec is described below. You can find all examples in the `peripherals/` directory.
-
-```
-name: The peripheral name
-address: Device address
-package: Package name, which may affect its directory output
-little_endian: Whether bits are little endian. Default is False
-registers:
-  - name: Name of a 'virtual register', which may be smaller than or larger than a physical register
-    description: Description of register
-    address: Register address
-    size: Virtual register size
-    setter: Writable?
-    getter: Readable?  
-```
+The current spec is described in `docs/cyanobyte.md`. You can find all examples in the `peripherals/` directory.
 
 ## Test
 ### Lint

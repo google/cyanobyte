@@ -6,6 +6,44 @@
 """
 Class for {{ info.title }}
 """
+{% macro params_int(input) %}
+{% for variable in input %}
+{% for key in variable.keys() -%}
+{% if key != 'value' %}{{key}}, {% endif %}
+{%- endfor %}
+{% endfor %}
+{% endmacro %}
+
+{% macro params(input) -%}
+{{params_int(input)[:-2]}}
+{%- endmacro %}
+
+{% macro variables(vars) %}
+{% for var in vars %}
+{% for key in var.keys() %}
+{# Technically in Python we don't need to declare vars ahead of time. #}
+{# But we'll do so anyway to verify this works. #}
+        {{key}} = None # Variable declaration
+{% endfor %}
+{% endfor %}
+{% endmacro %}
+
+{% macro logic(logicalSteps, function) %}
+
+{% for step in logicalSteps %}
+{% for key in step.keys() %}
+{# Check if assignment op #}
+{% if step[key][0:1] == "=" %}
+        {{key}} {{step[key]}}
+{% endif %}
+
+{# Check if assignment is a send-op #}
+{% if key == 'send' %}
+        self.set_{{function.register[12:].lower()}}({{step[key]}})
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endmacro %}
 
 import sys
 try:
@@ -125,6 +163,35 @@ class {{ info.title }}:
         register_data = self.get_{{function[key].register[12:].lower()}}()
         register_data = register_data | data
         self.set_{{function[key].register[12:].lower()}}(register_data)
+    {% endif %}
+
+    {% if function[key].computed %}
+    {% for compute in function[key].computed %}
+    {% for computeKey in compute.keys() %}
+    def {{key.lower()}}_{{computeKey.lower()}}(self, {{params(compute[computeKey].input)}}):
+        """
+{{utils.pad_string("        ", function[key].description)}}
+        """
+        {# Declare our variables #}
+{{ variables(compute[computeKey].variables) }}
+
+        {# Read `value` if applicable #}
+        {%- for variable in compute[computeKey].input %}
+        {% for varKey in variable.keys() %}
+        {% if varKey == 'value' %}
+        # Read value of register into a variable
+        value = self.get_{{function[key].register[12:].lower()}}()
+        {% endif %}
+        {% endfor %}
+        {% endfor -%}
+        {# Handle the logic #}
+{{ logic(compute[computeKey].logic, function[key]) }}
+        {# Return if applicable #}
+        {% if compute[computeKey].return %}
+        return {{compute[computeKey].return}}
+        {% endif %}
+    {% endfor %}
+    {% endfor %}
     {% endif %}
     {% endfor %}
     {% endfor %}
