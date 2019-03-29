@@ -1,0 +1,5 @@
+steps:
+  # Fetch entire repo
+- name: grc.io/cloud-builders/git
+  args: ['fetch', '--unshallow']
+  id: 'Fetch source history'
