@@ -1,6 +1,6 @@
 steps:
   # Fetch entire repo
-- name: grc.io/cloud-builders/git
+- name: gcr.io/cloud-builders/git
   args: ['fetch', '--unshallow']
   id: Fetch source history
 - name: "docker.io/library/python:3.7"
