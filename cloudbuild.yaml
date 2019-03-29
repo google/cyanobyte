@@ -2,4 +2,7 @@ steps:
   # Fetch entire repo
 - name: grc.io/cloud-builders/git
   args: ['fetch', '--unshallow']
-  id: 'Fetch source history'
+  id: Fetch source history
+- name: "docker.io/library/python:3.7"
+  args: ['pip', 'install', './requirements.txt', '--user']
+  id:  Install requirements
