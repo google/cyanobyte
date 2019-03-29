@@ -1,8 +1,11 @@
 steps:
   # Fetch entire repo
-- name: gcr.io/cloud-builders/git
-  args: ['fetch', '--unshallow']
-  id: Fetch source history
-- name: "docker.io/library/python:3.7"
-  args: ['pip', 'install', './requirements.txt', '--user']
-  id:  Install requirements
+# - name: gcr.io/cloud-builders/git
+#   args: ['fetch', '--unshallow']
+#   id: Fetch source history
+# - name: "docker.io/library/python:3.7"
+#   args: ['pip', 'install', './requirements.txt', '--user']
+#   id:  Install requirements
+- name: ubuntu
+  args: ['echo', 'hello world']
+  id: Always pass
