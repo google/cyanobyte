@@ -68,3 +68,37 @@ functions:
         - GND:
             title: Ground
             value: 0b000000000000
+  - setVOut:
+      title: Set output voltage
+      description: set vout
+      type: number
+      register: '#/registers/EEPROM'
+      readWrite: 'W'
+      bitStart: 12
+      bitEnd: 0
+      computed:
+        - asVoltage:
+            input:
+              - vcc: float32
+              - output: float32
+            logic:
+              - output: = output / vcc * 4096
+              - send: output
+  - getVOut:
+      title: Get output voltage
+      description: get vout
+      type: number
+      register: '#/registers/EEPROM'
+      readWrite: 'R'
+      bitStart: 12
+      bitEnd: 0
+      computed:
+        - asVoltage:
+            input:
+              - vcc: float32
+              - value: float32 # automatically pulls value
+            variables:
+              - voltage: float32
+            logic:
+              - voltage: = value / 4096 * vcc
+            return: voltage
