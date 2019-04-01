@@ -1,7 +1,4 @@
 steps:
-- name: ubuntu
-  args: ['exit 1']
-  id: Always faill
 - name: docker.io/library/python:3.7
   args: ['pip', 'install', '-r', './requirements.txt']
   id: Install dependencies
