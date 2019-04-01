@@ -1,6 +1,6 @@
 steps:
 - name: docker.io/library/python:3.7
-  args: ['pip', 'install', '-r', './requirements.txt']
+  args: ['pip3', 'install', '-r', 'requirements.txt']
   id: Install dependencies
 - name: docker.io/library/python:3.7
   entrypoint: python
