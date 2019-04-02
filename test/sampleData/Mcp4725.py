@@ -43,8 +43,8 @@ class Mcp4725:
     def __init__(self):
         # Initialize connection to peripheral
         self.bus = smbus.SMBus(1)
-    
-    def get_vout():
+
+    def get_vout(self):
         """
         VOut = (Vcc * value) / 4096
         The output is a range between 0 and Vcc with
@@ -54,12 +54,12 @@ class Mcp4725:
         """
         val = self.bus.read_i2c_block_data(
             self.DEVICE_ADDRESS,
-            self.REGISTER_
+            self.REGISTER_VOUT
         )
         val = _swap_endian(val)
         return val
 
-    def set_vout(data):
+    def set_vout(self, data):
         """
         VOut = (Vcc * value) / 4096
         The output is a range between 0 and Vcc with
@@ -70,10 +70,10 @@ class Mcp4725:
         data = _swap_endian(data)
         self.bus.write_i2c_block_data(
             self.DEVICE_ADDRESS,
-            self.REGISTER_,
+            self.REGISTER_VOUT,
             data
         )
-    def get_eeprom():
+    def get_eeprom(self):
         """
         If EEPROM is set, the saved voltage output will
         be loaded from power-on.
@@ -81,12 +81,12 @@ class Mcp4725:
         """
         val = self.bus.read_i2c_block_data(
             self.DEVICE_ADDRESS,
-            self.REGISTER_
+            self.REGISTER_EEPROM
         )
         val = _swap_endian(val)
         return val
 
-    def set_eeprom(data):
+    def set_eeprom(self, data):
         """
         If EEPROM is set, the saved voltage output will
         be loaded from power-on.
@@ -95,6 +95,6 @@ class Mcp4725:
         data = _swap_endian(data)
         self.bus.write_i2c_block_data(
             self.DEVICE_ADDRESS,
-            self.REGISTER_,
+            self.REGISTER_EEPROM,
             data
         )

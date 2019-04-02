@@ -36,23 +36,23 @@ class {{ info.title }}:
     def __init__(self):
         # Initialize connection to peripheral
         self.bus = smbus.SMBus(1)
-    
+
     {% for register in registers %}
     {% for key in register.keys() %}
-    def get_{{key.lower()}}():
+    def get_{{key.lower()}}(self):
         """
 {{utils.pad_string("        ", register[key].description)}}
         """
         val = self.bus.read_i2c_block_data(
             self.DEVICE_ADDRESS,
-            self.REGISTER_{{utils.object_key(register).upper()}}
+            self.REGISTER_{{key.upper()}}
         )
         {% if i2c.endian == 'little' %}
         val = _swap_endian(val)
         {% endif %}
         return val
 
-    def set_{{key.lower()}}(data):
+    def set_{{key.lower()}}(self, data):
         """
 {{utils.pad_string("        ", register[key].description)}}
         """
@@ -61,7 +61,7 @@ class {{ info.title }}:
         {% endif %}
         self.bus.write_i2c_block_data(
             self.DEVICE_ADDRESS,
-            self.REGISTER_{{utils.object_key(register).upper()}},
+            self.REGISTER_{{key.upper()}},
             data
         )
     {% endfor %}
