@@ -101,9 +101,6 @@ class {{ info.title }}:
         # Read register data
         # '#/registers/{{function[key].register[12:]}}' > '{{function[key].register[12:]}}'
         val = self.get_{{function[key].register[12:].lower()}}()
-        {% if i2c.endian == 'little' %}
-        val = _swap_endian(val)
-        {% endif %}
         # Mask register value
         val = val & {{utils.mask(function[key].bitStart, function[key].bitEnd)}}
         {% if function[key].bitEnd %}
@@ -127,9 +124,6 @@ class {{ info.title }}:
         # '#/registers/{{function[key].register[12:]}}' > '{{function[key].register[12:]}}'
         register_data = self.get_{{function[key].register[12:].lower()}}()
         register_data = register_data | data
-        {% if i2c.endian == 'little' %}
-        register_data = _swap_endian(register_data)
-        {% endif %}
         self.set_{{function[key].register[12:].lower()}}(register_data)
     {% endif %}
     {% endfor %}

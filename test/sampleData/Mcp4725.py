@@ -116,7 +116,6 @@ class Mcp4725:
         # Read register data
         # '#/registers/EEPROM' > 'EEPROM'
         val = self.get_eeprom()
-        val = _swap_endian(val)
         # Mask register value
         val = val & 0b0000111111111111
         return val
@@ -130,5 +129,4 @@ class Mcp4725:
         # '#/registers/EEPROM' > 'EEPROM'
         register_data = self.get_eeprom()
         register_data = register_data | data
-        register_data = _swap_endian(register_data)
         self.set_eeprom(register_data)
