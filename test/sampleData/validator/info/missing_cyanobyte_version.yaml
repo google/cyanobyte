@@ -1,0 +1,11 @@
+info:
+    title: Valid Info
+    description: This is a minimal example with valid info.
+    contact:
+        name: 'Joe Smith'
+        url: 'http://example.com'
+        email: 'joe@example.com'
+    license:
+        name: 'Apache 2.0'
+        url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+    version: 0.1.0
