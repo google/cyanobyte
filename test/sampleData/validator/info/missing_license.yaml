@@ -1,0 +1,9 @@
+cyanobyte: 0.1.0
+info:
+    title: Valid Info
+    description: This is a minimal example with valid info.
+    contact:
+        name: 'Joe Smith'
+        url: 'http://example.com'
+        email: 'joe@example.com'
+    version: 0.1.0
