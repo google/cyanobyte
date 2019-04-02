@@ -61,7 +61,7 @@
           },
           "required": [
             "name",
-            "year"
+            "date"
           ]
         },
         "license": {
