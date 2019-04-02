@@ -5,9 +5,7 @@ import json
 from jsonschema import validate
 
 
-@click.command()
-@click.option("-i", "--input", "input_files", multiple=True)
-def valdiate(input_files):
+def cyanobyte_valdiate(input_files):
     """
     Valdiate a list of CyanoByte documents.
 
@@ -25,5 +23,11 @@ def valdiate(input_files):
             validate(instance=document_dict, schema=schema)
 
 
+@click.command()
+@click.option("-i", "--input", "input_files", multiple=True)
+def click_valdiate(input_files):
+    cyanobyte_valdiate(input_files)
+
+
 if __name__ == "__main__":
-    valdiate(sys.argv[1:])
+    click_valdiate(sys.argv[1:])
