@@ -36,22 +36,22 @@ steps:
 - name: 'gcr.io/cloud-builders/git'
   entrypoint: 'bash'
   args: ['-c', 'git log -1 --pretty=%B | ./git-presubmit-linter/rules/verb-tense.sh imperative']
-  id: 'Check git message verb tense'
+  id: 'Commit message has correct verb tense'
   waitFor: ['Download Git Presubmit Linter']
 - name: 'gcr.io/cloud-builders/git'
   entrypoint: 'bash'
   args: ['-c', 'git log -1 --pretty=%B | ./git-presubmit-linter/rules/no-second-line.sh']
-  id: 'Check commit no trailing whitespace'
+  id: 'Commit message has no second line'
   waitFor: ['Download Git Presubmit Linter']
 - name: 'gcr.io/cloud-builders/git'
   entrypoint: 'bash'
   args: ['-c', 'git log -1 --pretty=%B | ./git-presubmit-linter/rules/line-length.sh 80']
-  id: 'Check git message line length'
+  id: 'Commit message is not too long'
   waitFor: ['Download Git Presubmit Linter']
 - name: 'gcr.io/cloud-builders/git'
   entrypoint: 'bash'
   args: ['-c', 'git diff HEAD^ --pretty=%B | ./git-presubmit-linter/rules/trailing-whitespace.sh']
-  id: 'Check commit no trailing whitespace'
+  id: 'Commit has no trailing whitespace'
   waitFor: ['Download Git Presubmit Linter']
 
 artifacts:
