@@ -1,7 +1,13 @@
+"""CyanoByte Validator
+
+The CyanoByte validator is used to ensure that a CyanoByte
+document meets the specification.
+"""
+
 import sys
+import json
 import click
 import yaml
-import json
 from jsonschema import validate
 
 
@@ -26,6 +32,12 @@ def cyanobyte_valdiate(input_files):
 @click.command()
 @click.option("-i", "--input", "input_files", multiple=True)
 def click_valdiate(input_files):
+    """
+    Main command line entrypoint
+
+    Args:
+        input_files: A list of CyanoByte documents to validate.
+    """
     cyanobyte_valdiate(input_files)
 
 
