@@ -1,4 +1,10 @@
 steps:
+# Fetch entire repo
+- name: gcr.io/cloud-builders/git
+  args: ['fetch', '--unshallow']
+  id: 'Unshallow git'
+
+# Python checks
 - name: docker.io/library/python:3.7
   args: ['pip3', 'install', '-r', 'requirements.txt', '--user']
   id: Install dependencies
@@ -21,6 +27,33 @@ steps:
   entrypoint: python3
   args: ['src/codegen.py', '-t', 'templates/raspberrypi.py', '-o', './build', '-i', 'peripherals/Mcp4725.yaml']
   id: Sample Python codegen
+
+# Git Presubmit Linter
+- name: 'gcr.io/cloud-builders/git'
+  args: ['clone', 'https://github.com/google/git-presubmit-linter.git']
+  id: 'Download Git Presubmit Linter'
+  waitFor: ['Unshallow git']
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: 'bash'
+  args: ['-c', 'git log -1 --pretty=%B | ./git-presubmit-linter/rules/verb-tense.sh imperative']
+  id: 'Check git message verb tense'
+  waitFor: ['Download Git Presubmit Linter']
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: 'bash'
+  args: ['-c', 'git log -1 --pretty=%B | ./git-presubmit-linter/rules/no-second-line.sh']
+  id: 'Check commit no trailing whitespace'
+  waitFor: ['Download Git Presubmit Linter']
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: 'bash'
+  args: ['-c', 'git log -1 --pretty=%B | ./git-presubmit-linter/rules/line-length.sh 80']
+  id: 'Check git message line length'
+  waitFor: ['Download Git Presubmit Linter']
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: 'bash'
+  args: ['-c', 'git diff HEAD^ --pretty=%B | ./git-presubmit-linter/rules/trailing-whitespace.sh']
+  id: 'Check commit no trailing whitespace'
+  waitFor: ['Download Git Presubmit Linter']
+
 artifacts:
   objects:
     # Store generated files in a Cloud Storage bucket with the commit hash as directory
