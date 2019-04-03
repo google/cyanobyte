@@ -1,0 +1,15 @@
+cyanobyte: 0.1.0
+info:
+    title: Valid Info
+    description: This is a minimal example with valid info.
+    contact:
+        name: 'Joe Smith'
+        url: 'http://example.com'
+        email: 'joe@example.com'
+    license:
+        name: 'Apache 2.0'
+        url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+    version: 0.1.0
+i2c:
+    addressType: '7-bit'
+    addressMask: 0x78

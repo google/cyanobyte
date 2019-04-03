@@ -1,0 +1,65 @@
+cyanobyte: 0.1.0
+info:
+    title: MCP9808
+    description: This is a test description
+    contact:
+        name: 'Joe Smith'
+        url: 'http://example.com'
+        email: 'joe@example.com'
+    license:
+        name: 'Apache 2.0'
+        url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+    version: 0.1.0
+i2c:
+    addressType: '7-bit'
+    address: 0x18
+    addressMask: 0x78
+
+registers:
+    - configuration:
+        address: 0x01
+        length: 16
+        title: Configuration Register
+        description: The MCP9808 has a 16-bit Configuration register (CONFIG) that allows the user to set various functions for a robust temperature monitoring system. Bits 10 through 0 are used to select the temperature alert output hysteresis, device shutdown or Low-Power mode, temperature boundary and critical temperature lock, and temperature Alert output enable/disable. In addition, Alert output condition (output set for TUPPER and TLOWER temperature boundary or TCRIT only), Alert output status and Alert output polarity and mode (Comparator Output or Interrupt Output mode) are user-configurable
+        
+functions:
+    - limitHysteresis:
+        title: TUPPER and TLOWER Limit Hysteresis bits
+        description: |
+            This bit can not be altered when either of the Lock bits are set (bit 6 and bit 7). 
+            This bit can be programmed in Shutdown mode.
+        register: '#/registers/configuration'
+        readWrite: 'R'
+        bitStart: 10
+        bitEnd: 9
+        type: 'enum'
+        enum:
+            - 0C:
+                title: 0°C (power-up default)
+                value: 0b00
+            - 1C5:
+                title: +1.5°C
+                value: 0b01
+            - 3C:
+                title: +3.0°C
+                value: 0b10
+            - 6C:
+                title: +6.0°C
+                value: 0b11
+    - shutdownMode:
+        title: Shutdown Mode bit
+        description: |
+            In shutdown, all power-consuming activities are disabled, though all registers can be written to or read.
+            This bit cannot be set to ‘1’ when either of the Lock bits is set (bit 6 and bit 7). However, it can be cleared to ‘0’ for continuous conversion while locked.
+        register: '#/registers/configuration'
+        readWrite: 'R'
+        bitStart: 8
+        bitEnd: 8
+        type: 'enum'
+        enum:
+            - continousConversion:
+                title: Continuous conversion (power-up default)
+                value: 0
+            - shutdown:
+                title: Shutdown (Low-Power mode)
+                value: 1
