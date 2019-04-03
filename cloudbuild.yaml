@@ -32,7 +32,7 @@ steps:
 - name: 'gcr.io/cloud-builders/git'
   args: ['clone', 'https://github.com/google/git-presubmit-linter.git']
   id: 'Download Git Presubmit Linter'
-  waitFor: ['Unshallow git']
+  waitFor: ['-']
 - name: 'gcr.io/cloud-builders/git'
   entrypoint: 'bash'
   args: ['-c', 'git log -1 --pretty=%B | ./git-presubmit-linter/rules/verb-tense.sh imperative']
