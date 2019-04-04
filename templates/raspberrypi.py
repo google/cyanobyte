@@ -14,6 +14,29 @@ except ImportError:
     print("Fatal error! Make sure to install smbus!")
     sys.exit(1)
 
+{# Create enums as for functions #}
+{% for function in functions %}
+{% for key in function.keys() %}
+{% if function[key].enum %}
+{# Optionally import class #}
+{% if importedEnum != True %}
+from enum import Enum
+{% set importedEnum = True %}
+{% endif %}
+{# Create enum class #}
+class {{key[0].upper()}}{{key[1:]}}Values(Enum):
+    """
+{{utils.pad_string("    ", "Valid values for " + function[key].title)}}
+    """
+    {% for enumObject in function[key].enum %}
+    {% for enumKey in enumObject.keys() %}
+    {{enumKey.upper()}} = {{enumObject[enumKey].value}} # {{enumObject[enumKey].title}}
+    {% endfor %}
+    {% endfor %}
+{% endif %}
+{% endfor %}
+{% endfor %}
+
 {% if i2c.endian == 'little' %}
 def _swap_endian(val):
     """
@@ -64,5 +87,44 @@ class {{ info.title }}:
             self.REGISTER_{{key.upper()}},
             data
         )
+    {% endfor %}
+    {% endfor %}
+
+    {% for function in functions %}
+    {% for key in function.keys() %}
+    {% if 'R' is in(function[key].readWrite) %}
+    {# Getter #}
+    def get_{{key.lower()}}(self):
+        """
+{{utils.pad_string("        ", function[key].description)}}
+        """
+        # Read register data
+        # '#/registers/{{function[key].register[12:]}}' > '{{function[key].register[12:]}}'
+        val = self.get_{{function[key].register[12:].lower()}}()
+        # Mask register value
+        val = val & {{utils.mask(function[key].bitStart, function[key].bitEnd)}}
+        {% if function[key].bitEnd %}
+        # Bitshift value
+        val = val >> {{function[key].bitEnd}}
+        {% endif %}
+        return val
+    {% endif %}
+
+     {% if 'W' is in(function[key].readWrite) %}
+    {# Setter #}
+    def set_{{key.lower()}}(self, data):
+        """
+{{utils.pad_string("        ", function[key].description)}}
+        """
+        {% if function[key].bitEnd %}
+        # Bitshift value
+        data = data << {{function[key].bitEnd}}
+        {% endif %}
+        # Read current register data
+        # '#/registers/{{function[key].register[12:]}}' > '{{function[key].register[12:]}}'
+        register_data = self.get_{{function[key].register[12:].lower()}}()
+        register_data = register_data | data
+        self.set_{{function[key].register[12:].lower()}}(register_data)
+    {% endif %}
     {% endfor %}
     {% endfor %}
