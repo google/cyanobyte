@@ -28,7 +28,9 @@ class {{ info.title }}:
     """
     DEVICE_ADDRESS = {{i2c.address}}
     {% for register in registers %}
-    REGISTER_{{utils.object_key(register).upper()}} = {{register.address}}
+    {% for key in register.keys() %}
+    REGISTER_{{key.upper()}} = {{register[key].address}}
+    {% endfor %}
     {% endfor %}
 
     def __init__(self):
@@ -36,30 +38,31 @@ class {{ info.title }}:
         self.bus = smbus.SMBus(1)
 
     {% for register in registers %}
-
-    def get_{{utils.object_key(register).lower()}}(self):
+    {% for key in register.keys() %}
+    def get_{{key.lower()}}(self):
         """
-{{utils.pad_string("        ", register.description)}}
+{{utils.pad_string("        ", register[key].description)}}
         """
         val = self.bus.read_i2c_block_data(
             self.DEVICE_ADDRESS,
-            self.REGISTER_{{utils.object_key(register).upper()}}
+            self.REGISTER_{{key.upper()}}
         )
         {% if i2c.endian == 'little' %}
         val = _swap_endian(val)
         {% endif %}
         return val
 
-    def set_{{utils.object_key(register).lower()}}(self, data):
+    def set_{{key.lower()}}(self, data):
         """
-{{utils.pad_string("        ", register.description)}}
+{{utils.pad_string("        ", register[key].description)}}
         """
         {% if i2c.endian == 'little' %}
         data = _swap_endian(data)
         {% endif %}
         self.bus.write_i2c_block_data(
             self.DEVICE_ADDRESS,
-            self.REGISTER_{{utils.object_key(register).upper()}},
+            self.REGISTER_{{key.upper()}},
             data
         )
+    {% endfor %}
     {% endfor %}

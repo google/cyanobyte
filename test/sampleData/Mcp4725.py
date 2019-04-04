@@ -44,7 +44,6 @@ class Mcp4725:
         # Initialize connection to peripheral
         self.bus = smbus.SMBus(1)
 
-
     def get_vout(self):
         """
         VOut = (Vcc * value) / 4096
@@ -74,7 +73,6 @@ class Mcp4725:
             self.REGISTER_VOUT,
             data
         )
-
     def get_eeprom(self):
         """
         If EEPROM is set, the saved voltage output will
