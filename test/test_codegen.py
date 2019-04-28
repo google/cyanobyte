@@ -20,31 +20,29 @@ import os
 class TestCodegen(unittest.TestCase):
     def compareFiles(self, filePath1, filePath2):
         print('Comparing', filePath1, 'and', filePath2)
-        file1 = open(filePath1)
-        fileContents1 = file1.read()
-        file2 = open(filePath2)
-        fileContents2 = file2.read()
-        self.assertEqual(
-            fileContents1,
-            fileContents2,
-            msg="{0} and {1} are not the same".format(filePath1, filePath2)
-        )
-        file1.close()
-        file2.close()
+        with open(filePath1) as file1:
+            with open(filePath2) as file2:
+                fileContents1 = file1.read()
+                fileContents2 = file2.read()
+                self.assertEqual(
+                    fileContents1,
+                    fileContents2,
+                    msg="{0} and {1} are not the same".format(filePath1, filePath2)
+                )
 
-    def setUp(self):
+    def tearDown(self):
         # Clear out existing files
-        os.system('rm -rf ./build/')
+        os.system('rm -rf ./tmp/')
         print('\n')
 
     def test_Mcp4725(self):
         os.system('python3 src/codegen.py \
-            -o ./build \
+            -o ./tmp \
             -t templates/doc.md \
             -t templates/raspberrypi.py \
             -i peripherals/Mcp4725.yaml > /dev/null')
-        self.compareFiles('build/com/example/Mcp4725.md', 'test/sampleData/Mcp4725.md')
-        self.compareFiles('build/com/example/Mcp4725.py', 'test/sampleData/Mcp4725.py')
+        self.compareFiles('tmp/com/cyanobyte/Mcp4725.md', 'test/sampleData/Mcp4725.md')
+        self.compareFiles('tmp/com/cyanobyte/Mcp4725.py', 'test/sampleData/Mcp4725.py')
 
 if __name__ == '__main__':
     unittest.main()

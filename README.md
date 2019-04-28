@@ -3,14 +3,14 @@ This project is an example of how to describe peripherals with an intermediary l
 
 It can also generate reference documentation for a periphreal, useful for embedding into datasheets.
 
-This is not an officially Google product.
+This is not an official Google product.
 
 ## Setup
 Note: This project requires Python3.
 s
-`pip install -r requirements.txt`
+`pip install -r requirements.txt --user`
 
-## Run
+## Run Codegen
 `python3 src/codegen.py -t templates/doc.md -o ./build -i peripherals/Mcp4725.yaml`
 
 ### Args
@@ -21,6 +21,12 @@ s
 
 ### Clean
 `rm -rf ./build`
+
+## Run Validator
+`python3 src/validator.py -i peripherals/MCP9808.yaml`
+
+### Args
+* `-i` - A CyanoByte document. You can provide multiple input files.
 
 ## Peripheral YAML file
 The current spec is described below. You can find all examples in the `peripherals/` directory.
@@ -40,7 +46,12 @@ registers:
 ```
 
 ## Test
-`python3 -m unittest test.codegen`
+### Litn
+`python3 -m pylint --rcfile=test/pylintrc src/*.py`
+`python3 -m pylint --rcfile=test/pylintrc test/sampleData/*.py`
+
+### Unit test
+`python3 -m unittest test.test_codegen`
 
 ## Templates
 The `templates` directory includes a set of canonical templates which can be used with this codegen tool.

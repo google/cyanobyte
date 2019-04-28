@@ -1,0 +1,78 @@
+{# 
+    Macro objectKey
+
+    For a YAML object, this will get the key.
+    ex.
+
+    - key:
+      foo: bar
+      fez: baz
+
+    Loaded in a Python dict, this is interpreted as:
+
+    {
+        "key": None,
+        "foo": "bar",
+        "fez": "baz"
+    }
+
+    This macro gets "key" by checking for any
+    property that has a value of `None`.
+#}
+
+{% macro object_key(yamlObject) %}
+{% for prop, val in yamlObject.items() %}
+{% if val == None -%}
+{{prop}}
+{%- endif %}
+{% endfor %}
+{% endmacro %}
+
+{#
+    Macro padString
+
+    This can be useful to pad a string with comments or
+    a given number of spaces.
+
+    x = """lorem
+    ipsum"""
+
+    {{ pad_string("# ", x) }}
+#}
+
+{% macro pad_string(padding, contentString) %}
+{% for line in contentString.splitlines() %}
+{% if line|length > 0 %}
+{{padding}}{{line|trim}}
+{% else %}
+{{padding|trim}}
+{% endif %}
+{% endfor %}
+{% endmacro %}
+
+{#
+    Macro license
+
+    This produces a license header based on the
+    license parameter. It generates the header
+    for a provided company and copyright year.
+#}
+
+{% macro license(company, year, license) %}
+{% if license == "Apache-2.0" %}
+Copyright (C) {{year}} {{company}}
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+{% endif %}
+{% endmacro %}
+

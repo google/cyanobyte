@@ -1,2 +1,5 @@
+click
+pylint
 pyyaml
 Jinja2
+jsonschema

@@ -1,67 +1,68 @@
-# Copyright (C) 2019 Google Inc.
+{% import 'macros.jinja2' as utils %}
+{{ utils.pad_string('# ', utils.license('Google Inc.', '2019', info.license.name)) -}}
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-# Auto-generated file for {{ name }}.
-# Generated from {{ fileName }} using PROJECT_NAME v{{ version }}
+# Auto-generated file for {{ info.title }} v{{ info.version }}.
+# Generated from {{ fileName }} using Cyanobyte Codegen v{{ version }}
+"""
+Class for {{ info.title }}
+"""
 
 import sys
 try:
     import smbus
 except ImportError:
-    print("Fatal error! Make sure to run `pip install smbus`")
+    print("Fatal error! Make sure to install smbus!")
     sys.exit(1)
 
-class {{ name }}
-    device_address = {{address}}
+{% if i2c.endian == 'little' %}
+def _swap_endian(val):
+    """
+    Swap the endianness of a short only
+    """
+    return val >> 8 | val << 8
+{% endif %}
+
+class {{ info.title }}:
+    """
+{{utils.pad_string("    ", info.description)}}
+    """
+    DEVICE_ADDRESS = {{i2c.address}}
+    {% for register in registers %}
+    {% for key in register.keys() %}
+    REGISTER_{{key.upper()}} = {{register[key].address}}
+    {% endfor %}
+    {% endfor %}
 
     def __init__(self):
         # Initialize connection to peripheral
         self.bus = smbus.SMBus(1)
 
-    {% if little_endian %}
-    def _swap_endian(val):
-        # short data type only
-        return val >> 8 | val << 8
-    {% endif %}
-    
     {% for register in registers %}
-    {% if register.getter %}
-    """
-    {{register.description}}
-    """
-    def get{{register.name}}():
-        val = bus.read_i2c_block_data(
-            device_address,
-            {{register.address}}
+    {% for key in register.keys() %}
+    def get_{{key.lower()}}(self):
+        """
+{{utils.pad_string("        ", register[key].description)}}
+        """
+        val = self.bus.read_i2c_block_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_{{key.upper()}}
         )
-        {% if little_endian %}
-        val = self._swap_endian(val)
+        {% if i2c.endian == 'little' %}
+        val = _swap_endian(val)
         {% endif %}
         return val
-    {% endif %}
-    {% if register.setter %}
-    """
-    {{register.description}}
-    """
-    def set{{register.name}}(data):
-        {% if little_endian %}
-        data = self._swap_endian(data)
+
+    def set_{{key.lower()}}(self, data):
+        """
+{{utils.pad_string("        ", register[key].description)}}
+        """
+        {% if i2c.endian == 'little' %}
+        data = _swap_endian(data)
         {% endif %}
-        bus.write_i2c_block_data(
-            device_address,
-            {{register.address}},
+        self.bus.write_i2c_block_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_{{key.upper()}},
             data
         )
-    {% endif %}
+    {% endfor %}
     {% endfor %}
