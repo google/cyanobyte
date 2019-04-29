@@ -9,4 +9,5 @@ This is the official authoritative versions of the CyanoByte and PsudoYAML speci
    
    standards/index.rst
    annotated_standards/index.rst
+   reference/index.rst
    meeting_minutes/index.rst
