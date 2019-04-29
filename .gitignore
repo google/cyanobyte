@@ -1,3 +1,5 @@
 # Build files
 /build/
 __pycache__/
+docs/build
+.idea
