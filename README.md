@@ -10,7 +10,7 @@ Note: This project requires Python3.
 s
 `pip install -r requirements.txt --user`
 
-## Run
+## Run Codegen
 `python3 src/codegen.py -t templates/doc.md -o ./build -i peripherals/Mcp4725.yaml`
 
 ### Args
@@ -21,6 +21,12 @@ s
 
 ### Clean
 `rm -rf ./build`
+
+## Run Validator
+`python3 src/validator.py -i peripherals/MCP9808.yaml`
+
+### Args
+* `-i` - A CyanoByte document. You can provide multiple input files.
 
 ## Peripheral YAML file
 The current spec is described below. You can find all examples in the `peripherals/` directory.

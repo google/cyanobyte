@@ -17,6 +17,10 @@
           "description": "The title of the document. This should be used as the class name in the auto-generated code and therefore should be short (e.g. the part name).",
           "type": "string"
         },
+        "package": {
+          "description": "Logical hierarchy of this device, typically organized as a reverse domain name.",
+          "type": "string"
+        },
         "description": {
           "description": "A description of the document.",
           "type": "string"
@@ -44,6 +48,24 @@
             "name",
             "url",
             "email"
+          ]
+        },
+        "copyright": {
+          "description": "Copyright info for the source code.",
+          "type": "object",
+          "properties": {
+            "name": {
+              "description": "Name of the copyright holder.",
+              "type": "string"
+            },
+            "date": {
+              "description": "Year / years for the copyright.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "date"
           ]
         },
         "license": {
