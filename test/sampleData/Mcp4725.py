@@ -25,6 +25,15 @@ except ImportError:
     print("Fatal error! Make sure to install smbus!")
     sys.exit(1)
 
+from enum import Enum
+class DigitalOutValues(Enum):
+    """
+    Valid values for Digital (binary) output
+
+    """
+    VCC = 4095 # Vcc (full power)
+    GND = 0 # Ground
+
 def _swap_endian(val):
     """
     Swap the endianness of a short only
@@ -98,3 +107,26 @@ class Mcp4725:
             self.REGISTER_EEPROM,
             data
         )
+
+    def get_digitalout(self):
+        """
+        Only allows you to send fully on or off
+
+        """
+        # Read register data
+        # '#/registers/EEPROM' > 'EEPROM'
+        val = self.get_eeprom()
+        # Mask register value
+        val = val & 0b0000111111111111
+        return val
+
+    def set_digitalout(self, data):
+        """
+        Only allows you to send fully on or off
+
+        """
+        # Read current register data
+        # '#/registers/EEPROM' > 'EEPROM'
+        register_data = self.get_eeprom()
+        register_data = register_data | data
+        self.set_eeprom(register_data)

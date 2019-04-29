@@ -48,3 +48,20 @@ registers:
       description: |
         If EEPROM is set, the saved voltage output will
         be loaded from power-on.
+functions:
+  - digitalOut:
+      title: Digital (binary) output
+      description: |
+        Only allows you to send fully on or off
+      register: '#/registers/EEPROM'
+      readWrite: 'R/W'
+      bitStart: 12
+      bitEnd: 0
+      type: 'enum'
+      enum:
+        - VCC:
+            title: Vcc (full power)
+            value: 0b111111111111
+        - GND:
+            title: Ground
+            value: 0b000000000000
