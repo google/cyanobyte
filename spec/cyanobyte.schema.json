@@ -50,6 +50,24 @@
             "email"
           ]
         },
+        "copyright": {
+          "description": "Copyright info for the source code.",
+          "type": "object",
+          "properties": {
+            "name": {
+              "description": "Name of the copyright holder.",
+              "type": "string"
+            },
+            "date": {
+              "description": "Year / years for the copyright.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "date"
+          ]
+        },
         "license": {
           "description": "License this document uses. TODO: Add validation other than it being a string.",
           "type": "object",
