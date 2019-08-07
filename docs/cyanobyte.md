@@ -4,12 +4,6 @@ This file contains a proposed updated CyanoByte specification. It is currently a
 
 The CyanoByte specification is a tool to describe the interface to embedded communications in a machine-readable format. It builds off the successes of OpenAPI for web APIs.
 
-## Philosophy of CyanoByte
-
-Throughout this exercise, common principles should be extracted to guide future decision making the project.
-
-- The spec should be representative of how things are currently done, even if it is less "proper" or correct. 
-
 ## Roadmap and Items to Consider
 - I2C
   - How do we deal with addresses that are configurable?
