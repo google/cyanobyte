@@ -74,10 +74,18 @@ class {{ info.title }}:
         """
 {{utils.pad_string("        ", register[key].description)}}
         """
-        val = self.bus.read_i2c_block_data(
+        {% if register[key].length == 8 %}
+        val = self.bus.read_byte_data(
             self.DEVICE_ADDRESS,
             self.REGISTER_{{key.upper()}}
         )
+        {% endif %}
+        {% if register[key].length == 16 %}
+        val = self.bus.read_word_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_{{key.upper()}}
+        )
+        {% endif %}
         {% if i2c.endian == 'little' %}
         val = _swap_endian(val)
         {% endif %}
@@ -90,11 +98,20 @@ class {{ info.title }}:
         {% if i2c.endian == 'little' %}
         data = _swap_endian(data)
         {% endif %}
-        self.bus.write_i2c_block_data(
+        {% if register[key].length == 8 %}
+        self.bus.write_byte_data(
             self.DEVICE_ADDRESS,
             self.REGISTER_{{key.upper()}},
             data
         )
+        {% endif %}
+        {% if register[key].length == 16 %}
+        self.bus.write_word_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_{{key.upper()}},
+            data
+        )
+        {% endif %}
     {% endfor %}
     {% endfor %}
 
