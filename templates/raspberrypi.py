@@ -42,9 +42,76 @@ Class for {{ info.title }}
 {% if key == 'send' %}
         self.set_{{function.register[12:].lower()}}({{step[key]}})
 {% endif %}
+
+{# If the value is a list, then this is a logical setter #}
+{% if step[key] is iterable %}
+        {{key}} = {{recursiveAssignLogic(step[key][0], step[key][0].keys()) -}}
+{% endif %}
+
 {% endfor %}
 {% endfor %}
 {% endmacro %}
+
+{% macro recursiveAssignLogic(logicalStep, keys) -%}
+{% for key in keys -%}
+{# Read from a register #}
+{# {{key}} {{logicalStep[key]}} #}
+{% if key == 'read' -%}
+    self.get_{{logicalStep[key][12:].lower()}}()
+{%- endif %}
+{# Perform a recursive summation from an array of logical steps #}
+{% if key == 'sum' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{step}}
+    {%- endif %}
+    {{ "+" if not loop.last }}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a recursive difference from an array of logical steps #}
+{% if key == 'difference' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{step}}
+    {%- endif %}
+    {{ "-" if not loop.last }}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a recursive product from an array of logical steps #}
+{% if key == 'product' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{step}}
+    {%- endif %}
+    {{ "*" if not loop.last }}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a recursive division from an array of logical steps #}
+{% if key == 'division' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{step}}
+    {%- endif %}
+    {{ "/" if not loop.last }}
+    {%- endfor -%})
+{%- endif %}
+{# Bitwise ops #}
+{%- if key == 'bitShiftLeft' -%}
+    ({{logicalStep.var}} << {{logicalStep.bits}})
+{%- endif %}
+{%- if key == 'bitShiftRight' -%}
+    ({{logicalStep.var}} >> {{logicalStep.bits}})
+{%- endif %}
+{%- endfor %}
+{%- endmacro %}
 
 import sys
 try:
@@ -91,6 +158,14 @@ def _swap_endian(val):
     return val >> 8 | val << 8
 {% endif %}
 
+def _sign(val, length):
+    """
+    Convert unsigned integer to signed integer
+    """
+    if val & (1 << (length - 1)):
+        return val - (1 << length)
+    return val
+
 class {{ info.title }}:
     """
 {{utils.pad_string("    ", info.description)}}
@@ -125,6 +200,10 @@ class {{ info.title }}:
         {% endif %}
         {% if i2c.endian == 'little' %}
         val = _swap_endian(val)
+        {% endif %}
+        {% if register[key].signed %}
+        # Unsigned > Signed integer
+        val = _sign(val, {{register[key].length}})
         {% endif %}
         return val
 
@@ -193,7 +272,11 @@ class {{ info.title }}:
     {% if function[key].computed %}
     {% for compute in function[key].computed %}
     {% for computeKey in compute.keys() %}
+    {% if compute[computeKey].input %}
     def {{key.lower()}}_{{computeKey.lower()}}(self, {{params(compute[computeKey].input)}}):
+    {% else %}
+    def {{key.lower()}}_{{computeKey.lower()}}(self):
+    {% endif %}
         """
 {{utils.pad_string("        ", function[key].description)}}
         """
@@ -211,6 +294,7 @@ class {{ info.title }}:
         {% endfor -%}
         {# Handle the logic #}
 {{ logic(compute[computeKey].logic, function[key]) }}
+
         {# Return if applicable #}
         {% if compute[computeKey].return %}
         return {{compute[computeKey].return}}

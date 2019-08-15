@@ -156,6 +156,10 @@
               "length": {
                 "description": "Length of the register in bits",
                 "type": "integer"
+              },
+              "signed": {
+                "description": "Whether the integer response should be signed when read",
+                "type": "boolean"
               }
             },
             "required": [
