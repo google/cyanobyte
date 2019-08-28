@@ -16,7 +16,7 @@ cyanobyte: 0.1.0
 info:
   contact:
     name: Nick Felker
-    url: https://github,com/google/cyanobyte
+    url: https://github.com/google/cyanobyte
     email: felker@google.com
   package: com.cyanobyte
   title: Bmp280
