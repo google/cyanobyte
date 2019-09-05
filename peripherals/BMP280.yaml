@@ -65,6 +65,75 @@ registers:
       title: Digital Temperature Compensation 3
       description: Used for Celcius conversion
       signed: true
+  - PressureMsb:
+      address: 0xF7
+      length: 8
+      title: Pressure MSB
+      description: Part 1 of Pressure
+  - PressureLsb:
+      address: 0xF8
+      length: 8
+      title: Pressure LSB
+      description: Part 2 of Pressure
+  - PressureXlsb:
+      address: 0xF9
+      length: 8
+      title: Pressure XLSB
+      description: Part 3 of Pressure
+  - DigP1:
+      address: 0x8E
+      length: 16
+      signed: false
+      title: Digital Pressure Compensation 1
+      description: Used for Pascals conversion
+  - DigP2:
+      address: 0x90
+      length: 16
+      signed: true
+      title: Digital Pressure Compensation 2
+      description: Used for Pascals conversion
+  - DigP3:
+      address: 0x92
+      length: 16
+      signed: true
+      title: Digital Pressure Compensation 3
+      description: Used for Pascals conversion
+  - DigP4:
+      address: 0x94
+      length: 16
+      signed: true
+      title: Digital Pressure Compensation 4
+      description: Used for Pascals conversion
+  - DigP5:
+      address: 0x96
+      length: 16
+      signed: true
+      title: Digital Pressure Compensation 5
+      description: Used for Pascals conversion
+  - DigP6:
+      address: 0x98
+      length: 16
+      signed: true
+      title: Digital Pressure Compensation 6
+      description: Used for Pascals conversion
+  - DigP7:
+      address: 0x9A
+      length: 16
+      signed: true
+      title: Digital Pressure Compensation 7
+      description: Used for Pascals conversion
+  - DigP8:
+      address: 0x9C
+      length: 16
+      signed: true
+      title: Digital Pressure Compensation 8
+      description: Used for Pascals conversion
+  - DigP9:
+      address: 0x9E
+      length: 16
+      signed: true
+      title: Digital Pressure Compensation 9
+      description: Used for Pascals conversion
 functions:
   - temperature:
       title: Temperature as read by sensor
@@ -163,3 +232,184 @@ functions:
                     - rawComp2
                   - 5120.0
             return: celsius
+  - pressure:
+      title: Pressure as read by sensor
+      description: Reads the atmospheric pressure
+      readWrite: 'n'
+      computed:
+        - asRaw:
+            variables:
+              - valueMsb: int8
+              - valueLsb: int8
+              - valueXlsb: int8
+              - output: int16
+            logic:
+              - valueMsb:
+                - read: '#/registers/PressureMsb'
+              - valueLsb:
+                - read: '#/registers/PressureLsb'
+              - valueXlsb:
+                - read: '#/registers/PressureXlsb'
+              - output:
+                - sum:
+                  - bitShiftLeft:
+                    var: valueMsb
+                    bits: 12
+                  - bitShiftLeft:
+                    var: valueLsb
+                    bits: 4
+                  - bitShiftRight:
+                    var: valueXlsb
+                    bits: 4
+            return: output
+        - asHpa:
+            variables:
+              - valueMsb: int8
+              - valueLsb: int8
+              - valueXlsb: int8
+              - valueDP1: int8
+              - valueDP2: int8
+              - valueDP3: int8
+              - valueDP4: int8
+              - valueDP5: int8
+              - valueDP6: int8
+              - valueDP7: int8
+              - valueDP8: int8
+              - valueDP9: in8
+              - rawPressure: int16
+              - rawTemperature: int16
+              - rawComp1: int16
+              - rawComp2: int16
+              - hpa: float32
+            logic:
+              - valueMsb:
+                - read: '#/registers/PressureMsb'
+              - valueLsb:
+                - read: '#/registers/PressureLsb'
+              - valueXlsb:
+                - read: '#/registers/PressureXlsb'
+              - valueDP1:
+                - read: '#/registers/DigP1'
+              - valueDP2:
+                - read: '#/registers/DigP2'
+              - valueDP3:
+                - read: '#/registers/DigP3'
+              - valueDP4:
+                - read: '#/registers/DigP4'
+              - valueDP5:
+                - read: '#/registers/DigP5'
+              - valueDP6:
+                - read: '#/registers/DigP6'
+              - valueDP7:
+                - read: '#/registers/DigP7'
+              - valueDP8:
+                - read: '#/registers/DigP8'
+              - valueDP9:
+                - read: '#/registers/DigP9'
+              - rawTemperature:
+                - function: '#/functions/temperature/asCelsius'
+              - rawTemperature:
+                - product:
+                  - rawTemperature
+                  - 5120.0 # Undivide the function value
+              - rawPressure:
+                - sum:
+                  - bitShiftLeft:
+                    var: valueMsb
+                    bits: 12
+                  - bitShiftLeft:
+                    var: valueLsb
+                    bits: 4
+                  - bitShiftRight:
+                    var: valueXlsb
+                    bits: 4
+              - rawComp1:
+                - difference:
+                  - division:
+                    - rawTemperature
+                    - 2
+                  - 64000.0
+              - rawComp2:
+                - division:
+                  - product:
+                    - rawComp1
+                    - rawComp1
+                    - valueDP6
+                  - 32768.0
+              - rawComp2:
+                - sum:
+                  - rawComp2
+                  - product:
+                    - rawComp1
+                    - valueDP5
+                    - 2.0
+              - rawComp2:
+                - sum:
+                  - division:
+                    - rawComp2
+                    - 4.0
+                  - product:
+                    - valueDP4
+                    - 65536.0
+              - rawComp1:
+                - division:
+                  - sum:
+                    - division:
+                      - product:
+                        - valueDP3
+                        - rawComp1
+                        - rawComp1
+                      - 524288.0
+                    - product:
+                      - valueDP2
+                      - rawComp1
+                  - 524288.0
+              - rawComp1:
+                - product:
+                  - sum:
+                    - 1.0
+                    - division:
+                      - rawComp1
+                      - 32768.0
+                  - valueDP1
+              - hpa:
+                - difference:
+                  - 1048576.0
+                  - rawPressure
+              - hpa:
+                - product:
+                  - difference:
+                    - hpa
+                    - division:
+                      - rawComp2
+                      - 4096.0
+                  - division:
+                    - 6250.0
+                    - rawComp1
+              - rawComp1:
+                - division:
+                  - product:
+                    - valueDP9
+                    - hpa
+                    - hpa
+                  - 2147483648.0
+              - rawComp2:
+                - division:
+                  - product:
+                    - hpa
+                    - valueDP8
+                  - 32768.0
+              - hpa:
+                - sum:
+                  - hpa
+                  - division:
+                    - sum:
+                      - rawComp1
+                      - rawComp2
+                      - valueDP7
+                    - 16.0
+              - hpa:
+                - division:
+                  - hpa
+                  - 100.0
+            return: hpa

@@ -39,6 +39,10 @@ def camel_to_snake(camel_str):
     result = regex.sub(r'_\g<0>', str(camel_str))
     return result.lower()
 
+def regex_replace(input, regex_pattern, regex_replacement):
+    regex = re.compile(regex_pattern)
+    return regex.sub(regex_replacement, input)
+
 def generate_source_file(template, peripheral, template_extension, output_dir):
     """
     Generates a source file for a provided Jinja2 template.
@@ -152,6 +156,7 @@ def gen(input_files, template_files=None, output_dir='./build', debug=False,
         lstrip_blocks=True
     )
     env.filters['camel_to_snake'] = camel_to_snake
+    env.filters['regex_replace'] = regex_replace
     for template_file in template_files:
         generate_files_for_template(
             env,

@@ -59,6 +59,11 @@ Class for {{ info.title }}
 {% if key == 'read' -%}
     self.get_{{logicalStep[key][12:].lower()}}()
 {%- endif %}
+{# Read from a function #}
+{# {{key}} {{logicalStep[key]}} #}
+{% if key == 'function' -%}
+    self.{{logicalStep[key].lower() | regex_replace('#/functions/(?P<function>.+)/(?P<compute>.+)', '\\g<function>_\\g<compute>')}}()
+{%- endif %}
 {# Perform a recursive summation from an array of logical steps #}
 {% if key == 'sum' -%}
     ({%- for step in logicalStep[key] -%}
