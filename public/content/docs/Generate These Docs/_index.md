@@ -11,6 +11,8 @@ engine.
 
 I recommend following the [Docsy Getting Started guide](https://www.docsy.dev/docs/getting-started/) to know how to get started.
 
+Make sure the theme is setup with `git submodule update --init --recursive`
+
 Run `cd public && hugo serve` to serve at http://localhost:1313.
 
 Run `hugo && firebase deploy` to generate and deploy the site.

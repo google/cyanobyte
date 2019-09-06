@@ -3,6 +3,7 @@ languageCode = "en-us"
 title = "Cyanobyte"
 theme = "docsy"
 enableRobotsTXT = true
+rss_sections = ["blog"]
 
 # Configure how URLs look like per section.
 [permalinks]
