@@ -29,3 +29,20 @@ All submissions, including submissions by project members, require review. We
 use GitHub pull requests for this purpose. Consult
 [GitHub Help](https://help.github.com/articles/about-pull-requests/) for more
 information on using pull requests.
+
+## Contributing new drivers
+We welcome new drivers that may help identify holes in the current specification.
+If you are adding a new driver, please ensure:
+
+1. Your driver works on all available templates in the repository
+1. Your driver passes the the validation tool
+1. There are tests which verify the rendered output
+
+## Contributing new platforms
+We welcome new templates for new languages and platforms, which may help identify
+holes in the current specification. If you are adding a new template, please ensure:
+
+1. The output code for each driver compiles on your platform
+1. Your template works on the hardware you specify for all available drivers in the
+repository
+1. There are tests which verify the rendered output
