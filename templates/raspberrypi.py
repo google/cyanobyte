@@ -108,6 +108,25 @@ Class for {{ info.title }}
     {{- "/" if not loop.last -}}
     {%- endfor -%})
 {%- endif %}
+{# Perform a recursive modulus from an array of logical steps #}
+{% if key == 'modulus' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{step}}
+    {%- endif %}
+    {{ "%" if not loop.last }}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a power operation #}
+{% if key == 'power' -%}
+    math.pow({{logicalStep[key][0]}}, {{logicalStep[key][1]}})
+{%- endif %}
+{# Perform an arc tangent operation #}
+{% if key == 'arc tangent' -%}
+    math.atan({{logicalStep[key]}})
+{%- endif %}
 {# Bitwise ops #}
 {%- if key == 'bitShiftLeft' -%}
     ({{logicalStep.var | camel_to_snake}} << {{logicalStep.bits}})
@@ -118,6 +137,8 @@ Class for {{ info.title }}
 {%- endfor %}
 {%- endmacro %}
 
+import math # Used for math ops only, like math.pow
+import struct # Used only for bit packing, like struct.pack
 import sys
 try:
     import smbus
@@ -311,7 +332,22 @@ class {{ info.title }}:
 {{ logic(compute[computeKey].logic, function[key]) }}
 
         {# Return if applicable #}
-        {% if compute[computeKey].return %}
+        {# Return a tuple #}
+        {% if compute[computeKey].return is iterable and compute[computeKey].return is not string %}
+        return [
+            {% for returnValue in compute[computeKey].return %}
+            {{returnValue}}
+            {{ "," if not loop.last }}
+            {% endfor %}
+        ]
+        {% endif %}
+        {# Return a plain value #}
+        {% if compute[computeKey].return is string %}
+            {# See if we need to massage the data type #}
+            {% if compute[computeKey].output == 'int16' %}
+        # Convert from a unsigned short to a signed short
+        {{compute[computeKey].return}} = struct.unpack("h", struct.pack("H", {{compute[computeKey].return}}))[0]
+            {% endif %}
         return {{compute[computeKey].return}}
         {% endif %}
     {% endfor %}
