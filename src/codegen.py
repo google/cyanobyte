@@ -17,6 +17,7 @@ Command-line tool to generate source files from Jinja templates.
 import os
 import sys
 import click
+import shutil
 from yaml import load
 
 try:
@@ -27,6 +28,7 @@ from jinja2 import Environment, FileSystemLoader
 
 _VERSION = "0.1.0"
 _DEBUG = False
+_CLEAN = False
 
 
 def generate_source_file(template, peripheral, template_extension, output_dir):
@@ -97,6 +99,14 @@ def generate_files_for_template(env, template_file, input_files, output_dir):
             except OSError:
                 print("Could not make output directory", output_dir)
                 sys.exit(1)
+        elif _CLEAN:
+            # Removes any files in the directory
+            for filename in os.listdir(output_dir):
+                path = os.path.join(output_dir, filename)
+                try:
+                    shutil.rmtree(path)
+                except OSError:
+                    os.remove(path)
 
         for peripheral in input_files:
             generate_source_file(
@@ -110,7 +120,8 @@ def generate_files_for_template(env, template_file, input_files, output_dir):
 @click.option("-o", "--output", "output_dir", default="./build",
               show_default=True)
 @click.option("-d", "--debug", "debug", default=False)
-def gen(input_files, template_files=None, output_dir='./build', debug=False):
+@click.option("-c", "--clean", "clean", is_flag=True)
+def gen(input_files, template_files=None, output_dir='./build', debug=False, clean=False):
     """
     Takes command line arguments and generates source files for every
     peripheral to each template file.
@@ -120,10 +131,12 @@ def gen(input_files, template_files=None, output_dir='./build', debug=False):
         template_files: A list of files that are part of the template.
         output_dir: The directory to output the generated files.
         debug: Print debug messages?
+        clean: clear the output directory before output?
     """
     #pylint: disable=global-statement
-    global _DEBUG
+    global _DEBUG, _CLEAN
     _DEBUG = debug
+    _CLEAN = clean
 
     if _DEBUG:
         print("Generating " + str(len(input_files)) + " file(s)")
