@@ -92,6 +92,10 @@ def generate_files_for_template(env, template_file, input_files, output_dir):
         template_object = env.from_string(template_contents.read())
         _, template_extension = os.path.splitext(template_file)
 
+        # Removes any files in the directory if clean flag is set
+        if _CLEAN and os.path.exists(output_dir):
+            shutil.rmtree(output_dir)
+
         # Create output dir
         if not os.path.exists(output_dir):
             try:
@@ -99,14 +103,6 @@ def generate_files_for_template(env, template_file, input_files, output_dir):
             except OSError:
                 print("Could not make output directory", output_dir)
                 sys.exit(1)
-        elif _CLEAN:
-            # Removes any files in the directory
-            for filename in os.listdir(output_dir):
-                path = os.path.join(output_dir, filename)
-                try:
-                    shutil.rmtree(path)
-                except OSError:
-                    os.remove(path)
 
         for peripheral in input_files:
             generate_source_file(
@@ -131,7 +127,7 @@ def gen(input_files, template_files=None, output_dir='./build', debug=False, cle
         template_files: A list of files that are part of the template.
         output_dir: The directory to output the generated files.
         debug: Print debug messages?
-        clean: clear the output directory before output?
+        clean: Clean the output directory before output?
     """
     #pylint: disable=global-statement
     global _DEBUG, _CLEAN
