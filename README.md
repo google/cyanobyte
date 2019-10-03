@@ -18,6 +18,7 @@ s
 * `-i` - A peripheral file. You can provide multiple input files.
 * `-o` - The output directory where files will be generated.
 * `-d` - Debug flag to print out additional information
+* `-c` - Clean the output directory before generating files
 
 ### Clean
 `rm -rf ./build`
