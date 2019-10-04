@@ -24,8 +24,8 @@ try:
 except ImportError:
     print("Fatal error! Make sure to install smbus!")
     sys.exit(1)
-
 from enum import Enum
+
 class DigitalOutValues(Enum):
     """
     Valid values for Digital (binary) output
@@ -61,7 +61,6 @@ class Mcp4725:
         In a 3.3v system, each step is 800 microvolts.
 
         """
-        # VALUE
         val = self.bus.read_i2c_block_data(
             self.DEVICE_ADDRESS,
             self.REGISTER_VOUT
@@ -89,7 +88,6 @@ class Mcp4725:
         be loaded from power-on.
 
         """
-        # VALUE
         val = self.bus.read_i2c_block_data(
             self.DEVICE_ADDRESS,
             self.REGISTER_EEPROM
@@ -109,6 +107,7 @@ class Mcp4725:
             self.REGISTER_EEPROM,
             data
         )
+
 
     def get_digitalout(self):
         """
