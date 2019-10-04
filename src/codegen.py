@@ -92,10 +92,6 @@ def generate_files_for_template(env, template_file, input_files, output_dir):
         template_object = env.from_string(template_contents.read())
         _, template_extension = os.path.splitext(template_file)
 
-        # Removes any files in the directory if clean flag is set
-        if _CLEAN and os.path.exists(output_dir):
-            shutil.rmtree(output_dir)
-
         # Create output dir
         if not os.path.exists(output_dir):
             try:
@@ -131,12 +127,15 @@ def gen(input_files, template_files=None, output_dir='./build', debug=False,
         clean: Clean the output directory before output?
     """
     #pylint: disable=global-statement
-    global _DEBUG, _CLEAN
+    global _DEBUG
     _DEBUG = debug
-    _CLEAN = clean
 
     if _DEBUG:
         print("Generating " + str(len(input_files)) + " file(s)")
+    
+    # Removes any files in the directory if clean flag is set
+    if clean and os.path.exists(output_dir):
+        shutil.rmtree(output_dir)
 
     # Setup Jinja2 environment
     env = Environment(

@@ -61,10 +61,6 @@ class Mcp4725:
         In a 3.3v system, each step is 800 microvolts.
 
         """
-        val = self.bus.read_i2c_block_data(
-            self.DEVICE_ADDRESS,
-            self.REGISTER_VOUT
-        )
         val = _swap_endian(val)
         return val
 
@@ -77,21 +73,12 @@ class Mcp4725:
 
         """
         data = _swap_endian(data)
-        self.bus.write_i2c_block_data(
-            self.DEVICE_ADDRESS,
-            self.REGISTER_VOUT,
-            data
-        )
     def get_eeprom(self):
         """
         If EEPROM is set, the saved voltage output will
         be loaded from power-on.
 
         """
-        val = self.bus.read_i2c_block_data(
-            self.DEVICE_ADDRESS,
-            self.REGISTER_EEPROM
-        )
         val = _swap_endian(val)
         return val
 
@@ -102,11 +89,6 @@ class Mcp4725:
 
         """
         data = _swap_endian(data)
-        self.bus.write_i2c_block_data(
-            self.DEVICE_ADDRESS,
-            self.REGISTER_EEPROM,
-            data
-        )
 
     def get_digitalout(self):
         """

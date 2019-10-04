@@ -22,7 +22,7 @@ info:
   description: Microchip 4725 Digital-to-Analog Converter
   copyright:
     name: Google Inc.
-    date: 2019
+    date: '2019'
   license:
     name: Apache-2.0
   version: 0.1.0

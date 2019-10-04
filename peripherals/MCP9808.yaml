@@ -2,10 +2,14 @@ cyanobyte: 0.1.0
 info:
     title: MCP9808
     description: This is a test description
+    package: com.cyanobyte
     contact:
         name: 'Joe Smith'
         url: 'http://example.com'
         email: 'joe@example.com'
+    copyright:
+        name: Google Inc.
+        date: '2019'
     license:
         name: 'Apache 2.0'
         url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
