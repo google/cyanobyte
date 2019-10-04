@@ -27,6 +27,7 @@ steps:
     - './build'
     - '-i'
     - 'peripherals/Mcp4725.yaml'
+    - '-i'
     - 'peripherals/MCP9808.yaml'
   id: Sample Python codegen
 artifacts:
