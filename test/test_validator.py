@@ -124,5 +124,8 @@ class TestValidatorPeripherals(unittest.TestCase):
     def test_mcp9808(self):
         self.assertIsNone(cyanobyte_valdiate(['peripherals/MCP9808.yaml']))
 
+    def test_tcs3472(self):
+        self.assertIsNone(cyanobyte_valdiate(['peripherals/Tcs3472.yaml']))
+
 if __name__ == '__main__':
     unittest.main()

@@ -61,7 +61,7 @@ class Mcp4725:
         In a 3.3v system, each step is 800 microvolts.
 
         """
-        val = self.bus.read_i2c_block_data(
+        val = self.bus.read_word_data(
             self.DEVICE_ADDRESS,
             self.REGISTER_VOUT
         )
@@ -77,7 +77,7 @@ class Mcp4725:
 
         """
         data = _swap_endian(data)
-        self.bus.write_i2c_block_data(
+        self.bus.write_word_data(
             self.DEVICE_ADDRESS,
             self.REGISTER_VOUT,
             data
@@ -88,7 +88,7 @@ class Mcp4725:
         be loaded from power-on.
 
         """
-        val = self.bus.read_i2c_block_data(
+        val = self.bus.read_word_data(
             self.DEVICE_ADDRESS,
             self.REGISTER_EEPROM
         )
@@ -102,7 +102,7 @@ class Mcp4725:
 
         """
         data = _swap_endian(data)
-        self.bus.write_i2c_block_data(
+        self.bus.write_word_data(
             self.DEVICE_ADDRESS,
             self.REGISTER_EEPROM,
             data

@@ -51,5 +51,10 @@ class TestCodegen(unittest.TestCase):
         self.compareFiles('tmp/com/cyanobyte/MCP9808.md', 'test/sampleData/MCP9808.md')
         self.compareFiles('tmp/com/cyanobyte/MCP9808.py', 'test/sampleData/MCP9808.py')
 
+    def test_TCS3472(self):
+        self.generatePeripheral('Tcs3472')
+        self.compareFiles('tmp/com/cyanobyte/TCS3472.md', 'test/sampleData/TCS3472.md')
+        self.compareFiles('tmp/com/cyanobyte/TCS3472.py', 'test/sampleData/TCS3472.py')
+
 if __name__ == '__main__':
     unittest.main()

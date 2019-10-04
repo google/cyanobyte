@@ -29,6 +29,8 @@ steps:
     - 'peripherals/Mcp4725.yaml'
     - '-i'
     - 'peripherals/MCP9808.yaml'
+    - '-i'
+    - 'peripherals/Tcs3472.yaml'
   id: Sample Python codegen
 artifacts:
   objects:
