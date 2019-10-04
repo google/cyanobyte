@@ -11,18 +11,17 @@ try:
 except ImportError:
     print("Fatal error! Make sure to install smbus!")
     sys.exit(1)
-
 from enum import Enum
+
 class LimitHysteresisValues(Enum):
     """
     Valid values for TUPPER and TLOWER Limit Hysteresis bits
 
     """
-    0C = 0 # 0°C (power-up default)
-    1C5 = 1 # +1.5°C
-    3C = 2 # +3.0°C
-    6C = 3 # +6.0°C
-from enum import Enum
+    TEMP_0C = 0 # 0°C (power-up default)
+    TEMP_1C5 = 1 # +1.5°C
+    TEMP_3C = 2 # +3.0°C
+    TEMP_6C = 3 # +6.0°C
 class ShutdownModeValues(Enum):
     """
     Valid values for Shutdown Mode bit
@@ -46,10 +45,20 @@ class MCP9808:
 
     def get_configuration(self):
         """
-        The MCP9808 has a 16-bit Configuration register (CONFIG) that allows the user to set various functions for a robust temperature monitoring system. Bits 10 through 0 are used to select the temperature alert output hysteresis, device shutdown or Low-Power mode, temperature boundary and critical temperature lock, and temperature Alert output enable/disable. In addition, Alert output condition (output set for TUPPER and TLOWER temperature boundary or TCRIT only), Alert output status and Alert output polarity and mode (Comparator Output or Interrupt Output mode) are user-configurable
+        The MCP9808 has a 16-bit Configuration register (CONFIG) that
+        allows the user to set various functions for a robust temperature
+        monitoring system.
+        Bits 10 through 0 are used to select the temperature alert output
+        hysteresis, device shutdown or Low-Power mode, temperature boundary
+        and critical temperature lock, and temperature Alert output
+        enable/disable.
+        In addition, Alert output condition (output set for TUPPER and
+        TLOWER temperature boundary or TCRIT only), Alert output status
+        and Alert output polarity and mode (Comparator Output or Interrupt
+        Output mode) are user-configurable.
 
         """
-        val = self.bus.read_word_data(
+        val = self.bus.read_i2c_block_data(
             self.DEVICE_ADDRESS,
             self.REGISTER_CONFIGURATION
         )
@@ -57,19 +66,30 @@ class MCP9808:
 
     def set_configuration(self, data):
         """
-        The MCP9808 has a 16-bit Configuration register (CONFIG) that allows the user to set various functions for a robust temperature monitoring system. Bits 10 through 0 are used to select the temperature alert output hysteresis, device shutdown or Low-Power mode, temperature boundary and critical temperature lock, and temperature Alert output enable/disable. In addition, Alert output condition (output set for TUPPER and TLOWER temperature boundary or TCRIT only), Alert output status and Alert output polarity and mode (Comparator Output or Interrupt Output mode) are user-configurable
+        The MCP9808 has a 16-bit Configuration register (CONFIG) that
+        allows the user to set various functions for a robust temperature
+        monitoring system.
+        Bits 10 through 0 are used to select the temperature alert output
+        hysteresis, device shutdown or Low-Power mode, temperature boundary
+        and critical temperature lock, and temperature Alert output
+        enable/disable.
+        In addition, Alert output condition (output set for TUPPER and
+        TLOWER temperature boundary or TCRIT only), Alert output status
+        and Alert output polarity and mode (Comparator Output or Interrupt
+        Output mode) are user-configurable.
 
         """
-        self.bus.write_word_data(
+        self.bus.write_i2c_block_data(
             self.DEVICE_ADDRESS,
             self.REGISTER_CONFIGURATION,
             data
         )
 
+
     def get_limithysteresis(self):
         """
-        This bit can not be altered when either of the Lock bits are set (bit 6 and bit 7).
-        This bit can be programmed in Shutdown mode.
+        This bit can not be altered when either of the Lock bits are set
+        (bit 6 and bit 7). This bit can be programmed in Shutdown mode.
 
         """
         # Read register data
@@ -83,8 +103,11 @@ class MCP9808:
 
     def get_shutdownmode(self):
         """
-        In shutdown, all power-consuming activities are disabled, though all registers can be written to or read.
-        This bit cannot be set to ‘1’ when either of the Lock bits is set (bit 6 and bit 7). However, it can be cleared to ‘0’ for continuous conversion while locked.
+        In shutdown, all power-consuming activities are disabled, though
+        all registers can be written to or read. This bit cannot be set
+        to ‘1’ when either of the Lock bits is set (bit 6 and bit 7).
+        However, it can be cleared to ‘0’ for continuous conversion while
+        locked.
 
         """
         # Read register data
@@ -95,4 +118,3 @@ class MCP9808:
         # Bitshift value
         val = val >> 8
         return val
-

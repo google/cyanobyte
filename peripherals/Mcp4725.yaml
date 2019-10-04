@@ -26,11 +26,13 @@ info:
   license:
     name: Apache-2.0
   version: 0.1.0
+
 i2c:
   addressType: 7-bit
   address: 0x62
   addressMask: 0x60
   endian: little
+
 registers:
   - VOut:
       address: 0x40
@@ -48,6 +50,7 @@ registers:
       description: |
         If EEPROM is set, the saved voltage output will
         be loaded from power-on.
+
 functions:
   - digitalOut:
       title: Digital (binary) output
