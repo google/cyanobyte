@@ -15,6 +15,7 @@
 Command-line tool to generate source files from Jinja templates.
 """
 import os
+import re
 import sys
 import shutil
 import click
@@ -30,6 +31,13 @@ _VERSION = "0.1.0"
 _DEBUG = False
 _CLEAN = False
 
+def camel_to_snake(camel_str):
+    """
+    Converts a camelCaseString into a snake_case_string
+    """
+    regex = re.compile('([A-Z])')
+    result = regex.sub(r'_\g<0>', str(camel_str))
+    return result.lower()
 
 def generate_source_file(template, peripheral, template_extension, output_dir):
     """
@@ -40,7 +48,7 @@ def generate_source_file(template, peripheral, template_extension, output_dir):
         peripheral: A single CyanoByte document to generate.
         template_extension: The file extension of the output.
         output_dir: The directory to output the generated files.
-  """
+    """
     # Open peripheral file
     with open(peripheral, "r") as peripheral_file:
         peripheral_data = load(peripheral_file, Loader=Loader)
@@ -143,6 +151,7 @@ def gen(input_files, template_files=None, output_dir='./build', debug=False,
         trim_blocks=True,
         lstrip_blocks=True
     )
+    env.filters['camel_to_snake'] = camel_to_snake
     for template_file in template_files:
         generate_files_for_template(
             env,

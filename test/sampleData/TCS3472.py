@@ -18,6 +18,10 @@
 Class for TCS3472
 """
 
+
+
+
+
 import sys
 try:
     import smbus
@@ -33,6 +37,7 @@ class InitValues(Enum):
     """
     POWER = 1 # Power
     RGBC = 2 # Color
+
 
 
 class TCS3472:

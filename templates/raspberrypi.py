@@ -1,5 +1,5 @@
 {% import 'macros.jinja2' as utils %}
-{% set template = namespace(enum=false) %}
+{% set template = namespace(enum=false, sign=false) %}
 {{ utils.pad_string('# ', utils.license(info.copyright.name, info.copyright.date, info.license.name)) -}}
 #
 # Auto-generated file for {{ info.title }} v{{ info.version }}.
@@ -7,6 +7,111 @@
 """
 Class for {{ info.title }}
 """
+{% macro params_int(input) -%}
+{% for variable in input %}
+{% for key in variable.keys() -%}
+{% if key != 'value' %}{{key}}, {% endif %}
+{%- endfor %}
+{% endfor %}
+{%- endmacro %}
+
+{% macro params(input) -%}
+{{params_int(input)[:-2]}}
+{%- endmacro %}
+
+{% macro variables(vars) -%}
+{% for var in vars %}
+{% for key in var.keys() %}
+{# Technically in Python we don't need to declare vars ahead of time. #}
+{# But we'll do so anyway to verify this works. #}
+        {{key | camel_to_snake}} = None # Variable declaration
+{% endfor %}
+{% endfor %}
+{%- endmacro %}
+
+{% macro logic(logicalSteps, function) -%}
+
+{% for step in logicalSteps %}
+{% for key in step.keys() %}
+{# Check if assignment op #}
+{% if step[key][0:1] == "=" %}
+        {{key | camel_to_snake}} {{step[key]}}
+{% endif %}
+
+{# Check if assignment is a send-op #}
+{% if key == 'send' %}
+        self.set_{{function.register[12:].lower()}}({{step[key]}})
+{% endif %}
+
+{# If the value is a list, then this is a logical setter #}
+{% if step[key] is iterable and step[key] is not string %}
+        {{key | camel_to_snake}} = {{recursiveAssignLogic(step[key][0], step[key][0].keys()) -}}
+{% endif %}
+
+{% endfor %}
+{% endfor %}
+{%- endmacro %}
+
+{% macro recursiveAssignLogic(logicalStep, keys) -%}
+{% for key in keys -%}
+{# Read from a register #}
+{# {{key}} {{logicalStep[key]}} #}
+{% if key == 'read' -%}
+    self.get_{{logicalStep[key][12:].lower()}}()
+{%- endif %}
+{# Perform a recursive summation from an array of logical steps #}
+{% if key == 'sum' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{step | camel_to_snake}}
+    {%- endif %}
+    {{- "+" if not loop.last -}}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a recursive difference from an array of logical steps #}
+{% if key == 'difference' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{step | camel_to_snake}}
+    {%- endif %}
+    {{- "-" if not loop.last -}}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a recursive product from an array of logical steps #}
+{% if key == 'product' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{step | camel_to_snake}}
+    {%- endif %}
+    {{- "*" if not loop.last -}}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a recursive division from an array of logical steps #}
+{% if key == 'division' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{ step | camel_to_snake }}
+    {%- endif %}
+    {{- "/" if not loop.last -}}
+    {%- endfor -%})
+{%- endif %}
+{# Bitwise ops #}
+{%- if key == 'bitShiftLeft' -%}
+    ({{logicalStep.var | camel_to_snake}} << {{logicalStep.bits}})
+{%- endif %}
+{%- if key == 'bitShiftRight' -%}
+    ({{logicalStep.var | camel_to_snake}} >> {{logicalStep.bits}})
+{%- endif %}
+{%- endfor %}
+{%- endmacro %}
 
 import sys
 try:
@@ -53,6 +158,25 @@ def _swap_endian(val):
     return val >> 8 | val << 8
 {% endif %}
 
+{# Add signing function if needed #}
+{% for register in registers %}
+{% for key in register.keys() %}
+{% if register[key].signed %}
+{# Optionally import class #}
+{% if template.sign is sameas false %}
+def _sign(val, length):
+    """
+    Convert unsigned integer to signed integer
+    """
+    if val & (1 << (length - 1)):
+        return val - (1 << length)
+    return val
+{% set template.sign = true %}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endfor %}
+
 class {{ info.title }}:
     """
 {{utils.pad_string("    ", info.description)}}
@@ -68,7 +192,7 @@ class {{ info.title }}:
         # Initialize connection to peripheral
         self.bus = smbus.SMBus(1)
 
-    {% for register in registers %}
+    {% for register in registers -%}
     {% for key in register.keys() %}
     def get_{{key.lower()}}(self):
         """
@@ -87,6 +211,10 @@ class {{ info.title }}:
         {% endif %}
         {% if i2c.endian == 'little' %}
         val = _swap_endian(val)
+        {% endif %}
+        {% if register[key].signed %}
+        # Unsigned > Signed integer
+        val = _sign(val, {{register[key].length}})
         {% endif %}
         return val
 
@@ -111,7 +239,7 @@ class {{ info.title }}:
         )
         {% endif %}
     {% endfor %}
-    {% endfor %}
+    {%- endfor %}
 
     {% for function in functions %}
     {% for key in function.keys() %}
@@ -150,6 +278,39 @@ class {{ info.title }}:
         register_data = self.get_{{function[key].register[12:].lower()}}()
         register_data = register_data | data
         self.set_{{function[key].register[12:].lower()}}(register_data)
+    {% endif %}
+    {% if function[key].computed %}
+    {% for compute in function[key].computed %}
+    {% for computeKey in compute.keys() %}
+    {% if compute[computeKey].input %}
+    def {{key.lower()}}_{{computeKey.lower()}}(self, {{params(compute[computeKey].input)}}):
+    {% else %}
+    def {{key.lower()}}_{{computeKey.lower()}}(self):
+    {% endif %}
+        """
+{{utils.pad_string("        ", function[key].description)}}
+        """
+        {# Declare our variables #}
+{{ variables(compute[computeKey].variables) }}
+
+        {# Read `value` if applicable #}
+        {%- for variable in compute[computeKey].input %}
+        {% for varKey in variable.keys() %}
+        {% if varKey == 'value' %}
+        # Read value of register into a variable
+        value = self.get_{{function[key].register[12:].lower()}}()
+        {% endif %}
+        {% endfor %}
+        {% endfor -%}
+        {# Handle the logic #}
+{{ logic(compute[computeKey].logic, function[key]) }}
+
+        {# Return if applicable #}
+        {% if compute[computeKey].return %}
+        return {{compute[computeKey].return}}
+        {% endif %}
+    {% endfor %}
+    {% endfor %}
     {% endif %}
     {% endfor %}
     {% endfor %}

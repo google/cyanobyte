@@ -18,6 +18,10 @@
 Class for Mcp4725
 """
 
+
+
+
+
 import sys
 try:
     import smbus
@@ -39,6 +43,7 @@ def _swap_endian(val):
     Swap the endianness of a short only
     """
     return val >> 8 | val << 8
+
 
 class Mcp4725:
     """
@@ -131,3 +136,60 @@ class Mcp4725:
         register_data = self.get_eeprom()
         register_data = register_data | data
         self.set_eeprom(register_data)
+
+    def set_setvout(self, data):
+        """
+        set vout
+
+        """
+        # Read current register data
+        # '#/registers/EEPROM' > 'EEPROM'
+        register_data = self.get_eeprom()
+        register_data = register_data | data
+        self.set_eeprom(register_data)
+    def setvout_asvoltage(self, vcc, output):
+        """
+        set vout
+
+        """
+
+
+        output = output / vcc * 4096
+
+
+
+
+        self.set_eeprom(output)
+
+
+
+
+
+    def get_getvout(self):
+        """
+        get vout
+
+        """
+        # Read register data
+        # '#/registers/EEPROM' > 'EEPROM'
+        val = self.get_eeprom()
+        # Mask register value
+        val = val & 0b0000111111111111
+        return val
+    def getvout_asvoltage(self, vcc):
+        """
+        get vout
+
+        """
+        voltage = None # Variable declaration
+
+
+        # Read value of register into a variable
+        value = self.get_eeprom()
+        voltage = value / 4096 * vcc
+
+
+
+
+
+        return voltage
