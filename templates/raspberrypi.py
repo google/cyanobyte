@@ -1,5 +1,5 @@
 {% import 'macros.jinja2' as utils %}
-{% set template = namespace(enum=false) %}
+{% set template = namespace(enum=false, sign=false) %}
 {{ utils.pad_string('# ', utils.license(info.copyright.name, info.copyright.date, info.license.name)) -}}
 #
 # Auto-generated file for {{ info.title }} v{{ info.version }}.
@@ -7,35 +7,35 @@
 """
 Class for {{ info.title }}
 """
-{% macro params_int(input) %}
+{% macro params_int(input) -%}
 {% for variable in input %}
 {% for key in variable.keys() -%}
 {% if key != 'value' %}{{key}}, {% endif %}
 {%- endfor %}
 {% endfor %}
-{% endmacro %}
+{%- endmacro %}
 
 {% macro params(input) -%}
 {{params_int(input)[:-2]}}
 {%- endmacro %}
 
-{% macro variables(vars) %}
+{% macro variables(vars) -%}
 {% for var in vars %}
 {% for key in var.keys() %}
 {# Technically in Python we don't need to declare vars ahead of time. #}
 {# But we'll do so anyway to verify this works. #}
-        {{key}} = None # Variable declaration
+        {{key | camel_to_snake}} = None # Variable declaration
 {% endfor %}
 {% endfor %}
-{% endmacro %}
+{%- endmacro %}
 
-{% macro logic(logicalSteps, function) %}
+{% macro logic(logicalSteps, function) -%}
 
 {% for step in logicalSteps %}
 {% for key in step.keys() %}
 {# Check if assignment op #}
 {% if step[key][0:1] == "=" %}
-        {{key}} {{step[key]}}
+        {{key | camel_to_snake}} {{step[key]}}
 {% endif %}
 
 {# Check if assignment is a send-op #}
@@ -44,13 +44,13 @@ Class for {{ info.title }}
 {% endif %}
 
 {# If the value is a list, then this is a logical setter #}
-{% if step[key] is iterable %}
-        {{key}} = {{recursiveAssignLogic(step[key][0], step[key][0].keys()) -}}
+{% if step[key] is iterable and step[key] is not string %}
+        {{key | camel_to_snake}} = {{recursiveAssignLogic(step[key][0], step[key][0].keys()) -}}
 {% endif %}
 
 {% endfor %}
 {% endfor %}
-{% endmacro %}
+{%- endmacro %}
 
 {% macro recursiveAssignLogic(logicalStep, keys) -%}
 {% for key in keys -%}
@@ -65,9 +65,9 @@ Class for {{ info.title }}
     {% if step is iterable and step is not string -%}
     {{ recursiveAssignLogic(step, step.keys()) -}}
     {%- else -%}
-    {{step}}
+    {{step | camel_to_snake}}
     {%- endif %}
-    {{ "+" if not loop.last }}
+    {{- "+" if not loop.last -}}
     {%- endfor -%})
 {%- endif %}
 {# Perform a recursive difference from an array of logical steps #}
@@ -76,9 +76,9 @@ Class for {{ info.title }}
     {% if step is iterable and step is not string -%}
     {{ recursiveAssignLogic(step, step.keys()) -}}
     {%- else -%}
-    {{step}}
+    {{step | camel_to_snake}}
     {%- endif %}
-    {{ "-" if not loop.last }}
+    {{- "-" if not loop.last -}}
     {%- endfor -%})
 {%- endif %}
 {# Perform a recursive product from an array of logical steps #}
@@ -87,9 +87,9 @@ Class for {{ info.title }}
     {% if step is iterable and step is not string -%}
     {{ recursiveAssignLogic(step, step.keys()) -}}
     {%- else -%}
-    {{step}}
+    {{step | camel_to_snake}}
     {%- endif %}
-    {{ "*" if not loop.last }}
+    {{- "*" if not loop.last -}}
     {%- endfor -%})
 {%- endif %}
 {# Perform a recursive division from an array of logical steps #}
@@ -98,17 +98,17 @@ Class for {{ info.title }}
     {% if step is iterable and step is not string -%}
     {{ recursiveAssignLogic(step, step.keys()) -}}
     {%- else -%}
-    {{step}}
+    {{ step | camel_to_snake }}
     {%- endif %}
-    {{ "/" if not loop.last }}
+    {{- "/" if not loop.last -}}
     {%- endfor -%})
 {%- endif %}
 {# Bitwise ops #}
 {%- if key == 'bitShiftLeft' -%}
-    ({{logicalStep.var}} << {{logicalStep.bits}})
+    ({{logicalStep.var | camel_to_snake}} << {{logicalStep.bits}})
 {%- endif %}
 {%- if key == 'bitShiftRight' -%}
-    ({{logicalStep.var}} >> {{logicalStep.bits}})
+    ({{logicalStep.var | camel_to_snake}} >> {{logicalStep.bits}})
 {%- endif %}
 {%- endfor %}
 {%- endmacro %}
@@ -158,6 +158,12 @@ def _swap_endian(val):
     return val >> 8 | val << 8
 {% endif %}
 
+{# Add signing function if needed #}
+{% for register in registers %}
+{% for key in register.keys() %}
+{% if register[key].signed %}
+{# Optionally import class #}
+{% if template.sign is sameas false %}
 def _sign(val, length):
     """
     Convert unsigned integer to signed integer
@@ -165,6 +171,11 @@ def _sign(val, length):
     if val & (1 << (length - 1)):
         return val - (1 << length)
     return val
+{% set template.sign = true %}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endfor %}
 
 class {{ info.title }}:
     """
@@ -181,7 +192,7 @@ class {{ info.title }}:
         # Initialize connection to peripheral
         self.bus = smbus.SMBus(1)
 
-    {% for register in registers %}
+    {% for register in registers -%}
     {% for key in register.keys() %}
     def get_{{key.lower()}}(self):
         """
@@ -228,7 +239,7 @@ class {{ info.title }}:
         )
         {% endif %}
     {% endfor %}
-    {% endfor %}
+    {%- endfor %}
 
     {% for function in functions %}
     {% for key in function.keys() %}
@@ -268,7 +279,6 @@ class {{ info.title }}:
         register_data = register_data | data
         self.set_{{function[key].register[12:].lower()}}(register_data)
     {% endif %}
-
     {% if function[key].computed %}
     {% for compute in function[key].computed %}
     {% for computeKey in compute.keys() %}

@@ -5,6 +5,10 @@
 Class for MCP9808
 """
 
+
+
+
+
 import sys
 try:
     import smbus
@@ -29,6 +33,7 @@ class ShutdownModeValues(Enum):
     """
     CONTINOUSCONVERSION = 0 # Continuous conversion (power-up default)
     SHUTDOWN = 1 # Shutdown (Low-Power mode)
+
 
 
 class MCP9808:

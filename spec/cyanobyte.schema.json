@@ -244,11 +244,7 @@
             "required": [
               "title",
               "description",
-              "register",
-              "readWrite",
-              "bitStart",
-              "bitEnd",
-              "type"
+              "readWrite"
             ]
           }
         }

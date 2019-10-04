@@ -23,7 +23,7 @@ info:
   description: Bosch Digital Pressure Sensor
   copyright:
     name: Google Inc.
-    date: 2019
+    date: '2019'
   license:
     name: Apache-2.0
   version: 0.1.0
@@ -107,6 +107,7 @@ functions:
               - rawTemp: int16
               - rawComp1: int16
               - rawComp2: int16
+              - rawComp3: int16
               - celsius: float32
             logic:
               - valueMsb:
@@ -142,22 +143,18 @@ functions:
                       - valueDT1
                       - 1024.0
                   - valueDT2
+              - rawComp3:
+                - difference:
+                  - division:
+                    - rawTemp
+                    - 131072.0
+                  - division:
+                    - valueDT1
+                    - 8192.0
               - rawComp2:
                 - product:
-                  - difference:
-                    - division:
-                      - rawTemp
-                      - 131072.0
-                    - division:
-                      - valueDT1
-                      - 8192.0
-                  - difference:
-                    - division:
-                      - rawTemp
-                      - 131072.0
-                    - division:
-                      - valueDT1
-                      - 8192.0
+                  - rawComp3
+                  - rawComp3
                   - valueDT3
               - celsius:
                 - division:

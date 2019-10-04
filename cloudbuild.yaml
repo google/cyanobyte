@@ -26,6 +26,8 @@ steps:
     - '-o'
     - './build'
     - '-i'
+    - 'peripherals/Bmp280.yaml'
+    - '-i'
     - 'peripherals/Mcp4725.yaml'
     - '-i'
     - 'peripherals/MCP9808.yaml'
