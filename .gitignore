@@ -1,3 +1,4 @@
 # Build files
 /build/
 __pycache__/
+*.pyc
