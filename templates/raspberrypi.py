@@ -59,9 +59,9 @@ class {{ info.title }}:
     def __init__(self):
         # Initialize connection to peripheral
         self.bus = smbus.SMBus(1)
-
     {% for register in registers %}
     {% for key in register.keys() %}
+
     def get_{{key.lower()}}(self):
         """
 {{utils.pad_string("        ", register[key].description)}}
