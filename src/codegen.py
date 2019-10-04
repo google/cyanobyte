@@ -16,8 +16,8 @@ Command-line tool to generate source files from Jinja templates.
 """
 import os
 import sys
-import click
 import shutil
+import click
 from yaml import load
 
 try:
@@ -117,7 +117,8 @@ def generate_files_for_template(env, template_file, input_files, output_dir):
               show_default=True)
 @click.option("-d", "--debug", "debug", default=False)
 @click.option("-c", "--clean", "clean", is_flag=True)
-def gen(input_files, template_files=None, output_dir='./build', debug=False, clean=False):
+def gen(input_files, template_files=None, output_dir='./build', debug=False,
+        clean=False):
     """
     Takes command line arguments and generates source files for every
     peripheral to each template file.
