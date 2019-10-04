@@ -74,13 +74,12 @@ class {{ info.title }}:
         """
 {{utils.pad_string("        ", register[key].description)}}
         """
-        {% if register[key].length == 8 %}
+        {% if register[key].length <= 8 %}
         val = self.bus.read_byte_data(
             self.DEVICE_ADDRESS,
             self.REGISTER_{{key.upper()}}
         )
-        {% endif %}
-        {% if register[key].length == 16 %}
+        {% elif register[key].length <= 16 %}
         val = self.bus.read_word_data(
             self.DEVICE_ADDRESS,
             self.REGISTER_{{key.upper()}}
@@ -98,14 +97,13 @@ class {{ info.title }}:
         {% if i2c.endian == 'little' %}
         data = _swap_endian(data)
         {% endif %}
-        {% if register[key].length == 8 %}
+        {% if register[key].length <= 8 %}
         self.bus.write_byte_data(
             self.DEVICE_ADDRESS,
             self.REGISTER_{{key.upper()}},
             data
         )
-        {% endif %}
-        {% if register[key].length == 16 %}
+        {% elif register[key].length <= 16 %}
         self.bus.write_word_data(
             self.DEVICE_ADDRESS,
             self.REGISTER_{{key.upper()}},

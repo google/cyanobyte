@@ -42,18 +42,18 @@ registers:
       address: 0xB6
       length: 16
       title: Red channel
-      description: This is the red light as an int. Divide by ambient light to get scaled number.
+      description: Red light as an int. Divide by ambient light to get scaled number.
       # Implementation note: float(light.get_red()) / light.get_clear() * 255 -> Red color value
   - green:
       address: 0xB8
       length: 16
       title: Green channel
-      description: This is the green light as an int. Divide by ambient light to get scaled number.
+      description: Green light as an int. Divide by ambient light to get scaled number.
   - blue:
       address: 0xBA
       length: 16
       title: Blue channel
-      description: This is the blue light as an int. Divide by ambient light to get scaled number.
+      description: Blue light as an int. Divide by ambient light to get scaled number.
 
 functions:
   - init:

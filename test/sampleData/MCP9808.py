@@ -58,7 +58,7 @@ class MCP9808:
         Output mode) are user-configurable.
 
         """
-        val = self.bus.read_i2c_block_data(
+        val = self.bus.read_word_data(
             self.DEVICE_ADDRESS,
             self.REGISTER_CONFIGURATION
         )
@@ -79,7 +79,7 @@ class MCP9808:
         Output mode) are user-configurable.
 
         """
-        self.bus.write_i2c_block_data(
+        self.bus.write_word_data(
             self.DEVICE_ADDRESS,
             self.REGISTER_CONFIGURATION,
             data
