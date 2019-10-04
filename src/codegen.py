@@ -132,7 +132,7 @@ def gen(input_files, template_files=None, output_dir='./build', debug=False,
 
     if _DEBUG:
         print("Generating " + str(len(input_files)) + " file(s)")
-    
+
     # Removes any files in the directory if clean flag is set
     if clean and os.path.exists(output_dir):
         shutil.rmtree(output_dir)
