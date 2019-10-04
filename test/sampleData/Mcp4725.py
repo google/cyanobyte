@@ -24,8 +24,8 @@ try:
 except ImportError:
     print("Fatal error! Make sure to install smbus!")
     sys.exit(1)
-
 from enum import Enum
+
 class DigitalOutValues(Enum):
     """
     Valid values for Digital (binary) output
@@ -107,6 +107,7 @@ class Mcp4725:
             self.REGISTER_EEPROM,
             data
         )
+
 
     def get_digitalout(self):
         """

@@ -1,4 +1,5 @@
 {% import 'macros.jinja2' as utils %}
+{% set template = namespace(enum=false) %}
 {{ utils.pad_string('# ', utils.license(info.copyright.name, info.copyright.date, info.license.name)) -}}
 #
 # Auto-generated file for {{ info.title }} v{{ info.version }}.
@@ -13,16 +14,23 @@ try:
 except ImportError:
     print("Fatal error! Make sure to install smbus!")
     sys.exit(1)
-
-{# Create enums as for functions #}
+{# Create enums for functions #}
 {% for function in functions %}
 {% for key in function.keys() %}
 {% if function[key].enum %}
 {# Optionally import class #}
-{% if importedEnum != True %}
+{% if template.enum is sameas false %}
 from enum import Enum
-{% set importedEnum = True %}
+{% set template.enum = true %}
 {% endif %}
+{% endif %}
+{% endfor %}
+{% endfor %}
+
+{# Create enums for functions #}
+{% for function in functions %}
+{% for key in function.keys() %}
+{% if function[key].enum %}
 {# Create enum class #}
 class {{key[0].upper()}}{{key[1:]}}Values(Enum):
     """
@@ -94,6 +102,7 @@ class {{ info.title }}:
     {% for key in function.keys() %}
     {% if 'R' is in(function[key].readWrite) %}
     {# Getter #}
+
     def get_{{key.lower()}}(self):
         """
 {{utils.pad_string("        ", function[key].description)}}
@@ -108,10 +117,11 @@ class {{ info.title }}:
         val = val >> {{function[key].bitEnd}}
         {% endif %}
         return val
-    {% endif %}
+    {% endif -%}
 
-    {% if 'W' is in(function[key].readWrite) %}
+    {%- if 'W' is in(function[key].readWrite) %}
     {# Setter #}
+
     def set_{{key.lower()}}(self, data):
         """
 {{utils.pad_string("        ", function[key].description)}}

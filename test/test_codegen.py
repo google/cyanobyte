@@ -18,6 +18,14 @@ import unittest
 import os
 
 class TestCodegen(unittest.TestCase):
+    def generatePeripheral(self, peripheral):
+        os.system('python3 src/codegen.py \
+            -c \
+            -o ./tmp/ \
+            -t templates/doc.md \
+            -t templates/raspberrypi.py \
+            -i peripherals/' + peripheral + '.yaml > /dev/null')
+
     def compareFiles(self, filePath1, filePath2):
         print('Comparing', filePath1, 'and', filePath2)
         with open(filePath1) as file1:
@@ -31,18 +39,17 @@ class TestCodegen(unittest.TestCase):
                 )
 
     def tearDown(self):
-        # Clear out existing files
-        os.system('rm -rf ./tmp/')
         print('\n')
 
     def test_Mcp4725(self):
-        os.system('python3 src/codegen.py \
-            -o ./tmp \
-            -t templates/doc.md \
-            -t templates/raspberrypi.py \
-            -i peripherals/Mcp4725.yaml > /dev/null')
+        self.generatePeripheral('Mcp4725')
         self.compareFiles('tmp/com/cyanobyte/Mcp4725.md', 'test/sampleData/Mcp4725.md')
         self.compareFiles('tmp/com/cyanobyte/Mcp4725.py', 'test/sampleData/Mcp4725.py')
+
+    def test_MCP9808(self):
+        self.generatePeripheral('MCP9808')
+        self.compareFiles('tmp/com/cyanobyte/MCP9808.md', 'test/sampleData/MCP9808.md')
+        self.compareFiles('tmp/com/cyanobyte/MCP9808.py', 'test/sampleData/MCP9808.py')
 
 if __name__ == '__main__':
     unittest.main()
