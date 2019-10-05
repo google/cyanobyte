@@ -59,6 +59,11 @@ def generate_source_file(template, peripheral, template_extension, output_dir):
         if _DEBUG:
             print(peripheral_data)
 
+        output_file_name = peripheral_data["info"]["title"]
+
+        # Naming convention: upper case
+        peripheral_data["info"]["title"] = peripheral_data["info"]["title"].upper()
+
         # Render file
         peripheral_gen = template.render(peripheral_data)
         # Get file path
@@ -79,7 +84,7 @@ def generate_source_file(template, peripheral, template_extension, output_dir):
 
         peripheral_output_path = os.path.join(
             output_file_path,
-            peripheral_data["info"]["title"] + template_extension
+            output_file_name + template_extension
         )
         with open(peripheral_output_path, "x") as peripheral_output_file:
             peripheral_output_file.write(peripheral_gen)
