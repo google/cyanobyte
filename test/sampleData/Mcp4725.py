@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Auto-generated file for Mcp4725 v0.1.0.
+# Auto-generated file for MCP4725 v0.1.0.
 # Generated from peripherals/Mcp4725.yaml using Cyanobyte Codegen v0.1.0
 """
-Class for Mcp4725
+Class for MCP4725
 """
 
 
@@ -45,7 +45,7 @@ def _swap_endian(val):
     return val >> 8 | val << 8
 
 
-class Mcp4725:
+class MCP4725:
     """
     Microchip 4725 Digital-to-Analog Converter
 
