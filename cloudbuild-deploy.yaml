@@ -1,4 +1,8 @@
 steps:
+- name: grc.io/cloud-builders/git
+  entrypoint: bash
+  args: ['-c', 'git submodule update --init --recursive']
+  id: Bash it
 - name: gcr.io/cloud-builders/git
   entrypoint: bash
   args: ['-c', 'ls -R']
