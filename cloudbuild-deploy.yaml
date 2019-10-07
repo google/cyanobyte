@@ -1,15 +1,18 @@
 steps:
   # See https://github.com/GoogleCloudPlatform/cloud-builders/issues/26
-- name: 'gcr.io/cloud-builders/git'
-  entrypoint: 'bash'
-  args:
-    - '-c'
-    - |
-      git config -f .git/config submodule.google_cyanobyte.url https://source.developers.google.com/p/cyanobyte-235018/r/github_google_cyanobyte &&
-      git config -f .gitmodules submodule.google_cyanobyte.url https://source.developers.google.com/p/cyanobyte-235018/r/github_google_cyanobyte &&
-      git submodule init &&
-      git submodule update
-  id: Bash it
+# - name: 'gcr.io/cloud-builders/git'
+#   entrypoint: 'bash'
+#   args:
+#     - '-c'
+#     - |
+#       git config -f .git/config submodule.google_cyanobyte.url https://source.developers.google.com/p/cyanobyte-235018/r/github_google_cyanobyte &&
+#       git config -f .gitmodules submodule.google_cyanobyte.url https://source.developers.google.com/p/cyanobyte-235018/r/github_google_cyanobyte &&
+#       git submodule init &&
+#       git submodule update
+#   id: Bash it
+- name: gcr.io/cloud-builders/git
+  entrypoint: bash
+  args: ['-c', 'git clone --recurse-submodules --depth 1 https://github.com/google/docsy.git docs/themes']
 - name: gcr.io/cloud-builders/git
   entrypoint: bash
   args: ['-c', 'ls -R']
