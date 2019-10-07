@@ -12,6 +12,7 @@ steps:
 #   id: Bash it
 - name: gcr.io/cloud-builders/git
   entrypoint: bash
+  id: Manually install Docsy
   args: ['-c', 'git clone --recurse-submodules --depth 1 https://github.com/google/docsy.git docs/themes']
 - name: gcr.io/cloud-builders/git
   entrypoint: bash
