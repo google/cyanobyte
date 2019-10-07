@@ -119,16 +119,16 @@ class TestValidatorI2c(unittest.TestCase):
 
 class TestValidatorPeripherals(unittest.TestCase):
     def test_bmp280(self):
-        self.assertIsNone(cyanobyte_valdiate(['peripherals/Bmp280.yaml']))
+        self.assertIsNone(cyanobyte_valdiate(['peripherals/BMP280.yaml']))
 
     def test_mcp4725(self):
-        self.assertIsNone(cyanobyte_valdiate(['peripherals/Mcp4725.yaml']))
+        self.assertIsNone(cyanobyte_valdiate(['peripherals/MCP4725.yaml']))
 
     def test_mcp9808(self):
         self.assertIsNone(cyanobyte_valdiate(['peripherals/MCP9808.yaml']))
 
     def test_tcs3472(self):
-        self.assertIsNone(cyanobyte_valdiate(['peripherals/Tcs3472.yaml']))
+        self.assertIsNone(cyanobyte_valdiate(['peripherals/TCS3472.yaml']))
 
 if __name__ == '__main__':
     unittest.main()
