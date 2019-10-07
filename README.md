@@ -11,7 +11,7 @@ s
 `pip install -r requirements.txt --user`
 
 ## Run Codegen
-`python3 src/codegen.py -t templates/doc.md -o ./build -i peripherals/Mcp4725.yaml`
+`python3 src/codegen.py -t templates/doc.md -o ./build -i peripherals/MCP4725.yaml`
 
 ### Args
 * `-t` - A template file. You can provide multiple template files.
