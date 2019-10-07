@@ -26,13 +26,13 @@ steps:
     - '-o'
     - './build'
     - '-i'
-    - 'peripherals/Bmp280.yaml'
+    - 'peripherals/BMP280.yaml'
     - '-i'
-    - 'peripherals/Mcp4725.yaml'
+    - 'peripherals/MCP4725.yaml'
     - '-i'
     - 'peripherals/MCP9808.yaml'
     - '-i'
-    - 'peripherals/Tcs3472.yaml'
+    - 'peripherals/TCS3472.yaml'
   id: Sample Python codegen
 artifacts:
   objects:

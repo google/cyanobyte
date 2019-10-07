@@ -41,15 +41,15 @@ class TestCodegen(unittest.TestCase):
     def tearDown(self):
         print('\n')
 
-    def test_Bmp280(self):
-        self.generatePeripheral('Bmp280')
-        self.compareFiles('tmp/com/cyanobyte/Bmp280.md', 'test/sampleData/Bmp280.md')
-        self.compareFiles('tmp/com/cyanobyte/Bmp280.py', 'test/sampleData/Bmp280.py')
+    def test_BMP280(self):
+        self.generatePeripheral('BMP280')
+        self.compareFiles('tmp/com/cyanobyte/BMP280.md', 'test/sampleData/BMP280.md')
+        self.compareFiles('tmp/com/cyanobyte/BMP280.py', 'test/sampleData/BMP280.py')
 
-    def test_Mcp4725(self):
-        self.generatePeripheral('Mcp4725')
-        self.compareFiles('tmp/com/cyanobyte/Mcp4725.md', 'test/sampleData/Mcp4725.md')
-        self.compareFiles('tmp/com/cyanobyte/Mcp4725.py', 'test/sampleData/Mcp4725.py')
+    def test_MCP4725(self):
+        self.generatePeripheral('MCP4725')
+        self.compareFiles('tmp/com/cyanobyte/MCP4725.md', 'test/sampleData/MCP4725.md')
+        self.compareFiles('tmp/com/cyanobyte/MCP4725.py', 'test/sampleData/MCP4725.py')
 
     def test_MCP9808(self):
         self.generatePeripheral('MCP9808')
@@ -57,7 +57,7 @@ class TestCodegen(unittest.TestCase):
         self.compareFiles('tmp/com/cyanobyte/MCP9808.py', 'test/sampleData/MCP9808.py')
 
     def test_TCS3472(self):
-        self.generatePeripheral('Tcs3472')
+        self.generatePeripheral('TCS3472')
         self.compareFiles('tmp/com/cyanobyte/TCS3472.md', 'test/sampleData/TCS3472.md')
         self.compareFiles('tmp/com/cyanobyte/TCS3472.py', 'test/sampleData/TCS3472.py')
 

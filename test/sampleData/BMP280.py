@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Auto-generated file for Bmp280 v0.1.0.
-# Generated from peripherals/Bmp280.yaml using Cyanobyte Codegen v0.1.0
+# Auto-generated file for BMP280 v0.1.0.
+# Generated from peripherals/BMP280.yaml using Cyanobyte Codegen v0.1.0
 """
-Class for Bmp280
+Class for BMP280
 """
 
 
@@ -39,7 +39,7 @@ def _sign(val, length):
         return val - (1 << length)
     return val
 
-class Bmp280:
+class BMP280:
     """
     Bosch Digital Pressure Sensor
 

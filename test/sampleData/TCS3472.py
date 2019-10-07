@@ -13,7 +13,7 @@
 # limitations under the License.
 #
 # Auto-generated file for TCS3472 v0.1.0.
-# Generated from peripherals/Tcs3472.yaml using Cyanobyte Codegen v0.1.0
+# Generated from peripherals/TCS3472.yaml using Cyanobyte Codegen v0.1.0
 """
 Class for TCS3472
 """

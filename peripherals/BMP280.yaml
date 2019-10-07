@@ -19,7 +19,7 @@ info:
     url: https://github.com/google/cyanobyte
     email: felker@google.com
   package: com.cyanobyte
-  title: Bmp280
+  title: BMP280
   description: Bosch Digital Pressure Sensor
   copyright:
     name: Google Inc.
