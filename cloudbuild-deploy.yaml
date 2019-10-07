@@ -1,7 +1,7 @@
 steps:
 - name: gcr.io/cloud-builders/git
   entrypoint: bash
-  args: ['ls']
+  args: ['-c', 'ls -R']
   id: Setup Docsy theme
   # Setup https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/hugo
 - name: gcr.io/$PROJECT_ID/hugo
