@@ -1,6 +1,7 @@
 steps:
 - name: gcr.io/cloud-builders/git
-  args: ['submodule', 'update', '--init', '--recursive']
+  entrypoint: bash
+  args: ['-c', 'git submodule update --init --recursive']
   id: Setup Docsy theme
   # Setup https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/hugo
 - name: gcr.io/$PROJECT_ID/hugo
