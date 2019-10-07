@@ -1,0 +1,14 @@
+steps:
+- name: gcr.io/cloud-builders/git
+  args: ['submodule', 'update', '--init', '--recursive']
+  id: Setup Docsy theme
+  # Setup https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/hugo
+- name: gcr.io/$PROJECT_ID/hugo
+  dir: docs
+  args: []
+  id: Generate HTML
+  # Setup https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/firebase
+- name: gcr.io/$PROJECT_ID/firebase
+  args: ['deploy']
+  dir: docs
+  id: Deploy to Firebase

@@ -1,0 +1,18 @@
+baseURL = "https://cyanobyte.dev"
+languageCode = "en-us"
+title = "Cyanobyte"
+theme = "docsy"
+enableRobotsTXT = true
+rss_sections = ["blog"]
+
+# Configure how URLs look like per section.
+[permalinks]
+blog = "/:section/:year/:month/:day/:slug/"
+
+[params.links]
+# Developer relevant links. These will show up on right side of footer and in the community page if you have one.
+[[params.links.developer]]
+	name = "GitHub"
+	url = "https://github.com/google/docsy"
+	icon = "fab fa-github"
+        desc = "Development takes place here!" 
