@@ -13,7 +13,7 @@
 # limitations under the License.
 #
 # Auto-generated file for BMP280 v0.1.0.
-# Generated from peripherals/Bmp280.yaml using Cyanobyte Codegen v0.1.0
+# Generated from peripherals/BMP280.yaml using Cyanobyte Codegen v0.1.0
 """
 Class for BMP280
 """

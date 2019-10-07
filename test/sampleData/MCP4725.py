@@ -13,7 +13,7 @@
 # limitations under the License.
 #
 # Auto-generated file for MCP4725 v0.1.0.
-# Generated from peripherals/Mcp4725.yaml using Cyanobyte Codegen v0.1.0
+# Generated from peripherals/MCP4725.yaml using Cyanobyte Codegen v0.1.0
 """
 Class for MCP4725
 """
