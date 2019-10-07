@@ -39,9 +39,12 @@ def camel_to_snake(camel_str):
     result = regex.sub(r'_\g<0>', str(camel_str))
     return result.lower()
 
-def regex_replace(input, regex_pattern, regex_replacement):
+def regex_replace(in_str, regex_pattern, regex_replacement):
+    """
+    On a given text input, replace it with a regular expression
+    """
     regex = re.compile(regex_pattern)
-    return regex.sub(regex_replacement, input)
+    return regex.sub(regex_replacement, in_str)
 
 def generate_source_file(template, peripheral, template_extension, output_dir):
     """

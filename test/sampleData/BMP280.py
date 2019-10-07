@@ -51,6 +51,18 @@ class BMP280:
     REGISTER_DIGT1 = 136
     REGISTER_DIGT2 = 138
     REGISTER_DIGT3 = 140
+    REGISTER_PRESSUREMSB = 247
+    REGISTER_PRESSURELSB = 248
+    REGISTER_PRESSUREXLSB = 249
+    REGISTER_DIGP1 = 142
+    REGISTER_DIGP2 = 144
+    REGISTER_DIGP3 = 146
+    REGISTER_DIGP4 = 148
+    REGISTER_DIGP5 = 150
+    REGISTER_DIGP6 = 152
+    REGISTER_DIGP7 = 154
+    REGISTER_DIGP8 = 156
+    REGISTER_DIGP9 = 158
 
     def __init__(self):
         # Initialize connection to peripheral
@@ -184,6 +196,274 @@ class BMP280:
             self.REGISTER_DIGT3,
             data
         )
+    def get_pressuremsb(self):
+        """
+        Part 1 of Pressure
+
+        """
+        val = self.bus.read_byte_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_PRESSUREMSB
+        )
+        return val
+
+    def set_pressuremsb(self, data):
+        """
+        Part 1 of Pressure
+
+        """
+        self.bus.write_byte_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_PRESSUREMSB,
+            data
+        )
+    def get_pressurelsb(self):
+        """
+        Part 2 of Pressure
+
+        """
+        val = self.bus.read_byte_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_PRESSURELSB
+        )
+        return val
+
+    def set_pressurelsb(self, data):
+        """
+        Part 2 of Pressure
+
+        """
+        self.bus.write_byte_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_PRESSURELSB,
+            data
+        )
+    def get_pressurexlsb(self):
+        """
+        Part 3 of Pressure
+
+        """
+        val = self.bus.read_byte_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_PRESSUREXLSB
+        )
+        return val
+
+    def set_pressurexlsb(self, data):
+        """
+        Part 3 of Pressure
+
+        """
+        self.bus.write_byte_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_PRESSUREXLSB,
+            data
+        )
+    def get_digp1(self):
+        """
+        Used for Pascals conversion
+
+        """
+        val = self.bus.read_word_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_DIGP1
+        )
+        return val
+
+    def set_digp1(self, data):
+        """
+        Used for Pascals conversion
+
+        """
+        self.bus.write_word_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_DIGP1,
+            data
+        )
+    def get_digp2(self):
+        """
+        Used for Pascals conversion
+
+        """
+        val = self.bus.read_word_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_DIGP2
+        )
+        # Unsigned > Signed integer
+        val = _sign(val, 16)
+        return val
+
+    def set_digp2(self, data):
+        """
+        Used for Pascals conversion
+
+        """
+        self.bus.write_word_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_DIGP2,
+            data
+        )
+    def get_digp3(self):
+        """
+        Used for Pascals conversion
+
+        """
+        val = self.bus.read_word_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_DIGP3
+        )
+        # Unsigned > Signed integer
+        val = _sign(val, 16)
+        return val
+
+    def set_digp3(self, data):
+        """
+        Used for Pascals conversion
+
+        """
+        self.bus.write_word_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_DIGP3,
+            data
+        )
+    def get_digp4(self):
+        """
+        Used for Pascals conversion
+
+        """
+        val = self.bus.read_word_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_DIGP4
+        )
+        # Unsigned > Signed integer
+        val = _sign(val, 16)
+        return val
+
+    def set_digp4(self, data):
+        """
+        Used for Pascals conversion
+
+        """
+        self.bus.write_word_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_DIGP4,
+            data
+        )
+    def get_digp5(self):
+        """
+        Used for Pascals conversion
+
+        """
+        val = self.bus.read_word_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_DIGP5
+        )
+        # Unsigned > Signed integer
+        val = _sign(val, 16)
+        return val
+
+    def set_digp5(self, data):
+        """
+        Used for Pascals conversion
+
+        """
+        self.bus.write_word_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_DIGP5,
+            data
+        )
+    def get_digp6(self):
+        """
+        Used for Pascals conversion
+
+        """
+        val = self.bus.read_word_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_DIGP6
+        )
+        # Unsigned > Signed integer
+        val = _sign(val, 16)
+        return val
+
+    def set_digp6(self, data):
+        """
+        Used for Pascals conversion
+
+        """
+        self.bus.write_word_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_DIGP6,
+            data
+        )
+    def get_digp7(self):
+        """
+        Used for Pascals conversion
+
+        """
+        val = self.bus.read_word_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_DIGP7
+        )
+        # Unsigned > Signed integer
+        val = _sign(val, 16)
+        return val
+
+    def set_digp7(self, data):
+        """
+        Used for Pascals conversion
+
+        """
+        self.bus.write_word_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_DIGP7,
+            data
+        )
+    def get_digp8(self):
+        """
+        Used for Pascals conversion
+
+        """
+        val = self.bus.read_word_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_DIGP8
+        )
+        # Unsigned > Signed integer
+        val = _sign(val, 16)
+        return val
+
+    def set_digp8(self, data):
+        """
+        Used for Pascals conversion
+
+        """
+        self.bus.write_word_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_DIGP8,
+            data
+        )
+    def get_digp9(self):
+        """
+        Used for Pascals conversion
+
+        """
+        val = self.bus.read_word_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_DIGP9
+        )
+        # Unsigned > Signed integer
+        val = _sign(val, 16)
+        return val
+
+    def set_digp9(self, data):
+        """
+        Used for Pascals conversion
+
+        """
+        self.bus.write_word_data(
+            self.DEVICE_ADDRESS,
+            self.REGISTER_DIGP9,
+            data
+        )
 
     def temperature_asraw(self):
         """
@@ -265,3 +545,141 @@ class BMP280:
 
 
         return celsius
+    def pressure_asraw(self):
+        """
+        Reads the atmospheric pressure
+
+        """
+        value_msb = None # Variable declaration
+        value_lsb = None # Variable declaration
+        value_xlsb = None # Variable declaration
+        output = None # Variable declaration
+
+
+
+
+        value_msb = self.get_pressuremsb()
+
+
+        value_lsb = self.get_pressurelsb()
+
+
+        value_xlsb = self.get_pressurexlsb()
+
+
+        output = ((value_msb << 12)+(value_lsb << 4)+(value_xlsb >> 4))
+
+
+        return output
+    def pressure_ashpa(self):
+        """
+        Reads the atmospheric pressure
+
+        """
+        value_msb = None # Variable declaration
+        value_lsb = None # Variable declaration
+        value_xlsb = None # Variable declaration
+        value_d_p1 = None # Variable declaration
+        value_d_p2 = None # Variable declaration
+        value_d_p3 = None # Variable declaration
+        value_d_p4 = None # Variable declaration
+        value_d_p5 = None # Variable declaration
+        value_d_p6 = None # Variable declaration
+        value_d_p7 = None # Variable declaration
+        value_d_p8 = None # Variable declaration
+        value_d_p9 = None # Variable declaration
+        raw_pressure = None # Variable declaration
+        raw_temperature = None # Variable declaration
+        raw_comp1 = None # Variable declaration
+        raw_comp2 = None # Variable declaration
+        raw_comp3 = None # Variable declaration
+        hpa = None # Variable declaration
+
+
+
+
+        value_msb = self.get_pressuremsb()
+
+
+        value_lsb = self.get_pressurelsb()
+
+
+        value_xlsb = self.get_pressurexlsb()
+
+
+        value_d_p1 = self.get_digp1()
+
+
+        value_d_p2 = self.get_digp2()
+
+
+        value_d_p3 = self.get_digp3()
+
+
+        value_d_p4 = self.get_digp4()
+
+
+        value_d_p5 = self.get_digp5()
+
+
+        value_d_p6 = self.get_digp6()
+
+
+        value_d_p7 = self.get_digp7()
+
+
+        value_d_p8 = self.get_digp8()
+
+
+        value_d_p9 = self.get_digp9()
+
+
+        raw_temperature = self.temperature_ascelsius()
+
+
+        raw_temperature = (raw_temperature*5120.0)
+
+
+        raw_pressure = ((value_msb << 12)+(value_lsb << 4)+(value_xlsb >> 4))
+
+
+        raw_comp1 = ((raw_temperature/2)-64000.0)
+
+
+        raw_comp2 = ((raw_comp1*raw_comp1*value_d_p6)/32768.0)
+
+
+        raw_comp2 = (raw_comp2+(raw_comp1*value_d_p5*2.0))
+
+
+        raw_comp2 = ((raw_comp2/4.0)+(value_d_p4*65536.0))
+
+
+        raw_comp3 = (value_d_p3*raw_comp1*raw_comp1)
+
+
+        raw_comp1 = (((raw_comp3/524288.0)+(value_d_p2*raw_comp1))/524288.0)
+
+
+        raw_comp1 = ((1.0+(raw_comp1/32768.0))*value_d_p1)
+
+
+        hpa = (1048576.0-raw_pressure)
+
+
+        hpa = ((hpa-(raw_comp2/4096.0))*(6250.0/raw_comp1))
+
+
+        raw_comp1 = ((value_d_p9*hpa*hpa)/2147483648.0)
+
+
+        raw_comp2 = ((hpa*value_d_p8)/32768.0)
+
+
+        hpa = (hpa+((raw_comp1+raw_comp2+value_d_p7)/16.0))
+
+
+        hpa = (hpa/100.0)
+
+
+        return hpa

@@ -280,6 +280,7 @@ functions:
               - rawTemperature: int16
               - rawComp1: int16
               - rawComp2: int16
+              - rawComp3: int16
               - hpa: float32
             logic:
               - valueMsb:
@@ -351,14 +352,16 @@ functions:
                   - product:
                     - valueDP4
                     - 65536.0
+              - rawComp3:
+                - product:
+                  - valueDP3
+                  - rawComp1
+                  - rawComp1
               - rawComp1:
                 - division:
                   - sum:
                     - division:
-                      - product:
-                        - valueDP3
-                        - rawComp1
-                        - rawComp1
+                      - rawComp3
                       - 524288.0
                     - product:
                       - valueDP2
