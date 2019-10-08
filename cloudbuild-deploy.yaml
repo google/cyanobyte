@@ -30,9 +30,9 @@ steps:
   id: Show that we have postcss 2
   args: ['-c', 'ls /workspace/docs/node_modules/.bin/postcss']
   # Setup https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/hugo
-- name: ubuntu
+- name: gcr.io/cloud-builders/wget
   entrypoint: bash
-  # Version 0.57.2
+  # Version 0.57.2 TODO https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values
   args: ['-c', 'wget -O- https://github.com/gohugoio/hugo/releases/download/v0.57.2/hugo_extended_0.57.2_Linux-64bit.tar.gz | tar zx']
   id: Install Hugo manually
 - name: ubuntu
