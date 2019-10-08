@@ -42,9 +42,13 @@ steps:
   id: Run Hugo manually
 - name: gcr.io/cloud-builders/git
   entrypoint: bash
+  id: Makee public directory
+  args: ['-c', 'mkdir docs/public']
+- name: gcr.io/cloud-builders/git
+  entrypoint: bash
   id: Move public directory
-  args: ['-c', 'mkdir docs/public && mv public/* docs/public']
-  - name: gcr.io/cloud-builders/git
+  args: ['-c', 'mv public/* docs/public']
+- name: gcr.io/cloud-builders/git
   dir: docs
   entrypoint: bash
   id: Show that we have a public dir
