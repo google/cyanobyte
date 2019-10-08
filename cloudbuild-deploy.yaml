@@ -17,7 +17,7 @@ steps:
 - name: node:10.15.1
   dir: docs
   entrypoint: npm
-  args: ['install', '-D', '--save', 'autoprefixer', 'postcss-cli']
+  args: ['install', '-g', 'autoprefixer', 'postcss-cli']
   id: Install PostCSS for final CSS assets
   # Setup https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/hugo
 - name: gcr.io/cloud-builders/git
