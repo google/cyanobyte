@@ -37,7 +37,7 @@ steps:
   id: Install Hugo manually
 - name: ubuntu
   entrypoint: bash
-  args: ['-c', 'hugo']
+  args: ['-c', '/hugo']
   id: Run Hugo manually
 # - name: gcr.io/$PROJECT_ID/hugo
   # dir: docs
