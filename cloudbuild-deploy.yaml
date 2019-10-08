@@ -40,6 +40,11 @@ steps:
   entrypoint: bash
   args: ['-c', './docs/hugo']
   id: Run Hugo manually
+- name: gcr.io/cloud-builders/git
+  dir: docs
+  entrypoint: bash
+  id: Show that we have a public dir
+  args: ['-c', 'ls -R']
 # - name: gcr.io/$PROJECT_ID/hugo
   # dir: docs
   # args: []
