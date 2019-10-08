@@ -34,6 +34,9 @@ steps:
   dir: docs
   args: []
   id: Generate HTML
+  env:
+    # https://github.com/gohugoio/hugo/issues/5091
+    - 'PATH=%PATH%;%cd%\node_modules\.bin'
   # Setup https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/firebase
 - name: gcr.io/$PROJECT_ID/firebase
   args: ['deploy']
