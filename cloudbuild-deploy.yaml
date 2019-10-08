@@ -14,7 +14,7 @@ steps:
   entrypoint: bash
   id: Clone Docsy theme
   args: ['-c', 'git clone --recurse-submodules --depth 1 https://github.com/google/docsy.git docs/themes/docsy']
-- name: node:10.15.1
+- name: gcr.io/cloud-builders/npm
   dir: docs
   entrypoint: npm
   args: ['install', 'autoprefixer', 'postcss-cli']
