@@ -22,6 +22,11 @@ steps:
   # Setup https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/hugo
 - name: gcr.io/$PROJECT_ID/hugo
   dir: docs
+  entrypoint: bash
+  args: ['-c', 'ls node_modules/.bin']
+  id: Generate L
+- name: gcr.io/$PROJECT_ID/hugo
+  dir: docs
   args: []
   id: Generate HTML
   # Setup https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/firebase
