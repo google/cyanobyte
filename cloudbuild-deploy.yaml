@@ -32,7 +32,8 @@ steps:
   # Setup https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/hugo
 - name: ubuntu
   entrypoint: bash
-  args: ['-c', 'wget -O- https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_Linux-64bit.tar.gz | tar zx']
+  # Version 0.57.2
+  args: ['-c', 'wget -O- https://github.com/gohugoio/hugo/releases/download/v0.57.2/hugo_extended_0.57.2_Linux-64bit.tar.gz | tar zx']
   id: Install Hugo manually
 - name: ubuntu
   entrypoint: bash
