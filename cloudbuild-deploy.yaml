@@ -20,11 +20,6 @@ steps:
   args: ['install', '-g', 'autoprefixer', 'postcss-cli']
   id: Install PostCSS for final CSS assets
   # Setup https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/hugo
-- name: gcr.io/cloud-builders/git
-  dir: docs
-  entrypoint: bash
-  args: ['-c', 'ls node_modules/.bin']
-  id: Generate L
 - name: gcr.io/$PROJECT_ID/hugo
   dir: docs
   args: []
