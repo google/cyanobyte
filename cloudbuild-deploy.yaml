@@ -15,6 +15,7 @@ steps:
   id: Clone Docsy theme
   args: ['-c', 'git clone --recurse-submodules --depth 1 https://github.com/google/docsy.git docs/themes/docsy']
 - name: node:10.15.1
+  dir: docs
   entrypoint: npm
   args: ['install', '-D', '--save', 'autoprefixer', 'postcss-cli']
   id: Install PostCSS for final CSS assets
