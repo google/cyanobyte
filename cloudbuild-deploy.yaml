@@ -37,9 +37,8 @@ steps:
   args: ['-c', 'wget -O- https://github.com/gohugoio/hugo/releases/download/v0.57.2/hugo_extended_0.57.2_Linux-64bit.tar.gz | tar zx']
   id: Install Hugo manually
 - name: ubuntu
-  dir: docs
   entrypoint: bash
-  args: ['-c', './hugo']
+  args: ['-c', './docs/hugo']
   id: Run Hugo manually
 # - name: gcr.io/$PROJECT_ID/hugo
   # dir: docs
