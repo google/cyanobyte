@@ -12,12 +12,12 @@ steps:
 #   id: Bash it
 - name: gcr.io/cloud-builders/git
   entrypoint: bash
-  id: Manually install Docsy
+  id: Clone Docsy theme
   args: ['-c', 'git clone --recurse-submodules --depth 1 https://github.com/google/docsy.git docs/themes/docsy']
-- name: gcr.io/cloud-builders/git
-  entrypoint: bash
-  args: ['-c', 'ls -R']
-  id: Setup Docsy theme
+- name: node:10.15.1
+  entrypoint: npm
+  args: ['install', '-D', '--save', 'autoprefixer', 'postcss-cli']
+  id: Install PostCSS for final CSS assets
   # Setup https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/hugo
 - name: gcr.io/$PROJECT_ID/hugo
   dir: docs
