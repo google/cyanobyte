@@ -30,13 +30,21 @@ steps:
   id: Show that we have postcss 2
   args: ['-c', 'ls /workspace/docs/node_modules/.bin/postcss']
   # Setup https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/hugo
-- name: gcr.io/$PROJECT_ID/hugo
-  dir: docs
-  args: []
-  id: Generate HTML
-  env:
+- name: ubuntu
+  entrypoint: bash
+  args: ['-c', 'wget -O- https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_Linux-64bit.tar.gz | tar zx']
+  id: Install Hugo manually
+- name: ubuntu
+  entrypoint: bash
+  args: ['-c', 'hugo']
+  id: Run Hugo manually
+# - name: gcr.io/$PROJECT_ID/hugo
+  # dir: docs
+  # args: []
+  # id: Generate HTML
+  # env:
     # https://github.com/gohugoio/hugo/issues/5091
-    - 'PATH=%PATH%;%cd%\node_modules\.bin'
+    # - 'PATH=%PATH%;%cd%\node_modules\.bin'
   # Setup https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/firebase
 - name: gcr.io/$PROJECT_ID/firebase
   args: ['deploy']
