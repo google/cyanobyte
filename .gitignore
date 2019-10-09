@@ -3,3 +3,7 @@
 __pycache__/
 *.pyc
 tmp/
+node_modules/
+docs/public/
+docs/resources/
+package-lock.json
