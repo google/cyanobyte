@@ -9,6 +9,11 @@ steps:
   entrypoint: npm
   args: ['install', 'autoprefixer', 'postcss-cli']
   id: Install PostCSS for final CSS assets
+- name: gcr.io/cloud-builders/npm
+  entrypoint: npm
+  dir: docs
+  args: ['install', 'autoprefixer', 'postcss-cli']
+  id: Install PostCSS for final CSS assets again
 - name: gcr.io/cloud-builders/wget
   entrypoint: bash
   args: ['-c', 'wget -O- https://github.com/gohugoio/hugo/releases/download/v${_HUGO}/hugo_extended_${_HUGO}_Linux-64bit.tar.gz | tar zx']
