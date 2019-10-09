@@ -1,0 +1,61 @@
++++
+title = "Goldydocs"
+linkTitle = "Goldydocs"
+
++++
+
+{{< blocks/cover title="Cyanobyte: An intermediate representation for hardware peripheral I/O" image_anchor="top" height="full" color="orange" >}}
+<div class="mx-auto">
+	<a class="btn btn-lg btn-primary mr-3 mb-4" href="{{< relref "/docs" >}}">
+		Learn More <i class="fas fa-arrow-alt-circle-right ml-2"></i>
+	</a>
+	<a class="btn btn-lg btn-secondary mr-3 mb-4" href="https://github.com/google/cyanobyte">
+		View Source <i class="fab fa-github ml-2 "></i>
+	</a>
+	<p class="lead mt-5">Get hardware drivers with 0 lines of code!</p>
+	<div class="mx-auto mt-5">
+		{{< blocks/link-down color="info" >}}
+	</div>
+</div>
+{{< /blocks/cover >}}
+
+
+{{% blocks/lead color="primary" %}}
+Cyanobyte is a specification that defines the types of hardware configurations and functions that
+a hardware peripheral can have.
+
+With a standardized representation, a codegen tool can read the intermediate representation and
+convert it into an executable driver in the language and platform of your choice.
+
+Think of it as a machine-readable datasheet. By placing not just registers, but logic into a
+static configration, you don't need to worry about converting a temperature sensor into Celsius,
+or finding the exact register values to initialize your device. All the logic is handled for you.
+
+This is an open spec, and we're looking for more feedback.
+{{% /blocks/lead %}}
+
+{{< blocks/section color="dark" >}}
+{{% blocks/feature icon="fa-lightbulb" title="Bright idea!" %}}
+Your LEDs just turn on. Now that's a bright idea.
+{{% /blocks/feature %}}
+
+
+{{% blocks/feature icon="fab fa-github" title="Contributions welcome!" url="https://github.com/google/cyanobyte" %}}
+We do a [Pull Request](https://github.com/google/cyanobyte/pulls) contributions workflow on **GitHub**. New users are always welcome!
+{{% /blocks/feature %}}
+
+
+{{% blocks/feature icon="fab fa-twitter" title="Follow me on Twitter!" url="https://twitter.com/handnf" %}}
+For announcement of latest features etc.
+{{% /blocks/feature %}}
+
+
+{{< /blocks/section >}}
+
+
+{{< blocks/section >}}
+<div class="col">
+<h3 class="text-center">Peripherals are defined in yaml files. We're chosen yaml for the ease of readability.</h3>
+</div>
+
+{{< /blocks/section >}} 
