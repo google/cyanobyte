@@ -1,15 +1,6 @@
+substitutions:
+  _HUGO: 0.57.2
 steps:
-  # See https://github.com/GoogleCloudPlatform/cloud-builders/issues/26
-# - name: 'gcr.io/cloud-builders/git'
-#   entrypoint: 'bash'
-#   args:
-#     - '-c'
-#     - |
-#       git config -f .git/config submodule.google_cyanobyte.url https://source.developers.google.com/p/cyanobyte-235018/r/github_google_cyanobyte &&
-#       git config -f .gitmodules submodule.google_cyanobyte.url https://source.developers.google.com/p/cyanobyte-235018/r/github_google_cyanobyte &&
-#       git submodule init &&
-#       git submodule update
-#   id: Bash it
 - name: gcr.io/cloud-builders/git
   entrypoint: bash
   id: Clone Docsy theme
@@ -19,22 +10,10 @@ steps:
   entrypoint: npm
   args: ['install', 'autoprefixer', 'postcss-cli']
   id: Install PostCSS for final CSS assets
-- name: gcr.io/cloud-builders/git
-  dir: docs
-  entrypoint: bash
-  id: Show that we have postcss
-  args: ['-c', 'ls node_modules/.bin/postcss']
-- name: gcr.io/cloud-builders/git
-  dir: docs
-  entrypoint: bash
-  id: Show that we have postcss 2
-  args: ['-c', 'ls /workspace/docs/node_modules/.bin/postcss']
-  # Setup https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/hugo
 - name: gcr.io/cloud-builders/wget
   dir: docs
   entrypoint: bash
-  # Version 0.57.2 TODO https://cloud.google.com/cloud-build/docs/configuring-builds/substitute-variable-values
-  args: ['-c', 'wget -O- https://github.com/gohugoio/hugo/releases/download/v0.57.2/hugo_extended_0.57.2_Linux-64bit.tar.gz | tar zx']
+  args: ['-c', 'wget -O- https://github.com/gohugoio/hugo/releases/download/v$_HUGO/hugo_extended_$_HUGO_Linux-64bit.tar.gz | tar zx']
   id: Install Hugo manually
 - name: ubuntu
   entrypoint: bash
@@ -42,24 +21,12 @@ steps:
   id: Run Hugo manually
 - name: gcr.io/cloud-builders/git
   entrypoint: bash
-  id: Makee public directory
+  id: Make public directory
   args: ['-c', 'mkdir docs/public']
 - name: gcr.io/cloud-builders/git
   entrypoint: bash
   id: Move public directory
   args: ['-c', 'mv public/* docs/public']
-- name: gcr.io/cloud-builders/git
-  dir: docs
-  entrypoint: bash
-  id: Show that we have a public dir
-  args: ['-c', 'ls -R']
-# - name: gcr.io/$PROJECT_ID/hugo
-  # dir: docs
-  # args: []
-  # id: Generate HTML
-  # env:
-    # https://github.com/gohugoio/hugo/issues/5091
-    # - 'PATH=%PATH%;%cd%\node_modules\.bin'
   # Setup https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/firebase
 - name: gcr.io/$PROJECT_ID/firebase
   args: ['deploy']
