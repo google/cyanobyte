@@ -28,7 +28,7 @@ steps:
 - name: gcr.io/cloud-builders/git
   entrypoint: bash
   id: Make public directory
-  args: ['-c', 'mkdir docs/public']
+  args: ['-c', 'mkdir -p docs/public']
 - name: gcr.io/cloud-builders/git
   entrypoint: bash
   id: Move public directory
