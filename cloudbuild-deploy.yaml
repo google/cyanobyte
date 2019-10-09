@@ -15,7 +15,7 @@ steps:
   id: Install Hugo manually
 - name: node:10.15.1
   entrypoint: bash
-  args: ['-c', './hugo -s ./docs/']
+  args: ['-c', './hugo']
   id: Run Hugo manually
 - name: gcr.io/cloud-builders/git
   entrypoint: bash
