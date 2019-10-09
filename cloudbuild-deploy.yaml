@@ -6,7 +6,6 @@ steps:
   id: Clone Docsy theme
   args: ['-c', 'git clone --recurse-submodules --depth 1 https://github.com/google/docsy.git docs/themes/docsy']
 - name: gcr.io/cloud-builders/npm
-  dir: docs
   entrypoint: npm
   args: ['install', 'autoprefixer', 'postcss-cli']
   id: Install PostCSS for final CSS assets
@@ -17,8 +16,7 @@ steps:
   id: Install Hugo manually
 - name: ubuntu
   entrypoint: bash
-  dir: docs
-  args: ['-c', '/workspace/docs/hugo']
+  args: ['-c', '/workspace/docs/hugo', '-s', './docs/']
   id: Run Hugo manually
 - name: gcr.io/cloud-builders/git
   entrypoint: bash
