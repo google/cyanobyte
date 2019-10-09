@@ -17,7 +17,8 @@ steps:
   id: Install Hugo manually
 - name: ubuntu
   entrypoint: bash
-  args: ['-c', './docs/hugo']
+  dir: docs
+  args: ['-c', '/workspace/docs/hugo']
   id: Run Hugo manually
 - name: gcr.io/cloud-builders/git
   entrypoint: bash
