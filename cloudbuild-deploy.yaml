@@ -5,15 +5,14 @@ steps:
   entrypoint: bash
   id: Clone Docsy theme
   args: ['-c', 'git clone --recurse-submodules --depth 1 https://github.com/google/docsy.git docs/themes/docsy']
-- name: node:10.15.1
-  entrypoint: npm
+- name: gcr.io/cloud-builders/npm
   args: ['install', 'autoprefixer', 'postcss-cli']
   id: Install PostCSS for final CSS assets
 - name: gcr.io/cloud-builders/wget
   entrypoint: bash
   args: ['-c', 'wget -O- https://github.com/gohugoio/hugo/releases/download/v${_HUGO}/hugo_extended_${_HUGO}_Linux-64bit.tar.gz | tar zx']
   id: Install Hugo manually
-- name: ubuntu
+- name: node:10.15.1
   entrypoint: bash
   args: ['-c', './hugo -s ./docs/']
   id: Run Hugo manually
