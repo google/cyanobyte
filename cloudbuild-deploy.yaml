@@ -25,7 +25,7 @@ steps:
 
 - name: node:10.15.1
   entrypoint: bash
-  args: ['-c', './hugo -s ./docs']
+  args: ['-c', './hugo']
   id: Run Hugo manually
 
 - name: node:10.15.1
