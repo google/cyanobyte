@@ -33,24 +33,23 @@ steps:
 #   args: ['-c', 'ls -R']
 #   id: Print local files p2
 
-- name: gcr.io/cloud-builders/git
-  entrypoint: bash
-  id: Make public directory
-  args: ['-c', 'mkdir -p docs/public']
+# - name: gcr.io/cloud-builders/git
+#   entrypoint: bash
+#   id: Make public directory
+#   args: ['-c', 'mkdir -p docs/public']
 
-- name: gcr.io/cloud-builders/git
-  entrypoint: bash
-  id: Move public directory
-  args: ['-c', 'mv public/* docs/public']
+# - name: gcr.io/cloud-builders/git
+#   entrypoint: bash
+#   id: Move public directory
+#   args: ['-c', 'mv public/* docs/public']
 
-- name: node:10.15.1
-  entrypoint: bash
-  dir: docs
-  args: ['-c', 'ls -R']
-  id: Print local files p2
+# - name: node:10.15.1
+#   entrypoint: bash
+#   dir: docs
+#   args: ['-c', 'ls -R']
+#   id: Print local files p2
 
   # Setup https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/firebase
 - name: gcr.io/$PROJECT_ID/firebase
   args: ['deploy', '--project', '$PROJECT_ID']
-  dir: docs
   id: Deploy to Firebase
