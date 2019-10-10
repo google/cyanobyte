@@ -18,20 +18,20 @@ steps:
   id: Move up content directory
   args: ['-c', 'mv docs/* .']
 
-- name: node:10.15.1
-  entrypoint: bash
-  args: ['-c', 'ls -R']
-  id: Print local files
+# - name: node:10.15.1
+#   entrypoint: bash
+#   args: ['-c', 'ls -R']
+#   id: Print local files
 
 - name: node:10.15.1
   entrypoint: bash
   args: ['-c', './hugo']
   id: Run Hugo manually
 
-- name: node:10.15.1
-  entrypoint: bash
-  args: ['-c', 'ls -R']
-  id: Print local files p2
+# - name: node:10.15.1
+#   entrypoint: bash
+#   args: ['-c', 'ls -R']
+#   id: Print local files p2
 
 - name: gcr.io/cloud-builders/git
   entrypoint: bash
@@ -45,6 +45,6 @@ steps:
 
   # Setup https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/firebase
 - name: gcr.io/$PROJECT_ID/firebase
-  args: ['deploy']
+  args: ['deploy', '--project', '$PROJECT_ID']
   dir: docs
   id: Deploy to Firebase
