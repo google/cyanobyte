@@ -13,26 +13,36 @@ steps:
   entrypoint: bash
   args: ['-c', 'wget -O- https://github.com/gohugoio/hugo/releases/download/v${_HUGO}/hugo_extended_${_HUGO}_Linux-64bit.tar.gz | tar zx']
   id: Install Hugo manually
-- name: node:10.15.1
-  entrypoint: bash
-  args: ['-c', 'ls -R']
-  id: Print local files
 - name: gcr.io/cloud-builders/git
   entrypoint: bash
   id: Move up content directory
   args: ['-c', 'mv docs/* .']
+
+- name: node:10.15.1
+  entrypoint: bash
+  args: ['-c', 'ls -R']
+  id: Print local files
+
 - name: node:10.15.1
   entrypoint: bash
   args: ['-c', './hugo -s ./docs']
   id: Run Hugo manually
+
+- name: node:10.15.1
+  entrypoint: bash
+  args: ['-c', 'ls -R']
+  id: Print local files p2
+
 - name: gcr.io/cloud-builders/git
   entrypoint: bash
   id: Make public directory
   args: ['-c', 'mkdir -p docs/public']
+
 - name: gcr.io/cloud-builders/git
   entrypoint: bash
   id: Move public directory
   args: ['-c', 'mv public/* docs/public']
+
   # Setup https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/firebase
 - name: gcr.io/$PROJECT_ID/firebase
   args: ['deploy']
