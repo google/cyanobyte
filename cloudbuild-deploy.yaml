@@ -5,30 +5,28 @@ steps:
   entrypoint: bash
   id: Clone Docsy theme
   args: ['-c', 'git clone --recurse-submodules --depth 1 https://github.com/google/docsy.git docs/themes/docsy']
-- name: gcr.io/cloud-builders/npm
-  dir: docs
+
+- name: node:10.15.1
   entrypoint: npm
   args: ['install', 'autoprefixer', 'postcss-cli']
   id: Install PostCSS for final CSS assets
+
 - name: gcr.io/cloud-builders/wget
-  dir: docs
   entrypoint: bash
   args: ['-c', 'wget -O- https://github.com/gohugoio/hugo/releases/download/v${_HUGO}/hugo_extended_${_HUGO}_Linux-64bit.tar.gz | tar zx']
   id: Install Hugo manually
-- name: ubuntu
+
+- name: gcr.io/cloud-builders/git
   entrypoint: bash
-  args: ['-c', './docs/hugo']
+  id: Move up content directory
+  args: ['-c', 'mv docs/* .']
+
+- name: node:10.15.1
+  entrypoint: bash
+  args: ['-c', './hugo']
   id: Run Hugo manually
-- name: gcr.io/cloud-builders/git
-  entrypoint: bash
-  id: Make public directory
-  args: ['-c', 'mkdir docs/public']
-- name: gcr.io/cloud-builders/git
-  entrypoint: bash
-  id: Move public directory
-  args: ['-c', 'mv public/* docs/public']
+
   # Setup https://github.com/GoogleCloudPlatform/cloud-builders-community/tree/master/firebase
 - name: gcr.io/$PROJECT_ID/firebase
-  args: ['deploy']
-  dir: docs
+  args: ['deploy', '--project', '$PROJECT_ID']
   id: Deploy to Firebase
