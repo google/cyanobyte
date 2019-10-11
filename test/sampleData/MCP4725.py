@@ -30,6 +30,8 @@ except ImportError:
     sys.exit(1)
 from enum import Enum
 
+
+
 class DigitalOutValues(Enum):
     """
     Valid values for Digital (binary) output
@@ -164,6 +166,7 @@ class MCP4725:
 
 
 
+        return []
 
     def get_getvout(self):
         """

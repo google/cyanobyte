@@ -121,6 +121,9 @@ class TestValidatorPeripherals(unittest.TestCase):
     def test_bmp280(self):
         self.assertIsNone(cyanobyte_valdiate(['peripherals/BMP280.yaml']))
 
+    def test_lsm303d(self):
+        self.assertIsNone(cyanobyte_valdiate(['peripherals/LSM303D.yaml']))
+
     def test_mcp4725(self):
         self.assertIsNone(cyanobyte_valdiate(['peripherals/MCP4725.yaml']))
 

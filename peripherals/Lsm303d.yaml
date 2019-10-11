@@ -19,11 +19,11 @@ info:
     url: https://github.com/google/cyanobyte
     email: felker@google.com
   package: com.cyanobyte
-  title: Lsm303d
+  title: LSM303D
   description: STMicroelectronics accelerometer and magnetometer
   copyright:
     name: Google Inc.
-    date: 2019
+    date: '2019'
   license:
     name: Apache-2.0
   version: 0.1.0
@@ -261,7 +261,6 @@ functions:
             variables:
               - valueX: int16
               - valueY: int16
-              - valueZ: int16
               - dividend: int16
               - heading: int16
             logic:
@@ -269,8 +268,6 @@ functions:
                 - function: '#/functions/orientation/xPlane'
               - valueY:
                 - function: '#/functions/orientation/yPlane'
-              - valueZ:
-                - function: '#/functions/orientation/zPlane'
               - dividend:
                 - division:
                   - valueX

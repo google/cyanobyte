@@ -46,6 +46,11 @@ class TestCodegen(unittest.TestCase):
         self.compareFiles('tmp/com/cyanobyte/BMP280.md', 'test/sampleData/BMP280.md')
         self.compareFiles('tmp/com/cyanobyte/BMP280.py', 'test/sampleData/BMP280.py')
 
+    def test_LSM303D(self):
+        self.generatePeripheral('LSM303D')
+        self.compareFiles('tmp/com/cyanobyte/LSM303D.md', 'test/sampleData/LSM303D.md')
+        self.compareFiles('tmp/com/cyanobyte/LSM303D.py', 'test/sampleData/LSM303D.py')
+
     def test_MCP4725(self):
         self.generatePeripheral('MCP4725')
         self.compareFiles('tmp/com/cyanobyte/MCP4725.md', 'test/sampleData/MCP4725.md')
