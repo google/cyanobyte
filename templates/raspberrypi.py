@@ -33,6 +33,11 @@ Class for {{ info.title }}
 
 {% for step in logicalSteps %}
 {% for key in step.keys() %}
+{# Check if assignment is a send-op #}
+{% if key == 'cmdWrite' %}
+        self.set_{{step.register[12:].lower()}}({{step.value}})
+        {% break %}
+{% endif %}
 {# Check if assignment op #}
 {% if step[key][0:1] == "=" %}
         {{key | camel_to_snake}} {{step[key]}}
@@ -117,6 +122,28 @@ Class for {{ info.title }}
     {{ step | camel_to_snake }}
     {%- endif %}
     {{- "%" if not loop.last -}}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a bitwise OR from an array of logical steps #}
+{% if key == 'bitwiseOr' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{step | camel_to_snake}}
+    {%- endif %}
+    {{- "|" if not loop.last -}}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a bitwise AND from an array of logical steps #}
+{% if key == 'bitwiseAnd' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{step | camel_to_snake}}
+    {%- endif %}
+    {{- "&" if not loop.last -}}
     {%- endfor -%})
 {%- endif %}
 {# Perform a power operation #}
@@ -210,7 +237,7 @@ def _swap_endian(val):
     """
     Swap the endianness of a short only
     """
-    return val >> 8 | val << 8
+    return (val & 0xFF00) >> 8 | (val & 0xFF) << 8
 {% endif %}
 
 {# Add signing function if needed #}

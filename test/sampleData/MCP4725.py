@@ -44,7 +44,7 @@ def _swap_endian(val):
     """
     Swap the endianness of a short only
     """
-    return val >> 8 | val << 8
+    return (val & 0xFF00) >> 8 | (val & 0xFF) << 8
 
 
 class MCP4725:

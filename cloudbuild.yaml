@@ -26,6 +26,8 @@ steps:
     - '-o'
     - './build'
     - '-i'
+    - 'peripherals/ADS1015.yaml'
+    - '-i'
     - 'peripherals/BMP280.yaml'
     - '-i'
     - 'peripherals/LSM303D.yaml'
