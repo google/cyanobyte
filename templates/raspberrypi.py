@@ -1,5 +1,5 @@
 {% import 'macros.jinja2' as utils %}
-{% set template = namespace(enum=false, sign=false) %}
+{% set template = namespace(enum=false, sign=false, math=false, struct=false) %}
 {{ utils.pad_string('# ', utils.license(info.copyright.name, info.copyright.date, info.license.name)) -}}
 #
 # Auto-generated file for {{ info.title }} v{{ info.version }}.
@@ -108,6 +108,25 @@ Class for {{ info.title }}
     {{- "/" if not loop.last -}}
     {%- endfor -%})
 {%- endif %}
+{# Perform a recursive modulus from an array of logical steps #}
+{% if key == 'modulus' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{ step | camel_to_snake }}
+    {%- endif %}
+    {{- "%" if not loop.last -}}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a power operation #}
+{% if key == 'power' -%}
+    math.pow({{logicalStep[key][0]}}, {{logicalStep[key][1]}})
+{%- endif %}
+{# Perform an arc tangent operation #}
+{% if key == 'arc tangent' -%}
+    math.atan({{logicalStep[key]}})
+{%- endif %}
 {# Bitwise ops #}
 {%- if key == 'bitShiftLeft' -%}
     ({{logicalStep.var | camel_to_snake}} << {{logicalStep.bits}})
@@ -133,6 +152,37 @@ except ImportError:
 from enum import Enum
 {% set template.enum = true %}
 {% endif %}
+{% endif %}
+{# Check if we need to import `math` lib #}
+{% if function[key].computed %}
+{% for compute in function[key].computed %}
+{% for computeKey in compute.keys() %}
+{% if compute[computeKey].output == 'int16' %}
+{% if template.struct is sameas false %}
+import struct
+{% set template.struct = true %}
+{% endif %}
+{% endif %}
+
+{% macro scanForMathLib(logicKeys) -%}
+{% for logic in logicKeys %}
+{% if logic is mapping %}
+{% for logicKey in logic.keys() %}
+{% if logicKey == 'power' or logicKey == 'arc tangent' %}
+{% if template.math is sameas false %}
+import math
+{% set template.math = true %}
+{% endif %}
+{% elif logic[logicKey] is iterable and logic[logicKey] is not string -%}
+{{- scanForMathLib(logic[logicKey]) -}}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{%- endmacro %}
+{{- scanForMathLib(compute[computeKey].logic) -}}
+{% endfor %}
+{% endfor %}
 {% endif %}
 {% endfor %}
 {% endfor %}
@@ -311,7 +361,17 @@ class {{ info.title }}:
 {{ logic(compute[computeKey].logic, function[key]) }}
 
         {# Return if applicable #}
-        {% if compute[computeKey].return %}
+        {# Return a tuple #}
+        {% if compute[computeKey].return is iterable and compute[computeKey].return is not string %}
+        return [{% for returnValue in compute[computeKey].return %}{{ returnValue | camel_to_snake }}{{ ", " if not loop.last }}{% endfor %}]
+        {% endif %}
+        {# Return a plain value #}
+        {% if compute[computeKey].return is string %}
+            {# See if we need to massage the data type #}
+            {% if compute[computeKey].output == 'int16' %}
+        # Convert from a unsigned short to a signed short
+        {{compute[computeKey].return}} = struct.unpack("h", struct.pack("H", {{compute[computeKey].return}}))[0]
+            {% endif %}
         return {{compute[computeKey].return}}
         {% endif %}
     {% endfor %}

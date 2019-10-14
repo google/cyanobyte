@@ -28,6 +28,8 @@ steps:
     - '-i'
     - 'peripherals/BMP280.yaml'
     - '-i'
+    - 'peripherals/LSM303D.yaml'
+    - '-i'
     - 'peripherals/MCP4725.yaml'
     - '-i'
     - 'peripherals/MCP9808.yaml'
