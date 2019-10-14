@@ -156,7 +156,8 @@ def gen(input_files, template_files=None, output_dir='./build', debug=False,
     env = Environment(
         loader=FileSystemLoader("./templates"),
         trim_blocks=True,
-        lstrip_blocks=True
+        lstrip_blocks=True,
+        extensions=['jinja2.ext.loopcontrols']
     )
     env.filters['camel_to_snake'] = camel_to_snake
     env.filters['regex_replace'] = regex_replace

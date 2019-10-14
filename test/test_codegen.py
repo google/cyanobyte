@@ -41,6 +41,11 @@ class TestCodegen(unittest.TestCase):
     def tearDown(self):
         print('\n')
 
+    def test_ADS1015(self):
+        self.generatePeripheral('ADS1015')
+        self.compareFiles('tmp/com/cyanobyte/ADS1015.md', 'test/sampleData/ADS1015.md')
+        self.compareFiles('tmp/com/cyanobyte/ADS1015.py', 'test/sampleData/ADS1015.py')
+
     def test_BMP280(self):
         self.generatePeripheral('BMP280')
         self.compareFiles('tmp/com/cyanobyte/BMP280.md', 'test/sampleData/BMP280.md')
