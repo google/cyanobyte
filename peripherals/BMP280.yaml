@@ -165,6 +165,7 @@ functions:
                     var: valueXlsb
                     bits: 4
             return: output
+            returnType: int16
         - asCelsius:
             variables:
               - valueMsb: int8
@@ -232,6 +233,7 @@ functions:
                     - rawComp2
                   - 5120.0
             return: celsius
+            returnType: float32
   - pressure:
       title: Pressure as read by sensor
       description: Reads the atmospheric pressure
@@ -262,6 +264,7 @@ functions:
                     var: valueXlsb
                     bits: 4
             return: output
+            returnType: int16
         - asHpa:
             variables:
               - valueMsb: int8
@@ -275,7 +278,7 @@ functions:
               - valueDP6: int8
               - valueDP7: int8
               - valueDP8: int8
-              - valueDP9: in8
+              - valueDP9: int8
               - rawPressure: int16
               - rawTemperature: int16
               - rawComp1: int16
@@ -416,3 +419,4 @@ functions:
                   - hpa
                   - 100.0
             return: hpa
+            returnType: float32
