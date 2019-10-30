@@ -109,10 +109,8 @@ functions:
               - upper: int8
               - datum: int16
             logic:
-              - lower:
-                - read: '#/registers/AccelerometerX_Low'
-              - upper:
-                - read: '#/registers/AccelerometerX_High'
+              - lower: '#/registers/AccelerometerX_Low'
+              - upper: '#/registers/AccelerometerX_High'
               - datum:
                 - sum:
                   - bitShiftLeft:
@@ -127,10 +125,8 @@ functions:
               - upper: int8
               - datum: int16
             logic:
-              - lower:
-                - read: '#/registers/AccelerometerY_Low'
-              - upper:
-                - read: '#/registers/AccelerometerY_High'
+              - lower: '#/registers/AccelerometerY_Low'
+              - upper: '#/registers/AccelerometerY_High'
               - datum:
                 - sum:
                   - bitShiftLeft:
@@ -145,10 +141,8 @@ functions:
               - upper: int8
               - datum: int16
             logic:
-              - lower:
-                - read: '#/registers/AccelerometerZ_Low'
-              - upper:
-                - read: '#/registers/AccelerometerZ_High'
+              - lower: '#/registers/AccelerometerZ_Low'
+              - upper: '#/registers/AccelerometerZ_High'
               - datum:
                 - sum:
                   - bitShiftLeft:
@@ -164,12 +158,9 @@ functions:
               - accelerationScale: int8 # Linear acceleration scale variable
             logic:
               - accelerationScale: = 2 # Default scale level
-              - valueX:
-                - function: '#/functions/acceleration/xPlane'
-              - valueY:
-                - function: '#/functions/acceleration/yPlane'
-              - valueZ:
-                - function: '#/functions/acceleration/zPlane'
+              - valueX: '#/functions/acceleration/xPlane'
+              - valueY: '#/functions/acceleration/yPlane'
+              - valueZ: '#/functions/acceleration/zPlane'
               - valueX:
                 - product:
                   - division:
@@ -210,10 +201,8 @@ functions:
               - upper: int8
               - datum: int16
             logic:
-              - lower:
-                - read: '#/registers/MagnetometerX_Low'
-              - upper:
-                - read: '#/registers/MagnetometerX_High'
+              - lower: '#/registers/MagnetometerX_Low'
+              - upper: '#/registers/MagnetometerX_High'
               - datum:
                 - sum:
                   - bitShiftLeft:
@@ -228,10 +217,8 @@ functions:
               - upper: int8
               - datum: int16
             logic:
-              - lower:
-                - read: '#/registers/MagnetometerY_Low'
-              - upper:
-                - read: '#/registers/MagnetometerY_High'
+              - lower: '#/registers/MagnetometerY_Low'
+              - upper: '#/registers/MagnetometerY_High'
               - datum:
                 - sum:
                   - bitShiftLeft:
@@ -246,10 +233,8 @@ functions:
               - upper: int8
               - datum: int16
             logic:
-              - lower:
-                - read: '#/registers/MagnetometerZ_Low'
-              - upper:
-                - read: '#/registers/MagnetometerZ_High'
+              - lower: '#/registers/MagnetometerZ_Low'
+              - upper: '#/registers/MagnetometerZ_High'
               - datum:
                 - sum:
                   - bitShiftLeft:
@@ -264,10 +249,8 @@ functions:
               - dividend: int16
               - heading: int16
             logic:
-              - valueX:
-                - function: '#/functions/orientation/xPlane'
-              - valueY:
-                - function: '#/functions/orientation/yPlane'
+              - valueX: '#/functions/orientation/xPlane'
+              - valueY: '#/functions/orientation/yPlane'
               - dividend:
                 - division:
                   - valueX
