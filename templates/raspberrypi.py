@@ -1,4 +1,5 @@
 {% import 'macros.jinja2' as utils %}
+{% import 'python.jinja2' as py %}
 {% set template = namespace(enum=false, sign=false, math=false, struct=false) %}
 {{ utils.pad_string('# ', utils.license(info.copyright.name, info.copyright.date, info.license.name)) -}}
 #
@@ -7,28 +8,6 @@
 """
 Class for {{ info.title }}
 """
-{% macro params_int(input) -%}
-{% for variable in input %}
-{% for key in variable.keys() -%}
-{% if key != 'value' %}{{key}}, {% endif %}
-{%- endfor %}
-{% endfor %}
-{%- endmacro %}
-
-{% macro params(input) -%}
-{{params_int(input)[:-2]}}
-{%- endmacro %}
-
-{% macro variables(vars) -%}
-{% for var in vars %}
-{% for key in var.keys() %}
-{# Technically in Python we don't need to declare vars ahead of time. #}
-{# But we'll do so anyway to verify this works. #}
-        {{key | camel_to_snake}} = None # Variable declaration
-{% endfor %}
-{% endfor %}
-{%- endmacro %}
-
 {% macro logic(logicalSteps, function) -%}
 
 {% for step in logicalSteps %}
@@ -37,130 +16,29 @@ Class for {{ info.title }}
 {% if key == 'cmdWrite' %}
         self.set_{{step.register[12:].lower()}}({{step.value}})
         {% break %}
-{% endif %}
+{%- endif %}
 {# Check if assignment op #}
 {% if step[key][0:1] == "=" %}
         {{key | camel_to_snake}} {{step[key]}}
-{% endif %}
-
+{%- endif %}
 {# Check if assignment is a send-op #}
 {% if key == 'send' %}
         self.set_{{function.register[12:].lower()}}({{step[key]}})
-{% endif %}
-
+{%- endif %}
+{# Check if assignment is register read op #}
+{% if step[key][:12] == '#/registers/' %}
+        {{key | camel_to_snake}} = self.get_{{step[key][12:].lower()}}()
+{%- endif %}
+{# Check if assignment is function call op #}
+{% if step[key][:12] == '#/functions/' %}
+        {{key | camel_to_snake}} = self.{{step[key].lower() | regex_replace('#/functions/(?P<function>.+)/(?P<compute>.+)', '\\g<function>_\\g<compute>')}}()
+{%- endif %}
 {# If the value is a list, then this is a logical setter #}
 {% if step[key] is iterable and step[key] is not string %}
-        {{key | camel_to_snake}} = {{recursiveAssignLogic(step[key][0], step[key][0].keys()) -}}
-{% endif %}
+        {{key | camel_to_snake}} = {{py.recursiveAssignLogic(step[key][0], step[key][0].keys()) -}}
+{%- endif %}
 
 {% endfor %}
-{% endfor %}
-{%- endmacro %}
-
-{% macro recursiveAssignLogic(logicalStep, keys) -%}
-{% for key in keys -%}
-{# Read from a register #}
-{# {{key}} {{logicalStep[key]}} #}
-{% if key == 'read' -%}
-    self.get_{{logicalStep[key][12:].lower()}}()
-{%- endif %}
-{# Read from a function #}
-{# {{key}} {{logicalStep[key]}} #}
-{% if key == 'function' -%}
-    self.{{logicalStep[key].lower() | regex_replace('#/functions/(?P<function>.+)/(?P<compute>.+)', '\\g<function>_\\g<compute>')}}()
-{%- endif %}
-{# Perform a recursive summation from an array of logical steps #}
-{% if key == 'sum' -%}
-    ({%- for step in logicalStep[key] -%}
-    {% if step is iterable and step is not string -%}
-    {{ recursiveAssignLogic(step, step.keys()) -}}
-    {%- else -%}
-    {{step | camel_to_snake}}
-    {%- endif %}
-    {{- "+" if not loop.last -}}
-    {%- endfor -%})
-{%- endif %}
-{# Perform a recursive difference from an array of logical steps #}
-{% if key == 'difference' -%}
-    ({%- for step in logicalStep[key] -%}
-    {% if step is iterable and step is not string -%}
-    {{ recursiveAssignLogic(step, step.keys()) -}}
-    {%- else -%}
-    {{step | camel_to_snake}}
-    {%- endif %}
-    {{- "-" if not loop.last -}}
-    {%- endfor -%})
-{%- endif %}
-{# Perform a recursive product from an array of logical steps #}
-{% if key == 'product' -%}
-    ({%- for step in logicalStep[key] -%}
-    {% if step is iterable and step is not string -%}
-    {{ recursiveAssignLogic(step, step.keys()) -}}
-    {%- else -%}
-    {{step | camel_to_snake}}
-    {%- endif %}
-    {{- "*" if not loop.last -}}
-    {%- endfor -%})
-{%- endif %}
-{# Perform a recursive division from an array of logical steps #}
-{% if key == 'division' -%}
-    ({%- for step in logicalStep[key] -%}
-    {% if step is iterable and step is not string -%}
-    {{ recursiveAssignLogic(step, step.keys()) -}}
-    {%- else -%}
-    {{ step | camel_to_snake }}
-    {%- endif %}
-    {{- "/" if not loop.last -}}
-    {%- endfor -%})
-{%- endif %}
-{# Perform a recursive modulus from an array of logical steps #}
-{% if key == 'modulus' -%}
-    ({%- for step in logicalStep[key] -%}
-    {% if step is iterable and step is not string -%}
-    {{ recursiveAssignLogic(step, step.keys()) -}}
-    {%- else -%}
-    {{ step | camel_to_snake }}
-    {%- endif %}
-    {{- "%" if not loop.last -}}
-    {%- endfor -%})
-{%- endif %}
-{# Perform a bitwise OR from an array of logical steps #}
-{% if key == 'bitwiseOr' -%}
-    ({%- for step in logicalStep[key] -%}
-    {% if step is iterable and step is not string -%}
-    {{ recursiveAssignLogic(step, step.keys()) -}}
-    {%- else -%}
-    {{step | camel_to_snake}}
-    {%- endif %}
-    {{- "|" if not loop.last -}}
-    {%- endfor -%})
-{%- endif %}
-{# Perform a bitwise AND from an array of logical steps #}
-{% if key == 'bitwiseAnd' -%}
-    ({%- for step in logicalStep[key] -%}
-    {% if step is iterable and step is not string -%}
-    {{ recursiveAssignLogic(step, step.keys()) -}}
-    {%- else -%}
-    {{step | camel_to_snake}}
-    {%- endif %}
-    {{- "&" if not loop.last -}}
-    {%- endfor -%})
-{%- endif %}
-{# Perform a power operation #}
-{% if key == 'power' -%}
-    math.pow({{logicalStep[key][0]}}, {{logicalStep[key][1]}})
-{%- endif %}
-{# Perform an arc tangent operation #}
-{% if key == 'arc tangent' -%}
-    math.atan({{logicalStep[key]}})
-{%- endif %}
-{# Bitwise ops #}
-{%- if key == 'bitShiftLeft' -%}
-    ({{logicalStep.var | camel_to_snake}} << {{logicalStep.bits}})
-{%- endif %}
-{%- if key == 'bitShiftRight' -%}
-    ({{logicalStep.var | camel_to_snake}} >> {{logicalStep.bits}})
-{%- endif %}
 {%- endfor %}
 {%- endmacro %}
 
@@ -170,50 +48,7 @@ try:
 except ImportError:
     print("Fatal error! Make sure to install smbus!")
     sys.exit(1)
-{# Create enums for functions #}
-{% for function in functions %}
-{% for key in function.keys() %}
-{% if function[key].enum %}
-{# Optionally import class #}
-{% if template.enum is sameas false %}
-from enum import Enum
-{% set template.enum = true %}
-{% endif %}
-{% endif %}
-{# Check if we need to import `math` lib #}
-{% if function[key].computed %}
-{% for compute in function[key].computed %}
-{% for computeKey in compute.keys() %}
-{% if compute[computeKey].output == 'int16' %}
-{% if template.struct is sameas false %}
-import struct
-{% set template.struct = true %}
-{% endif %}
-{% endif %}
-
-{% macro scanForMathLib(logicKeys) -%}
-{% for logic in logicKeys %}
-{% if logic is mapping %}
-{% for logicKey in logic.keys() %}
-{% if logicKey == 'power' or logicKey == 'arc tangent' %}
-{% if template.math is sameas false %}
-import math
-{% set template.math = true %}
-{% endif %}
-{% elif logic[logicKey] is iterable and logic[logicKey] is not string -%}
-{{- scanForMathLib(logic[logicKey]) -}}
-{% endif %}
-{% endfor %}
-{% endif %}
-{% endfor %}
-{%- endmacro %}
-{{- scanForMathLib(compute[computeKey].logic) -}}
-{% endfor %}
-{% endfor %}
-{% endif %}
-{% endfor %}
-{% endfor %}
-
+{{ py.importStdLibs(functions, template) -}}
 {# Create enums for functions #}
 {% for function in functions %}
 {% for key in function.keys() %}
@@ -365,7 +200,7 @@ class {{ info.title }}:
     {% for compute in function[key].computed %}
     {% for computeKey in compute.keys() %}
     {% if compute[computeKey].input %}
-    def {{key.lower()}}_{{computeKey.lower()}}(self, {{params(compute[computeKey].input)}}):
+    def {{key.lower()}}_{{computeKey.lower()}}(self, {{py.params(compute[computeKey].input)}}):
     {% else %}
     def {{key.lower()}}_{{computeKey.lower()}}(self):
     {% endif %}
@@ -373,8 +208,7 @@ class {{ info.title }}:
 {{utils.pad_string("        ", function[key].description)}}
         """
         {# Declare our variables #}
-{{ variables(compute[computeKey].variables) }}
-
+{{ py.variables(compute[computeKey].variables) }}
         {# Read `value` if applicable #}
         {%- for variable in compute[computeKey].input %}
         {% for varKey in variable.keys() %}
@@ -386,7 +220,6 @@ class {{ info.title }}:
         {% endfor -%}
         {# Handle the logic #}
 {{ logic(compute[computeKey].logic, function[key]) }}
-
         {# Return if applicable #}
         {# Return a tuple #}
         {% if compute[computeKey].return is iterable and compute[computeKey].return is not string %}

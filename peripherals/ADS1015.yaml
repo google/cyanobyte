@@ -157,8 +157,7 @@ functions:
               - programmableGain: int8
               - processed: int16
             logic:
-              - config:
-                - read: '#/registers/Config'
+              - config: '#/registers/Config'
               - config:
                 - bitwiseOr:
                   - config
@@ -172,8 +171,7 @@ functions:
               - cmdWrite:
                 register: '#/registers/Config'
                 value: config
-              - raw:
-                - read: '#/registers/Conversion'
+              - raw: '#/registers/Conversion'
               - datumA:
                 - bitwiseAnd:
                   - raw

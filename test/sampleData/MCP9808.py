@@ -5,10 +5,6 @@
 Class for MCP9808
 """
 
-
-
-
-
 import sys
 try:
     import smbus
@@ -16,7 +12,6 @@ except ImportError:
     print("Fatal error! Make sure to install smbus!")
     sys.exit(1)
 from enum import Enum
-
 class LimitHysteresisValues(Enum):
     """
     Valid values for TUPPER and TLOWER Limit Hysteresis bits

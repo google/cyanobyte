@@ -18,10 +18,6 @@
 Class for MCP4725
 """
 
-
-
-
-
 import sys
 try:
     import smbus
@@ -29,7 +25,6 @@ except ImportError:
     print("Fatal error! Make sure to install smbus!")
     sys.exit(1)
 from enum import Enum
-
 
 
 class DigitalOutValues(Enum):
@@ -155,16 +150,8 @@ class MCP4725:
 
         """
 
-
         output = output / vcc * 4096
-
-
-
-
         self.set_eeprom(output)
-
-
-
 
         return []
 
@@ -186,13 +173,8 @@ class MCP4725:
         """
         voltage = None # Variable declaration
 
-
         # Read value of register into a variable
         value = self.get_eeprom()
         voltage = value / 4096 * vcc
-
-
-
-
 
         return voltage

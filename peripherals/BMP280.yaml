@@ -147,12 +147,9 @@ functions:
               - valueXlsb: int8
               - output: int16
             logic:
-              - valueMsb:
-                - read: '#/registers/TempMsb'
-              - valueLsb:
-                - read: '#/registers/TempLsb'
-              - valueXlsb:
-                - read: '#/registers/TempXlsb'
+              - valueMsb: '#/registers/TempMsb'
+              - valueLsb: '#/registers/TempLsb'
+              - valueXlsb: '#/registers/TempXlsb'
               - output:
                 - sum:
                   - bitShiftLeft:
@@ -179,18 +176,12 @@ functions:
               - rawComp3: int16
               - celsius: float32
             logic:
-              - valueMsb:
-                - read: '#/registers/TempMsb'
-              - valueLsb:
-                - read: '#/registers/TempLsb'
-              - valueXlsb:
-                - read: '#/registers/TempXlsb'
-              - valueDT1:
-                - read: '#/registers/DigT1'
-              - valueDT2:
-                - read: '#/registers/DigT2'
-              - valueDT3:
-                - read: '#/registers/DigT3'
+              - valueMsb: '#/registers/TempMsb'
+              - valueLsb: '#/registers/TempLsb'
+              - valueXlsb: '#/registers/TempXlsb'
+              - valueDT1: '#/registers/DigT1'
+              - valueDT2: '#/registers/DigT2'
+              - valueDT3: '#/registers/DigT3'
               - rawTemp:
                 - sum:
                   - bitShiftLeft:
@@ -244,12 +235,9 @@ functions:
               - valueXlsb: int8
               - output: int16
             logic:
-              - valueMsb:
-                - read: '#/registers/PressureMsb'
-              - valueLsb:
-                - read: '#/registers/PressureLsb'
-              - valueXlsb:
-                - read: '#/registers/PressureXlsb'
+              - valueMsb: '#/registers/PressureMsb'
+              - valueLsb: '#/registers/PressureLsb'
+              - valueXlsb: '#/registers/PressureXlsb'
               - output:
                 - sum:
                   - bitShiftLeft:
@@ -283,32 +271,19 @@ functions:
               - rawComp3: int16
               - hpa: float32
             logic:
-              - valueMsb:
-                - read: '#/registers/PressureMsb'
-              - valueLsb:
-                - read: '#/registers/PressureLsb'
-              - valueXlsb:
-                - read: '#/registers/PressureXlsb'
-              - valueDP1:
-                - read: '#/registers/DigP1'
-              - valueDP2:
-                - read: '#/registers/DigP2'
-              - valueDP3:
-                - read: '#/registers/DigP3'
-              - valueDP4:
-                - read: '#/registers/DigP4'
-              - valueDP5:
-                - read: '#/registers/DigP5'
-              - valueDP6:
-                - read: '#/registers/DigP6'
-              - valueDP7:
-                - read: '#/registers/DigP7'
-              - valueDP8:
-                - read: '#/registers/DigP8'
-              - valueDP9:
-                - read: '#/registers/DigP9'
-              - rawTemperature:
-                - function: '#/functions/temperature/asCelsius'
+              - valueMsb: '#/registers/PressureMsb'
+              - valueLsb: '#/registers/PressureLsb'
+              - valueXlsb: '#/registers/PressureXlsb'
+              - valueDP1: '#/registers/DigP1'
+              - valueDP2: '#/registers/DigP2'
+              - valueDP3: '#/registers/DigP3'
+              - valueDP4: '#/registers/DigP4'
+              - valueDP5: '#/registers/DigP5'
+              - valueDP6: '#/registers/DigP6'
+              - valueDP7: '#/registers/DigP7'
+              - valueDP8: '#/registers/DigP8'
+              - valueDP9: '#/registers/DigP9'
+              - rawTemperature: '#/functions/temperature/asCelsius'
               - rawTemperature:
                 - product:
                   - rawTemperature
