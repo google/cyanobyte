@@ -27,8 +27,6 @@ except ImportError:
 from enum import Enum
 
 
-
-
 class DigitalOutValues(Enum):
     """
     Valid values for Digital (binary) output
@@ -152,18 +150,8 @@ class MCP4725:
 
         """
 
-
         output = output / vcc * 4096
-
-
-
-
-
         self.set_eeprom(output)
-
-
-
-
 
         return []
 
@@ -185,14 +173,8 @@ class MCP4725:
         """
         voltage = None # Variable declaration
 
-
         # Read value of register into a variable
         value = self.get_eeprom()
         voltage = value / 4096 * vcc
-
-
-
-
-
 
         return voltage

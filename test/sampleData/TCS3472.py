@@ -25,8 +25,6 @@ except ImportError:
     print("Fatal error! Make sure to install smbus!")
     sys.exit(1)
 from enum import Enum
-
-
 class InitValues(Enum):
     """
     Valid values for Setup the device configuration

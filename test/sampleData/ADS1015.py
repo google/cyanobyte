@@ -26,8 +26,6 @@ except ImportError:
     sys.exit(1)
 from enum import Enum
 
-
-
 class SampleRateValues(Enum):
     """
     Valid values for Setup sample rate for reading analog voltage
@@ -186,58 +184,16 @@ class ADS1015:
         programmable_gain = None # Variable declaration
         processed = None # Variable declaration
 
-
-
-
         config = self.get_config()
-
-
-
-
-
-
         config = (config|(channel << 12))
-
-
-
-
         config = (config|32768)
         self.set_config(config)
-
-
         raw = self.get_conversion()
-
-
-
-
-
-
         datum_a = (raw&65280)
-
-
-
-
         datum_a = (datum_a >> 8)
-
-
-
-
         datum_b = (raw&255)
-
-
-
-
         processed = ((datum_a << 4)|(datum_b >> 4))
         programmable_gain = 6144
-
-
-
-
-
-
-
-
         processed = ((processed/2047/1000)*programmable_gain)
-
 
         return processed

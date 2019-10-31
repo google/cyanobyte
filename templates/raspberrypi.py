@@ -21,22 +21,18 @@ Class for {{ info.title }}
 {% if step[key][0:1] == "=" %}
         {{key | camel_to_snake}} {{step[key]}}
 {%- endif %}
-
 {# Check if assignment is a send-op #}
 {% if key == 'send' %}
         self.set_{{function.register[12:].lower()}}({{step[key]}})
 {%- endif %}
-
 {# Check if assignment is register read op #}
 {% if step[key][:12] == '#/registers/' %}
         {{key | camel_to_snake}} = self.get_{{step[key][12:].lower()}}()
 {%- endif %}
-
 {# Check if assignment is function call op #}
 {% if step[key][:12] == '#/functions/' %}
         {{key | camel_to_snake}} = self.{{step[key].lower() | regex_replace('#/functions/(?P<function>.+)/(?P<compute>.+)', '\\g<function>_\\g<compute>')}}()
 {%- endif %}
-
 {# If the value is a list, then this is a logical setter #}
 {% if step[key] is iterable and step[key] is not string %}
         {{key | camel_to_snake}} = {{py.recursiveAssignLogic(step[key][0], step[key][0].keys()) -}}
@@ -52,8 +48,7 @@ try:
 except ImportError:
     print("Fatal error! Make sure to install smbus!")
     sys.exit(1)
-{{ py.importStdLibs(functions, template) }}
-
+{{ py.importStdLibs(functions, template) -}}
 {# Create enums for functions #}
 {% for function in functions %}
 {% for key in function.keys() %}
@@ -214,7 +209,6 @@ class {{ info.title }}:
         """
         {# Declare our variables #}
 {{ py.variables(compute[computeKey].variables) }}
-
         {# Read `value` if applicable #}
         {%- for variable in compute[computeKey].input %}
         {% for varKey in variable.keys() %}
@@ -226,7 +220,6 @@ class {{ info.title }}:
         {% endfor -%}
         {# Handle the logic #}
 {{ logic(compute[computeKey].logic, function[key]) }}
-
         {# Return if applicable #}
         {# Return a tuple #}
         {% if compute[computeKey].return is iterable and compute[computeKey].return is not string %}
