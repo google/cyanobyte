@@ -18,10 +18,6 @@
 Class for LSM303D
 """
 
-
-
-
-
 import sys
 try:
     import smbus
@@ -34,6 +30,7 @@ import struct
 
 
 import math
+
 
 
 
@@ -333,7 +330,13 @@ class LSM303D:
         lower = self.get_accelerometerx_low()
 
 
+
+
         upper = self.get_accelerometerx_high()
+
+
+
+
 
 
         datum = ((upper << 8)+lower)
@@ -357,7 +360,13 @@ class LSM303D:
         lower = self.get_accelerometery_low()
 
 
+
+
         upper = self.get_accelerometery_high()
+
+
+
+
 
 
         datum = ((upper << 8)+lower)
@@ -381,7 +390,13 @@ class LSM303D:
         lower = self.get_accelerometerz_low()
 
 
+
+
         upper = self.get_accelerometerz_high()
+
+
+
+
 
 
         datum = ((upper << 8)+lower)
@@ -407,19 +422,32 @@ class LSM303D:
 
 
 
+
+
         value_x = self.acceleration_xplane()
+
+
 
 
         value_y = self.acceleration_yplane()
 
 
+
+
         value_z = self.acceleration_zplane()
+
+
+
 
 
         value_x = ((value_x/math.pow(2, 15))*acceleration_scale)
 
 
+
+
         value_y = ((value_y/math.pow(2, 15))*acceleration_scale)
+
+
 
 
         value_z = ((value_z/math.pow(2, 15))*acceleration_scale)
@@ -441,7 +469,13 @@ class LSM303D:
         lower = self.get_magnetometerx_low()
 
 
+
+
         upper = self.get_magnetometerx_high()
+
+
+
+
 
 
         datum = ((upper << 8)+lower)
@@ -465,7 +499,13 @@ class LSM303D:
         lower = self.get_magnetometery_low()
 
 
+
+
         upper = self.get_magnetometery_high()
+
+
+
+
 
 
         datum = ((upper << 8)+lower)
@@ -489,7 +529,13 @@ class LSM303D:
         lower = self.get_magnetometerz_low()
 
 
+
+
         upper = self.get_magnetometerz_high()
+
+
+
+
 
 
         datum = ((upper << 8)+lower)
@@ -511,19 +557,31 @@ class LSM303D:
 
 
 
+
         value_x = self.orientation_xplane()
+
+
 
 
         value_y = self.orientation_yplane()
 
 
+
+
+
         dividend = (value_x/value_y)
+
+
 
 
         heading = math.atan(dividend)
 
 
+
+
         heading = (heading%(2*3.141592653589793))
+
+
 
 
         heading = ((heading/3.141592653589793)*180)

@@ -18,10 +18,6 @@
 Class for ADS1015
 """
 
-
-
-
-
 import sys
 try:
     import smbus
@@ -29,6 +25,7 @@ except ImportError:
     print("Fatal error! Make sure to install smbus!")
     sys.exit(1)
 from enum import Enum
+
 
 
 class SampleRateValues(Enum):
@@ -195,7 +192,13 @@ class ADS1015:
         config = self.get_config()
 
 
+
+
+
+
         config = (config|(channel << 12))
+
+
 
 
         config = (config|32768)
@@ -205,17 +208,30 @@ class ADS1015:
         raw = self.get_conversion()
 
 
+
+
+
+
         datum_a = (raw&65280)
+
+
 
 
         datum_a = (datum_a >> 8)
 
 
+
+
         datum_b = (raw&255)
+
+
 
 
         processed = ((datum_a << 4)|(datum_b >> 4))
         programmable_gain = 6144
+
+
+
 
 
 

@@ -18,10 +18,6 @@
 Class for MCP4725
 """
 
-
-
-
-
 import sys
 try:
     import smbus
@@ -29,6 +25,7 @@ except ImportError:
     print("Fatal error! Make sure to install smbus!")
     sys.exit(1)
 from enum import Enum
+
 
 
 
@@ -161,7 +158,9 @@ class MCP4725:
 
 
 
+
         self.set_eeprom(output)
+
 
 
 
@@ -190,6 +189,7 @@ class MCP4725:
         # Read value of register into a variable
         value = self.get_eeprom()
         voltage = value / 4096 * vcc
+
 
 
 

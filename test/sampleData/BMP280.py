@@ -18,16 +18,13 @@
 Class for BMP280
 """
 
-
-
-
-
 import sys
 try:
     import smbus
 except ImportError:
     print("Fatal error! Make sure to install smbus!")
     sys.exit(1)
+
 
 
 
@@ -485,10 +482,18 @@ class BMP280:
         value_msb = self.get_tempmsb()
 
 
+
+
         value_lsb = self.get_templsb()
 
 
+
+
         value_xlsb = self.get_tempxlsb()
+
+
+
+
 
 
         output = ((value_msb << 12)+(value_lsb << 4)+(value_xlsb >> 4))
@@ -518,31 +523,53 @@ class BMP280:
         value_msb = self.get_tempmsb()
 
 
+
+
         value_lsb = self.get_templsb()
+
+
 
 
         value_xlsb = self.get_tempxlsb()
 
 
+
+
         value_d_t1 = self.get_digt1()
+
+
 
 
         value_d_t2 = self.get_digt2()
 
 
+
+
         value_d_t3 = self.get_digt3()
+
+
+
+
 
 
         raw_temp = ((value_msb << 12)+(value_lsb << 4)+(value_xlsb >> 4))
 
 
+
+
         raw_comp1 = (((raw_temp/16384.0)-(value_d_t1/1024.0))*value_d_t2)
+
+
 
 
         raw_comp3 = ((raw_temp/131072.0)-(value_d_t1/8192.0))
 
 
+
+
         raw_comp2 = (raw_comp3*raw_comp3*value_d_t3)
+
+
 
 
         celsius = ((raw_comp1+raw_comp2)/5120.0)
@@ -565,10 +592,18 @@ class BMP280:
         value_msb = self.get_pressuremsb()
 
 
+
+
         value_lsb = self.get_pressurelsb()
 
 
+
+
         value_xlsb = self.get_pressurexlsb()
+
+
+
+
 
 
         output = ((value_msb << 12)+(value_lsb << 4)+(value_xlsb >> 4))
@@ -605,82 +640,138 @@ class BMP280:
         value_msb = self.get_pressuremsb()
 
 
+
+
         value_lsb = self.get_pressurelsb()
+
+
 
 
         value_xlsb = self.get_pressurexlsb()
 
 
+
+
         value_d_p1 = self.get_digp1()
+
+
 
 
         value_d_p2 = self.get_digp2()
 
 
+
+
         value_d_p3 = self.get_digp3()
+
+
 
 
         value_d_p4 = self.get_digp4()
 
 
+
+
         value_d_p5 = self.get_digp5()
+
+
 
 
         value_d_p6 = self.get_digp6()
 
 
+
+
         value_d_p7 = self.get_digp7()
+
+
 
 
         value_d_p8 = self.get_digp8()
 
 
+
+
         value_d_p9 = self.get_digp9()
+
+
+
 
 
         raw_temperature = self.temperature_ascelsius()
 
 
+
+
+
         raw_temperature = (raw_temperature*5120.0)
+
+
 
 
         raw_pressure = ((value_msb << 12)+(value_lsb << 4)+(value_xlsb >> 4))
 
 
+
+
         raw_comp1 = ((raw_temperature/2)-64000.0)
+
+
 
 
         raw_comp2 = ((raw_comp1*raw_comp1*value_d_p6)/32768.0)
 
 
+
+
         raw_comp2 = (raw_comp2+(raw_comp1*value_d_p5*2.0))
+
+
 
 
         raw_comp2 = ((raw_comp2/4.0)+(value_d_p4*65536.0))
 
 
+
+
         raw_comp3 = (value_d_p3*raw_comp1*raw_comp1)
+
+
 
 
         raw_comp1 = (((raw_comp3/524288.0)+(value_d_p2*raw_comp1))/524288.0)
 
 
+
+
         raw_comp1 = ((1.0+(raw_comp1/32768.0))*value_d_p1)
+
+
 
 
         hpa = (1048576.0-raw_pressure)
 
 
+
+
         hpa = ((hpa-(raw_comp2/4096.0))*(6250.0/raw_comp1))
+
+
 
 
         raw_comp1 = ((value_d_p9*hpa*hpa)/2147483648.0)
 
 
+
+
         raw_comp2 = ((hpa*value_d_p8)/32768.0)
 
 
+
+
         hpa = (hpa+((raw_comp1+raw_comp2+value_d_p7)/16.0))
+
+
 
 
         hpa = (hpa/100.0)
