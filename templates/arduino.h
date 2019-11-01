@@ -1,4 +1,5 @@
 {% import 'macros.jinja2' as utils %}
+{% import 'clang.jinja2' as cpp %}
 {% set template = namespace(math=false) %}
 /*
 {{ utils.pad_string('* ', utils.license(info.copyright.name, info.copyright.date, info.license.name)) -}}
@@ -8,46 +9,6 @@
 * Class for {{ info.title }}
 {{utils.pad_string("* ", info.description)}}
 */
-
-{% macro numconv(cyan) -%}
-{%- if cyan == 'int8' -%}
-char
-{%- elif cyan == 'uint8' -%}
-uint8_t
-{%- elif cyan == 'int16' -%}
-short
-{%- elif cyan == 'uint16' -%}
-uint16_t
-{%- elif cyan == 'float32' -%}
-float
-{%- else -%}
-/* ERROR UNDEFINED TYPE */
-{%- endif -%}
-{%- endmacro %}
-
-{% macro numtype(len, sign) -%}
-{%- if sign -%}
-{%- if len <= 8 -%}
-char
-{%- elif len <= 16 -%}
-short
-{%- elif len <= 32 -%}
-long
-{%- else -%}
-long long
-{%- endif -%}
-{%- else -%}
-{%- if len <= 8 -%}
-uint8_t
-{%- elif len <= 16 -%}
-uint16_t
-{%- elif len <= 32 -%}
-uint32_t
-{%- else -%}
-uint64_t
-{%- endif -%}
-{%- endif -%}
-{%- endmacro %}
 
 #ifndef _{{info.title}}_H_
 #define _{{info.title}}_H_
@@ -83,23 +44,46 @@ uint64_t
 {% endfor %}
 {% endfor %}
 
+{# Create enums for functions #}
+{% for function in functions %}
+{% for key in function.keys() %}
+{% if function[key].enum %}
+{# Create enum #}
+/*
+{{utils.pad_string(" * ", "Valid values for " + function[key].title)}}
+ */
+enum {{key}} {
+    {% set args = namespace(index=0) %}
+    {% for enumObject in function[key].enum %}
+    {% for enumKey in enumObject.keys() %}
+    {{key.upper()}}_{{enumKey.upper()}} = {{enumObject[enumKey].value}}{{- "," if args.index + 1 < function[key].enum | length }} // {{enumObject[enumKey].title}}
+    {% set args.index = args.index + 1 %}
+    {% endfor %}
+    {% endfor %}
+};
+typedef enum {{key}} {{key}}_t;
+{% endif %}
+{% endfor %}
+{% endfor %}
+
 class {{info.title}} {
     public:
         {{info.title}}(TwoWire& wire);
 
-        int begin();
+        void begin();
         void end();
         {% for register in registers -%}
         {% for key in register.keys() %}
+        {% set length = register[key].length %}
         /**
 {{utils.pad_string("         * ", register[key].description)}}
          */
-        {{numtype(register[key].length)}} read{{key}}();
+        {{cpp.numtype(register[key].length)}} read{{key}}();
 
         /**
 {{utils.pad_string("         * ", register[key].description)}}
          */
-        int write{{key}}(uint8_t data);
+        int write{{key}}({{cpp.numtype(length)}} data);
         {% endfor %}
         {%- endfor %}
         {% for function in functions %}
@@ -108,13 +92,13 @@ class {{info.title}} {
         /**
 {{utils.pad_string("         * ", function[key].description)}}
          */
-        {{numtype(register[function[key].register[12:]].length)}} get{{key}}();
+        {{cpp.registerSize(registers, function[key].register[12:])}} get{{key}}();
         {% endif %}
         {% if 'W' is in(function[key].readWrite) %}
         /**
 {{utils.pad_string("         * ", function[key].description)}}
          */
-        int set{{key}}(uint8_t data);
+        {{cpp.registerSize(registers, function[key].register[12:])}} set{{key}}(uint8_t data);
         {% endif %}
 
         {% if function[key].computed %}
@@ -124,9 +108,9 @@ class {{info.title}} {
 {{utils.pad_string("         * ", function[key].description)}}
          */
         {% if compute[computeKey].input %}
-        {{numconv(compute[computeKey].returnType)}} {{key}}{{computeKey}}({{params(compute[computeKey].input)}});
+        {{cpp.returnType(compute[computeKey])}} {{key}}{{computeKey}}({{cpp.params(compute[computeKey])}});
         {% else %}
-        {{numconv(compute[computeKey].returnType)}} {{key}}{{computeKey}}();
+        {{cpp.returnType(compute[computeKey])}} {{key}}{{computeKey}}({{cpp.params(compute[computeKey])}});
         {% endif %}
         {% endfor %}
         {% endfor %}

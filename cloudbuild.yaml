@@ -23,6 +23,10 @@ steps:
     - 'src/codegen.py'
     - '-t'
     - 'templates/raspberrypi.py'
+    - '-t'
+    - 'templates/arduino.cpp'
+    - '-t'
+    - 'templates/arduino.h'
     - '-o'
     - './build'
     - '-i'
@@ -37,7 +41,7 @@ steps:
     - 'peripherals/MCP9808.yaml'
     - '-i'
     - 'peripherals/TCS3472.yaml'
-  id: Sample Python codegen
+  id: Sample codegen
 artifacts:
   objects:
     # Store generated files in a Cloud Storage bucket with the commit hash as directory

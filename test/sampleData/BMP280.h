@@ -20,18 +20,17 @@
 
 */
 
-
-
 #ifndef _BMP280_H_
 #define _BMP280_H_
 #include <Arduino.h>
 #include <Wire.h>
 
+
 class BMP280 {
     public:
         BMP280(TwoWire& wire);
 
-        int begin();
+        void begin();
         void end();
         /**
          * Part 1 of temperature
@@ -76,7 +75,7 @@ class BMP280 {
          * Used for Celcius conversion
 
          */
-        int writeDigT1(uint8_t data);
+        int writeDigT1(uint16_t data);
         /**
          * Used for Celcius conversion
 
@@ -87,7 +86,7 @@ class BMP280 {
          * Used for Celcius conversion
 
          */
-        int writeDigT2(uint8_t data);
+        int writeDigT2(uint16_t data);
         /**
          * Used for Celcius conversion
 
@@ -98,7 +97,7 @@ class BMP280 {
          * Used for Celcius conversion
 
          */
-        int writeDigT3(uint8_t data);
+        int writeDigT3(uint16_t data);
         /**
          * Part 1 of Pressure
 
@@ -142,7 +141,7 @@ class BMP280 {
          * Used for Pascals conversion
 
          */
-        int writeDigP1(uint8_t data);
+        int writeDigP1(uint16_t data);
         /**
          * Used for Pascals conversion
 
@@ -153,7 +152,7 @@ class BMP280 {
          * Used for Pascals conversion
 
          */
-        int writeDigP2(uint8_t data);
+        int writeDigP2(uint16_t data);
         /**
          * Used for Pascals conversion
 
@@ -164,7 +163,7 @@ class BMP280 {
          * Used for Pascals conversion
 
          */
-        int writeDigP3(uint8_t data);
+        int writeDigP3(uint16_t data);
         /**
          * Used for Pascals conversion
 
@@ -175,7 +174,7 @@ class BMP280 {
          * Used for Pascals conversion
 
          */
-        int writeDigP4(uint8_t data);
+        int writeDigP4(uint16_t data);
         /**
          * Used for Pascals conversion
 
@@ -186,7 +185,7 @@ class BMP280 {
          * Used for Pascals conversion
 
          */
-        int writeDigP5(uint8_t data);
+        int writeDigP5(uint16_t data);
         /**
          * Used for Pascals conversion
 
@@ -197,7 +196,7 @@ class BMP280 {
          * Used for Pascals conversion
 
          */
-        int writeDigP6(uint8_t data);
+        int writeDigP6(uint16_t data);
         /**
          * Used for Pascals conversion
 
@@ -208,7 +207,7 @@ class BMP280 {
          * Used for Pascals conversion
 
          */
-        int writeDigP7(uint8_t data);
+        int writeDigP7(uint16_t data);
         /**
          * Used for Pascals conversion
 
@@ -219,7 +218,7 @@ class BMP280 {
          * Used for Pascals conversion
 
          */
-        int writeDigP8(uint8_t data);
+        int writeDigP8(uint16_t data);
         /**
          * Used for Pascals conversion
 
@@ -230,7 +229,7 @@ class BMP280 {
          * Used for Pascals conversion
 
          */
-        int writeDigP9(uint8_t data);
+        int writeDigP9(uint16_t data);
 
         /**
          * Reads the temperature

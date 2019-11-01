@@ -22,12 +22,6 @@
 
 
 
-
-
-
-
-
-
 short _sign(val, length) {
     // Convert unsigned integer to signed integer
     if val & (1 << (length - 1)) {
@@ -36,7 +30,6 @@ short _sign(val, length) {
     return val;
 }
 
-// FIXME Use proper types for numbers
 #include "BMP280.h"
 #define DEVICE_ADDRESS 119
 
@@ -64,7 +57,7 @@ BMP280::BMP280(TwoWire& wire) :
 {
 }
 
-int BMP280::begin() {
+void BMP280::begin() {
     _wire->begin();
 }
 
@@ -72,7 +65,8 @@ void BMP280::end() {
     _wire->end();
 }
 
-int BMP280::readTempMsb() {
+uint8_t BMP280::readTempMsb() {
+    uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
     _wire->write(REGISTER_TEMPMSB);
@@ -80,28 +74,30 @@ int BMP280::readTempMsb() {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 1.0) != 1.0) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
         return 0;
     }
 
-    for (size_t i = 0; i < 1.0; i++) {
-        *value++ = wire->read();
-    }
+    datum = wire->read();
+    value = value << 8 | datum;
 
     return value;
 }
 
 int BMP280::writeTempMsb(uint8_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_TEMPMSB);
-    _wire->write(data);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[2] = { (uint8_t) REGISTER_TEMPMSB };
+    uint8_t buffer[1] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 2);
     if (_wire->endTransmission() != 0) {
         return 0;
     }
     return 1;
 }
 
-int BMP280::readTempLsb() {
+uint8_t BMP280::readTempLsb() {
+    uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
     _wire->write(REGISTER_TEMPLSB);
@@ -109,28 +105,30 @@ int BMP280::readTempLsb() {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 1.0) != 1.0) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
         return 0;
     }
 
-    for (size_t i = 0; i < 1.0; i++) {
-        *value++ = wire->read();
-    }
+    datum = wire->read();
+    value = value << 8 | datum;
 
     return value;
 }
 
 int BMP280::writeTempLsb(uint8_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_TEMPLSB);
-    _wire->write(data);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[2] = { (uint8_t) REGISTER_TEMPLSB };
+    uint8_t buffer[1] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 2);
     if (_wire->endTransmission() != 0) {
         return 0;
     }
     return 1;
 }
 
-int BMP280::readTempXlsb() {
+uint8_t BMP280::readTempXlsb() {
+    uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
     _wire->write(REGISTER_TEMPXLSB);
@@ -138,115 +136,132 @@ int BMP280::readTempXlsb() {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 1.0) != 1.0) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
         return 0;
     }
 
-    for (size_t i = 0; i < 1.0; i++) {
-        *value++ = wire->read();
-    }
+    datum = wire->read();
+    value = value << 8 | datum;
 
     return value;
 }
 
 int BMP280::writeTempXlsb(uint8_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_TEMPXLSB);
-    _wire->write(data);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[2] = { (uint8_t) REGISTER_TEMPXLSB };
+    uint8_t buffer[1] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 2);
     if (_wire->endTransmission() != 0) {
         return 0;
     }
     return 1;
 }
 
-int BMP280::readDigT1() {
-    uint8_t value;
+uint16_t BMP280::readDigT1() {
+    uint8_t datum;
+    uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
     _wire->write(REGISTER_DIGT1);
     if (_wire->endTransmission(false) != 0) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 2.0) != 2.0) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
         return 0;
     }
 
-    for (size_t i = 0; i < 2.0; i++) {
-        *value++ = wire->read();
-    }
+    datum = wire->read();
+    value = value << 8 | datum;
+    datum = wire->read();
+    value = value << 8 | datum;
 
     return value;
 }
 
-int BMP280::writeDigT1(uint8_t data) {
+int BMP280::writeDigT1(uint16_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_DIGT1);
-    _wire->write(data);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[3] = { (uint8_t) REGISTER_DIGT1 };
+    uint8_t buffer[1] = (data >> 8) & 0xFF;
+    uint8_t buffer[2] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 3);
     if (_wire->endTransmission() != 0) {
         return 0;
     }
     return 1;
 }
 
-int BMP280::readDigT2() {
-    uint8_t value;
+uint16_t BMP280::readDigT2() {
+    uint8_t datum;
+    uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
     _wire->write(REGISTER_DIGT2);
     if (_wire->endTransmission(false) != 0) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 2.0) != 2.0) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
         return 0;
     }
 
-    for (size_t i = 0; i < 2.0; i++) {
-        *value++ = wire->read();
-    }
+    datum = wire->read();
+    value = value << 8 | datum;
+    datum = wire->read();
+    value = value << 8 | datum;
 
     return value;
 }
 
-int BMP280::writeDigT2(uint8_t data) {
+int BMP280::writeDigT2(uint16_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_DIGT2);
-    _wire->write(data);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[3] = { (uint8_t) REGISTER_DIGT2 };
+    uint8_t buffer[1] = (data >> 8) & 0xFF;
+    uint8_t buffer[2] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 3);
     if (_wire->endTransmission() != 0) {
         return 0;
     }
     return 1;
 }
 
-int BMP280::readDigT3() {
-    uint8_t value;
+uint16_t BMP280::readDigT3() {
+    uint8_t datum;
+    uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
     _wire->write(REGISTER_DIGT3);
     if (_wire->endTransmission(false) != 0) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 2.0) != 2.0) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
         return 0;
     }
 
-    for (size_t i = 0; i < 2.0; i++) {
-        *value++ = wire->read();
-    }
+    datum = wire->read();
+    value = value << 8 | datum;
+    datum = wire->read();
+    value = value << 8 | datum;
 
     return value;
 }
 
-int BMP280::writeDigT3(uint8_t data) {
+int BMP280::writeDigT3(uint16_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_DIGT3);
-    _wire->write(data);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[3] = { (uint8_t) REGISTER_DIGT3 };
+    uint8_t buffer[1] = (data >> 8) & 0xFF;
+    uint8_t buffer[2] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 3);
     if (_wire->endTransmission() != 0) {
         return 0;
     }
     return 1;
 }
 
-int BMP280::readPressureMsb() {
+uint8_t BMP280::readPressureMsb() {
+    uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
     _wire->write(REGISTER_PRESSUREMSB);
@@ -254,28 +269,30 @@ int BMP280::readPressureMsb() {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 1.0) != 1.0) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
         return 0;
     }
 
-    for (size_t i = 0; i < 1.0; i++) {
-        *value++ = wire->read();
-    }
+    datum = wire->read();
+    value = value << 8 | datum;
 
     return value;
 }
 
 int BMP280::writePressureMsb(uint8_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_PRESSUREMSB);
-    _wire->write(data);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[2] = { (uint8_t) REGISTER_PRESSUREMSB };
+    uint8_t buffer[1] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 2);
     if (_wire->endTransmission() != 0) {
         return 0;
     }
     return 1;
 }
 
-int BMP280::readPressureLsb() {
+uint8_t BMP280::readPressureLsb() {
+    uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
     _wire->write(REGISTER_PRESSURELSB);
@@ -283,28 +300,30 @@ int BMP280::readPressureLsb() {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 1.0) != 1.0) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
         return 0;
     }
 
-    for (size_t i = 0; i < 1.0; i++) {
-        *value++ = wire->read();
-    }
+    datum = wire->read();
+    value = value << 8 | datum;
 
     return value;
 }
 
 int BMP280::writePressureLsb(uint8_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_PRESSURELSB);
-    _wire->write(data);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[2] = { (uint8_t) REGISTER_PRESSURELSB };
+    uint8_t buffer[1] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 2);
     if (_wire->endTransmission() != 0) {
         return 0;
     }
     return 1;
 }
 
-int BMP280::readPressureXlsb() {
+uint8_t BMP280::readPressureXlsb() {
+    uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
     _wire->write(REGISTER_PRESSUREXLSB);
@@ -312,282 +331,328 @@ int BMP280::readPressureXlsb() {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 1.0) != 1.0) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
         return 0;
     }
 
-    for (size_t i = 0; i < 1.0; i++) {
-        *value++ = wire->read();
-    }
+    datum = wire->read();
+    value = value << 8 | datum;
 
     return value;
 }
 
 int BMP280::writePressureXlsb(uint8_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_PRESSUREXLSB);
-    _wire->write(data);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[2] = { (uint8_t) REGISTER_PRESSUREXLSB };
+    uint8_t buffer[1] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 2);
     if (_wire->endTransmission() != 0) {
         return 0;
     }
     return 1;
 }
 
-int BMP280::readDigP1() {
-    uint8_t value;
+uint16_t BMP280::readDigP1() {
+    uint8_t datum;
+    uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
     _wire->write(REGISTER_DIGP1);
     if (_wire->endTransmission(false) != 0) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 2.0) != 2.0) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
         return 0;
     }
 
-    for (size_t i = 0; i < 2.0; i++) {
-        *value++ = wire->read();
-    }
+    datum = wire->read();
+    value = value << 8 | datum;
+    datum = wire->read();
+    value = value << 8 | datum;
 
     return value;
 }
 
-int BMP280::writeDigP1(uint8_t data) {
+int BMP280::writeDigP1(uint16_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_DIGP1);
-    _wire->write(data);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[3] = { (uint8_t) REGISTER_DIGP1 };
+    uint8_t buffer[1] = (data >> 8) & 0xFF;
+    uint8_t buffer[2] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 3);
     if (_wire->endTransmission() != 0) {
         return 0;
     }
     return 1;
 }
 
-int BMP280::readDigP2() {
-    uint8_t value;
+uint16_t BMP280::readDigP2() {
+    uint8_t datum;
+    uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
     _wire->write(REGISTER_DIGP2);
     if (_wire->endTransmission(false) != 0) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 2.0) != 2.0) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
         return 0;
     }
 
-    for (size_t i = 0; i < 2.0; i++) {
-        *value++ = wire->read();
-    }
+    datum = wire->read();
+    value = value << 8 | datum;
+    datum = wire->read();
+    value = value << 8 | datum;
 
     return value;
 }
 
-int BMP280::writeDigP2(uint8_t data) {
+int BMP280::writeDigP2(uint16_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_DIGP2);
-    _wire->write(data);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[3] = { (uint8_t) REGISTER_DIGP2 };
+    uint8_t buffer[1] = (data >> 8) & 0xFF;
+    uint8_t buffer[2] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 3);
     if (_wire->endTransmission() != 0) {
         return 0;
     }
     return 1;
 }
 
-int BMP280::readDigP3() {
-    uint8_t value;
+uint16_t BMP280::readDigP3() {
+    uint8_t datum;
+    uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
     _wire->write(REGISTER_DIGP3);
     if (_wire->endTransmission(false) != 0) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 2.0) != 2.0) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
         return 0;
     }
 
-    for (size_t i = 0; i < 2.0; i++) {
-        *value++ = wire->read();
-    }
+    datum = wire->read();
+    value = value << 8 | datum;
+    datum = wire->read();
+    value = value << 8 | datum;
 
     return value;
 }
 
-int BMP280::writeDigP3(uint8_t data) {
+int BMP280::writeDigP3(uint16_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_DIGP3);
-    _wire->write(data);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[3] = { (uint8_t) REGISTER_DIGP3 };
+    uint8_t buffer[1] = (data >> 8) & 0xFF;
+    uint8_t buffer[2] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 3);
     if (_wire->endTransmission() != 0) {
         return 0;
     }
     return 1;
 }
 
-int BMP280::readDigP4() {
-    uint8_t value;
+uint16_t BMP280::readDigP4() {
+    uint8_t datum;
+    uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
     _wire->write(REGISTER_DIGP4);
     if (_wire->endTransmission(false) != 0) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 2.0) != 2.0) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
         return 0;
     }
 
-    for (size_t i = 0; i < 2.0; i++) {
-        *value++ = wire->read();
-    }
+    datum = wire->read();
+    value = value << 8 | datum;
+    datum = wire->read();
+    value = value << 8 | datum;
 
     return value;
 }
 
-int BMP280::writeDigP4(uint8_t data) {
+int BMP280::writeDigP4(uint16_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_DIGP4);
-    _wire->write(data);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[3] = { (uint8_t) REGISTER_DIGP4 };
+    uint8_t buffer[1] = (data >> 8) & 0xFF;
+    uint8_t buffer[2] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 3);
     if (_wire->endTransmission() != 0) {
         return 0;
     }
     return 1;
 }
 
-int BMP280::readDigP5() {
-    uint8_t value;
+uint16_t BMP280::readDigP5() {
+    uint8_t datum;
+    uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
     _wire->write(REGISTER_DIGP5);
     if (_wire->endTransmission(false) != 0) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 2.0) != 2.0) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
         return 0;
     }
 
-    for (size_t i = 0; i < 2.0; i++) {
-        *value++ = wire->read();
-    }
+    datum = wire->read();
+    value = value << 8 | datum;
+    datum = wire->read();
+    value = value << 8 | datum;
 
     return value;
 }
 
-int BMP280::writeDigP5(uint8_t data) {
+int BMP280::writeDigP5(uint16_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_DIGP5);
-    _wire->write(data);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[3] = { (uint8_t) REGISTER_DIGP5 };
+    uint8_t buffer[1] = (data >> 8) & 0xFF;
+    uint8_t buffer[2] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 3);
     if (_wire->endTransmission() != 0) {
         return 0;
     }
     return 1;
 }
 
-int BMP280::readDigP6() {
-    uint8_t value;
+uint16_t BMP280::readDigP6() {
+    uint8_t datum;
+    uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
     _wire->write(REGISTER_DIGP6);
     if (_wire->endTransmission(false) != 0) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 2.0) != 2.0) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
         return 0;
     }
 
-    for (size_t i = 0; i < 2.0; i++) {
-        *value++ = wire->read();
-    }
+    datum = wire->read();
+    value = value << 8 | datum;
+    datum = wire->read();
+    value = value << 8 | datum;
 
     return value;
 }
 
-int BMP280::writeDigP6(uint8_t data) {
+int BMP280::writeDigP6(uint16_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_DIGP6);
-    _wire->write(data);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[3] = { (uint8_t) REGISTER_DIGP6 };
+    uint8_t buffer[1] = (data >> 8) & 0xFF;
+    uint8_t buffer[2] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 3);
     if (_wire->endTransmission() != 0) {
         return 0;
     }
     return 1;
 }
 
-int BMP280::readDigP7() {
-    uint8_t value;
+uint16_t BMP280::readDigP7() {
+    uint8_t datum;
+    uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
     _wire->write(REGISTER_DIGP7);
     if (_wire->endTransmission(false) != 0) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 2.0) != 2.0) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
         return 0;
     }
 
-    for (size_t i = 0; i < 2.0; i++) {
-        *value++ = wire->read();
-    }
+    datum = wire->read();
+    value = value << 8 | datum;
+    datum = wire->read();
+    value = value << 8 | datum;
 
     return value;
 }
 
-int BMP280::writeDigP7(uint8_t data) {
+int BMP280::writeDigP7(uint16_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_DIGP7);
-    _wire->write(data);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[3] = { (uint8_t) REGISTER_DIGP7 };
+    uint8_t buffer[1] = (data >> 8) & 0xFF;
+    uint8_t buffer[2] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 3);
     if (_wire->endTransmission() != 0) {
         return 0;
     }
     return 1;
 }
 
-int BMP280::readDigP8() {
-    uint8_t value;
+uint16_t BMP280::readDigP8() {
+    uint8_t datum;
+    uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
     _wire->write(REGISTER_DIGP8);
     if (_wire->endTransmission(false) != 0) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 2.0) != 2.0) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
         return 0;
     }
 
-    for (size_t i = 0; i < 2.0; i++) {
-        *value++ = wire->read();
-    }
+    datum = wire->read();
+    value = value << 8 | datum;
+    datum = wire->read();
+    value = value << 8 | datum;
 
     return value;
 }
 
-int BMP280::writeDigP8(uint8_t data) {
+int BMP280::writeDigP8(uint16_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_DIGP8);
-    _wire->write(data);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[3] = { (uint8_t) REGISTER_DIGP8 };
+    uint8_t buffer[1] = (data >> 8) & 0xFF;
+    uint8_t buffer[2] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 3);
     if (_wire->endTransmission() != 0) {
         return 0;
     }
     return 1;
 }
 
-int BMP280::readDigP9() {
-    uint8_t value;
+uint16_t BMP280::readDigP9() {
+    uint8_t datum;
+    uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
     _wire->write(REGISTER_DIGP9);
     if (_wire->endTransmission(false) != 0) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 2.0) != 2.0) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
         return 0;
     }
 
-    for (size_t i = 0; i < 2.0; i++) {
-        *value++ = wire->read();
-    }
+    datum = wire->read();
+    value = value << 8 | datum;
+    datum = wire->read();
+    value = value << 8 | datum;
 
     return value;
 }
 
-int BMP280::writeDigP9(uint8_t data) {
+int BMP280::writeDigP9(uint16_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_DIGP9);
-    _wire->write(data);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[3] = { (uint8_t) REGISTER_DIGP9 };
+    uint8_t buffer[1] = (data >> 8) & 0xFF;
+    uint8_t buffer[2] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 3);
     if (_wire->endTransmission() != 0) {
         return 0;
     }
@@ -603,22 +668,10 @@ short BMP280::temperatureasRaw() {
     short output; // Variable declaration
 
 
-
-
     valueMsb = readTempMsb();
-
-
-
     valueLsb = readTempLsb();
-
-
-
     valueXlsb = readTempXlsb();
-
-
-
     output = ((valueMsb << 12)+(valueLsb << 4)+(valueXlsb >> 4));
-
 
 
     return output;
@@ -638,50 +691,17 @@ float BMP280::temperatureasCelsius() {
     float celsius; // Variable declaration
 
 
-
-
     valueMsb = readTempMsb();
-
-
-
     valueLsb = readTempLsb();
-
-
-
     valueXlsb = readTempXlsb();
-
-
-
     valueDT1 = readDigT1();
-
-
-
     valueDT2 = readDigT2();
-
-
-
     valueDT3 = readDigT3();
-
-
-
     rawTemp = ((valueMsb << 12)+(valueLsb << 4)+(valueXlsb >> 4));
-
-
-
     rawComp1 = (((rawTemp/16384.0)-(valueDT1/1024.0))*valueDT2);
-
-
-
     rawComp3 = ((rawTemp/131072.0)-(valueDT1/8192.0));
-
-
-
     rawComp2 = (rawComp3*rawComp3*valueDT3);
-
-
-
     celsius = ((rawComp1+rawComp2)/5120.0);
-
 
 
     return celsius;
@@ -695,22 +715,10 @@ short BMP280::pressureasRaw() {
     short output; // Variable declaration
 
 
-
-
     valueMsb = readPressureMsb();
-
-
-
     valueLsb = readPressureLsb();
-
-
-
     valueXlsb = readPressureXlsb();
-
-
-
     output = ((valueMsb << 12)+(valueLsb << 4)+(valueXlsb >> 4));
-
 
 
     return output;
@@ -737,118 +745,34 @@ float BMP280::pressureasHpa() {
     float hpa; // Variable declaration
 
 
-
-
     valueMsb = readPressureMsb();
-
-
-
     valueLsb = readPressureLsb();
-
-
-
     valueXlsb = readPressureXlsb();
-
-
-
     valueDP1 = readDigP1();
-
-
-
     valueDP2 = readDigP2();
-
-
-
     valueDP3 = readDigP3();
-
-
-
     valueDP4 = readDigP4();
-
-
-
     valueDP5 = readDigP5();
-
-
-
     valueDP6 = readDigP6();
-
-
-
     valueDP7 = readDigP7();
-
-
-
     valueDP8 = readDigP8();
-
-
-
     valueDP9 = readDigP9();
-
-
-
     rawTemperature = temperature_asCelsius();
-
-
-
     rawTemperature = (rawTemperature*5120.0);
-
-
-
     rawPressure = ((valueMsb << 12)+(valueLsb << 4)+(valueXlsb >> 4));
-
-
-
     rawComp1 = ((rawTemperature/2)-64000.0);
-
-
-
     rawComp2 = ((rawComp1*rawComp1*valueDP6)/32768.0);
-
-
-
     rawComp2 = (rawComp2+(rawComp1*valueDP5*2.0));
-
-
-
     rawComp2 = ((rawComp2/4.0)+(valueDP4*65536.0));
-
-
-
     rawComp3 = (valueDP3*rawComp1*rawComp1);
-
-
-
     rawComp1 = (((rawComp3/524288.0)+(valueDP2*rawComp1))/524288.0);
-
-
-
     rawComp1 = ((1.0+(rawComp1/32768.0))*valueDP1);
-
-
-
     hpa = (1048576.0-rawPressure);
-
-
-
     hpa = ((hpa-(rawComp2/4096.0))*(6250.0/rawComp1));
-
-
-
     rawComp1 = ((valueDP9*hpa*hpa)/2147483648.0);
-
-
-
     rawComp2 = ((hpa*valueDP8)/32768.0);
-
-
-
     hpa = (hpa+((rawComp1+rawComp2+valueDP7)/16.0));
-
-
-
     hpa = (hpa/100.0);
-
 
 
     return hpa;
