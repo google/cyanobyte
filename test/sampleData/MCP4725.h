@@ -80,20 +80,20 @@ class MCP4725 {
          * Only allows you to send fully on or off
 
          */
-        uint16_t setdigitalOut(uint8_t data);
+        int setdigitalOut(uint8_t data);
 
 
         /**
          * set vout
 
          */
-        uint16_t setsetVOut(uint8_t data);
+        int setsetVOut(uint8_t data);
 
         /**
          * set vout
 
          */
-        void setVOutasVoltage(vcc, output);
+        void setVOutasVoltage(float vcc, float output);
 
         /**
          * get vout
@@ -105,7 +105,7 @@ class MCP4725 {
          * get vout
 
          */
-        float getVOutasVoltage(vcc);
+        float getVOutasVoltage(float vcc);
 
 
     private:

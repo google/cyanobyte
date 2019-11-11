@@ -105,21 +105,21 @@ class ADS1015 {
          * This sets the samples-per-second value
 
          */
-        uint16_t setSampleRate(uint8_t data);
+        int setSampleRate(uint8_t data);
 
 
         /**
          * This sets the programmable gain for reading analog voltage
 
          */
-        uint16_t setProgrammableGain(uint8_t data);
+        int setProgrammableGain(uint8_t data);
 
 
         /**
          * This bit controls the operating mode
 
          */
-        uint16_t setDeviceOperatingMode(uint8_t data);
+        int setDeviceOperatingMode(uint8_t data);
 
 
 
@@ -129,7 +129,7 @@ class ADS1015 {
          * Reads the analog voltage in Volts
 
          */
-        short analogread(channel);
+        short analogread(char channel);
 
 
     private:

@@ -41,9 +41,9 @@ uint16_t MCP9808::readconfiguration() {
         return 0;
     }
 
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
 
     return value;
@@ -53,8 +53,8 @@ int MCP9808::writeconfiguration(uint16_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[3] = { (uint8_t) REGISTER_CONFIGURATION };
-    uint8_t buffer[1] = (data >> 8) & 0xFF;
-    uint8_t buffer[2] = (data >> 0) & 0xFF;
+    buffer[1] = (data >> 8) & 0xFF;
+    buffer[2] = (data >> 0) & 0xFF;
     _wire->write(buffer, 3);
     if (_wire->endTransmission() != 0) {
         return 0;
@@ -66,22 +66,22 @@ int MCP9808::writeconfiguration(uint16_t data) {
 uint16_t MCP9808::getlimitHysteresis() {
     // Read register data
     // '#/registers/configuration' > 'configuration'
-    uint8_t val = readconfiguration()
+    uint8_t val = readconfiguration();
     // Mask register value
-    val = val & 0b0000001100000000
+    val = val & 0b0000001100000000;
     // Bitshift value
-    val = val >> 9
-    return val
+    val = val >> 9;
+    return val;
 }
 
 uint16_t MCP9808::getshutdownMode() {
     // Read register data
     // '#/registers/configuration' > 'configuration'
-    uint8_t val = readconfiguration()
+    uint8_t val = readconfiguration();
     // Mask register value
-    val = val & 0b0000000010000000
+    val = val & 0b0000000010000000;
     // Bitshift value
-    val = val >> 8
-    return val
+    val = val >> 8;
+    return val;
 }
 

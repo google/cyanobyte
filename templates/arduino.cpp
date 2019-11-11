@@ -33,7 +33,7 @@
 {% endif %}
 {# // Check if assignment is function call op #}
 {% if step[key][:12] == '#/functions/' %}
-    {{key}} = {{step[key] | regex_replace('#/functions/(?P<function>.+)/(?P<compute>.+)', '\\g<function>_\\g<compute>')}}();
+    {{key}} = {{step[key] | regex_replace('#/functions/(?P<function>.+)/(?P<compute>.+)', '\\g<function>\\g<compute>')}}();
 {% endif %}
 {# // If the value is a list, then this is a logical setter #}
 {% if step[key] is iterable and step[key] is not string %}
@@ -44,7 +44,7 @@
 {%- endmacro %}
 
 {% if i2c.endian == 'little' %}
-short _swap_endian(val) {
+static short _swap_endian(short val) {
     // Swap the endianness of a short only
     return (val & 0xFF00) >> 8 | (val & 0xFF) << 8;
 }
@@ -55,9 +55,9 @@ short _swap_endian(val) {
 {% for key in register.keys() %}
 {% if register[key].signed %}
 {% if template.sign is sameas false %}
-short _sign(val, length) {
+static short _sign(short val, char length) {
     // Convert unsigned integer to signed integer
-    if val & (1 << (length - 1)) {
+    if (val & (1 << (length - 1))) {
         return val - (1 << length);
     }
     return val;
@@ -109,7 +109,7 @@ void {{info.title}}::end() {
 
     {# Read a byte at a time #}
     {% for n in range(bytes) %}
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
     {% endfor %}
 
@@ -121,7 +121,7 @@ int {{info.title}}::write{{key}}({{cpp.numtype(length)}} data) {
     // Put our data into uint8_t buffer
     uint8_t buffer[{{bytes + 1}}] = { (uint8_t) REGISTER_{{key.upper()}} };
     {% for n in range(bytes) %}
-    uint8_t buffer[{{n + 1}}] = (data >> {{8 * (bytes - n - 1)}}) & 0xFF;
+    buffer[{{n + 1}}] = (data >> {{8 * (bytes - n - 1)}}) & 0xFF;
     {% endfor %}
     _wire->write(buffer, {{bytes + 1}});
     if (_wire->endTransmission() != 0) {
@@ -140,30 +140,30 @@ int {{info.title}}::write{{key}}({{cpp.numtype(length)}} data) {
 {{cpp.registerSize(registers, function[key].register[12:])}} {{info.title}}::get{{key}}() {
     // Read register data
     // '#/registers/{{function[key].register[12:]}}' > '{{function[key].register[12:]}}'
-    uint8_t val = read{{function[key].register[12:]}}()
+    uint8_t val = read{{function[key].register[12:]}}();
     // Mask register value
-    val = val & {{utils.mask(function[key].bitStart, function[key].bitEnd)}}
+    val = val & {{utils.mask(function[key].bitStart, function[key].bitEnd)}};
     {% if function[key].bitEnd %}
     // Bitshift value
-    val = val >> {{function[key].bitEnd}}
+    val = val >> {{function[key].bitEnd}};
     {% endif %}
-    return val
+    return val;
 }
 {% endif -%}
 
 {%- if 'W' is in(function[key].readWrite) %}
 {# Setter #}
 
-{{cpp.registerSize(registers, function[key].register[12:])}} {{info.title}}::set{{key}}(uint8_t data) {
+int {{info.title}}::set{{key}}(uint8_t data) {
     {% if function[key].bitEnd %}
     // Bitshift value
-    data = data << {{function[key].bitEnd}}
+    data = data << {{function[key].bitEnd}};
     {% endif %}
     // Read current register data
     // '#/registers/{{function[key].register[12:]}}' > '{{function[key].register[12:]}}'
-    uint8_t register_data = read{{function[key].register[12:].lower()}}()
-    register_data = register_data | data
-    return write{{function[key].register[12:]}}(register_data)
+    uint8_t register_data = read{{function[key].register[12:]}}();
+    register_data = register_data | data;
+    return write{{function[key].register[12:]}}(register_data);
 }
 {% endif %}
 
@@ -183,7 +183,7 @@ int {{info.title}}::write{{key}}({{cpp.numtype(length)}} data) {
     {% for varKey in variable.keys() %}
     {% if varKey == 'value' %}
     // Read value of register into a variable
-    value = read{{function[key].register[12:]}}()
+    {{cpp.numconv(variable[varKey])}} value = read{{function[key].register[12:]}}();
     {% endif %}
     {% endfor %}
     {% endfor -%}

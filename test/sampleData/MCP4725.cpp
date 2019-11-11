@@ -21,7 +21,7 @@
 */
 
 
-short _swap_endian(val) {
+static short _swap_endian(short val) {
     // Swap the endianness of a short only
     return (val & 0xFF00) >> 8 | (val & 0xFF) << 8;
 }
@@ -59,7 +59,7 @@ uint16_t MCP4725::readVOut() {
         return 0;
     }
 
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
 
     return value;
@@ -69,7 +69,7 @@ int MCP4725::writeVOut(uint16_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[2] = { (uint8_t) REGISTER_VOUT };
-    uint8_t buffer[1] = (data >> 0) & 0xFF;
+    buffer[1] = (data >> 0) & 0xFF;
     _wire->write(buffer, 2);
     if (_wire->endTransmission() != 0) {
         return 0;
@@ -90,7 +90,7 @@ uint16_t MCP4725::readEEPROM() {
         return 0;
     }
 
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
 
     return value;
@@ -100,7 +100,7 @@ int MCP4725::writeEEPROM(uint16_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[2] = { (uint8_t) REGISTER_EEPROM };
-    uint8_t buffer[1] = (data >> 0) & 0xFF;
+    buffer[1] = (data >> 0) & 0xFF;
     _wire->write(buffer, 2);
     if (_wire->endTransmission() != 0) {
         return 0;
@@ -112,30 +112,30 @@ int MCP4725::writeEEPROM(uint16_t data) {
 uint16_t MCP4725::getdigitalOut() {
     // Read register data
     // '#/registers/EEPROM' > 'EEPROM'
-    uint8_t val = readEEPROM()
+    uint8_t val = readEEPROM();
     // Mask register value
-    val = val & 0b0000111111111111
-    return val
+    val = val & 0b0000111111111111;
+    return val;
 }
 
-uint16_t MCP4725::setdigitalOut(uint8_t data) {
+int MCP4725::setdigitalOut(uint8_t data) {
     // Read current register data
     // '#/registers/EEPROM' > 'EEPROM'
-    uint8_t register_data = readeeprom()
-    register_data = register_data | data
-    return writeEEPROM(register_data)
+    uint8_t register_data = readEEPROM();
+    register_data = register_data | data;
+    return writeEEPROM(register_data);
 }
 
 
-uint16_t MCP4725::setsetVOut(uint8_t data) {
+int MCP4725::setsetVOut(uint8_t data) {
     // Read current register data
     // '#/registers/EEPROM' > 'EEPROM'
-    uint8_t register_data = readeeprom()
-    register_data = register_data | data
-    return writeEEPROM(register_data)
+    uint8_t register_data = readEEPROM();
+    register_data = register_data | data;
+    return writeEEPROM(register_data);
 }
 
-void MCP4725::setVOutasVoltage(vcc, output) {
+void MCP4725::setVOutasVoltage(float vcc, float output) {
 
 
     output = output / vcc * 4096;
@@ -147,18 +147,18 @@ void MCP4725::setVOutasVoltage(vcc, output) {
 uint16_t MCP4725::getgetVOut() {
     // Read register data
     // '#/registers/EEPROM' > 'EEPROM'
-    uint8_t val = readEEPROM()
+    uint8_t val = readEEPROM();
     // Mask register value
-    val = val & 0b0000111111111111
-    return val
+    val = val & 0b0000111111111111;
+    return val;
 }
 
-float MCP4725::getVOutasVoltage(vcc) {
+float MCP4725::getVOutasVoltage(float vcc) {
     float voltage; // Variable declaration
 
 
     // Read value of register into a variable
-    value = readEEPROM()
+    float value = readEEPROM();
     voltage = value / 4096 * vcc;
 
 

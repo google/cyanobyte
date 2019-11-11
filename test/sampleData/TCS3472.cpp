@@ -58,7 +58,7 @@ uint8_t TCS3472::readenable() {
         return 0;
     }
 
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
 
     return value;
@@ -68,7 +68,7 @@ int TCS3472::writeenable(uint8_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[2] = { (uint8_t) REGISTER_ENABLE };
-    uint8_t buffer[1] = (data >> 0) & 0xFF;
+    buffer[1] = (data >> 0) & 0xFF;
     _wire->write(buffer, 2);
     if (_wire->endTransmission() != 0) {
         return 0;
@@ -89,9 +89,9 @@ uint16_t TCS3472::readclear() {
         return 0;
     }
 
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
 
     return value;
@@ -101,8 +101,8 @@ int TCS3472::writeclear(uint16_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[3] = { (uint8_t) REGISTER_CLEAR };
-    uint8_t buffer[1] = (data >> 8) & 0xFF;
-    uint8_t buffer[2] = (data >> 0) & 0xFF;
+    buffer[1] = (data >> 8) & 0xFF;
+    buffer[2] = (data >> 0) & 0xFF;
     _wire->write(buffer, 3);
     if (_wire->endTransmission() != 0) {
         return 0;
@@ -123,9 +123,9 @@ uint16_t TCS3472::readred() {
         return 0;
     }
 
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
 
     return value;
@@ -135,8 +135,8 @@ int TCS3472::writered(uint16_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[3] = { (uint8_t) REGISTER_RED };
-    uint8_t buffer[1] = (data >> 8) & 0xFF;
-    uint8_t buffer[2] = (data >> 0) & 0xFF;
+    buffer[1] = (data >> 8) & 0xFF;
+    buffer[2] = (data >> 0) & 0xFF;
     _wire->write(buffer, 3);
     if (_wire->endTransmission() != 0) {
         return 0;
@@ -157,9 +157,9 @@ uint16_t TCS3472::readgreen() {
         return 0;
     }
 
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
 
     return value;
@@ -169,8 +169,8 @@ int TCS3472::writegreen(uint16_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[3] = { (uint8_t) REGISTER_GREEN };
-    uint8_t buffer[1] = (data >> 8) & 0xFF;
-    uint8_t buffer[2] = (data >> 0) & 0xFF;
+    buffer[1] = (data >> 8) & 0xFF;
+    buffer[2] = (data >> 0) & 0xFF;
     _wire->write(buffer, 3);
     if (_wire->endTransmission() != 0) {
         return 0;
@@ -191,9 +191,9 @@ uint16_t TCS3472::readblue() {
         return 0;
     }
 
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
 
     return value;
@@ -203,8 +203,8 @@ int TCS3472::writeblue(uint16_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[3] = { (uint8_t) REGISTER_BLUE };
-    uint8_t buffer[1] = (data >> 8) & 0xFF;
-    uint8_t buffer[2] = (data >> 0) & 0xFF;
+    buffer[1] = (data >> 8) & 0xFF;
+    buffer[2] = (data >> 0) & 0xFF;
     _wire->write(buffer, 3);
     if (_wire->endTransmission() != 0) {
         return 0;
@@ -216,17 +216,17 @@ int TCS3472::writeblue(uint16_t data) {
 uint8_t TCS3472::getinit() {
     // Read register data
     // '#/registers/enable' > 'enable'
-    uint8_t val = readenable()
+    uint8_t val = readenable();
     // Mask register value
-    val = val & 0b0000000001111111
-    return val
+    val = val & 0b0000000001111111;
+    return val;
 }
 
-uint8_t TCS3472::setinit(uint8_t data) {
+int TCS3472::setinit(uint8_t data) {
     // Read current register data
     // '#/registers/enable' > 'enable'
-    uint8_t register_data = readenable()
-    register_data = register_data | data
-    return writeenable(register_data)
+    uint8_t register_data = readenable();
+    register_data = register_data | data;
+    return writeenable(register_data);
 }
 

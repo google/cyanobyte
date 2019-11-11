@@ -4,7 +4,7 @@
 {% for variable in input %}
 {% for key in variable.keys() -%}
 {% if key != 'value' -%}
-{{- ", " if args.index > 0 -}}{{- key -}}
+{{- ", " if args.index > 0 -}}{{- numconv(variable[key]) }} {{ key -}}
 {%- set args.index = args.index + 1 -%}
 {%- endif %}
 {%- endfor %}
@@ -143,9 +143,10 @@ uint64_t
 {% if key == 'modulus' -%}
     ({%- for step in logicalStep[key] -%}
     {% if step is iterable and step is not string -%}
-    {{ recursiveAssignLogic(step, step.keys()) -}}
+    (int) {{ recursiveAssignLogic(step, step.keys()) -}}
     {%- else -%}
-    {{ step }}
+    {#- Need to do a cast to int, may lose precision -#}
+    (int) {{ step }}
     {%- endif %}
     {{- "%" if not loop.last -}}
     {%- endfor -%})
@@ -156,7 +157,7 @@ uint64_t
     {% if step is iterable and step is not string -%}
     {{ recursiveAssignLogic(step, step.keys()) -}}
     {%- else -%}
-    {{step}}
+    {{ step }}
     {%- endif %}
     {{- "|" if not loop.last -}}
     {%- endfor -%})
@@ -167,7 +168,7 @@ uint64_t
     {% if step is iterable and step is not string -%}
     {{ recursiveAssignLogic(step, step.keys()) -}}
     {%- else -%}
-    {{step}}
+    {{ step }}
     {%- endif %}
     {{- "&" if not loop.last -}}
     {%- endfor -%})

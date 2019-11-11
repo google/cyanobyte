@@ -98,7 +98,7 @@ class {{info.title}} {
         /**
 {{utils.pad_string("         * ", function[key].description)}}
          */
-        {{cpp.registerSize(registers, function[key].register[12:])}} set{{key}}(uint8_t data);
+        int set{{key}}(uint8_t data);
         {% endif %}
 
         {% if function[key].computed %}

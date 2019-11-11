@@ -105,7 +105,7 @@ class TCS3472 {
          * Enable RGBC and Power
 
          */
-        uint8_t setinit(uint8_t data);
+        int setinit(uint8_t data);
 
 
 

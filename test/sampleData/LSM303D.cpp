@@ -65,7 +65,7 @@ uint8_t LSM303D::readAccelerometerX_Low() {
         return 0;
     }
 
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
 
     return value;
@@ -75,7 +75,7 @@ int LSM303D::writeAccelerometerX_Low(uint8_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[2] = { (uint8_t) REGISTER_ACCELEROMETERX_LOW };
-    uint8_t buffer[1] = (data >> 0) & 0xFF;
+    buffer[1] = (data >> 0) & 0xFF;
     _wire->write(buffer, 2);
     if (_wire->endTransmission() != 0) {
         return 0;
@@ -96,7 +96,7 @@ uint8_t LSM303D::readAccelerometerX_High() {
         return 0;
     }
 
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
 
     return value;
@@ -106,7 +106,7 @@ int LSM303D::writeAccelerometerX_High(uint8_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[2] = { (uint8_t) REGISTER_ACCELEROMETERX_HIGH };
-    uint8_t buffer[1] = (data >> 0) & 0xFF;
+    buffer[1] = (data >> 0) & 0xFF;
     _wire->write(buffer, 2);
     if (_wire->endTransmission() != 0) {
         return 0;
@@ -127,7 +127,7 @@ uint8_t LSM303D::readAccelerometerY_Low() {
         return 0;
     }
 
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
 
     return value;
@@ -137,7 +137,7 @@ int LSM303D::writeAccelerometerY_Low(uint8_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[2] = { (uint8_t) REGISTER_ACCELEROMETERY_LOW };
-    uint8_t buffer[1] = (data >> 0) & 0xFF;
+    buffer[1] = (data >> 0) & 0xFF;
     _wire->write(buffer, 2);
     if (_wire->endTransmission() != 0) {
         return 0;
@@ -158,7 +158,7 @@ uint8_t LSM303D::readAccelerometerY_High() {
         return 0;
     }
 
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
 
     return value;
@@ -168,7 +168,7 @@ int LSM303D::writeAccelerometerY_High(uint8_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[2] = { (uint8_t) REGISTER_ACCELEROMETERY_HIGH };
-    uint8_t buffer[1] = (data >> 0) & 0xFF;
+    buffer[1] = (data >> 0) & 0xFF;
     _wire->write(buffer, 2);
     if (_wire->endTransmission() != 0) {
         return 0;
@@ -189,7 +189,7 @@ uint8_t LSM303D::readAccelerometerZ_Low() {
         return 0;
     }
 
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
 
     return value;
@@ -199,7 +199,7 @@ int LSM303D::writeAccelerometerZ_Low(uint8_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[2] = { (uint8_t) REGISTER_ACCELEROMETERZ_LOW };
-    uint8_t buffer[1] = (data >> 0) & 0xFF;
+    buffer[1] = (data >> 0) & 0xFF;
     _wire->write(buffer, 2);
     if (_wire->endTransmission() != 0) {
         return 0;
@@ -220,7 +220,7 @@ uint8_t LSM303D::readAccelerometerZ_High() {
         return 0;
     }
 
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
 
     return value;
@@ -230,7 +230,7 @@ int LSM303D::writeAccelerometerZ_High(uint8_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[2] = { (uint8_t) REGISTER_ACCELEROMETERZ_HIGH };
-    uint8_t buffer[1] = (data >> 0) & 0xFF;
+    buffer[1] = (data >> 0) & 0xFF;
     _wire->write(buffer, 2);
     if (_wire->endTransmission() != 0) {
         return 0;
@@ -251,7 +251,7 @@ uint8_t LSM303D::readMagnetometerX_Low() {
         return 0;
     }
 
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
 
     return value;
@@ -261,7 +261,7 @@ int LSM303D::writeMagnetometerX_Low(uint8_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[2] = { (uint8_t) REGISTER_MAGNETOMETERX_LOW };
-    uint8_t buffer[1] = (data >> 0) & 0xFF;
+    buffer[1] = (data >> 0) & 0xFF;
     _wire->write(buffer, 2);
     if (_wire->endTransmission() != 0) {
         return 0;
@@ -282,7 +282,7 @@ uint8_t LSM303D::readMagnetometerX_High() {
         return 0;
     }
 
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
 
     return value;
@@ -292,7 +292,7 @@ int LSM303D::writeMagnetometerX_High(uint8_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[2] = { (uint8_t) REGISTER_MAGNETOMETERX_HIGH };
-    uint8_t buffer[1] = (data >> 0) & 0xFF;
+    buffer[1] = (data >> 0) & 0xFF;
     _wire->write(buffer, 2);
     if (_wire->endTransmission() != 0) {
         return 0;
@@ -313,7 +313,7 @@ uint8_t LSM303D::readMagnetometerY_Low() {
         return 0;
     }
 
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
 
     return value;
@@ -323,7 +323,7 @@ int LSM303D::writeMagnetometerY_Low(uint8_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[2] = { (uint8_t) REGISTER_MAGNETOMETERY_LOW };
-    uint8_t buffer[1] = (data >> 0) & 0xFF;
+    buffer[1] = (data >> 0) & 0xFF;
     _wire->write(buffer, 2);
     if (_wire->endTransmission() != 0) {
         return 0;
@@ -344,7 +344,7 @@ uint8_t LSM303D::readMagnetometerY_High() {
         return 0;
     }
 
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
 
     return value;
@@ -354,7 +354,7 @@ int LSM303D::writeMagnetometerY_High(uint8_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[2] = { (uint8_t) REGISTER_MAGNETOMETERY_HIGH };
-    uint8_t buffer[1] = (data >> 0) & 0xFF;
+    buffer[1] = (data >> 0) & 0xFF;
     _wire->write(buffer, 2);
     if (_wire->endTransmission() != 0) {
         return 0;
@@ -375,7 +375,7 @@ uint8_t LSM303D::readMagnetometerZ_Low() {
         return 0;
     }
 
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
 
     return value;
@@ -385,7 +385,7 @@ int LSM303D::writeMagnetometerZ_Low(uint8_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[2] = { (uint8_t) REGISTER_MAGNETOMETERZ_LOW };
-    uint8_t buffer[1] = (data >> 0) & 0xFF;
+    buffer[1] = (data >> 0) & 0xFF;
     _wire->write(buffer, 2);
     if (_wire->endTransmission() != 0) {
         return 0;
@@ -406,7 +406,7 @@ uint8_t LSM303D::readMagnetometerZ_High() {
         return 0;
     }
 
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
 
     return value;
@@ -416,7 +416,7 @@ int LSM303D::writeMagnetometerZ_High(uint8_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[2] = { (uint8_t) REGISTER_MAGNETOMETERZ_HIGH };
-    uint8_t buffer[1] = (data >> 0) & 0xFF;
+    buffer[1] = (data >> 0) & 0xFF;
     _wire->write(buffer, 2);
     if (_wire->endTransmission() != 0) {
         return 0;
@@ -476,9 +476,9 @@ void LSM303D::accelerationasG(short * returnArray) {
 
 
     accelerationScale = 2;
-    valueX = acceleration_xPlane();
-    valueY = acceleration_yPlane();
-    valueZ = acceleration_zPlane();
+    valueX = accelerationxPlane();
+    valueY = accelerationyPlane();
+    valueZ = accelerationzPlane();
     valueX = ((valueX/pow(2, 15))*accelerationScale);
     valueY = ((valueY/pow(2, 15))*accelerationScale);
     valueZ = ((valueZ/pow(2, 15))*accelerationScale);
@@ -539,11 +539,11 @@ short LSM303D::orientationheading() {
     short heading; // Variable declaration
 
 
-    valueX = orientation_xPlane();
-    valueY = orientation_yPlane();
+    valueX = orientationxPlane();
+    valueY = orientationyPlane();
     dividend = (valueX/valueY);
     heading = atan(dividend);
-    heading = (heading%(2*3.141592653589793));
+    heading = ((int) heading%(int) (2*3.141592653589793));
     heading = ((heading/3.141592653589793)*180);
 
 

@@ -21,7 +21,7 @@
 */
 
 
-short _swap_endian(val) {
+static short _swap_endian(short val) {
     // Swap the endianness of a short only
     return (val & 0xFF00) >> 8 | (val & 0xFF) << 8;
 }
@@ -59,9 +59,9 @@ uint16_t ADS1015::readConfig() {
         return 0;
     }
 
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
 
     return value;
@@ -71,8 +71,8 @@ int ADS1015::writeConfig(uint16_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[3] = { (uint8_t) REGISTER_CONFIG };
-    uint8_t buffer[1] = (data >> 8) & 0xFF;
-    uint8_t buffer[2] = (data >> 0) & 0xFF;
+    buffer[1] = (data >> 8) & 0xFF;
+    buffer[2] = (data >> 0) & 0xFF;
     _wire->write(buffer, 3);
     if (_wire->endTransmission() != 0) {
         return 0;
@@ -93,9 +93,9 @@ uint16_t ADS1015::readConversion() {
         return 0;
     }
 
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
-    datum = wire->read();
+    datum = _wire->read();
     value = value << 8 | datum;
 
     return value;
@@ -105,8 +105,8 @@ int ADS1015::writeConversion(uint16_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[3] = { (uint8_t) REGISTER_CONVERSION };
-    uint8_t buffer[1] = (data >> 8) & 0xFF;
-    uint8_t buffer[2] = (data >> 0) & 0xFF;
+    buffer[1] = (data >> 8) & 0xFF;
+    buffer[2] = (data >> 0) & 0xFF;
     _wire->write(buffer, 3);
     if (_wire->endTransmission() != 0) {
         return 0;
@@ -116,46 +116,46 @@ int ADS1015::writeConversion(uint16_t data) {
 
 
 
-uint16_t ADS1015::setSampleRate(uint8_t data) {
+int ADS1015::setSampleRate(uint8_t data) {
     // Bitshift value
-    data = data << 5
+    data = data << 5;
     // Read current register data
     // '#/registers/Config' > 'Config'
-    uint8_t register_data = readconfig()
-    register_data = register_data | data
-    return writeConfig(register_data)
+    uint8_t register_data = readConfig();
+    register_data = register_data | data;
+    return writeConfig(register_data);
 }
 
 
-uint16_t ADS1015::setProgrammableGain(uint8_t data) {
+int ADS1015::setProgrammableGain(uint8_t data) {
     // Bitshift value
-    data = data << 9
+    data = data << 9;
     // Read current register data
     // '#/registers/Config' > 'Config'
-    uint8_t register_data = readconfig()
-    register_data = register_data | data
-    return writeConfig(register_data)
+    uint8_t register_data = readConfig();
+    register_data = register_data | data;
+    return writeConfig(register_data);
 }
 
 
-uint16_t ADS1015::setDeviceOperatingMode(uint8_t data) {
+int ADS1015::setDeviceOperatingMode(uint8_t data) {
     // Bitshift value
-    data = data << 8
+    data = data << 8;
     // Read current register data
     // '#/registers/Config' > 'Config'
-    uint8_t register_data = readconfig()
-    register_data = register_data | data
-    return writeConfig(register_data)
+    uint8_t register_data = readConfig();
+    register_data = register_data | data;
+    return writeConfig(register_data);
 }
 
 
 
-short ADS1015::analogread(channel) {
+short ADS1015::analogread(char channel) {
     short config; // Variable declaration
     short raw; // Variable declaration
     char datumA; // Variable declaration
     char datumB; // Variable declaration
-    char programmableGain; // Variable declaration
+    short programmableGain; // Variable declaration
     short processed; // Variable declaration
 
 
