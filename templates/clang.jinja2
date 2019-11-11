@@ -1,0 +1,192 @@
+{% macro params(compute) -%}
+{% set input = compute.input %}
+{% set args = namespace(index=0, dict={}) %}
+{% for variable in input %}
+{% for key in variable.keys() -%}
+{% if key != 'value' -%}
+{{- ", " if args.index > 0 -}}{{- numconv(variable[key]) }} {{ key -}}
+{%- set args.index = args.index + 1 -%}
+{%- endif %}
+{%- endfor %}
+{% endfor %}
+{# In C languages, you pass in array as a parameter #}
+{% if 'return' in compute and compute.return is iterable and compute.return is not string %}
+{% for var in compute.variables %}
+{% for key in var.keys() %}
+    {% set x=args.dict.__setitem__(key, var[key]) %}
+{% endfor %}
+{% endfor %}
+{{- ", " if args.index > 0 -}}{{numconv(args.dict[compute.return[0]])}} * returnArray
+{%- endif %}
+{%- endmacro %}
+
+{% macro variables(vars) -%}
+{% for var in vars %}
+{% for key in var.keys() %}
+    {{ numconv(var[key]) }} {{key}}; // Variable declaration
+{% endfor %}
+{% endfor %}
+{%- endmacro %}
+
+{% macro registerSize(registers, name) %}
+{% for reg in registers %}
+{% for key in reg.keys() %}
+{% if key == name %}{{numtype(reg[key].length)}}{% endif %}
+{% endfor %}
+{% endfor %}
+{% endmacro %}
+
+{% macro returnType(compute) -%}
+{# Create a dictionary of all the variables #}
+{% set vars = namespace(dict={}) %}
+{% for var in compute.variables %}
+{% for key in var.keys() %}
+    {% set x=vars.dict.__setitem__(key, var[key]) %}
+{% endfor %}
+{% endfor %}
+{% if compute.return is iterable and compute.return is not string %}
+{# In C languages, you do not return arrays. Rather the arg is an array #}
+void
+{%- else -%}
+{# Render a single var type #}
+{{ numconv(vars.dict[compute.return]) }}
+{%- endif %}
+{%- endmacro %}
+
+{% macro numconv(cyan) -%}
+{%- if cyan == 'int8' -%}
+char
+{%- elif cyan == 'uint8' -%}
+uint8_t
+{%- elif cyan == 'int16' -%}
+short
+{%- elif cyan == 'uint16' -%}
+uint16_t
+{%- elif cyan == 'float32' -%}
+float
+{%- else -%}
+/* ERROR UNDEFINED TYPE */
+{%- endif -%}
+{%- endmacro %}
+
+{% macro numtype(len, sign) -%}
+{%- if sign -%}
+{%- if len <= 8 %}
+char
+{%- elif len <= 16 %}
+short
+{%- elif len <= 32 %}
+long
+{%- else %}
+long long
+{%- endif %}
+{%- else %}
+{%- if len <= 8 %}
+uint8_t
+{%- elif len <= 16 %}
+uint16_t
+{%- elif len <= 32 %}
+uint32_t
+{%- else %}
+uint64_t
+{%- endif %}
+{%- endif %}
+{%- endmacro %}
+
+{% macro recursiveAssignLogic(logicalStep, keys) -%}
+{% for key in keys -%}
+{# Perform a recursive summation from an array of logical steps #}
+{% if key == 'sum' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{step}}
+    {%- endif %}
+    {{- "+" if not loop.last -}}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a recursive difference from an array of logical steps #}
+{% if key == 'difference' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{step}}
+    {%- endif %}
+    {{- "-" if not loop.last -}}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a recursive product from an array of logical steps #}
+{% if key == 'product' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{step}}
+    {%- endif %}
+    {{- "*" if not loop.last -}}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a recursive division from an array of logical steps #}
+{% if key == 'division' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{ step }}
+    {%- endif %}
+    {{- "/" if not loop.last -}}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a recursive modulus from an array of logical steps #}
+{% if key == 'modulus' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    (int) {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {#- Need to do a cast to int, may lose precision -#}
+    (int) {{ step }}
+    {%- endif %}
+    {{- "%" if not loop.last -}}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a bitwise OR from an array of logical steps #}
+{% if key == 'bitwiseOr' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{ step }}
+    {%- endif %}
+    {{- "|" if not loop.last -}}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a bitwise AND from an array of logical steps #}
+{% if key == 'bitwiseAnd' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{ step }}
+    {%- endif %}
+    {{- "&" if not loop.last -}}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a power operation #}
+{% if key == 'power' -%}
+    pow({{logicalStep[key][0]}}, {{logicalStep[key][1]}})
+{%- endif %}
+{# Perform an arc tangent operation #}
+{% if key == 'arc tangent' -%}
+    atan({{logicalStep[key]}})
+{%- endif %}
+{# Bitwise ops #}
+{%- if key == 'bitShiftLeft' -%}
+    ({{logicalStep.var}} << {{logicalStep.bits}})
+{%- endif %}
+{%- if key == 'bitShiftRight' -%}
+    ({{logicalStep.var}} >> {{logicalStep.bits}})
+{%- endif %}
+{%- endfor %}
+{%- endmacro %}

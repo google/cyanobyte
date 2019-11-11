@@ -154,7 +154,7 @@ functions:
               - raw: int16
               - datumA: int8
               - datumB: int8
-              - programmableGain: int8
+              - programmableGain: int16
               - processed: int16
             logic:
               - config: '#/registers/Config'
