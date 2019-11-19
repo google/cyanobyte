@@ -28,62 +28,56 @@ class TestCodegen(unittest.TestCase):
             -t templates/arduino.h \
             -i peripherals/' + peripheral + '.yaml > /dev/null')
 
-    def compareFiles(self, filePath1, filePath2):
-        print('Comparing', filePath1, 'and', filePath2)
-        with open(filePath1) as file1:
-            with open(filePath2) as file2:
-                fileContents1 = file1.read()
-                fileContents2 = file2.read()
-                self.assertEqual(
-                    fileContents1,
-                    fileContents2,
-                    msg="{0} and {1} are not the same".format(filePath1, filePath2)
-                )
+    def compareFiles(self, driverName):
+        drivers = [driverName.strip() + '.md',
+                   driverName.strip() + '.py',
+                   driverName.strip() + '.cpp',
+                   driverName.strip() + '.h']
+                   
+        testPath = 'test/sampleData'
+        tmpPath  = 'tmp/com/cyanobyte'
+        
+        for driver in drivers:
+            fullTestPath = os.path.join(testPath, driver)
+            fullTmpPath  = os.path.join(tmpPath, driver)
+        
+            print('Comparing', fullTestPath, 'and', fullTmpPath)
+            with open(fullTestPath) as file1:
+                with open(fullTmpPath) as file2:
+                    fileContents1 = file1.read()
+                    fileContents2 = file2.read()
+                    self.assertEqual(
+                        fileContents1,
+                        fileContents2,
+                        msg="{0} and {1} are not the same".format(fullTestPath, fullTmpPath)
+                    )
 
     def tearDown(self):
         print('\n')
 
     def test_ADS1015(self):
         self.generatePeripheral('ADS1015')
-        self.compareFiles('tmp/com/cyanobyte/ADS1015.md', 'test/sampleData/ADS1015.md')
-        self.compareFiles('tmp/com/cyanobyte/ADS1015.py', 'test/sampleData/ADS1015.py')
-        self.compareFiles('tmp/com/cyanobyte/ADS1015.cpp', 'test/sampleData/ADS1015.cpp')
-        self.compareFiles('tmp/com/cyanobyte/ADS1015.h', 'test/sampleData/ADS1015.h')
-
+        self.compareFiles('ADS1015')
+        
     def test_BMP280(self):
         self.generatePeripheral('BMP280')
-        self.compareFiles('tmp/com/cyanobyte/BMP280.md', 'test/sampleData/BMP280.md')
-        self.compareFiles('tmp/com/cyanobyte/BMP280.py', 'test/sampleData/BMP280.py')
-        self.compareFiles('tmp/com/cyanobyte/BMP280.cpp', 'test/sampleData/BMP280.cpp')
-        self.compareFiles('tmp/com/cyanobyte/BMP280.h', 'test/sampleData/BMP280.h')
-
+        self.compareFiles('BMP280')
+        
     def test_LSM303D(self):
         self.generatePeripheral('LSM303D')
-        self.compareFiles('tmp/com/cyanobyte/LSM303D.md', 'test/sampleData/LSM303D.md')
-        self.compareFiles('tmp/com/cyanobyte/LSM303D.py', 'test/sampleData/LSM303D.py')
-        self.compareFiles('tmp/com/cyanobyte/LSM303D.cpp', 'test/sampleData/LSM303D.cpp')
-        self.compareFiles('tmp/com/cyanobyte/LSM303D.h', 'test/sampleData/LSM303D.h')
+        self.compareFiles('LSM303D')
 
     def test_MCP4725(self):
         self.generatePeripheral('MCP4725')
-        self.compareFiles('tmp/com/cyanobyte/MCP4725.md', 'test/sampleData/MCP4725.md')
-        self.compareFiles('tmp/com/cyanobyte/MCP4725.py', 'test/sampleData/MCP4725.py')
-        self.compareFiles('tmp/com/cyanobyte/MCP4725.cpp', 'test/sampleData/MCP4725.cpp')
-        self.compareFiles('tmp/com/cyanobyte/MCP4725.h', 'test/sampleData/MCP4725.h')
+        self.compareFiles('MCP4725')
 
     def test_MCP9808(self):
         self.generatePeripheral('MCP9808')
-        self.compareFiles('tmp/com/cyanobyte/MCP9808.md', 'test/sampleData/MCP9808.md')
-        self.compareFiles('tmp/com/cyanobyte/MCP9808.py', 'test/sampleData/MCP9808.py')
-        self.compareFiles('tmp/com/cyanobyte/MCP9808.cpp', 'test/sampleData/MCP9808.cpp')
-        self.compareFiles('tmp/com/cyanobyte/MCP9808.h', 'test/sampleData/MCP9808.h')
+        self.compareFiles('MCP9808')
 
     def test_TCS3472(self):
         self.generatePeripheral('TCS3472')
-        self.compareFiles('tmp/com/cyanobyte/TCS3472.md', 'test/sampleData/TCS3472.md')
-        self.compareFiles('tmp/com/cyanobyte/TCS3472.py', 'test/sampleData/TCS3472.py')
-        self.compareFiles('tmp/com/cyanobyte/TCS3472.cpp', 'test/sampleData/TCS3472.cpp')
-        self.compareFiles('tmp/com/cyanobyte/TCS3472.h', 'test/sampleData/TCS3472.h')
+        self.compareFiles('TCS3472')
 
 if __name__ == '__main__':
     unittest.main()
