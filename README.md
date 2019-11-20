@@ -41,10 +41,10 @@ The current spec is described in `docs/cyanobyte.md`. You can find all examples 
 `python3 -m unittest test.test_codegen`
 
 ## Templates
-The `templates` directory includes a set of canonical templates which can be used with this codegen tool.
+The [templates](templates) directory includes a set of canonical templates which can be used with this codegen tool.
 
-The `peripherals` directory includes a set of peripheral description files that have been created along with
+The [peripherals](peripherals) directory includes a set of peripheral description files that have been created along with
 the project. It is not an exhaustive list.
 
 ## License
-See `LICENSE`
+See [LICENSE](LICENSE)
