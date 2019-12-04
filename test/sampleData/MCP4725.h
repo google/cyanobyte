@@ -83,11 +83,6 @@ class MCP4725 {
         int setdigitalOut(uint8_t data);
 
 
-        /**
-         * set vout
-
-         */
-        int setsetVOut(uint8_t data);
 
         /**
          * set vout
@@ -95,11 +90,6 @@ class MCP4725 {
          */
         void setVOutasVoltage(float vcc, float output);
 
-        /**
-         * get vout
-
-         */
-        uint16_t getgetVOut();
 
         /**
          * get vout

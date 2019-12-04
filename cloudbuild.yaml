@@ -27,6 +27,8 @@ steps:
     - 'templates/arduino.cpp'
     - '-t'
     - 'templates/arduino.h'
+    - '-t'
+    - 'templates/kubos.c'
     - '-o'
     - './build'
     - '-i'

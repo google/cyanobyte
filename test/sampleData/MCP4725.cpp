@@ -127,14 +127,6 @@ int MCP4725::setdigitalOut(uint8_t data) {
 }
 
 
-int MCP4725::setsetVOut(uint8_t data) {
-    // Read current register data
-    // '#/registers/EEPROM' > 'EEPROM'
-    uint8_t register_data = readEEPROM();
-    register_data = register_data | data;
-    return writeEEPROM(register_data);
-}
-
 void MCP4725::setVOutasVoltage(float vcc, float output) {
 
 
@@ -144,14 +136,6 @@ void MCP4725::setVOutasVoltage(float vcc, float output) {
 
 }
 
-uint16_t MCP4725::getgetVOut() {
-    // Read register data
-    // '#/registers/EEPROM' > 'EEPROM'
-    uint8_t val = readEEPROM();
-    // Mask register value
-    val = val & 0b0000111111111111;
-    return val;
-}
 
 float MCP4725::getVOutasVoltage(float vcc) {
     float voltage; // Variable declaration
