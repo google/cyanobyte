@@ -27,19 +27,44 @@ class TestCodegen(unittest.TestCase):
             -t templates/arduino.cpp \
             -t templates/arduino.h \
             -i peripherals/' + peripheral + '.yaml > /dev/null')
+        os.system('python3 src/codegen.py \
+            -c \
+            -o ./tmpKubos/ \
+            -t templates/kubos.c \
+            -t templates/kubos.h \
+            -i peripherals/' + peripheral + '.yaml > /dev/null')
 
     def compareFiles(self, driverName):
         drivers = [driverName.strip() + '.md',
                    driverName.strip() + '.py',
                    driverName.strip() + '.cpp',
                    driverName.strip() + '.h']
+        driversKubos = [driverName.strip() + '.c',
+                        driverName.strip() + '.h']
                    
         testPath = 'test/sampleData'
+        testPathKubos = 'test/sampleDataKubos'
         tmpPath  = 'tmp/com/cyanobyte'
+        tmpPathKubos = 'tmpKubos/com/cyanobyte'
         
         for driver in drivers:
             fullTestPath = os.path.join(testPath, driver)
             fullTmpPath  = os.path.join(tmpPath, driver)
+        
+            print('Comparing', fullTestPath, 'and', fullTmpPath)
+            with open(fullTestPath) as file1:
+                with open(fullTmpPath) as file2:
+                    fileContents1 = file1.read()
+                    fileContents2 = file2.read()
+                    self.assertEqual(
+                        fileContents1,
+                        fileContents2,
+                        msg="{0} and {1} are not the same".format(fullTestPath, fullTmpPath)
+                    )
+
+        for driver in driversKubos:
+            fullTestPath = os.path.join(testPathKubos, driver)
+            fullTmpPath  = os.path.join(tmpPathKubos, driver)
         
             print('Comparing', fullTestPath, 'and', fullTmpPath)
             with open(fullTestPath) as file1:

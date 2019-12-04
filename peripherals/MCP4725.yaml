@@ -73,7 +73,7 @@ functions:
       description: set vout
       type: number
       register: '#/registers/EEPROM'
-      readWrite: 'W'
+      readWrite: 'n'
       bitStart: 12
       bitEnd: 0
       computed:
@@ -89,7 +89,7 @@ functions:
       description: get vout
       type: number
       register: '#/registers/EEPROM'
-      readWrite: 'R'
+      readWrite: 'n'
       bitStart: 12
       bitEnd: 0
       computed:
