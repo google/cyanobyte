@@ -3,6 +3,7 @@
 __pycache__/
 *.pyc
 tmp/
+tmpKubos/
 node_modules/
 docs/public/
 docs/resources/
