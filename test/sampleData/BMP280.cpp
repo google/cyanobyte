@@ -707,7 +707,6 @@ float BMP280::temperatureasCelsius() {
     return celsius;
 }
 
-
 short BMP280::pressureasRaw() {
     char valueMsb; // Variable declaration
     char valueLsb; // Variable declaration

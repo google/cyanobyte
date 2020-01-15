@@ -260,7 +260,6 @@ void bmp280_temperature_asraw(short* val);
 */
 void bmp280_temperature_ascelsius(float* val);
 
-
 /**
  * Reads the atmospheric pressure
 

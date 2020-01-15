@@ -66,7 +66,6 @@ int mcp9808_get_limithysteresis(uint16_t* val) {
     val = val >> 9;
     return 0;
 }
-
 int mcp9808_get_shutdownmode(uint16_t* val) {
     // Read register data
     // '#/registers/configuration' > 'configuration'

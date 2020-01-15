@@ -140,7 +140,6 @@ functions:
   - temperature:
       title: Temperature as read by sensor
       description: Reads the temperature
-      readWrite: 'n'
       computed:
         - asRaw:
             variables:
@@ -228,7 +227,6 @@ functions:
   - pressure:
       title: Pressure as read by sensor
       description: Reads the atmospheric pressure
-      readWrite: 'n'
       computed:
         - asRaw:
             variables:

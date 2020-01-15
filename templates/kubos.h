@@ -47,19 +47,19 @@
 {% endfor %}
 {% endfor %}
 
-{# Create enums for functions #}
-{% for function in functions %}
-{% for key in function.keys() %}
-{% if function[key].enum %}
+{# Create enums for fields #}
+{% for field in fields %}
+{% for key in field.keys() %}
+{% if field[key].enum %}
 {# Create enum #}
 /*
-{{utils.pad_string(" * ", "Valid values for " + function[key].title)}}
+{{utils.pad_string(" * ", "Valid values for " + field[key].title)}}
  */
 enum {{key}} {
     {% set args = namespace(index=0) %}
-    {% for enumObject in function[key].enum %}
+    {% for enumObject in field[key].enum %}
     {% for enumKey in enumObject.keys() %}
-    {{key.upper()}}_{{enumKey.upper()}} = {{enumObject[enumKey].value}}{{- "," if args.index + 1 < function[key].enum | length }} // {{enumObject[enumKey].title}}
+    {{key.upper()}}_{{enumKey.upper()}} = {{enumObject[enumKey].value}}{{- "," if args.index + 1 < field[key].enum | length }} // {{enumObject[enumKey].title}}
     {% set args.index = args.index + 1 %}
     {% endfor %}
     {% endfor %}
@@ -86,23 +86,27 @@ int {{info.title.lower()}}_write{{key}}({{cpp.numtype(register[key].length)}}* d
 {% endfor %}
 {%- endfor %}
 
-{% for function in functions %}
-{% for key in function.keys() %}
-{% if 'R' is in(function[key].readWrite) %}
-{% set int_t = cpp.registerSize(registers, function[key].register[12:]) %}
+{% for field in fields %}
+{% for key in field.keys() %}
+{% if 'R' is in(field[key].readWrite) %}
+{% set int_t = cpp.registerSize(registers, field[key].register[12:]) %}
 /**
-{{utils.pad_string(" * ", function[key].description)}}
+{{utils.pad_string(" * ", field[key].description)}}
  */
 int {{info.title.lower()}}_get_{{key.lower()}}({{int_t}}* val);
 {% endif %}
-{% if 'W' is in(function[key].readWrite) %}
-{% set int_t = cpp.registerSize(registers, function[key].register[12:]) %}
+{% if 'W' is in(field[key].readWrite) %}
+{% set int_t = cpp.registerSize(registers, field[key].register[12:]) %}
 /**
-{{utils.pad_string(" * ", function[key].description)}}
+{{utils.pad_string(" * ", field[key].description)}}
  */
 int {{info.title.lower()}}_set_{{key.lower()}}({{int_t}}* data);
 {% endif %}
+{% endfor %}
+{% endfor %}
 
+{% for function in functions %}
+{% for key in function.keys() %}
 {% if function[key].computed %}
 {% for compute in function[key].computed %}
 {% for computeKey in compute.keys() %}

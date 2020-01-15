@@ -73,7 +73,6 @@ uint16_t MCP9808::getlimitHysteresis() {
     val = val >> 9;
     return val;
 }
-
 uint16_t MCP9808::getshutdownMode() {
     // Read register data
     // '#/registers/configuration' > 'configuration'

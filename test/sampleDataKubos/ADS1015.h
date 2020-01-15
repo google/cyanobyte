@@ -108,24 +108,16 @@ int ads1015_writeConversion(uint16_t* data);
 
  */
 int ads1015_set_samplerate(uint16_t* data);
-
-
 /**
  * This sets the programmable gain for reading analog voltage
 
  */
 int ads1015_set_programmablegain(uint16_t* data);
-
-
 /**
  * This bit controls the operating mode
 
  */
 int ads1015_set_deviceoperatingmode(uint16_t* data);
-
-
-
-
 
 /**
  * Reads the analog voltage in Volts

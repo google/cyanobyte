@@ -51,7 +51,7 @@ registers:
         If EEPROM is set, the saved voltage output will
         be loaded from power-on.
 
-functions:
+fields:
   - digitalOut:
       title: Digital (binary) output
       description: |
@@ -68,12 +68,12 @@ functions:
         - GND:
             title: Ground
             value: 0b000000000000
+functions:
   - setVOut:
       title: Set output voltage
       description: set vout
       type: number
       register: '#/registers/EEPROM'
-      readWrite: 'n'
       bitStart: 12
       bitEnd: 0
       computed:
@@ -89,7 +89,6 @@ functions:
       description: get vout
       type: number
       register: '#/registers/EEPROM'
-      readWrite: 'n'
       bitStart: 12
       bitEnd: 0
       computed:

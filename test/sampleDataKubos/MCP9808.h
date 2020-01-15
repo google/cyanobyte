@@ -77,8 +77,6 @@ int mcp9808_writeconfiguration(uint16_t* data);
 
  */
 int mcp9808_get_limithysteresis(uint16_t* val);
-
-
 /**
  * In shutdown, all power-consuming activities are disabled, though
  * all registers can be written to or read. This bit cannot be set
@@ -88,7 +86,6 @@ int mcp9808_get_limithysteresis(uint16_t* val);
 
  */
 int mcp9808_get_shutdownmode(uint16_t* val);
-
 
 
 #endif

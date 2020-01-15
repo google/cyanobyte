@@ -133,40 +133,44 @@ int {{info.title}}::write{{key}}({{cpp.numtype(length)}} data) {
 {% endfor %}
 {%- endfor %}
 
-{% for function in functions %}
-{% for key in function.keys() %}
-{% if 'R' is in(function[key].readWrite) %}
+{% for field in fields %}
+{% for key in field.keys() %}
+{% if 'R' is in(field[key].readWrite) %}
 {# Getter #}
-{{cpp.registerSize(registers, function[key].register[12:])}} {{info.title}}::get{{key}}() {
+{{cpp.registerSize(registers, field[key].register[12:])}} {{info.title}}::get{{key}}() {
     // Read register data
-    // '#/registers/{{function[key].register[12:]}}' > '{{function[key].register[12:]}}'
-    uint8_t val = read{{function[key].register[12:]}}();
+    // '#/registers/{{field[key].register[12:]}}' > '{{field[key].register[12:]}}'
+    uint8_t val = read{{field[key].register[12:]}}();
     // Mask register value
-    val = val & {{utils.mask(function[key].bitStart, function[key].bitEnd)}};
-    {% if function[key].bitEnd %}
+    val = val & {{utils.mask(field[key].bitStart, field[key].bitEnd)}};
+    {% if field[key].bitEnd %}
     // Bitshift value
-    val = val >> {{function[key].bitEnd}};
+    val = val >> {{field[key].bitEnd}};
     {% endif %}
     return val;
 }
 {% endif -%}
 
-{%- if 'W' is in(function[key].readWrite) %}
+{%- if 'W' is in(field[key].readWrite) %}
 {# Setter #}
 
 int {{info.title}}::set{{key}}(uint8_t data) {
-    {% if function[key].bitEnd %}
+    {% if field[key].bitEnd %}
     // Bitshift value
-    data = data << {{function[key].bitEnd}};
+    data = data << {{field[key].bitEnd}};
     {% endif %}
     // Read current register data
-    // '#/registers/{{function[key].register[12:]}}' > '{{function[key].register[12:]}}'
-    uint8_t register_data = read{{function[key].register[12:]}}();
+    // '#/registers/{{field[key].register[12:]}}' > '{{field[key].register[12:]}}'
+    uint8_t register_data = read{{field[key].register[12:]}}();
     register_data = register_data | data;
-    return write{{function[key].register[12:]}}(register_data);
+    return write{{field[key].register[12:]}}(register_data);
 }
 {% endif %}
+{% endfor %}
+{% endfor %}
 
+{% for function in functions %}
+{% for key in function.keys() %}
 {% if function[key].computed %}
 {% for compute in function[key].computed %}
 {% for computeKey in compute.keys() %}

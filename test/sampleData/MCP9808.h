@@ -76,8 +76,6 @@ class MCP9808 {
 
          */
         uint16_t getlimitHysteresis();
-
-
         /**
          * In shutdown, all power-consuming activities are disabled, though
          * all registers can be written to or read. This bit cannot be set
@@ -87,7 +85,6 @@ class MCP9808 {
 
          */
         uint16_t getshutdownMode();
-
 
 
     private:

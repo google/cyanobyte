@@ -106,24 +106,16 @@ class ADS1015 {
 
          */
         int setSampleRate(uint8_t data);
-
-
         /**
          * This sets the programmable gain for reading analog voltage
 
          */
         int setProgrammableGain(uint8_t data);
-
-
         /**
          * This bit controls the operating mode
 
          */
         int setDeviceOperatingMode(uint8_t data);
-
-
-
-
 
         /**
          * Reads the analog voltage in Volts

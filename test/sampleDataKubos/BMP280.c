@@ -505,7 +505,6 @@ void bmp280_temperature_ascelsius(float* val) {
     return celsius;
 }
 
-
 void bmp280_pressure_asraw(short* val) {
     char valueMsb; // Variable declaration
     char valueLsb; // Variable declaration

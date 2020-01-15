@@ -37,7 +37,7 @@ registers:
             and Alert output polarity and mode (Comparator Output or Interrupt
             Output mode) are user-configurable.
 
-functions:
+fields:
     - limitHysteresis:
         title: TUPPER and TLOWER Limit Hysteresis bits
         description: |
