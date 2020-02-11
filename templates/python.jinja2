@@ -115,16 +115,20 @@
 {%- endfor %}
 {%- endmacro %}
 
-{% macro importStdLibs(functions, template) %}
-{% for function in functions %}
-{% for key in function.keys() %}
-{% if function[key].enum %}
+{% macro importStdLibs(fields, functions, template) %}
+{% for field in fields %}
+{% for key in field.keys() %}
+{% if field[key].enum %}
 {# Optionally import class #}
 {% if template.enum is sameas false %}
 from enum import Enum
 {% set template.enum = true %}
 {% endif %}
 {% endif %}
+{% endfor %}
+{% endfor %}
+{% for function in functions %}
+{% for key in function.keys() %}
 {# Check if we need to import `math` lib #}
 {% if function[key].computed %}
 {% for compute in function[key].computed %}

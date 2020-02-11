@@ -187,7 +187,6 @@ class LSM303D {
          */
         void accelerationasG(short * returnArray);
 
-
         /**
          * Reads the magnetic orientation
 

@@ -44,19 +44,19 @@
 {% endfor %}
 {% endfor %}
 
-{# Create enums for functions #}
-{% for function in functions %}
-{% for key in function.keys() %}
-{% if function[key].enum %}
+{# Create enums for fields #}
+{% for field in fields %}
+{% for key in field.keys() %}
+{% if field[key].enum %}
 {# Create enum #}
 /*
-{{utils.pad_string(" * ", "Valid values for " + function[key].title)}}
+{{utils.pad_string(" * ", "Valid values for " + field[key].title)}}
  */
 enum {{key}} {
     {% set args = namespace(index=0) %}
-    {% for enumObject in function[key].enum %}
+    {% for enumObject in field[key].enum %}
     {% for enumKey in enumObject.keys() %}
-    {{key.upper()}}_{{enumKey.upper()}} = {{enumObject[enumKey].value}}{{- "," if args.index + 1 < function[key].enum | length }} // {{enumObject[enumKey].title}}
+    {{key.upper()}}_{{enumKey.upper()}} = {{enumObject[enumKey].value}}{{- "," if args.index + 1 < field[key].enum | length }} // {{enumObject[enumKey].title}}
     {% set args.index = args.index + 1 %}
     {% endfor %}
     {% endfor %}
@@ -86,21 +86,25 @@ class {{info.title}} {
         int write{{key}}({{cpp.numtype(length)}} data);
         {% endfor %}
         {%- endfor %}
-        {% for function in functions %}
-        {% for key in function.keys() %}
-        {% if 'R' is in(function[key].readWrite) %}
+        {% for field in fields %}
+        {% for key in field.keys() %}
+        {% if 'R' is in(field[key].readWrite) %}
         /**
-{{utils.pad_string("         * ", function[key].description)}}
+{{utils.pad_string("         * ", field[key].description)}}
          */
-        {{cpp.registerSize(registers, function[key].register[12:])}} get{{key}}();
+        {{cpp.registerSize(registers, field[key].register[12:])}} get{{key}}();
         {% endif %}
-        {% if 'W' is in(function[key].readWrite) %}
+        {% if 'W' is in(field[key].readWrite) %}
         /**
-{{utils.pad_string("         * ", function[key].description)}}
+{{utils.pad_string("         * ", field[key].description)}}
          */
         int set{{key}}(uint8_t data);
         {% endif %}
+        {% endfor %}
+        {% endfor %}
 
+        {% for function in functions %}
+        {% for key in function.keys() %}
         {% if function[key].computed %}
         {% for compute in function[key].computed %}
         {% for computeKey in compute.keys() %}

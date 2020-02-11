@@ -199,7 +199,6 @@ void lsm303d_acceleration_zplane(short* val);
 */
 void lsm303d_acceleration_asg(void* val);
 
-
 /**
  * Reads the magnetic orientation
 

@@ -126,7 +126,6 @@ int ADS1015::setSampleRate(uint8_t data) {
     return writeConfig(register_data);
 }
 
-
 int ADS1015::setProgrammableGain(uint8_t data) {
     // Bitshift value
     data = data << 9;
@@ -137,7 +136,6 @@ int ADS1015::setProgrammableGain(uint8_t data) {
     return writeConfig(register_data);
 }
 
-
 int ADS1015::setDeviceOperatingMode(uint8_t data) {
     // Bitshift value
     data = data << 8;
@@ -147,8 +145,6 @@ int ADS1015::setDeviceOperatingMode(uint8_t data) {
     register_data = register_data | data;
     return writeConfig(register_data);
 }
-
-
 
 short ADS1015::analogread(char channel) {
     short config; // Variable declaration

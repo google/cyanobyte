@@ -173,8 +173,8 @@
         "additionalProperties": false
       }
     },
-    "functions": {
-      "description": "Chip functions",
+    "fields": {
+      "description": "Subcomponents of a register",
       "type": "array",
       "items": {
         "description": "Outer object",
@@ -245,6 +245,84 @@
               "title",
               "description",
               "readWrite"
+            ]
+          }
+        }
+      }
+    },
+    "functions": {
+      "description": "Chip functions",
+      "type": "array",
+      "items": {
+        "description": "Outer object",
+        "type": "object",
+        "patternProperties": {
+          "^.*$": {
+            "description": "Chip function",
+            "type": "object",
+            "properties": {
+              "title": {
+                "description": "Title of the function",
+                "type": "string"
+              },
+              "description": {
+                "description": "Description of the function",
+                "type": "string"
+              },
+              "register": {
+                "description": "Register of the function",
+                "type": "string"
+              },
+              "computed": {
+                "description": "Properties for a computed element",
+                "type": "array",
+                "items": {
+                  "description": "A computation",
+                  "type": "object",
+                  "patternProperties": {
+                    "^.*$": {
+                      "description": "Title of the computation",
+                      "type": "object",
+                      "properties": {
+                        "variables": {
+                          "description": "All variables used in the computation",
+                          "type": "array",
+                          "items": {
+                            "description": "Variable name",
+                            "type": "object",
+                            "patternProperties": {
+                              "^.$": {
+                                "description": "Variable name",
+                                "type": "string",
+                                "enum": [
+                                  "int8",
+                                  "int16",
+                                  "int32",
+                                  "uint8",
+                                  "uint16",
+                                  "uint32"
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "logic": {
+                          "description": "Set of logical operations",
+                          "type": "array"
+                        },
+                        "return": {
+                          "description": "The variable or variable array to return",
+                          "type": ["string", "array"]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "required": [
+              "title",
+              "description"
             ]
           }
         }

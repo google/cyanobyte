@@ -369,7 +369,6 @@ void lsm303d_acceleration_asg(void* val) {
     return [value_x, value_y, value_z];
 }
 
-
 void lsm303d_orientation_xplane(short* val) {
     char lower; // Variable declaration
     char upper; // Variable declaration

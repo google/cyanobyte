@@ -55,7 +55,7 @@ registers:
       title: Blue channel
       description: Blue light as an int. Divide by ambient light to get scaled number.
 
-functions:
+fields:
   - init:
       title: Setup the device configuration
       description: Enable RGBC and Power

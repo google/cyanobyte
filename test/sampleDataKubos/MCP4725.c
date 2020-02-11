@@ -119,7 +119,6 @@ int mcp4725_set_digitalout(uint16_t* data) {
     return 0;
 }
 
-
 void mcp4725_setvout_asvoltage(void* val, ) {
 
 
@@ -129,7 +128,6 @@ void mcp4725_setvout_asvoltage(void* val, ) {
 
     return [];
 }
-
 
 void mcp4725_getvout_asvoltage(float* val, ) {
     float voltage; // Variable declaration

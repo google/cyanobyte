@@ -48,17 +48,17 @@ try:
 except ImportError:
     print("Fatal error! Make sure to install smbus!")
     sys.exit(1)
-{{ py.importStdLibs(functions, template) -}}
-{# Create enums for functions #}
-{% for function in functions %}
-{% for key in function.keys() %}
-{% if function[key].enum %}
+{{ py.importStdLibs(fields, functions, template) -}}
+{# Create enums for fields #}
+{% for field in fields %}
+{% for key in field.keys() %}
+{% if field[key].enum %}
 {# Create enum class #}
 class {{key[0].upper()}}{{key[1:]}}Values(Enum):
     """
-{{utils.pad_string("    ", "Valid values for " + function[key].title)}}
+{{utils.pad_string("    ", "Valid values for " + field[key].title)}}
     """
-    {% for enumObject in function[key].enum %}
+    {% for enumObject in field[key].enum %}
     {% for enumKey in enumObject.keys() %}
     {{enumKey.upper()}} = {{enumObject[enumKey].value}} # {{enumObject[enumKey].title}}
     {% endfor %}
@@ -158,44 +158,48 @@ class {{ info.title }}:
     {% endfor %}
     {%- endfor %}
 
-    {% for function in functions %}
-    {% for key in function.keys() %}
-    {% if 'R' is in(function[key].readWrite) %}
+    {% for field in fields %}
+    {% for key in field.keys() %}
+    {% if 'R' is in(field[key].readWrite) %}
     {# Getter #}
 
     def get_{{key.lower()}}(self):
         """
-{{utils.pad_string("        ", function[key].description)}}
+{{utils.pad_string("        ", field[key].description)}}
         """
         # Read register data
-        # '#/registers/{{function[key].register[12:]}}' > '{{function[key].register[12:]}}'
-        val = self.get_{{function[key].register[12:].lower()}}()
+        # '#/registers/{{field[key].register[12:]}}' > '{{field[key].register[12:]}}'
+        val = self.get_{{field[key].register[12:].lower()}}()
         # Mask register value
-        val = val & {{utils.mask(function[key].bitStart, function[key].bitEnd)}}
-        {% if function[key].bitEnd %}
+        val = val & {{utils.mask(field[key].bitStart, field[key].bitEnd)}}
+        {% if field[key].bitEnd %}
         # Bitshift value
-        val = val >> {{function[key].bitEnd}}
+        val = val >> {{field[key].bitEnd}}
         {% endif %}
         return val
     {% endif -%}
 
-    {%- if 'W' is in(function[key].readWrite) %}
+    {%- if 'W' is in(field[key].readWrite) %}
     {# Setter #}
 
     def set_{{key.lower()}}(self, data):
         """
-{{utils.pad_string("        ", function[key].description)}}
+{{utils.pad_string("        ", field[key].description)}}
         """
-        {% if function[key].bitEnd %}
+        {% if field[key].bitEnd %}
         # Bitshift value
-        data = data << {{function[key].bitEnd}}
+        data = data << {{field[key].bitEnd}}
         {% endif %}
         # Read current register data
-        # '#/registers/{{function[key].register[12:]}}' > '{{function[key].register[12:]}}'
-        register_data = self.get_{{function[key].register[12:].lower()}}()
+        # '#/registers/{{field[key].register[12:]}}' > '{{field[key].register[12:]}}'
+        register_data = self.get_{{field[key].register[12:].lower()}}()
         register_data = register_data | data
-        self.set_{{function[key].register[12:].lower()}}(register_data)
+        self.set_{{field[key].register[12:].lower()}}(register_data)
     {% endif %}
+    {% endfor %}
+    {% endfor %}
+    {% for function in functions %}
+    {% for key in function.keys() %}
     {% if function[key].computed %}
     {% for compute in function[key].computed %}
     {% for computeKey in compute.keys() %}

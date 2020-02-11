@@ -489,7 +489,6 @@ void LSM303D::accelerationasG(short * returnArray) {
     returnArray[2] = valueZ;
 }
 
-
 short LSM303D::orientationxPlane() {
     char lower; // Variable declaration
     char upper; // Variable declaration

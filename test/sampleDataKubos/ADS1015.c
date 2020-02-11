@@ -112,7 +112,6 @@ int ads1015_set_samplerate(uint16_t* data) {
     return 0;
 }
 
-
 int ads1015_set_programmablegain(uint16_t* data) {
     // Bitshift value
     data = data << 9;
@@ -131,7 +130,6 @@ int ads1015_set_programmablegain(uint16_t* data) {
     return 0;
 }
 
-
 int ads1015_set_deviceoperatingmode(uint16_t* data) {
     // Bitshift value
     data = data << 8;
@@ -149,8 +147,6 @@ int ads1015_set_deviceoperatingmode(uint16_t* data) {
     }
     return 0;
 }
-
-
 
 void ads1015_analog_read(short* val, ) {
     short config; // Variable declaration

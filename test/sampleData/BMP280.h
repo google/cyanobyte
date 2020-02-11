@@ -242,7 +242,6 @@ class BMP280 {
          */
         float temperatureasCelsius();
 
-
         /**
          * Reads the atmospheric pressure
 

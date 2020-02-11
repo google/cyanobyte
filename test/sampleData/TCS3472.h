@@ -108,7 +108,6 @@ class TCS3472 {
         int setinit(uint8_t data);
 
 
-
     private:
         TwoWire* _wire;
 };
