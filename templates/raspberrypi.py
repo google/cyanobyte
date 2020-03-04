@@ -200,7 +200,6 @@ class {{ info.title }}:
     {% endfor %}
     {% for function in functions %}
     {% for key in function.keys() %}
-    {% if function[key].computed %}
     {% for compute in function[key].computed %}
     {% for computeKey in compute.keys() %}
     {% if compute[computeKey].input %}
@@ -240,6 +239,5 @@ class {{ info.title }}:
         {% endif %}
     {% endfor %}
     {% endfor %}
-    {% endif %}
     {% endfor %}
     {% endfor %}

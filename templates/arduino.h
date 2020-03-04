@@ -18,7 +18,6 @@
 {% for function in functions %}
 {% for key in function.keys() %}
 {# Check if we need to import `math` lib #}
-{% if function[key].computed %}
 {% for compute in function[key].computed %}
 {% for computeKey in compute.keys() %}
 {% macro scanForMathLib(logicKeys) -%}
@@ -40,7 +39,6 @@
 {{- scanForMathLib(compute[computeKey].logic) -}}
 {% endfor %}
 {% endfor %}
-{% endif %}
 {% endfor %}
 {% endfor %}
 
@@ -105,7 +103,6 @@ class {{info.title}} {
 
         {% for function in functions %}
         {% for key in function.keys() %}
-        {% if function[key].computed %}
         {% for compute in function[key].computed %}
         {% for computeKey in compute.keys() %}
         /**
@@ -118,7 +115,6 @@ class {{info.title}} {
         {% endif %}
         {% endfor %}
         {% endfor %}
-        {% endif %}
 
         {% endfor %}
         {% endfor %}
