@@ -46,5 +46,12 @@ The [templates](templates) directory includes a set of canonical templates which
 The [peripherals](peripherals) directory includes a set of peripheral description files that have been created along with
 the project. It is not an exhaustive list.
 
+## Contributors
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information.
+
+When a pull request is submitted, a continuous integration task is run. The CI task must
+be completed successfully before a patch is merged. You can see the specific rules run in
+[cloudbuild.yaml](cloudbuild.yaml).
+
 ## License
 See [LICENSE](LICENSE)
