@@ -1,5 +1,10 @@
-# LSM303D
-STMicroelectronics accelerometer and magnetometer
+---
+title: "LSM303D"
+linkTitle: "LSM303D"
+weight: 4
+description: >
+  STMicroelectronics accelerometer and magnetometer
+---
 
 ## Registers
 
