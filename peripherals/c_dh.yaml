@@ -1,0 +1,21 @@
+# See <link to Google Drive>
+cyanobyte: 0.1.0
+info:
+  package: edu.rowan.rocketronix
+  title: C&DH
+  description: C&DH Subsystem messages
+  license:
+    name: Apache-2.0
+  version: 0.1.0
+
+i2c:
+  addressType: 7-bit
+  address: 0x10
+  addressMask: 0xFF
+
+registers:
+    - Battery:
+        address: 0x02
+        length: 32
+        title: Battery level from Power
+        description: kWh remaining
