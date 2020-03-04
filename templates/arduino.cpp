@@ -171,7 +171,6 @@ int {{info.title}}::set{{key}}(uint8_t data) {
 
 {% for function in functions %}
 {% for key in function.keys() %}
-{% if function[key].computed %}
 {% for compute in function[key].computed %}
 {% for computeKey in compute.keys() %}
 {% if compute[computeKey].input %}
@@ -210,6 +209,5 @@ int {{info.title}}::set{{key}}(uint8_t data) {
 
 {% endfor %}
 {% endfor %}
-{% endif %}
 {% endfor %}
 {% endfor %}

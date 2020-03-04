@@ -18,53 +18,37 @@ import unittest
 import os
 
 class TestCodegen(unittest.TestCase):
-    def generatePeripheral(self, peripheral):
+    def generatePeripheral(self, template):
         os.system('python3 src/codegen.py \
             -c \
             -o ./tmp/ \
-            -t templates/doc.md \
-            -t templates/raspberrypi.py \
-            -t templates/arduino.cpp \
-            -t templates/arduino.h \
-            -i peripherals/' + peripheral + '.yaml > /dev/null')
-        os.system('python3 src/codegen.py \
-            -c \
-            -o ./tmpKubos/ \
-            -t templates/kubos.c \
-            -t templates/kubos.h \
-            -i peripherals/' + peripheral + '.yaml > /dev/null')
+            -t templates/' + template + '\
+            -i peripherals/ADS1015.yaml \
+            -i peripherals/BMP280.yaml \
+            -i peripherals/LSM303D.yaml \
+            -i peripherals/MCP4725.yaml \
+            -i peripherals/MCP9808.yaml \
+            -i peripherals/TCS3472.yaml \
+            > /dev/null')
 
-    def compareFiles(self, driverName):
-        drivers = [driverName.strip() + '.md',
-                   driverName.strip() + '.py',
-                   driverName.strip() + '.cpp',
-                   driverName.strip() + '.h']
-        driversKubos = [driverName.strip() + '.c',
-                        driverName.strip() + '.h']
-                   
+    def compareFiles(self, platformName, extension):
+        peripherals = [
+            'ADS1015', 'BMP280', 'LSM303D', 'MCP4725', 'MCP9808',
+            'TCS3472'
+        ]
         testPath = 'test/sampleData'
-        testPathKubos = 'test/sampleDataKubos'
         tmpPath  = 'tmp/com/cyanobyte'
-        tmpPathKubos = 'tmpKubos/com/cyanobyte'
         
-        for driver in drivers:
-            fullTestPath = os.path.join(testPath, driver)
-            fullTmpPath  = os.path.join(tmpPath, driver)
-        
-            print('Comparing', fullTestPath, 'and', fullTmpPath)
-            with open(fullTestPath) as file1:
-                with open(fullTmpPath) as file2:
-                    fileContents1 = file1.read()
-                    fileContents2 = file2.read()
-                    self.assertEqual(
-                        fileContents1,
-                        fileContents2,
-                        msg="{0} and {1} are not the same".format(fullTestPath, fullTmpPath)
-                    )
-
-        for driver in driversKubos:
-            fullTestPath = os.path.join(testPathKubos, driver)
-            fullTmpPath  = os.path.join(tmpPathKubos, driver)
+        for peripheral in peripherals:
+            fullTestPath = os.path.join(
+                testPath,
+                platformName,
+                peripheral + '.' + extension
+            )
+            fullTmpPath  = os.path.join(
+                tmpPath,
+                peripheral + '.' + extension
+            )
         
             print('Comparing', fullTestPath, 'and', fullTmpPath)
             with open(fullTestPath) as file1:
@@ -80,29 +64,25 @@ class TestCodegen(unittest.TestCase):
     def tearDown(self):
         print('\n')
 
-    def test_ADS1015(self):
-        self.generatePeripheral('ADS1015')
-        self.compareFiles('ADS1015')
-        
-    def test_BMP280(self):
-        self.generatePeripheral('BMP280')
-        self.compareFiles('BMP280')
-        
-    def test_LSM303D(self):
-        self.generatePeripheral('LSM303D')
-        self.compareFiles('LSM303D')
+    def test_Arduino(self):
+        self.generatePeripheral('arduino.cpp')
+        self.compareFiles('arduino', 'cpp')
+        self.generatePeripheral('arduino.h')
+        self.compareFiles('arduino', 'h')
 
-    def test_MCP4725(self):
-        self.generatePeripheral('MCP4725')
-        self.compareFiles('MCP4725')
+    def test_Kubos(self):
+        self.generatePeripheral('kubos.c')
+        self.compareFiles('kubos', 'c')
+        self.generatePeripheral('kubos.h')
+        self.compareFiles('kubos', 'h')
+    
+    def test_Markdown(self):
+        self.generatePeripheral('doc.md')
+        self.compareFiles('markdown', 'md')
 
-    def test_MCP9808(self):
-        self.generatePeripheral('MCP9808')
-        self.compareFiles('MCP9808')
-
-    def test_TCS3472(self):
-        self.generatePeripheral('TCS3472')
-        self.compareFiles('TCS3472')
+    def test_RaspberryPi(self):
+        self.generatePeripheral('raspberrypi.py')
+        self.compareFiles('raspberrypi', 'py')
 
 if __name__ == '__main__':
     unittest.main()
