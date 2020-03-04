@@ -21,7 +21,6 @@
 {% for function in functions %}
 {% for key in function.keys() %}
 {# Check if we need to import `math` lib #}
-{% if function[key].computed %}
 {% for compute in function[key].computed %}
 {% for computeKey in compute.keys() %}
 {% macro scanForMathLib(logicKeys) -%}
@@ -43,7 +42,6 @@
 {{- scanForMathLib(compute[computeKey].logic) -}}
 {% endfor %}
 {% endfor %}
-{% endif %}
 {% endfor %}
 {% endfor %}
 
@@ -107,7 +105,6 @@ int {{info.title.lower()}}_set_{{key.lower()}}({{int_t}}* data);
 
 {% for function in functions %}
 {% for key in function.keys() %}
-{% if function[key].computed %}
 {% for compute in function[key].computed %}
 {% for computeKey in compute.keys() %}
 {% set int_t = cpp.returnType(compute[computeKey]) %}
@@ -121,7 +118,6 @@ void {{info.title.lower()}}_{{key.lower()}}_{{computeKey.lower()}}({{int_t}}* va
 {% endif %}
 {% endfor %}
 {% endfor %}
-{% endif %}
 
 {% endfor %}
 {% endfor %}

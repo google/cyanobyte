@@ -130,7 +130,6 @@ from enum import Enum
 {% for function in functions %}
 {% for key in function.keys() %}
 {# Check if we need to import `math` lib #}
-{% if function[key].computed %}
 {% for compute in function[key].computed %}
 {% for computeKey in compute.keys() %}
 {% if compute[computeKey].output == 'int16' %}
@@ -159,7 +158,6 @@ import math
 {{- scanForMathLib(compute[computeKey].logic) -}}
 {% endfor %}
 {% endfor %}
-{% endif %}
 {% endfor %}
 {% endfor %}
 
