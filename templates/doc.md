@@ -1,5 +1,10 @@
-# {{ info.title }}
-{{ info.description }}
+---
+title: "{{info.title}}"
+linkTitle: "{{info.title}}"
+weight: 4
+description: >
+  {{info.description}}
+---
 
 ## Registers
 {% for register in registers %}
