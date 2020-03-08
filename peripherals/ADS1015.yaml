@@ -169,8 +169,8 @@ functions:
                     - config
                     - 0x8000 # Set single-shot mode
               - cmdWrite:
-                register: '#/registers/Config'
-                value: config
+                  register: '#/registers/Config'
+                  value: config
               - raw: '#/registers/Conversion'
               - datumA:
                 - bitwiseAnd:

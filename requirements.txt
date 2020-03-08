@@ -3,3 +3,5 @@ pylint
 pyyaml
 Jinja2
 jsonschema
+importlib_metadata
+pathlib2
