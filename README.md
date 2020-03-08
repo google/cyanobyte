@@ -7,8 +7,11 @@ This is not an official Google product.
 
 ## Setup
 Note: This project requires Python3.
-s
+
 `pip install -r requirements.txt --user`
+
+For more advanced development, also install the dev list.
+`pip install -r requirements-dev.txt --user`
 
 ## Run Codegen
 `python3 src/codegen.py -t templates/doc.md -o ./build -i peripherals/MCP4725.yaml`

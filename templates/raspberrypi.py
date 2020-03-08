@@ -14,7 +14,7 @@ Class for {{ info.title }}
 {% for key in step.keys() %}
 {# Check if assignment is a send-op #}
 {% if key == 'cmdWrite' %}
-        self.set_{{step.register[12:].lower()}}({{step.value}})
+        self.set_{{step[key].register[12:].lower()}}({{step[key].value}})
         {% break %}
 {%- endif %}
 {# Check if assignment op #}

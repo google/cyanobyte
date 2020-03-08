@@ -70,6 +70,10 @@ class TestCodegen(unittest.TestCase):
         self.generatePeripheral('arduino.h')
         self.compareFiles('arduino', 'h')
 
+    def test_CMSIS_SVD(self):
+        self.generatePeripheral('cmsis.svd')
+        self.compareFiles('cmsis-svd', 'svd')
+
     def test_EmbeddedC(self):
         self.generatePeripheral('generic.c')
         self.compareFiles('embedded-c', 'c')

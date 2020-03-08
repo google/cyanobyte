@@ -16,7 +16,7 @@
 {% for key in step.keys() %}
 {# // Check if assignment is a send-op #}
 {% if key == 'cmdWrite' %}
-    write{{step.register[12:]}}({{step.value}});
+    write{{step[key].register[12:]}}({{step[key].value}});
     {% break %}
 {% endif %}
 {# // Check if assignment op #}
