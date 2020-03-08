@@ -45,7 +45,7 @@
 {%- endmacro %}
 
 {% if i2c.endian == 'little' %}
-static short _swap_endian(val) {
+static short _swap_endian(short val) {
     // Swap the endianness of a short only
     return (val & 0xFF00) >> 8 | (val & 0xFF) << 8;
 }
@@ -56,7 +56,7 @@ static short _swap_endian(val) {
 {% for key in register.keys() %}
 {% if register[key].signed %}
 {% if template.sign is sameas false %}
-static short _sign(val, length) {
+static short _sign(short val, short length) {
     // Convert unsigned integer to signed integer
     if val & (1 << (length - 1)) {
         return val - (1 << length);
@@ -115,60 +115,64 @@ int {{info.title.lower()}}_write{{key}}(
 {% endfor %}
 {%- endfor %}
 
-{% for function in functions %}
-{% for key in function.keys() %}
-{% if 'R' is in(function[key].readWrite) %}
-{% set int_t = cpp.registerSize(registers, function[key].register[12:]) %}
+{% for field in fields %}
+{% for key in field.keys() %}
+{% if 'R' is in(field[key].readWrite) %}
+{% set int_t = cpp.registerSize(registers, field[key].register[12:]) %}
 {# Getter #}
 int {{info.title.lower()}}_get_{{key.lower()}}(
     {{int_t}}* val,
-    int (*read)(uint8_t, uint8_t, {{cpp.numtype(register[key].length)}}*, uint8_t)
+    int (*read)(uint8_t, uint8_t, int*, uint8_t)
 ) {
     // Read register data
-    // '#/registers/{{function[key].register[12:]}}' > '{{function[key].register[12:]}}'
-    int result = {{info.title.lower()}}_read{{function[key].register[12:]}}(val, read);
+    // '#/registers/{{field[key].register[12:]}}' > '{{field[key].register[12:]}}'
+    int result = {{info.title.lower()}}_read{{field[key].register[12:]}}(val, read);
     if (result != 0) {
         return result;
     }
     // Mask register value
-    val = val & {{utils.mask(function[key].bitStart, function[key].bitEnd)}};
-    {% if function[key].bitEnd %}
+    val = val & {{utils.mask(field[key].bitStart, field[key].bitEnd)}};
+    {% if field[key].bitEnd %}
     // Bitshift value
-    val = val >> {{function[key].bitEnd}};
+    val = val >> {{field[key].bitEnd}};
     {% endif %}
     return 0;
 }
 {% endif -%}
 
-{%- if 'W' is in(function[key].readWrite) %}
-{% set int_t = cpp.registerSize(registers, function[key].register[12:]) %}
+{%- if 'W' is in(field[key].readWrite) %}
+{% set int_t = cpp.registerSize(registers, field[key].register[12:]) %}
 {# Setter #}
 
 int {{info.title.lower()}}_set_{{key.lower()}}(
     {{int_t}}* data,
-    int (*read)(uint8_t, uint8_t, {{cpp.numtype(register[key].length)}}*, uint8_t),
-    int (*write)(uint8_t, uint8_t, {{cpp.numtype(register[key].length)}}*, uint8_t)
+    int (*read)(uint8_t, uint8_t, int*, uint8_t),
+    int (*write)(uint8_t, uint8_t, int*, uint8_t)
 ) {
-    {% if function[key].bitEnd %}
+    {% if field[key].bitEnd %}
     // Bitshift value
-    data = data << {{function[key].bitEnd}};
+    data = data << {{field[key].bitEnd}};
     {% endif %}
     // Read current register data
-    // '#/registers/{{function[key].register[12:]}}' > '{{function[key].register[12:]}}'
+    // '#/registers/{{field[key].register[12:]}}' > '{{field[key].register[12:]}}'
     {{int_t}} register_data;
-    int result = {{info.title.lower()}}_read{{function[key].register[12:]}}(&register_data, read);
+    int result = {{info.title.lower()}}_read{{field[key].register[12:]}}(&register_data, read);
     if (result != 0) {
         return -1;
     }
     register_data = register_data | data;
-    result = {{info.title.lower()}}_write{{function[key].register[12:]}}(&register_data, write);
+    result = {{info.title.lower()}}_write{{field[key].register[12:]}}(&register_data, write);
     if (result != 0) {
         return -2;
     }
     return 0;
 }
 {% endif %}
+{% endfor %}
+{% endfor %}
 
+{% for function in functions %}
+{% for key in function.keys() %}
 {% if function[key].computed %}
 {% for compute in function[key].computed %}
 {% for computeKey in compute.keys() %}

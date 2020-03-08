@@ -43,19 +43,19 @@
 {% endfor %}
 {% endfor %}
 
-{# Create enums for functions #}
-{% for function in functions %}
-{% for key in function.keys() %}
-{% if function[key].enum %}
+{# Create enums for fields #}
+{% for field in fields %}
+{% for key in field.keys() %}
+{% if field[key].enum %}
 {# Create enum #}
 /*
-{{utils.pad_string(" * ", "Valid values for " + function[key].title)}}
+{{utils.pad_string(" * ", "Valid values for " + field[key].title)}}
  */
 enum {{key}} {
     {% set args = namespace(index=0) %}
-    {% for enumObject in function[key].enum %}
+    {% for enumObject in field[key].enum %}
     {% for enumKey in enumObject.keys() %}
-    {{key.upper()}}_{{enumKey.upper()}} = {{enumObject[enumKey].value}}{{- "," if args.index + 1 < function[key].enum | length }} // {{enumObject[enumKey].title}}
+    {{key.upper()}}_{{enumKey.upper()}} = {{enumObject[enumKey].value}}{{- "," if args.index + 1 < field[key].enum | length }} // {{enumObject[enumKey].title}}
     {% set args.index = args.index + 1 %}
     {% endfor %}
     {% endfor %}
@@ -88,31 +88,34 @@ int {{info.title.lower()}}_write{{key}}(
 {% endfor %}
 {%- endfor %}
 
-{% for function in functions %}
-{% for key in function.keys() %}
-{% if 'R' is in(function[key].readWrite) %}
-{% set int_t = cpp.registerSize(registers, function[key].register[12:]) %}
+{% for field in fields %}
+{% for key in field.keys() %}
+{% if 'R' is in(field[key].readWrite) %}
+{% set int_t = cpp.registerSize(registers, field[key].register[12:]) %}
 /**
-{{utils.pad_string(" * ", function[key].description)}}
+{{utils.pad_string(" * ", field[key].description)}}
  */
 int {{info.title.lower()}}_get_{{key.lower()}}(
     {{int_t}}* val,
-    int (*read)(uint8_t, uint8_t, {{cpp.numtype(register[key].length)}}*, uint8_t)
+    int (*read)(uint8_t, uint8_t, int*, uint8_t)
 );
 {% endif %}
-{% if 'W' is in(function[key].readWrite) %}
-{% set int_t = cpp.registerSize(registers, function[key].register[12:]) %}
+{% if 'W' is in(field[key].readWrite) %}
+{% set int_t = cpp.registerSize(registers, field[key].register[12:]) %}
 /**
-{{utils.pad_string(" * ", function[key].description)}}
+{{utils.pad_string(" * ", field[key].description)}}
  */
 int {{info.title.lower()}}_set_{{key.lower()}}(
     {{int_t}}* data,
-    int (*read)(uint8_t, uint8_t, {{cpp.numtype(register[key].length)}}*, uint8_t),
-    int (*write)(uint8_t, uint8_t, {{cpp.numtype(register[key].length)}}*, uint8_t)
+    int (*read)(uint8_t, uint8_t, int*, uint8_t),
+    int (*write)(uint8_t, uint8_t, int*, uint8_t)
 );
 {% endif %}
+{% endfor %}
+{% endfor %}
 
-{% if function[key].computed %}
+{% for function in functions %}
+{% for key in function.keys() %}
 {% for compute in function[key].computed %}
 {% for computeKey in compute.keys() %}
 {% set int_t = cpp.returnType(compute[computeKey]) %}
@@ -135,7 +138,6 @@ void {{info.title.lower()}}_{{key.lower()}}_{{computeKey.lower()}}(
 {% endif %}
 {% endfor %}
 {% endfor %}
-{% endif %}
 
 {% endfor %}
 {% endfor %}
