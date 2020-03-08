@@ -70,6 +70,12 @@ class TestCodegen(unittest.TestCase):
         self.generatePeripheral('arduino.h')
         self.compareFiles('arduino', 'h')
 
+    def test_EmbeddedC(self):
+        self.generatePeripheral('generic.c')
+        self.compareFiles('embedded-c', 'c')
+        self.generatePeripheral('generic.h')
+        self.compareFiles('embedded-c', 'h')
+
     def test_Kubos(self):
         self.generatePeripheral('kubos.c')
         self.compareFiles('kubos', 'c')
