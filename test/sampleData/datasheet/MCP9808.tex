@@ -77,21 +77,62 @@ configuration & Configuration Register & 1 & 16 \\
 
 \section{Fields}
 
+ 
+
+
+\raggedright
+
+\subsection{Register configuration}
 \centering
-\begin{tabular}{lcrr}
+\begin{tabular}{lcr}
 \toprule
-  & Field Name & Register & Bits \\
+  & Field Name & Bits \\
 \midrule
-limitHysteresis & TUPPER and TLOWER Limit Hysteresis bits & configuration &
+limitHysteresis & TUPPER and TLOWER Limit Hysteresis bits & 
 10:9
 \\
-
-shutdownMode & Shutdown Mode bit & configuration &
+shutdownMode & Shutdown Mode bit & 
 8
 \\
-
 \bottomrule
+
 \end{tabular}
+
+
+\raggedright
+
+\subsubsection{Field limitHysteresis }
+
+This bit can not be altered when either of the Lock bits are set
+(bit 6 and bit 7). This bit can be programmed in Shutdown mode.
+
+
+\begin{itemize}
+\item Temp\_0C (0) - 0°C (power-up default)
+\item Temp\_1C5 (1) - +1.5°C
+\item Temp\_3C (2) - +3.0°C
+\item Temp\_6C (3) - +6.0°C
+\end{itemize}
+
+
+\raggedright
+
+\subsubsection{Field shutdownMode }
+
+In shutdown, all power-consuming activities are disabled, though
+all registers can be written to or read. This bit cannot be set
+to ‘1’ when either of the Lock bits is set (bit 6 and bit 7).
+However, it can be cleared to ‘0’ for continuous conversion while
+locked.
+
+
+\begin{itemize}
+\item continousConversion (0) - Continuous conversion (power-up default)
+\item shutdown (1) - Shutdown (Low-Power mode)
+\end{itemize}
+
+
+
 
 \raggedright
 

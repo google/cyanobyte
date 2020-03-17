@@ -1,3 +1,4 @@
+{% set template = namespace(registersToFields=dict()) %}
 \documentclass[a4paper,12pt,oneside,pdflatex,italian,final,twocolumn]{article}
 
 \usepackage[utf8]{inputenc}
@@ -73,30 +74,76 @@
 \bottomrule
 \end{tabular}
 
+{% if fields %}
 \raggedright
 
 {% if fields %}
 \section{Fields}
 
-\centering
-\begin{tabular}{lcrr}
-\toprule
-  & Field Name & Register & Bits \\
-\midrule
+{# Create a dictionary linking a register to its associated fields #}
+{# for hierarchical display #} 
 {% for field in fields %}
 {% for key in field.keys() %}
-{{key}} & {{field[key].title}} & {{field[key].register[12:]}} &
-{% if field[key].bitStart == field[key].bitEnd %}
-{{field[key].bitStart}}
+{% set rkey = field[key].register %}
+{% if rkey in template.registersToFields %}
+{% set _dummy = field[key].update({ 'key': key }) %}
+{{- template.registersToFields[rkey].append(field[key]) or "" -}}
 {% else %}
-{{field[key].bitStart}}:{{field[key].bitEnd}}
+{% set _dummy = field[key].update({ 'key': key }) %}
+{% set _dummy = template.registersToFields.update({ rkey: [] }) %}
+{{- template.registersToFields[rkey].append(field[key]) or "" -}}
+{% endif %}
+{% endfor %}
+{% endfor %}
+
+{% for key in template.registersToFields.keys() %}
+{% set register = template.registersToFields[key] %}
+
+\raggedright
+
+\subsection{Register {{key[12:]}}}
+{# Table #}
+\centering
+\begin{tabular}{lcr}
+\toprule
+  & Field Name & Bits \\
+\midrule
+{% for field in register %}
+{{field.key}} & {{field.title}} & 
+{% if field.bitStart == field.bitEnd %}
+{{field.bitStart}}
+{% else %}
+{{field.bitStart}}:{{field.bitEnd}}
 {% endif %}
 \\
-
-{% endfor %}
 {% endfor %}
 \bottomrule
+
 \end{tabular}
+
+{% for field in register %}
+{% if field.enum %}
+
+\raggedright
+
+\subsubsection{Field {{field.key}} }
+
+{{field.description}}
+
+\begin{itemize}
+{% for enum in field.enum %}
+{% for key in enum.keys() %}
+\item {{key | regex_replace('_', '\_')}} ({{enum[key].value}}) - {{enum[key].title}}
+{% endfor %}
+{% endfor %}
+\end{itemize}
+
+{% endif %}
+{% endfor %}
+
+{% endfor %}
+{% endif %}
+
 
 \raggedright
 
