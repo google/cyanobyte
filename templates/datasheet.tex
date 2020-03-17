@@ -1,0 +1,117 @@
+\documentclass[a4paper,12pt,oneside,pdflatex,italian,final,twocolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{parallel}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+
+\usepackage[export]{adjustbox}
+\usepackage[margin=0.5in]{geometry}
+\addtolength{\topmargin}{0in}
+
+\usepackage{libertine}
+\renewcommand*\familydefault{\sfdefault}  %% Only if the base font of the document is to be sans serif
+\usepackage[T1]{fontenc}
+
+\title{ {{ info.title }} }
+\author{ {{ info.contact.name }} }
+\date{ {{ info.copyright.date }} }
+
+\begin{document}
+
+\pagestyle{fancy}
+
+\lhead{ {{ info.contact.name }} }
+\chead { {{ info.copyright.date }} }
+\rhead{ {{ info.title }} v{{ info.version }} }
+
+
+\onecolumn
+
+
+\begin{figure}
+\begin{minipage}{0.47\textwidth}
+
+\section{Overview}
+    {{ info.description }}
+    \begin{itemize}
+        \item Device address {{ i2c.address }}
+        \item Address type {{ i2c.addressType }}
+        {% if i2c.endian == 'little' %}
+        \item Little Endian
+        {% endif %}
+    \end{itemize}
+
+
+\end{minipage}
+\hfill
+
+\end{figure}
+
+
+\section{Register Description}
+\begin{itemize}
+{% for register in registers %}
+{% for key in register.keys() %}
+\item {{register[key].title}} - {{register[key].description}}
+{% endfor %}
+{% endfor %}
+\end{itemize}
+
+\section{Technical specification}
+\centering
+\begin{tabular}{lcrr}
+\toprule
+ & Register Name & Register Address & Register Length \\
+\midrule
+{% for register in registers %}
+{% for key in register.keys() %}
+{{key}} & {{register[key].title}} & {{register[key].address}} & {{register[key].length}} \\
+{% endfor %}
+{% endfor %}
+\bottomrule
+\end{tabular}
+
+\raggedright
+
+\section{Fields}
+
+\centering
+\begin{tabular}{lcrr}
+\toprule
+  & Field Name & Register & Bits \\
+\midrule
+{% for field in fields %}
+{% for key in field.keys() %}
+{{key}} & {{field[key].title}} & {{field[key].register[12:]}} &
+{% if field[key].bitStart == field[key].bitEnd %}
+{{field[key].bitStart}}
+{% else %}
+{{field[key].bitStart}}:{{field[key].bitEnd}}
+{% endif %}
+\\
+
+{% endfor %}
+{% endfor %}
+\bottomrule
+\end{tabular}
+
+\raggedright
+
+\section{Functions}
+
+\centering
+\begin{tabular}{lc}
+\toprule
+  & Description \\
+\midrule
+{% for function in functions %}
+{% for key in function.keys() %}
+{{key}} & {{function[key].description}} \\
+{% endfor %}
+{% endfor %}
+\bottomrule
+\end{tabular}
+
+\end{document}

@@ -1,0 +1,108 @@
+\documentclass[a4paper,12pt,oneside,pdflatex,italian,final,twocolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{parallel}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+
+\usepackage[export]{adjustbox}
+\usepackage[margin=0.5in]{geometry}
+\addtolength{\topmargin}{0in}
+
+\usepackage{libertine}
+\renewcommand*\familydefault{\sfdefault}  %% Only if the base font of the document is to be sans serif
+\usepackage[T1]{fontenc}
+
+\title{ MCP9808 }
+\author{ Joe Smith }
+\date{ 2019 }
+
+\begin{document}
+
+\pagestyle{fancy}
+
+\lhead{ Joe Smith }
+\chead { 2019 }
+\rhead{ MCP9808 v0.1.0 }
+
+
+\onecolumn
+
+
+\begin{figure}
+\begin{minipage}{0.47\textwidth}
+
+\section{Overview}
+    This is a test description
+    \begin{itemize}
+        \item Device address 24
+        \item Address type 7-bit
+    \end{itemize}
+
+
+\end{minipage}
+\hfill
+
+\end{figure}
+
+
+\section{Register Description}
+\begin{itemize}
+\item Configuration Register - The MCP9808 has a 16-bit Configuration register (CONFIG) that
+allows the user to set various functions for a robust temperature
+monitoring system.
+Bits 10 through 0 are used to select the temperature alert output
+hysteresis, device shutdown or Low-Power mode, temperature boundary
+and critical temperature lock, and temperature Alert output
+enable/disable.
+In addition, Alert output condition (output set for TUPPER and
+TLOWER temperature boundary or TCRIT only), Alert output status
+and Alert output polarity and mode (Comparator Output or Interrupt
+Output mode) are user-configurable.
+
+\end{itemize}
+
+\section{Technical specification}
+\centering
+\begin{tabular}{lcrr}
+\toprule
+ & Register Name & Register Address & Register Length \\
+\midrule
+configuration & Configuration Register & 1 & 16 \\
+\bottomrule
+\end{tabular}
+
+\raggedright
+
+\section{Fields}
+
+\centering
+\begin{tabular}{lcrr}
+\toprule
+  & Field Name & Register & Bits \\
+\midrule
+limitHysteresis & TUPPER and TLOWER Limit Hysteresis bits & configuration &
+10:9
+\\
+
+shutdownMode & Shutdown Mode bit & configuration &
+8
+\\
+
+\bottomrule
+\end{tabular}
+
+\raggedright
+
+\section{Functions}
+
+\centering
+\begin{tabular}{lc}
+\toprule
+  & Description \\
+\midrule
+\bottomrule
+\end{tabular}
+
+\end{document}

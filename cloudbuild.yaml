@@ -34,6 +34,8 @@ steps:
     - 'templates/kubos.c'
     - '-t'
     - 'templates/cmsis.svd'
+    - '-t'
+    - 'templates/datasheet.tex'
     - '-o'
     - './build'
     - '-i'

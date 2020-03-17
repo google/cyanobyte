@@ -85,6 +85,10 @@ class TestCodegen(unittest.TestCase):
         self.compareFiles('kubos', 'c')
         self.generatePeripheral('kubos.h')
         self.compareFiles('kubos', 'h')
+
+    def test_LaTeX(self):
+        self.generatePeripheral('datasheet.tex')
+        self.compareFiles('datasheet', 'tex')
     
     def test_Markdown(self):
         self.generatePeripheral('doc.md')

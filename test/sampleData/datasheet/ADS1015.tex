@@ -1,0 +1,109 @@
+\documentclass[a4paper,12pt,oneside,pdflatex,italian,final,twocolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{parallel}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+
+\usepackage[export]{adjustbox}
+\usepackage[margin=0.5in]{geometry}
+\addtolength{\topmargin}{0in}
+
+\usepackage{libertine}
+\renewcommand*\familydefault{\sfdefault}  %% Only if the base font of the document is to be sans serif
+\usepackage[T1]{fontenc}
+
+\title{ ADS1015 }
+\author{ Nick Felker }
+\date{ 2019 }
+
+\begin{document}
+
+\pagestyle{fancy}
+
+\lhead{ Nick Felker }
+\chead { 2019 }
+\rhead{ ADS1015 v0.1.0 }
+
+
+\onecolumn
+
+
+\begin{figure}
+\begin{minipage}{0.47\textwidth}
+
+\section{Overview}
+    Texas Instruments Analog-Digital Converter
+    \begin{itemize}
+        \item Device address 73
+        \item Address type 7-bit
+        \item Little Endian
+    \end{itemize}
+
+
+\end{minipage}
+\hfill
+
+\end{figure}
+
+
+\section{Register Description}
+\begin{itemize}
+\item ADC config - Describes the specifics of the sensing implementation
+\item ADC Value - Conversion register contains the result of the last conversion
+\end{itemize}
+
+\section{Technical specification}
+\centering
+\begin{tabular}{lcrr}
+\toprule
+ & Register Name & Register Address & Register Length \\
+\midrule
+Config & ADC config & 1 & 16 \\
+Conversion & ADC Value & 0 & 16 \\
+\bottomrule
+\end{tabular}
+
+\raggedright
+
+\section{Fields}
+
+\centering
+\begin{tabular}{lcrr}
+\toprule
+  & Field Name & Register & Bits \\
+\midrule
+SampleRate & Setup sample rate for reading analog voltage & Config &
+7:5
+\\
+
+ProgrammableGain & Setup programmable gain & Config &
+11:9
+\\
+
+DeviceOperatingMode & Set the operating mode & Config &
+8
+\\
+
+Channel & Set the channel to read & config &
+14:12
+\\
+
+\bottomrule
+\end{tabular}
+
+\raggedright
+
+\section{Functions}
+
+\centering
+\begin{tabular}{lc}
+\toprule
+  & Description \\
+\midrule
+analog & Reads the analog voltage in Volts \\
+\bottomrule
+\end{tabular}
+
+\end{document}
