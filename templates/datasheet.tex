@@ -75,6 +75,7 @@
 
 \raggedright
 
+{% if fields %}
 \section{Fields}
 
 \centering
@@ -99,6 +100,9 @@
 
 \raggedright
 
+{% endif %}
+
+{% if functions %}
 \section{Functions}
 
 \centering
@@ -113,5 +117,8 @@
 {% endfor %}
 \bottomrule
 \end{tabular}
+
+\raggedright
+{% endif %}
 
 \end{document}
