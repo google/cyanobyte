@@ -1,0 +1,125 @@
+\documentclass[a4paper,12pt,oneside,pdflatex,italian,final,twocolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{parallel}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+
+\usepackage[export]{adjustbox}
+\usepackage[margin=0.5in]{geometry}
+\addtolength{\topmargin}{0in}
+
+\usepackage{libertine}
+\renewcommand*\familydefault{\sfdefault}  %% Only if the base font of the document is to be sans serif
+\usepackage[T1]{fontenc}
+
+\title{ BMP280 }
+\author{ Nick Felker }
+\date{ 2019 }
+
+\begin{document}
+
+\pagestyle{fancy}
+
+\lhead{ Nick Felker }
+\chead { 2019 }
+\rhead{ BMP280 v0.1.0 }
+
+
+\onecolumn
+
+
+\begin{figure}
+\begin{minipage}{0.47\textwidth}
+
+\section{Overview}
+    Bosch Digital Pressure Sensor
+    \begin{itemize}
+        \item Device address 119
+        \item Address type 7-bit
+    \end{itemize}
+
+
+\end{minipage}
+\hfill
+
+\end{figure}
+
+
+\section{Register Description}
+\begin{itemize}
+\item Temperature MSB - Part 1 of temperature
+\item Temperature LSB - Part 2 of temperature
+\item Temperature XLSB - Final part of temperature
+\item Digital Temperature Compensation 1 - Used for Celcius conversion
+\item Digital Temperature Compensation 2 - Used for Celcius conversion
+\item Digital Temperature Compensation 3 - Used for Celcius conversion
+\item Pressure MSB - Part 1 of Pressure
+\item Pressure LSB - Part 2 of Pressure
+\item Pressure XLSB - Part 3 of Pressure
+\item Digital Pressure Compensation 1 - Used for Pascals conversion
+\item Digital Pressure Compensation 2 - Used for Pascals conversion
+\item Digital Pressure Compensation 3 - Used for Pascals conversion
+\item Digital Pressure Compensation 4 - Used for Pascals conversion
+\item Digital Pressure Compensation 5 - Used for Pascals conversion
+\item Digital Pressure Compensation 6 - Used for Pascals conversion
+\item Digital Pressure Compensation 7 - Used for Pascals conversion
+\item Digital Pressure Compensation 8 - Used for Pascals conversion
+\item Digital Pressure Compensation 9 - Used for Pascals conversion
+\end{itemize}
+
+\section{Technical specification}
+\centering
+\begin{tabular}{lcrr}
+\toprule
+ & Register Name & Register Address & Register Length \\
+\midrule
+TempMsb & Temperature MSB & 250 & 8 \\
+TempLsb & Temperature LSB & 251 & 8 \\
+TempXlsb & Temperature XLSB & 252 & 8 \\
+DigT1 & Digital Temperature Compensation 1 & 136 & 16 \\
+DigT2 & Digital Temperature Compensation 2 & 138 & 16 \\
+DigT3 & Digital Temperature Compensation 3 & 140 & 16 \\
+PressureMsb & Pressure MSB & 247 & 8 \\
+PressureLsb & Pressure LSB & 248 & 8 \\
+PressureXlsb & Pressure XLSB & 249 & 8 \\
+DigP1 & Digital Pressure Compensation 1 & 142 & 16 \\
+DigP2 & Digital Pressure Compensation 2 & 144 & 16 \\
+DigP3 & Digital Pressure Compensation 3 & 146 & 16 \\
+DigP4 & Digital Pressure Compensation 4 & 148 & 16 \\
+DigP5 & Digital Pressure Compensation 5 & 150 & 16 \\
+DigP6 & Digital Pressure Compensation 6 & 152 & 16 \\
+DigP7 & Digital Pressure Compensation 7 & 154 & 16 \\
+DigP8 & Digital Pressure Compensation 8 & 156 & 16 \\
+DigP9 & Digital Pressure Compensation 9 & 158 & 16 \\
+\bottomrule
+\end{tabular}
+
+\raggedright
+
+\section{Fields}
+
+\centering
+\begin{tabular}{lcrr}
+\toprule
+  & Field Name & Register & Bits \\
+\midrule
+\bottomrule
+\end{tabular}
+
+\raggedright
+
+\section{Functions}
+
+\centering
+\begin{tabular}{lc}
+\toprule
+  & Description \\
+\midrule
+temperature & Reads the temperature \\
+pressure & Reads the atmospheric pressure \\
+\bottomrule
+\end{tabular}
+
+\end{document}

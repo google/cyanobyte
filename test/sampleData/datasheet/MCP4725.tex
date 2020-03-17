@@ -1,0 +1,104 @@
+\documentclass[a4paper,12pt,oneside,pdflatex,italian,final,twocolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{parallel}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+
+\usepackage[export]{adjustbox}
+\usepackage[margin=0.5in]{geometry}
+\addtolength{\topmargin}{0in}
+
+\usepackage{libertine}
+\renewcommand*\familydefault{\sfdefault}  %% Only if the base font of the document is to be sans serif
+\usepackage[T1]{fontenc}
+
+\title{ MCP4725 }
+\author{ Nick Felker, Chris Frederickson }
+\date{ 2019 }
+
+\begin{document}
+
+\pagestyle{fancy}
+
+\lhead{ Nick Felker, Chris Frederickson }
+\chead { 2019 }
+\rhead{ MCP4725 v0.1.0 }
+
+
+\onecolumn
+
+
+\begin{figure}
+\begin{minipage}{0.47\textwidth}
+
+\section{Overview}
+    Microchip 4725 Digital-to-Analog Converter
+    \begin{itemize}
+        \item Device address 98
+        \item Address type 7-bit
+        \item Little Endian
+    \end{itemize}
+
+
+\end{minipage}
+\hfill
+
+\end{figure}
+
+
+\section{Register Description}
+\begin{itemize}
+\item Output voltage - VOut = (Vcc * value) / 4096
+The output is a range between 0 and Vcc with
+steps of Vcc/4096.
+In a 3.3v system, each step is 800 microvolts.
+
+\item EEPROM - If EEPROM is set, the saved voltage output will
+be loaded from power-on.
+
+\end{itemize}
+
+\section{Technical specification}
+\centering
+\begin{tabular}{lcrr}
+\toprule
+ & Register Name & Register Address & Register Length \\
+\midrule
+VOut & Output voltage & 64 & 12 \\
+EEPROM & EEPROM & 96 & 12 \\
+\bottomrule
+\end{tabular}
+
+\raggedright
+
+\section{Fields}
+
+\centering
+\begin{tabular}{lcrr}
+\toprule
+  & Field Name & Register & Bits \\
+\midrule
+digitalOut & Digital (binary) output & EEPROM &
+12:0
+\\
+
+\bottomrule
+\end{tabular}
+
+\raggedright
+
+\section{Functions}
+
+\centering
+\begin{tabular}{lc}
+\toprule
+  & Description \\
+\midrule
+setVOut & set vout \\
+getVOut & get vout \\
+\bottomrule
+\end{tabular}
+
+\end{document}
