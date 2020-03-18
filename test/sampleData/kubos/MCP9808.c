@@ -24,7 +24,6 @@
 
 
 #include "MCP9808.h"
-#define DEVICE_ADDRESS 24
 
 #define REGISTER_CONFIGURATION 1
 
@@ -32,7 +31,10 @@ static int i2c_bus = 0; // Pointer to bus
 
 // Provide `bus_name` based on application specifics.
 // For example, you may pass in bus name "/dev/i2c-1"
-int mcp9808_init(char* bus_name) {
+static deviceAddress_t DEVICE_ADDRESS;
+
+int mcp9808_init(deviceAddress_t address, char* bus_name) {
+    DEVICE_ADDRESS = address;
     // Initialize bus
     if (k_i2c_init(&bus_name, &i2c_bus) != I2C_OK) {
         return -1;

@@ -45,10 +45,22 @@ enum shutdownMode {
     SHUTDOWNMODE_SHUTDOWN = 1 // Shutdown (Low-Power mode)
 };
 typedef enum shutdownMode shutdownMode_t;
+enum deviceAddress {
+    I2C_ADDRESS_24 = 24,
+    I2C_ADDRESS_25 = 25,
+    I2C_ADDRESS_26 = 26,
+    I2C_ADDRESS_27 = 27,
+    I2C_ADDRESS_28 = 28,
+    I2C_ADDRESS_29 = 29,
+    I2C_ADDRESS_30 = 30,
+    I2C_ADDRESS_31 = 31
+};
+typedef enum deviceAddress deviceAddress_t;
 
 class MCP9808 {
     public:
-        MCP9808(TwoWire& wire);
+        MCP9808(TwoWire& wire, deviceAddress_t address);
+        deviceAddress_t DEVICE_ADDRESS;
 
         void begin();
         void end();

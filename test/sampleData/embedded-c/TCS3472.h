@@ -34,7 +34,7 @@ enum init {
 };
 typedef enum init init_t;
 
-int tcs3472_init(char* bus_name, int (*connect)(uint8_t));
+int tcs3472_init(int (*connect)(uint8_t));
    
 /**
   * Enable specific components of the peripheral

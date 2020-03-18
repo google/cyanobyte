@@ -44,8 +44,19 @@ enum shutdownMode {
     SHUTDOWNMODE_SHUTDOWN = 1 // Shutdown (Low-Power mode)
 };
 typedef enum shutdownMode shutdownMode_t;
+enum deviceAddress {
+    I2C_ADDRESS_24 = 24,
+    I2C_ADDRESS_25 = 25,
+    I2C_ADDRESS_26 = 26,
+    I2C_ADDRESS_27 = 27,
+    I2C_ADDRESS_28 = 28,
+    I2C_ADDRESS_29 = 29,
+    I2C_ADDRESS_30 = 30,
+    I2C_ADDRESS_31 = 31
+};
+typedef enum deviceAddress deviceAddress_t;
 
-int mcp9808_init(char* bus_name, int (*connect)(uint8_t));
+int mcp9808_init(deviceAddress_t address, int (*connect)(uint8_t));
    
 /**
   * The MCP9808 has a 16-bit Configuration register (CONFIG) that

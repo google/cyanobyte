@@ -63,10 +63,23 @@ typedef enum {{key}} {{key}}_t;
 {% endif %}
 {% endfor %}
 {% endfor %}
+{% if i2c.address is iterable and i2c.address is not string %}
+enum deviceAddress {
+    {% for address in i2c.address %}
+    I2C_ADDRESS_{{address}} = {{address}}{{ "," if not loop.last }}
+    {% endfor %}
+};
+typedef enum deviceAddress deviceAddress_t;
+{% endif %}
 
 class {{info.title}} {
     public:
+        {% if i2c.address is iterable and i2c.address is not string %}
+        {{info.title}}(TwoWire& wire, deviceAddress_t address);
+        deviceAddress_t DEVICE_ADDRESS;
+        {% else %}
         {{info.title}}(TwoWire& wire);
+        {% endif %}
 
         void begin();
         void end();

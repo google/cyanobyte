@@ -62,6 +62,15 @@ class {{key[0].upper()}}{{key[1:]}}Values(Enum):
 {% endif %}
 {% endfor %}
 {% endfor %}
+{% if i2c.address is iterable and i2c.address is not string %}
+class DeviceAddressValues(Enum):
+    """
+    Valid device addresses
+    """
+    {% for address in i2c.address %}
+    I2C_ADDRESS_{{address}} = {{address}}
+    {% endfor %}
+{% endif %}
 
 {% if i2c.endian == 'little' %}
 def _swap_endian(val):
@@ -94,16 +103,25 @@ class {{ info.title }}:
     """
 {{utils.pad_string("    ", info.description)}}
     """
+    {% if i2c.address is number %}
     DEVICE_ADDRESS = {{i2c.address}}
+    {% endif %}
     {% for register in registers %}
     {% for key in register.keys() %}
     REGISTER_{{key.upper()}} = {{register[key].address}}
     {% endfor %}
     {% endfor %}
 
+    {% if i2c.address is iterable and i2c.address is not string %}
+    def __init__(self, address):
+        # Initialize connection to peripheral
+        self.bus = smbus.SMBus(1)
+        self.DEVICE_ADDRESS = address
+    {% else %}
     def __init__(self):
         # Initialize connection to peripheral
         self.bus = smbus.SMBus(1)
+    {% endif %}
 
     {% for register in registers -%}
     {% for key in register.keys() %}

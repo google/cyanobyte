@@ -34,7 +34,7 @@ enum digitalOut {
 };
 typedef enum digitalOut digitalOut_t;
 
-int mcp4725_init(char* bus_name, int (*connect)(uint8_t));
+int mcp4725_init(int (*connect)(uint8_t));
    
 /**
   * VOut = (Vcc * value) / 4096

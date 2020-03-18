@@ -26,7 +26,7 @@
 #include <math.h>
 
 
-int lsm303d_init(char* bus_name, int (*connect)(uint8_t));
+int lsm303d_init(int (*connect)(uint8_t));
    
 /**
   * Raw accelerometer data on X plane

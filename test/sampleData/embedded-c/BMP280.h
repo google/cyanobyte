@@ -25,7 +25,7 @@
 
 
 
-int bmp280_init(char* bus_name, int (*connect)(uint8_t));
+int bmp280_init(int (*connect)(uint8_t));
    
 /**
   * Part 1 of temperature

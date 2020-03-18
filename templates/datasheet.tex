@@ -37,7 +37,14 @@
 \section{Overview}
     {{ info.description }}
     \begin{itemize}
+        {% if i2c.address is iterable and i2c.address is not string %}
+        \item Device addresses:
+          {% for address in i2c.address %}
+          {{address}}{{ "," if not loop.last }}
+          {% endfor %}
+        {% else %}
         \item Device address {{ i2c.address }}
+        {% endif %}
         \item Address type {{ i2c.addressType }}
         {% if i2c.endian == 'little' %}
         \item Little Endian

@@ -72,7 +72,7 @@ enum Channel {
 };
 typedef enum Channel Channel_t;
 
-int ads1015_init(char* bus_name, int (*connect)(uint8_t));
+int ads1015_init(int (*connect)(uint8_t));
    
 /**
   * Describes the specifics of the sensing implementation

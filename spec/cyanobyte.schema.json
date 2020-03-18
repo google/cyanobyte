@@ -118,7 +118,16 @@
         },
         "address": {
           "description": "I2C Address of the component",
-          "type": "integer"
+          "oneOf": [
+            {"type": "integer"},
+            {
+              "type": "array",
+              "items": {
+                "description": "Array of potentially valid device addresses",
+                "type": "integer"
+              }
+            }
+          ]
         },
         "addressMask": {
           "description": "Address mask for addresses that can be altered",

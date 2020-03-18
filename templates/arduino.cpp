@@ -69,7 +69,9 @@ static short _sign(short val, char length) {
 {% endfor %}
 
 #include "{{info.title}}.h"
+{% if i2c.address is number %}
 #define DEVICE_ADDRESS {{i2c.address}}
+{% endif %}
 
 {% for register in registers %}
 {% for key in register.keys() %}
@@ -77,10 +79,18 @@ static short _sign(short val, char length) {
 {% endfor %}
 {% endfor %}
 
+{% if i2c.address is iterable and i2c.address is not string %}
+{{info.title}}::{{info.title}}(TwoWire& wire, deviceAddress_t address) :
+    _wire(&wire),
+    DEVICE_ADDRESS ( address )
+{
+}
+{% else %}
 {{info.title}}::{{info.title}}(TwoWire& wire) :
     _wire(&wire)
 {
 }
+{% endif %}
 
 void {{info.title}}::begin() {
     _wire->begin();

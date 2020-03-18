@@ -70,7 +70,9 @@ static short _sign(short val, short length) {
 {% endfor %}
 
 #include "{{info.title}}.h"
+{% if i2c.address is number %}
 #define DEVICE_ADDRESS {{i2c.address}}
+{% endif %}
 
 {% for register in registers %}
 {% for key in register.keys() %}
@@ -79,12 +81,24 @@ static short _sign(short val, short length) {
 {% endfor %}
 
 // Provide an I2C connect function, return status
+{% if i2c.address is iterable and i2c.address is not string %}
+static deviceAddress_t DEVICE_ADDRESS;
+
+int {{info.title.lower()}}_init(deviceAddress_t address, int (*connect)(uint8_t)) {
+    DEVICE_ADDRESS = address;
+    // Initialize bus
+    if (connect(DEVICE_ADDRESS) != 0) {
+        return -1;
+    }
+}
+{% else %}
 int {{info.title.lower()}}_init(int (*connect)(uint8_t)) {
     // Initialize bus
     if (connect(DEVICE_ADDRESS) != 0) {
         return -1;
     }
 }
+{% endif %}
 
 {% for register in registers -%}
 {% for key in register.keys() %}

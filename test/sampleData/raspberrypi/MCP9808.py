@@ -37,6 +37,18 @@ class ShutdownModeValues(Enum):
     """
     CONTINOUSCONVERSION = 0 # Continuous conversion (power-up default)
     SHUTDOWN = 1 # Shutdown (Low-Power mode)
+class DeviceAddressValues(Enum):
+    """
+    Valid device addresses
+    """
+    I2C_ADDRESS_24 = 24
+    I2C_ADDRESS_25 = 25
+    I2C_ADDRESS_26 = 26
+    I2C_ADDRESS_27 = 27
+    I2C_ADDRESS_28 = 28
+    I2C_ADDRESS_29 = 29
+    I2C_ADDRESS_30 = 30
+    I2C_ADDRESS_31 = 31
 
 
 
@@ -45,12 +57,12 @@ class MCP9808:
     This is a test description
 
     """
-    DEVICE_ADDRESS = 24
     REGISTER_CONFIGURATION = 1
 
-    def __init__(self):
+    def __init__(self, address):
         # Initialize connection to peripheral
         self.bus = smbus.SMBus(1)
+        self.DEVICE_ADDRESS = address
 
     def get_configuration(self):
         """
