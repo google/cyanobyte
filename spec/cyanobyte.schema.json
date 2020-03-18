@@ -74,7 +74,7 @@
           "properties": {
             "name": {
               "description": "A SPDX compliant license identifier",
-              "oneOf": [
+              "anyOf": [
                 {"type": "string"},
                 {"enum": [
                   "Apache-2.0",
