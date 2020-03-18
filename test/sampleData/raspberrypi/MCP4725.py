@@ -21,7 +21,6 @@ Class for MCP4725
 from enum import Enum
 import smbus
 
-
 class DigitalOutValues(Enum):
     """
     Valid values for Digital (binary) output

@@ -43,6 +43,8 @@ Class for {{ info.title }}
 {%- endmacro %}
 
 {{ py.importStdLibs(fields, functions, template) -}}
+import smbus
+
 {# Create enums for fields #}
 {% for field in fields %}
 {% for key in field.keys() %}

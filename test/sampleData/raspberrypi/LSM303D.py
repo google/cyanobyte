@@ -18,16 +18,9 @@
 Class for LSM303D
 """
 
-import smbus
 import struct
-
-
-
-
 import math
-
-
-
+import smbus
 
 
 

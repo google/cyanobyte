@@ -22,9 +22,6 @@ import smbus
 
 
 
-
-
-
 def _sign(val, length):
     """
     Convert unsigned integer to signed integer

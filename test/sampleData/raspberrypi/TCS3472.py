@@ -20,6 +20,7 @@ Class for TCS3472
 
 from enum import Enum
 import smbus
+
 class InitValues(Enum):
     """
     Valid values for Setup the device configuration

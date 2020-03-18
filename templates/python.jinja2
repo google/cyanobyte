@@ -127,7 +127,6 @@ from enum import Enum
 {% endif %}
 {% endfor %}
 {% endfor %}
-import smbus
 {% for function in functions %}
 {% for key in function.keys() %}
 {# Check if we need to import `math` lib #}
@@ -139,7 +138,6 @@ import struct
 {% set template.struct = true %}
 {% endif %}
 {% endif %}
-
 {% macro scanForMathLib(logicKeys) -%}
 {% for logic in logicKeys %}
 {% if logic is mapping %}
@@ -161,5 +159,4 @@ import math
 {% endfor %}
 {% endfor %}
 {% endfor %}
-
 {%- endmacro %}
