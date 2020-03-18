@@ -11,8 +11,7 @@ info:
         name: Google Inc.
         date: '2019'
     license:
-        name: 'Apache 2.0'
-        url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+        name: Apache-2.0
     version: 0.1.0
 i2c:
     addressType: '7-bit'

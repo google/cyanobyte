@@ -74,13 +74,22 @@
           "properties": {
             "name": {
               "description": "A SPDX compliant license identifier",
-              "type": "string"
+              "anyOf": [
+                {"type": "string"},
+                {"enum": [
+                  "Apache-2.0",
+                  "MIT"
+                ]}
+              ]
             },
             "url": {
               "description": "If the license name is not SPDX compliant, this can link to the license",
               "type": "string"
             }
-          }
+          },
+          "required": [
+            "name"
+          ]
         },
         "version": {
           "description": "Version number for this document using kind of semver.",
