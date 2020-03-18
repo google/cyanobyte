@@ -30,7 +30,7 @@ class LSM303D:
     STMicroelectronics accelerometer and magnetometer
 
     """
-    DEVICE_ADDRESS = 29
+    device_address = 29
     REGISTER_ACCELEROMETERX_LOW = 168
     REGISTER_ACCELEROMETERX_HIGH = 169
     REGISTER_ACCELEROMETERY_LOW = 170
@@ -54,7 +54,7 @@ class LSM303D:
 
         """
         val = self.bus.read_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_ACCELEROMETERX_LOW
         )
         return val
@@ -65,7 +65,7 @@ class LSM303D:
 
         """
         self.bus.write_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_ACCELEROMETERX_LOW,
             data
         )
@@ -75,7 +75,7 @@ class LSM303D:
 
         """
         val = self.bus.read_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_ACCELEROMETERX_HIGH
         )
         return val
@@ -86,7 +86,7 @@ class LSM303D:
 
         """
         self.bus.write_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_ACCELEROMETERX_HIGH,
             data
         )
@@ -96,7 +96,7 @@ class LSM303D:
 
         """
         val = self.bus.read_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_ACCELEROMETERY_LOW
         )
         return val
@@ -107,7 +107,7 @@ class LSM303D:
 
         """
         self.bus.write_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_ACCELEROMETERY_LOW,
             data
         )
@@ -117,7 +117,7 @@ class LSM303D:
 
         """
         val = self.bus.read_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_ACCELEROMETERY_HIGH
         )
         return val
@@ -128,7 +128,7 @@ class LSM303D:
 
         """
         self.bus.write_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_ACCELEROMETERY_HIGH,
             data
         )
@@ -138,7 +138,7 @@ class LSM303D:
 
         """
         val = self.bus.read_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_ACCELEROMETERZ_LOW
         )
         return val
@@ -149,7 +149,7 @@ class LSM303D:
 
         """
         self.bus.write_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_ACCELEROMETERZ_LOW,
             data
         )
@@ -159,7 +159,7 @@ class LSM303D:
 
         """
         val = self.bus.read_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_ACCELEROMETERZ_HIGH
         )
         return val
@@ -170,7 +170,7 @@ class LSM303D:
 
         """
         self.bus.write_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_ACCELEROMETERZ_HIGH,
             data
         )
@@ -180,7 +180,7 @@ class LSM303D:
 
         """
         val = self.bus.read_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_MAGNETOMETERX_LOW
         )
         return val
@@ -191,7 +191,7 @@ class LSM303D:
 
         """
         self.bus.write_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_MAGNETOMETERX_LOW,
             data
         )
@@ -201,7 +201,7 @@ class LSM303D:
 
         """
         val = self.bus.read_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_MAGNETOMETERX_HIGH
         )
         return val
@@ -212,7 +212,7 @@ class LSM303D:
 
         """
         self.bus.write_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_MAGNETOMETERX_HIGH,
             data
         )
@@ -222,7 +222,7 @@ class LSM303D:
 
         """
         val = self.bus.read_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_MAGNETOMETERY_LOW
         )
         return val
@@ -233,7 +233,7 @@ class LSM303D:
 
         """
         self.bus.write_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_MAGNETOMETERY_LOW,
             data
         )
@@ -243,7 +243,7 @@ class LSM303D:
 
         """
         val = self.bus.read_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_MAGNETOMETERY_HIGH
         )
         return val
@@ -254,7 +254,7 @@ class LSM303D:
 
         """
         self.bus.write_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_MAGNETOMETERY_HIGH,
             data
         )
@@ -264,7 +264,7 @@ class LSM303D:
 
         """
         val = self.bus.read_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_MAGNETOMETERZ_LOW
         )
         return val
@@ -275,7 +275,7 @@ class LSM303D:
 
         """
         self.bus.write_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_MAGNETOMETERZ_LOW,
             data
         )
@@ -285,7 +285,7 @@ class LSM303D:
 
         """
         val = self.bus.read_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_MAGNETOMETERZ_HIGH
         )
         return val
@@ -296,7 +296,7 @@ class LSM303D:
 
         """
         self.bus.write_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_MAGNETOMETERZ_HIGH,
             data
         )

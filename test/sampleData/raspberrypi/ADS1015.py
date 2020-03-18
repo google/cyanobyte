@@ -73,7 +73,7 @@ class ADS1015:
     Texas Instruments Analog-Digital Converter
 
     """
-    DEVICE_ADDRESS = 73
+    device_address = 73
     REGISTER_CONFIG = 1
     REGISTER_CONVERSION = 0
 
@@ -87,7 +87,7 @@ class ADS1015:
 
         """
         val = self.bus.read_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_CONFIG
         )
         val = _swap_endian(val)
@@ -100,7 +100,7 @@ class ADS1015:
         """
         data = _swap_endian(data)
         self.bus.write_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_CONFIG,
             data
         )
@@ -110,7 +110,7 @@ class ADS1015:
 
         """
         val = self.bus.read_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_CONVERSION
         )
         val = _swap_endian(val)
@@ -123,7 +123,7 @@ class ADS1015:
         """
         data = _swap_endian(data)
         self.bus.write_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_CONVERSION,
             data
         )

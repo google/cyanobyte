@@ -104,7 +104,7 @@ class {{ info.title }}:
 {{utils.pad_string("    ", info.description)}}
     """
     {% if i2c.address is number %}
-    DEVICE_ADDRESS = {{i2c.address}}
+    device_address = {{i2c.address}}
     {% endif %}
     {% for register in registers %}
     {% for key in register.keys() %}
@@ -116,7 +116,7 @@ class {{ info.title }}:
     def __init__(self, address):
         # Initialize connection to peripheral
         self.bus = smbus.SMBus(1)
-        self.DEVICE_ADDRESS = address
+        self.device_address = address
     {% else %}
     def __init__(self):
         # Initialize connection to peripheral
@@ -131,12 +131,12 @@ class {{ info.title }}:
         """
         {% if register[key].length <= 8 %}
         val = self.bus.read_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_{{key.upper()}}
         )
         {% elif register[key].length <= 16 %}
         val = self.bus.read_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_{{key.upper()}}
         )
         {% endif %}
@@ -158,13 +158,13 @@ class {{ info.title }}:
         {% endif %}
         {% if register[key].length <= 8 %}
         self.bus.write_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_{{key.upper()}},
             data
         )
         {% elif register[key].length <= 16 %}
         self.bus.write_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_{{key.upper()}},
             data
         )

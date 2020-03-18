@@ -35,7 +35,7 @@ class BMP280:
     Bosch Digital Pressure Sensor
 
     """
-    DEVICE_ADDRESS = 119
+    device_address = 119
     REGISTER_TEMPMSB = 250
     REGISTER_TEMPLSB = 251
     REGISTER_TEMPXLSB = 252
@@ -65,7 +65,7 @@ class BMP280:
 
         """
         val = self.bus.read_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_TEMPMSB
         )
         return val
@@ -76,7 +76,7 @@ class BMP280:
 
         """
         self.bus.write_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_TEMPMSB,
             data
         )
@@ -86,7 +86,7 @@ class BMP280:
 
         """
         val = self.bus.read_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_TEMPLSB
         )
         return val
@@ -97,7 +97,7 @@ class BMP280:
 
         """
         self.bus.write_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_TEMPLSB,
             data
         )
@@ -107,7 +107,7 @@ class BMP280:
 
         """
         val = self.bus.read_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_TEMPXLSB
         )
         return val
@@ -118,7 +118,7 @@ class BMP280:
 
         """
         self.bus.write_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_TEMPXLSB,
             data
         )
@@ -128,7 +128,7 @@ class BMP280:
 
         """
         val = self.bus.read_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGT1
         )
         return val
@@ -139,7 +139,7 @@ class BMP280:
 
         """
         self.bus.write_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGT1,
             data
         )
@@ -149,7 +149,7 @@ class BMP280:
 
         """
         val = self.bus.read_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGT2
         )
         return val
@@ -160,7 +160,7 @@ class BMP280:
 
         """
         self.bus.write_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGT2,
             data
         )
@@ -170,7 +170,7 @@ class BMP280:
 
         """
         val = self.bus.read_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGT3
         )
         # Unsigned > Signed integer
@@ -183,7 +183,7 @@ class BMP280:
 
         """
         self.bus.write_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGT3,
             data
         )
@@ -193,7 +193,7 @@ class BMP280:
 
         """
         val = self.bus.read_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_PRESSUREMSB
         )
         return val
@@ -204,7 +204,7 @@ class BMP280:
 
         """
         self.bus.write_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_PRESSUREMSB,
             data
         )
@@ -214,7 +214,7 @@ class BMP280:
 
         """
         val = self.bus.read_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_PRESSURELSB
         )
         return val
@@ -225,7 +225,7 @@ class BMP280:
 
         """
         self.bus.write_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_PRESSURELSB,
             data
         )
@@ -235,7 +235,7 @@ class BMP280:
 
         """
         val = self.bus.read_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_PRESSUREXLSB
         )
         return val
@@ -246,7 +246,7 @@ class BMP280:
 
         """
         self.bus.write_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_PRESSUREXLSB,
             data
         )
@@ -256,7 +256,7 @@ class BMP280:
 
         """
         val = self.bus.read_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGP1
         )
         return val
@@ -267,7 +267,7 @@ class BMP280:
 
         """
         self.bus.write_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGP1,
             data
         )
@@ -277,7 +277,7 @@ class BMP280:
 
         """
         val = self.bus.read_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGP2
         )
         # Unsigned > Signed integer
@@ -290,7 +290,7 @@ class BMP280:
 
         """
         self.bus.write_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGP2,
             data
         )
@@ -300,7 +300,7 @@ class BMP280:
 
         """
         val = self.bus.read_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGP3
         )
         # Unsigned > Signed integer
@@ -313,7 +313,7 @@ class BMP280:
 
         """
         self.bus.write_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGP3,
             data
         )
@@ -323,7 +323,7 @@ class BMP280:
 
         """
         val = self.bus.read_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGP4
         )
         # Unsigned > Signed integer
@@ -336,7 +336,7 @@ class BMP280:
 
         """
         self.bus.write_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGP4,
             data
         )
@@ -346,7 +346,7 @@ class BMP280:
 
         """
         val = self.bus.read_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGP5
         )
         # Unsigned > Signed integer
@@ -359,7 +359,7 @@ class BMP280:
 
         """
         self.bus.write_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGP5,
             data
         )
@@ -369,7 +369,7 @@ class BMP280:
 
         """
         val = self.bus.read_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGP6
         )
         # Unsigned > Signed integer
@@ -382,7 +382,7 @@ class BMP280:
 
         """
         self.bus.write_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGP6,
             data
         )
@@ -392,7 +392,7 @@ class BMP280:
 
         """
         val = self.bus.read_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGP7
         )
         # Unsigned > Signed integer
@@ -405,7 +405,7 @@ class BMP280:
 
         """
         self.bus.write_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGP7,
             data
         )
@@ -415,7 +415,7 @@ class BMP280:
 
         """
         val = self.bus.read_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGP8
         )
         # Unsigned > Signed integer
@@ -428,7 +428,7 @@ class BMP280:
 
         """
         self.bus.write_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGP8,
             data
         )
@@ -438,7 +438,7 @@ class BMP280:
 
         """
         val = self.bus.read_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGP9
         )
         # Unsigned > Signed integer
@@ -451,7 +451,7 @@ class BMP280:
 
         """
         self.bus.write_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_DIGP9,
             data
         )

@@ -41,7 +41,7 @@ class MCP4725:
     Microchip 4725 Digital-to-Analog Converter
 
     """
-    DEVICE_ADDRESS = 98
+    device_address = 98
     REGISTER_VOUT = 64
     REGISTER_EEPROM = 96
 
@@ -58,7 +58,7 @@ class MCP4725:
 
         """
         val = self.bus.read_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_VOUT
         )
         val = _swap_endian(val)
@@ -74,7 +74,7 @@ class MCP4725:
         """
         data = _swap_endian(data)
         self.bus.write_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_VOUT,
             data
         )
@@ -85,7 +85,7 @@ class MCP4725:
 
         """
         val = self.bus.read_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_EEPROM
         )
         val = _swap_endian(val)
@@ -99,7 +99,7 @@ class MCP4725:
         """
         data = _swap_endian(data)
         self.bus.write_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_EEPROM,
             data
         )

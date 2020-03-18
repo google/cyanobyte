@@ -62,7 +62,7 @@ class MCP9808:
     def __init__(self, address):
         # Initialize connection to peripheral
         self.bus = smbus.SMBus(1)
-        self.DEVICE_ADDRESS = address
+        self.device_address = address
 
     def get_configuration(self):
         """
@@ -80,7 +80,7 @@ class MCP9808:
 
         """
         val = self.bus.read_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_CONFIGURATION
         )
         return val
@@ -101,7 +101,7 @@ class MCP9808:
 
         """
         self.bus.write_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_CONFIGURATION,
             data
         )
