@@ -6,11 +6,7 @@ Class for MCP9808
 """
 
 import sys
-try:
-    import smbus
-except ImportError:
-    print("Fatal error! Make sure to install smbus!")
-    sys.exit(1)
+import smbus
 from enum import Enum
 class LimitHysteresisValues(Enum):
     """

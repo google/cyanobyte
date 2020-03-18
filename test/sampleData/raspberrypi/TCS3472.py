@@ -19,11 +19,7 @@ Class for TCS3472
 """
 
 import sys
-try:
-    import smbus
-except ImportError:
-    print("Fatal error! Make sure to install smbus!")
-    sys.exit(1)
+import smbus
 from enum import Enum
 class InitValues(Enum):
     """

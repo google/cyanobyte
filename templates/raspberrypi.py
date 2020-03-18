@@ -43,11 +43,7 @@ Class for {{ info.title }}
 {%- endmacro %}
 
 import sys
-try:
-    import smbus
-except ImportError:
-    print("Fatal error! Make sure to install smbus!")
-    sys.exit(1)
+import smbus
 {{ py.importStdLibs(fields, functions, template) -}}
 {# Create enums for fields #}
 {% for field in fields %}

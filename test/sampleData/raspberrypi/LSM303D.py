@@ -19,11 +19,7 @@ Class for LSM303D
 """
 
 import sys
-try:
-    import smbus
-except ImportError:
-    print("Fatal error! Make sure to install smbus!")
-    sys.exit(1)
+import smbus
 import struct
 
 
