@@ -15,7 +15,15 @@ info:
     version: 0.1.0
 i2c:
     addressType: '7-bit'
-    address: 0x18
+    address:
+        - 0x18
+        - 0x19
+        - 0x1A
+        - 0x1B
+        - 0x1C
+        - 0x1D
+        - 0x1E
+        - 0x1F
     addressMask: 0x78
 
 registers:

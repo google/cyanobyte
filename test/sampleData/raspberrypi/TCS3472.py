@@ -36,7 +36,7 @@ class TCS3472:
     Color Light-to-Digital Converter with IR Filter
 
     """
-    DEVICE_ADDRESS = 41
+    device_address = 41
     REGISTER_ENABLE = 128
     REGISTER_CLEAR = 180
     REGISTER_RED = 182
@@ -53,7 +53,7 @@ class TCS3472:
 
         """
         val = self.bus.read_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_ENABLE
         )
         return val
@@ -64,7 +64,7 @@ class TCS3472:
 
         """
         self.bus.write_byte_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_ENABLE,
             data
         )
@@ -74,7 +74,7 @@ class TCS3472:
 
         """
         val = self.bus.read_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_CLEAR
         )
         return val
@@ -85,7 +85,7 @@ class TCS3472:
 
         """
         self.bus.write_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_CLEAR,
             data
         )
@@ -95,7 +95,7 @@ class TCS3472:
 
         """
         val = self.bus.read_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_RED
         )
         return val
@@ -106,7 +106,7 @@ class TCS3472:
 
         """
         self.bus.write_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_RED,
             data
         )
@@ -116,7 +116,7 @@ class TCS3472:
 
         """
         val = self.bus.read_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_GREEN
         )
         return val
@@ -127,7 +127,7 @@ class TCS3472:
 
         """
         self.bus.write_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_GREEN,
             data
         )
@@ -137,7 +137,7 @@ class TCS3472:
 
         """
         val = self.bus.read_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_BLUE
         )
         return val
@@ -148,7 +148,7 @@ class TCS3472:
 
         """
         self.bus.write_word_data(
-            self.DEVICE_ADDRESS,
+            self.device_address,
             self.REGISTER_BLUE,
             data
         )

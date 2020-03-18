@@ -24,12 +24,14 @@
 
 
 #include "MCP9808.h"
-#define DEVICE_ADDRESS 24
 
 #define REGISTER_CONFIGURATION 1
 
 // Provide an I2C connect function, return status
-int mcp9808_init(int (*connect)(uint8_t)) {
+static deviceAddress_t DEVICE_ADDRESS;
+
+int mcp9808_init(deviceAddress_t address, int (*connect)(uint8_t)) {
+    DEVICE_ADDRESS = address;
     // Initialize bus
     if (connect(DEVICE_ADDRESS) != 0) {
         return -1;

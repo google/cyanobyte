@@ -24,12 +24,12 @@
 
 
 #include "MCP9808.h"
-#define DEVICE_ADDRESS 24
 
 #define REGISTER_CONFIGURATION 1
 
-MCP9808::MCP9808(TwoWire& wire) :
-    _wire(&wire)
+MCP9808::MCP9808(TwoWire& wire, deviceAddress_t address) :
+    _wire(&wire),
+    DEVICE_ADDRESS ( address )
 {
 }
 

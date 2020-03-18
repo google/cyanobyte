@@ -70,7 +70,9 @@ short _sign(val, length) {
 {% endfor %}
 
 #include "{{info.title}}.h"
+{% if i2c.address is number %}
 #define DEVICE_ADDRESS {{i2c.address}}
+{% endif %}
 
 {% for register in registers %}
 {% for key in register.keys() %}
@@ -82,12 +84,24 @@ static int i2c_bus = 0; // Pointer to bus
 
 // Provide `bus_name` based on application specifics.
 // For example, you may pass in bus name "/dev/i2c-1"
+{% if i2c.address is iterable and i2c.address is not string %}
+static deviceAddress_t DEVICE_ADDRESS;
+
+int {{info.title.lower()}}_init(deviceAddress_t address, char* bus_name) {
+    DEVICE_ADDRESS = address;
+    // Initialize bus
+    if (k_i2c_init(&bus_name, &i2c_bus) != I2C_OK) {
+        return -1;
+    }
+}
+{% else %}
 int {{info.title.lower()}}_init(char* bus_name) {
     // Initialize bus
     if (k_i2c_init(&bus_name, &i2c_bus) != I2C_OK) {
         return -1;
     }
 }
+{% endif %}
 
 void {{info.title.lower()}}_terminate() {
     k_i2c_terminate(&i2c_bus);

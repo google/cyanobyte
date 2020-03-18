@@ -20,7 +20,11 @@
         <peripheral>
             <name>{{ info.title }}</name>
             <description>{{ info.description }}</description>
+            {% if i2c.address is iterable and i2c.address is not string %}
+            <baseAddress>{{ i2c.address[0] }}</baseAddress>
+            {% else %}
             <baseAddress>{{ i2c.address }}</baseAddress>
+            {% endif %}
             <addressBlock>
                 <offset>0</offset>
                 <size>{{ i2c.addressMask }}</size>

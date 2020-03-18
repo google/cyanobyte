@@ -66,8 +66,20 @@ typedef enum {{key}} {{key}}_t;
 {% endif %}
 {% endfor %}
 {% endfor %}
+{% if i2c.address is iterable and i2c.address is not string %}
+enum deviceAddress {
+    {% for address in i2c.address %}
+    I2C_ADDRESS_{{address}} = {{address}}{{ "," if not loop.last }}
+    {% endfor %}
+};
+typedef enum deviceAddress deviceAddress_t;
+{% endif %}
 
+{% if i2c.address is iterable and i2c.address is not string %}
+int {{info.title.lower()}}_init(deviceAddress_t address, char* bus_name);
+{% else %}
 int {{info.title.lower()}}_init(char* bus_name);
+{% endif %}
 void {{info.title.lower()}}_terminate();
 {% for register in registers -%}
 {% for key in register.keys() %}
