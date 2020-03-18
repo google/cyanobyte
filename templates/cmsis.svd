@@ -54,17 +54,16 @@ uint64_t
                 <usage>registers</usage>
             </addressBlock>
             <registers>
-            {% for register in registers -%}
-            {% for key in register.keys() %}
+            {% for key,register in registers|dictsort -%}
                 <register>
                     <name>{{key}}</name>
-                    <description>{{register[key].description}}</description>
-                    <addressOffset>{{register[key].address}}</addressOffset>
-                    <size>{{register[key].length}}</size>
+                    <description>{{register.description}}</description>
+                    <addressOffset>{{register.address}}</addressOffset>
+                    <size>{{register.length}}</size>
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <dataType>{{ numtype(register[key].length) }}</dataType>
+                    <dataType>{{ numtype(register.length) }}</dataType>
                     {% if fields %}
                     <fields>
                     {% for field in fields -%}
@@ -113,7 +112,6 @@ uint64_t
                     </fields>
                     {% endif %}
                 </register>
-            {% endfor %}
             {% endfor %}
             </registers>
         </peripheral>

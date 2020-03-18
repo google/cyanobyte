@@ -27,7 +27,7 @@ i2c:
     addressMask: 0x78
 
 registers:
-    - configuration:
+    configuration:
         address: 0x01
         length: 16
         title: Configuration Register

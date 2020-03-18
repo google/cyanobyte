@@ -50,13 +50,13 @@
 
 \section{Register Description}
 \begin{itemize}
+\item EEPROM - If EEPROM is set, the saved voltage output will
+be loaded from power-on.
+
 \item Output voltage - VOut = (Vcc * value) / 4096
 The output is a range between 0 and Vcc with
 steps of Vcc/4096.
 In a 3.3v system, each step is 800 microvolts.
-
-\item EEPROM - If EEPROM is set, the saved voltage output will
-be loaded from power-on.
 
 \end{itemize}
 
@@ -66,8 +66,8 @@ be loaded from power-on.
 \toprule
  & Register Name & Register Address & Register Length \\
 \midrule
-VOut & Output voltage & 64 & 12 \\
 EEPROM & EEPROM & 96 & 12 \\
+VOut & Output voltage & 64 & 12 \\
 \bottomrule
 \end{tabular}
 

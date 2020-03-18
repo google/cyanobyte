@@ -33,15 +33,6 @@ short _sign(val, length) {
 #include "BMP280.h"
 #define DEVICE_ADDRESS 119
 
-#define REGISTER_TEMPMSB 250
-#define REGISTER_TEMPLSB 251
-#define REGISTER_TEMPXLSB 252
-#define REGISTER_DIGT1 136
-#define REGISTER_DIGT2 138
-#define REGISTER_DIGT3 140
-#define REGISTER_PRESSUREMSB 247
-#define REGISTER_PRESSURELSB 248
-#define REGISTER_PRESSUREXLSB 249
 #define REGISTER_DIGP1 142
 #define REGISTER_DIGP2 144
 #define REGISTER_DIGP3 146
@@ -51,6 +42,15 @@ short _sign(val, length) {
 #define REGISTER_DIGP7 154
 #define REGISTER_DIGP8 156
 #define REGISTER_DIGP9 158
+#define REGISTER_DIGT1 136
+#define REGISTER_DIGT2 138
+#define REGISTER_DIGT3 140
+#define REGISTER_PRESSURELSB 248
+#define REGISTER_PRESSUREMSB 247
+#define REGISTER_PRESSUREXLSB 249
+#define REGISTER_TEMPLSB 251
+#define REGISTER_TEMPMSB 250
+#define REGISTER_TEMPXLSB 252
 
 static int i2c_bus = 0; // Pointer to bus
 
@@ -65,198 +65,6 @@ int bmp280_init(char* bus_name) {
 
 void bmp280_terminate() {
     k_i2c_terminate(&i2c_bus);
-}
-
-int bmp280_readTempMsb(uint8_t* val) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 1) != I2C_OK) {
-        return -2;
-    }
-    return 0;
-}
-
-int bmp280_writeTempMsb(uint8_t* data) {
-    // Put our data into uint8_t buffer
-    uint8_t buffer[2] = { (uint8_t) REGISTER_TEMPMSB };
-    uint8_t buffer[1] = (data >> 8) & 0xFF;
-    // First write our register address
-    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 2) != I2C_OK) {
-        return -1;
-    }
-    return 0;
-}
-
-int bmp280_readTempLsb(uint8_t* val) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 1) != I2C_OK) {
-        return -2;
-    }
-    return 0;
-}
-
-int bmp280_writeTempLsb(uint8_t* data) {
-    // Put our data into uint8_t buffer
-    uint8_t buffer[2] = { (uint8_t) REGISTER_TEMPLSB };
-    uint8_t buffer[1] = (data >> 8) & 0xFF;
-    // First write our register address
-    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 2) != I2C_OK) {
-        return -1;
-    }
-    return 0;
-}
-
-int bmp280_readTempXlsb(uint8_t* val) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 1) != I2C_OK) {
-        return -2;
-    }
-    return 0;
-}
-
-int bmp280_writeTempXlsb(uint8_t* data) {
-    // Put our data into uint8_t buffer
-    uint8_t buffer[2] = { (uint8_t) REGISTER_TEMPXLSB };
-    uint8_t buffer[1] = (data >> 8) & 0xFF;
-    // First write our register address
-    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 2) != I2C_OK) {
-        return -1;
-    }
-    return 0;
-}
-
-int bmp280_readDigT1(uint16_t* val) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 2) != I2C_OK) {
-        return -2;
-    }
-    return 0;
-}
-
-int bmp280_writeDigT1(uint16_t* data) {
-    // Put our data into uint8_t buffer
-    uint8_t buffer[3] = { (uint8_t) REGISTER_DIGT1 };
-    uint8_t buffer[1] = (data >> 16) & 0xFF;
-    uint8_t buffer[2] = (data >> 8) & 0xFF;
-    // First write our register address
-    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 3) != I2C_OK) {
-        return -1;
-    }
-    return 0;
-}
-
-int bmp280_readDigT2(uint16_t* val) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 2) != I2C_OK) {
-        return -2;
-    }
-    return 0;
-}
-
-int bmp280_writeDigT2(uint16_t* data) {
-    // Put our data into uint8_t buffer
-    uint8_t buffer[3] = { (uint8_t) REGISTER_DIGT2 };
-    uint8_t buffer[1] = (data >> 16) & 0xFF;
-    uint8_t buffer[2] = (data >> 8) & 0xFF;
-    // First write our register address
-    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 3) != I2C_OK) {
-        return -1;
-    }
-    return 0;
-}
-
-int bmp280_readDigT3(uint16_t* val) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 2) != I2C_OK) {
-        return -2;
-    }
-    return 0;
-}
-
-int bmp280_writeDigT3(uint16_t* data) {
-    // Put our data into uint8_t buffer
-    uint8_t buffer[3] = { (uint8_t) REGISTER_DIGT3 };
-    uint8_t buffer[1] = (data >> 16) & 0xFF;
-    uint8_t buffer[2] = (data >> 8) & 0xFF;
-    // First write our register address
-    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 3) != I2C_OK) {
-        return -1;
-    }
-    return 0;
-}
-
-int bmp280_readPressureMsb(uint8_t* val) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 1) != I2C_OK) {
-        return -2;
-    }
-    return 0;
-}
-
-int bmp280_writePressureMsb(uint8_t* data) {
-    // Put our data into uint8_t buffer
-    uint8_t buffer[2] = { (uint8_t) REGISTER_PRESSUREMSB };
-    uint8_t buffer[1] = (data >> 8) & 0xFF;
-    // First write our register address
-    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 2) != I2C_OK) {
-        return -1;
-    }
-    return 0;
-}
-
-int bmp280_readPressureLsb(uint8_t* val) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 1) != I2C_OK) {
-        return -2;
-    }
-    return 0;
-}
-
-int bmp280_writePressureLsb(uint8_t* data) {
-    // Put our data into uint8_t buffer
-    uint8_t buffer[2] = { (uint8_t) REGISTER_PRESSURELSB };
-    uint8_t buffer[1] = (data >> 8) & 0xFF;
-    // First write our register address
-    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 2) != I2C_OK) {
-        return -1;
-    }
-    return 0;
-}
-
-int bmp280_readPressureXlsb(uint8_t* val) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 1) != I2C_OK) {
-        return -2;
-    }
-    return 0;
-}
-
-int bmp280_writePressureXlsb(uint8_t* data) {
-    // Put our data into uint8_t buffer
-    uint8_t buffer[2] = { (uint8_t) REGISTER_PRESSUREXLSB };
-    uint8_t buffer[1] = (data >> 8) & 0xFF;
-    // First write our register address
-    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 2) != I2C_OK) {
-        return -1;
-    }
-    return 0;
 }
 
 int bmp280_readDigP1(uint16_t* val) {
@@ -279,9 +87,7 @@ int bmp280_writeDigP1(uint16_t* data) {
         return -1;
     }
     return 0;
-}
-
-int bmp280_readDigP2(uint16_t* val) {
+}int bmp280_readDigP2(uint16_t* val) {
     if (val == NULL) {
         return -1; // Need to provide a valid value pointer
     }
@@ -301,9 +107,7 @@ int bmp280_writeDigP2(uint16_t* data) {
         return -1;
     }
     return 0;
-}
-
-int bmp280_readDigP3(uint16_t* val) {
+}int bmp280_readDigP3(uint16_t* val) {
     if (val == NULL) {
         return -1; // Need to provide a valid value pointer
     }
@@ -323,9 +127,7 @@ int bmp280_writeDigP3(uint16_t* data) {
         return -1;
     }
     return 0;
-}
-
-int bmp280_readDigP4(uint16_t* val) {
+}int bmp280_readDigP4(uint16_t* val) {
     if (val == NULL) {
         return -1; // Need to provide a valid value pointer
     }
@@ -345,9 +147,7 @@ int bmp280_writeDigP4(uint16_t* data) {
         return -1;
     }
     return 0;
-}
-
-int bmp280_readDigP5(uint16_t* val) {
+}int bmp280_readDigP5(uint16_t* val) {
     if (val == NULL) {
         return -1; // Need to provide a valid value pointer
     }
@@ -367,9 +167,7 @@ int bmp280_writeDigP5(uint16_t* data) {
         return -1;
     }
     return 0;
-}
-
-int bmp280_readDigP6(uint16_t* val) {
+}int bmp280_readDigP6(uint16_t* val) {
     if (val == NULL) {
         return -1; // Need to provide a valid value pointer
     }
@@ -389,9 +187,7 @@ int bmp280_writeDigP6(uint16_t* data) {
         return -1;
     }
     return 0;
-}
-
-int bmp280_readDigP7(uint16_t* val) {
+}int bmp280_readDigP7(uint16_t* val) {
     if (val == NULL) {
         return -1; // Need to provide a valid value pointer
     }
@@ -411,9 +207,7 @@ int bmp280_writeDigP7(uint16_t* data) {
         return -1;
     }
     return 0;
-}
-
-int bmp280_readDigP8(uint16_t* val) {
+}int bmp280_readDigP8(uint16_t* val) {
     if (val == NULL) {
         return -1; // Need to provide a valid value pointer
     }
@@ -433,9 +227,7 @@ int bmp280_writeDigP8(uint16_t* data) {
         return -1;
     }
     return 0;
-}
-
-int bmp280_readDigP9(uint16_t* val) {
+}int bmp280_readDigP9(uint16_t* val) {
     if (val == NULL) {
         return -1; // Need to provide a valid value pointer
     }
@@ -455,9 +247,181 @@ int bmp280_writeDigP9(uint16_t* data) {
         return -1;
     }
     return 0;
+}int bmp280_readDigT1(uint16_t* val) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 2) != I2C_OK) {
+        return -2;
+    }
+    return 0;
 }
 
+int bmp280_writeDigT1(uint16_t* data) {
+    // Put our data into uint8_t buffer
+    uint8_t buffer[3] = { (uint8_t) REGISTER_DIGT1 };
+    uint8_t buffer[1] = (data >> 16) & 0xFF;
+    uint8_t buffer[2] = (data >> 8) & 0xFF;
+    // First write our register address
+    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 3) != I2C_OK) {
+        return -1;
+    }
+    return 0;
+}int bmp280_readDigT2(uint16_t* val) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 2) != I2C_OK) {
+        return -2;
+    }
+    return 0;
+}
 
+int bmp280_writeDigT2(uint16_t* data) {
+    // Put our data into uint8_t buffer
+    uint8_t buffer[3] = { (uint8_t) REGISTER_DIGT2 };
+    uint8_t buffer[1] = (data >> 16) & 0xFF;
+    uint8_t buffer[2] = (data >> 8) & 0xFF;
+    // First write our register address
+    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 3) != I2C_OK) {
+        return -1;
+    }
+    return 0;
+}int bmp280_readDigT3(uint16_t* val) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 2) != I2C_OK) {
+        return -2;
+    }
+    return 0;
+}
+
+int bmp280_writeDigT3(uint16_t* data) {
+    // Put our data into uint8_t buffer
+    uint8_t buffer[3] = { (uint8_t) REGISTER_DIGT3 };
+    uint8_t buffer[1] = (data >> 16) & 0xFF;
+    uint8_t buffer[2] = (data >> 8) & 0xFF;
+    // First write our register address
+    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 3) != I2C_OK) {
+        return -1;
+    }
+    return 0;
+}int bmp280_readPressureLsb(uint8_t* val) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 1) != I2C_OK) {
+        return -2;
+    }
+    return 0;
+}
+
+int bmp280_writePressureLsb(uint8_t* data) {
+    // Put our data into uint8_t buffer
+    uint8_t buffer[2] = { (uint8_t) REGISTER_PRESSURELSB };
+    uint8_t buffer[1] = (data >> 8) & 0xFF;
+    // First write our register address
+    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 2) != I2C_OK) {
+        return -1;
+    }
+    return 0;
+}int bmp280_readPressureMsb(uint8_t* val) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 1) != I2C_OK) {
+        return -2;
+    }
+    return 0;
+}
+
+int bmp280_writePressureMsb(uint8_t* data) {
+    // Put our data into uint8_t buffer
+    uint8_t buffer[2] = { (uint8_t) REGISTER_PRESSUREMSB };
+    uint8_t buffer[1] = (data >> 8) & 0xFF;
+    // First write our register address
+    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 2) != I2C_OK) {
+        return -1;
+    }
+    return 0;
+}int bmp280_readPressureXlsb(uint8_t* val) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 1) != I2C_OK) {
+        return -2;
+    }
+    return 0;
+}
+
+int bmp280_writePressureXlsb(uint8_t* data) {
+    // Put our data into uint8_t buffer
+    uint8_t buffer[2] = { (uint8_t) REGISTER_PRESSUREXLSB };
+    uint8_t buffer[1] = (data >> 8) & 0xFF;
+    // First write our register address
+    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 2) != I2C_OK) {
+        return -1;
+    }
+    return 0;
+}int bmp280_readTempLsb(uint8_t* val) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 1) != I2C_OK) {
+        return -2;
+    }
+    return 0;
+}
+
+int bmp280_writeTempLsb(uint8_t* data) {
+    // Put our data into uint8_t buffer
+    uint8_t buffer[2] = { (uint8_t) REGISTER_TEMPLSB };
+    uint8_t buffer[1] = (data >> 8) & 0xFF;
+    // First write our register address
+    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 2) != I2C_OK) {
+        return -1;
+    }
+    return 0;
+}int bmp280_readTempMsb(uint8_t* val) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 1) != I2C_OK) {
+        return -2;
+    }
+    return 0;
+}
+
+int bmp280_writeTempMsb(uint8_t* data) {
+    // Put our data into uint8_t buffer
+    uint8_t buffer[2] = { (uint8_t) REGISTER_TEMPMSB };
+    uint8_t buffer[1] = (data >> 8) & 0xFF;
+    // First write our register address
+    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 2) != I2C_OK) {
+        return -1;
+    }
+    return 0;
+}int bmp280_readTempXlsb(uint8_t* val) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 1) != I2C_OK) {
+        return -2;
+    }
+    return 0;
+}
+
+int bmp280_writeTempXlsb(uint8_t* data) {
+    // Put our data into uint8_t buffer
+    uint8_t buffer[2] = { (uint8_t) REGISTER_TEMPXLSB };
+    uint8_t buffer[1] = (data >> 8) & 0xFF;
+    // First write our register address
+    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 2) != I2C_OK) {
+        return -1;
+    }
+    return 0;
+}
 
 void bmp280_temperature_asraw(short* val) {
     char valueMsb; // Variable declaration

@@ -30,8 +30,8 @@ static short _swap_endian(short val) {
 #include "MCP4725.h"
 #define DEVICE_ADDRESS 98
 
-#define REGISTER_VOUT 64
 #define REGISTER_EEPROM 96
+#define REGISTER_VOUT 64
 
 MCP4725::MCP4725(TwoWire& wire) :
     _wire(&wire)
@@ -44,37 +44,6 @@ void MCP4725::begin() {
 
 void MCP4725::end() {
     _wire->end();
-}
-
-uint16_t MCP4725::readVOut() {
-    uint8_t datum;
-    uint16_t value;
-    _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_VOUT);
-    if (_wire->endTransmission(false) != 0) {
-        return -1;
-    }
-
-    if (_wire->requestFrom(DEVICE_ADDRESS, 12) != 12) {
-        return 0;
-    }
-
-    datum = _wire->read();
-    value = value << 8 | datum;
-
-    return value;
-}
-
-int MCP4725::writeVOut(uint16_t data) {
-    _wire->beginTransmission(DEVICE_ADDRESS);
-    // Put our data into uint8_t buffer
-    uint8_t buffer[2] = { (uint8_t) REGISTER_VOUT };
-    buffer[1] = (data >> 0) & 0xFF;
-    _wire->write(buffer, 2);
-    if (_wire->endTransmission() != 0) {
-        return 0;
-    }
-    return 1;
 }
 
 uint16_t MCP4725::readEEPROM() {
@@ -106,9 +75,36 @@ int MCP4725::writeEEPROM(uint16_t data) {
         return 0;
     }
     return 1;
+}uint16_t MCP4725::readVOut() {
+    uint8_t datum;
+    uint16_t value;
+    _wire->beginTransmission(DEVICE_ADDRESS);
+    _wire->write(REGISTER_VOUT);
+    if (_wire->endTransmission(false) != 0) {
+        return -1;
+    }
+
+    if (_wire->requestFrom(DEVICE_ADDRESS, 12) != 12) {
+        return 0;
+    }
+
+    datum = _wire->read();
+    value = value << 8 | datum;
+
+    return value;
 }
 
-
+int MCP4725::writeVOut(uint16_t data) {
+    _wire->beginTransmission(DEVICE_ADDRESS);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[2] = { (uint8_t) REGISTER_VOUT };
+    buffer[1] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 2);
+    if (_wire->endTransmission() != 0) {
+        return 0;
+    }
+    return 1;
+}
 uint16_t MCP4725::getdigitalOut() {
     // Read register data
     // '#/registers/EEPROM' > 'EEPROM'

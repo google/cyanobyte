@@ -96,7 +96,6 @@ int mcp9808_writeconfiguration(
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
 );
-
 /**
  * This bit can not be altered when either of the Lock bits are set
  * (bit 6 and bit 7). This bit can be programmed in Shutdown mode.

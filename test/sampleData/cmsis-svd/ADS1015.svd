@@ -39,7 +39,7 @@ limitations under the License.
                 <usage>registers</usage>
             </addressBlock>
             <registers>
-                <register>
+<register>
                     <name>Config</name>
                     <description>Describes the specifics of the sensing implementation</description>
                     <addressOffset>1</addressOffset>
@@ -221,7 +221,7 @@ limitations under the License.
                         </field>
                     </fields>
                 </register>
-                <register>
+<register>
                     <name>Conversion</name>
                     <description>Conversion register contains the result of the last conversion</description>
                     <addressOffset>0</addressOffset>

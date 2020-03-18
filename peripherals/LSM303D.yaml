@@ -35,66 +35,66 @@ i2c:
 registers:
   # Accelerometer registers are 8 bits each, with 16-bit data values
   # Increment each output by 0x80 to enable auto-increment of registers
-  - AccelerometerX_Low:
-      address: 0xA8
-      length: 8
-      title: Accelerometer X
-      description: Raw accelerometer data on X plane
-  - AccelerometerX_High:
-      address: 0xA9
-      length: 8
-      title: Accelerometer X
-      description: Raw accelerometer data on X plane
-  - AccelerometerY_Low:
-      address: 0xAA
-      length: 8
-      title: Accelerometer Y
-      description: Raw accelerometer data on Y plane
-  - AccelerometerY_High:
-      address: 0xAB
-      length: 8
-      title: Accelerometer Y
-      description: Raw accelerometer data on Y plane
-  - AccelerometerZ_Low:
-      address: 0xAC
-      length: 8
-      title: Accelerometer Z
-      description: Raw accelerometer data on Z plane
-  - AccelerometerZ_High:
-      address: 0xAD
-      length: 8
-      title: Accelerometer Z
-      description: Raw accelerometer data on Z plane
-  - MagnetometerX_Low:
-      address: 0x88
-      length: 8
-      title: Magnetometer X
-      description: Raw magnetometer data on X plane
-  - MagnetometerX_High:
-      address: 0x89
-      length: 8
-      title: Magnetometer X
-      description: Raw magnetometer data on X plane
-  - MagnetometerY_Low:
-      address: 0x8A
-      length: 8
-      title: Magnetometer Y
-      description: Raw magnetometer data on Y plane
-  - MagnetometerY_High:
-      address: 0x8B
-      length: 8
-      title: Magnetometer Y
-      description: Raw magnetometer data on Y plane
-  - MagnetometerZ_Low:
-      address: 0x8C
-      length: 8
-      title: Magnetometer Z
-      description: Raw magnetometer data on Z plane
-  - MagnetometerZ_High:
-      address: 0x8D
-      length: 8
-      title: Magnetometer Z
-      description: Raw magnetometer data on Z plane
+  AccelerometerX_Low:
+    address: 0xA8
+    length: 8
+    title: Accelerometer X
+    description: Raw accelerometer data on X plane
+  AccelerometerX_High:
+    address: 0xA9
+    length: 8
+    title: Accelerometer X
+    description: Raw accelerometer data on X plane
+  AccelerometerY_Low:
+    address: 0xAA
+    length: 8
+    title: Accelerometer Y
+    description: Raw accelerometer data on Y plane
+  AccelerometerY_High:
+    address: 0xAB
+    length: 8
+    title: Accelerometer Y
+    description: Raw accelerometer data on Y plane
+  AccelerometerZ_Low:
+    address: 0xAC
+    length: 8
+    title: Accelerometer Z
+    description: Raw accelerometer data on Z plane
+  AccelerometerZ_High:
+    address: 0xAD
+    length: 8
+    title: Accelerometer Z
+    description: Raw accelerometer data on Z plane
+  MagnetometerX_Low:
+    address: 0x88
+    length: 8
+    title: Magnetometer X
+    description: Raw magnetometer data on X plane
+  MagnetometerX_High:
+    address: 0x89
+    length: 8
+    title: Magnetometer X
+    description: Raw magnetometer data on X plane
+  MagnetometerY_Low:
+    address: 0x8A
+    length: 8
+    title: Magnetometer Y
+    description: Raw magnetometer data on Y plane
+  MagnetometerY_High:
+    address: 0x8B
+    length: 8
+    title: Magnetometer Y
+    description: Raw magnetometer data on Y plane
+  MagnetometerZ_Low:
+    address: 0x8C
+    length: 8
+    title: Magnetometer Z
+    description: Raw magnetometer data on Z plane
+  MagnetometerZ_High:
+    address: 0x8D
+    length: 8
+    title: Magnetometer Z
+    description: Raw magnetometer data on Z plane
 
 functions:
   - acceleration:

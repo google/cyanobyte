@@ -78,7 +78,6 @@ typedef enum Channel Channel_t;
 
 int ads1015_init(char* bus_name);
 void ads1015_terminate();
-   
 /**
   * Describes the specifics of the sensing implementation
 
@@ -89,9 +88,7 @@ int ads1015_readConfig(uint16_t* val);
  * Describes the specifics of the sensing implementation
 
  */
-int ads1015_writeConfig(uint16_t* data);
-   
-/**
+int ads1015_writeConfig(uint16_t* data);/**
   * Conversion register contains the result of the last conversion
 
 */
@@ -102,7 +99,6 @@ int ads1015_readConversion(uint16_t* val);
 
  */
 int ads1015_writeConversion(uint16_t* data);
-
 /**
  * This sets the samples-per-second value
 

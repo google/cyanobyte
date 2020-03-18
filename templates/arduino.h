@@ -83,19 +83,17 @@ class {{info.title}} {
 
         void begin();
         void end();
-        {% for register in registers -%}
-        {% for key in register.keys() %}
-        {% set length = register[key].length %}
+        {% for key in registers.keys() -%}
+        {% set length = registers[key].length %}
         /**
-{{utils.pad_string("         * ", register[key].description)}}
+{{utils.pad_string("         * ", registers[key].description)}}
          */
-        {{cpp.numtype(register[key].length)}} read{{key}}();
+        {{cpp.numtype(registers[key].length)}} read{{key}}();
 
         /**
-{{utils.pad_string("         * ", register[key].description)}}
+{{utils.pad_string("         * ", registers[key].description)}}
          */
         int write{{key}}({{cpp.numtype(length)}} data);
-        {% endfor %}
         {%- endfor %}
         {% for field in fields %}
         {% for key in field.keys() %}

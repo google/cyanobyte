@@ -80,17 +80,6 @@ class ADS1015 {
         void begin();
         void end();
         /**
-         * Describes the specifics of the sensing implementation
-
-         */
-        uint16_t readConfig();
-
-        /**
-         * Describes the specifics of the sensing implementation
-
-         */
-        int writeConfig(uint16_t data);
-        /**
          * Conversion register contains the result of the last conversion
 
          */
@@ -100,8 +89,17 @@ class ADS1015 {
          * Conversion register contains the result of the last conversion
 
          */
-        int writeConversion(uint16_t data);
+        int writeConversion(uint16_t data);        /**
+         * Describes the specifics of the sensing implementation
+
+         */
+        uint16_t readConfig();
+
         /**
+         * Describes the specifics of the sensing implementation
+
+         */
+        int writeConfig(uint16_t data);        /**
          * This sets the samples-per-second value
 
          */

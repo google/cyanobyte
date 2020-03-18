@@ -60,10 +60,8 @@
 
 \section{Register Description}
 \begin{itemize}
-{% for register in registers %}
-{% for key in register.keys() %}
-\item {{register[key].title}} - {{register[key].description}}
-{% endfor %}
+{% for key,register in registers|dictsort %}
+\item {{register.title}} - {{register.description}}
 {% endfor %}
 \end{itemize}
 
@@ -73,10 +71,8 @@
 \toprule
  & Register Name & Register Address & Register Length \\
 \midrule
-{% for register in registers %}
-{% for key in register.keys() %}
-{{key | regex_replace('_', '\_')}} & {{register[key].title}} & {{register[key].address}} & {{register[key].length}} \\
-{% endfor %}
+{% for key,register in registers|dictsort %}
+{{key | regex_replace('_', '\_')}} & {{register.title}} & {{register.address}} & {{register.length}} \\
 {% endfor %}
 \bottomrule
 \end{tabular}

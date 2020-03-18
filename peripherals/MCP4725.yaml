@@ -34,22 +34,22 @@ i2c:
   endian: little
 
 registers:
-  - VOut:
-      address: 0x40
-      length: 12
-      title: Output voltage
-      description: |
-        VOut = (Vcc * value) / 4096
-        The output is a range between 0 and Vcc with
-        steps of Vcc/4096.
-        In a 3.3v system, each step is 800 microvolts.
-  - EEPROM:
-      address: 0x60
-      length: 12
-      title: EEPROM
-      description: |
-        If EEPROM is set, the saved voltage output will
-        be loaded from power-on.
+  VOut:
+    address: 0x40
+    length: 12
+    title: Output voltage
+    description: |
+      VOut = (Vcc * value) / 4096
+      The output is a range between 0 and Vcc with
+      steps of Vcc/4096.
+      In a 3.3v system, each step is 800 microvolts.
+  EEPROM:
+    address: 0x60
+    length: 12
+    title: EEPROM
+    description: |
+      If EEPROM is set, the saved voltage output will
+      be loaded from power-on.
 
 fields:
   - digitalOut:

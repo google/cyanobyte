@@ -62,9 +62,7 @@ int ads1015_writeConfig(
         return -1;
     }
     return 0;
-}
-
-int ads1015_readConversion(
+}int ads1015_readConversion(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
@@ -86,8 +84,6 @@ int ads1015_writeConversion(
     }
     return 0;
 }
-
-
 
 int ads1015_set_samplerate(
     uint16_t* data,

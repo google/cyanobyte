@@ -51,9 +51,8 @@ static short _swap_endian(short val) {
 {% endif %}
 
 {# Add signing function if needed #}
-{% for register in registers %}
-{% for key in register.keys() %}
-{% if register[key].signed %}
+{% for key,register in registers|dictsort %}
+{% if register.signed %}
 {% if template.sign is sameas false %}
 static short _sign(short val, char length) {
     // Convert unsigned integer to signed integer
@@ -66,17 +65,14 @@ static short _sign(short val, char length) {
 {% endif %}
 {% endif %}
 {% endfor %}
-{% endfor %}
 
 #include "{{info.title}}.h"
 {% if i2c.address is number %}
 #define DEVICE_ADDRESS {{i2c.address}}
 {% endif %}
 
-{% for register in registers %}
-{% for key in register.keys() %}
-#define REGISTER_{{key.upper()}} {{register[key].address}}
-{% endfor %}
+{% for key,register in registers|dictsort %}
+#define REGISTER_{{key.upper()}} {{register.address}}
 {% endfor %}
 
 {% if i2c.address is iterable and i2c.address is not string %}
@@ -100,10 +96,9 @@ void {{info.title}}::end() {
     _wire->end();
 }
 
-{% for register in registers -%}
-{% for key in register.keys() %}
-{% set length = register[key].length %}
-{% set bytes = (register[key].length / 8) | round(1, 'ceil') | int %}
+{% for key,register in registers|dictsort -%}
+{% set length = register.length %}
+{% set bytes = (register.length / 8) | round(1, 'ceil') | int %}
 {{cpp.numtype(length)}} {{info.title}}::read{{key}}() {
     uint8_t datum;
     {{cpp.numtype(length)}} value;
@@ -140,7 +135,6 @@ int {{info.title}}::write{{key}}({{cpp.numtype(length)}} data) {
     return 1;
 }
 
-{% endfor %}
 {%- endfor %}
 
 {% for field in fields %}

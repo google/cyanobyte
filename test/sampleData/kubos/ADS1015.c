@@ -68,9 +68,7 @@ int ads1015_writeConfig(uint16_t* data) {
         return -1;
     }
     return 0;
-}
-
-int ads1015_readConversion(uint16_t* val) {
+}int ads1015_readConversion(uint16_t* val) {
     if (val == NULL) {
         return -1; // Need to provide a valid value pointer
     }
@@ -91,8 +89,6 @@ int ads1015_writeConversion(uint16_t* data) {
     }
     return 0;
 }
-
-
 
 int ads1015_set_samplerate(uint16_t* data) {
     // Bitshift value

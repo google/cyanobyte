@@ -33,15 +33,6 @@ static short _sign(short val, short length) {
 #include "BMP280.h"
 #define DEVICE_ADDRESS 119
 
-#define REGISTER_TEMPMSB 250
-#define REGISTER_TEMPLSB 251
-#define REGISTER_TEMPXLSB 252
-#define REGISTER_DIGT1 136
-#define REGISTER_DIGT2 138
-#define REGISTER_DIGT3 140
-#define REGISTER_PRESSUREMSB 247
-#define REGISTER_PRESSURELSB 248
-#define REGISTER_PRESSUREXLSB 249
 #define REGISTER_DIGP1 142
 #define REGISTER_DIGP2 144
 #define REGISTER_DIGP3 146
@@ -51,6 +42,15 @@ static short _sign(short val, short length) {
 #define REGISTER_DIGP7 154
 #define REGISTER_DIGP8 156
 #define REGISTER_DIGP9 158
+#define REGISTER_DIGT1 136
+#define REGISTER_DIGT2 138
+#define REGISTER_DIGT3 140
+#define REGISTER_PRESSURELSB 248
+#define REGISTER_PRESSUREMSB 247
+#define REGISTER_PRESSUREXLSB 249
+#define REGISTER_TEMPLSB 251
+#define REGISTER_TEMPMSB 250
+#define REGISTER_TEMPXLSB 252
 
 // Provide an I2C connect function, return status
 int bmp280_init(int (*connect)(uint8_t)) {
@@ -58,213 +58,6 @@ int bmp280_init(int (*connect)(uint8_t)) {
     if (connect(DEVICE_ADDRESS) != 0) {
         return -1;
     }
-}
-
-int bmp280_readTempMsb(
-    uint8_t* val,
-    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (read(DEVICE_ADDRESS, REGISTER_TEMPMSB, val, 1) != 0) {
-        return -2;
-    }
-    return 0;
-}
-
-int bmp280_writeTempMsb(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_TEMPMSB, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}
-
-int bmp280_readTempLsb(
-    uint8_t* val,
-    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (read(DEVICE_ADDRESS, REGISTER_TEMPLSB, val, 1) != 0) {
-        return -2;
-    }
-    return 0;
-}
-
-int bmp280_writeTempLsb(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_TEMPLSB, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}
-
-int bmp280_readTempXlsb(
-    uint8_t* val,
-    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (read(DEVICE_ADDRESS, REGISTER_TEMPXLSB, val, 1) != 0) {
-        return -2;
-    }
-    return 0;
-}
-
-int bmp280_writeTempXlsb(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_TEMPXLSB, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}
-
-int bmp280_readDigT1(
-    uint16_t* val,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (read(DEVICE_ADDRESS, REGISTER_DIGT1, val, 2) != 0) {
-        return -2;
-    }
-    return 0;
-}
-
-int bmp280_writeDigT1(
-    uint16_t* data,
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_DIGT1, data, 2) != 0) {
-        return -1;
-    }
-    return 0;
-}
-
-int bmp280_readDigT2(
-    uint16_t* val,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (read(DEVICE_ADDRESS, REGISTER_DIGT2, val, 2) != 0) {
-        return -2;
-    }
-    return 0;
-}
-
-int bmp280_writeDigT2(
-    uint16_t* data,
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_DIGT2, data, 2) != 0) {
-        return -1;
-    }
-    return 0;
-}
-
-int bmp280_readDigT3(
-    uint16_t* val,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (read(DEVICE_ADDRESS, REGISTER_DIGT3, val, 2) != 0) {
-        return -2;
-    }
-    return 0;
-}
-
-int bmp280_writeDigT3(
-    uint16_t* data,
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_DIGT3, data, 2) != 0) {
-        return -1;
-    }
-    return 0;
-}
-
-int bmp280_readPressureMsb(
-    uint8_t* val,
-    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (read(DEVICE_ADDRESS, REGISTER_PRESSUREMSB, val, 1) != 0) {
-        return -2;
-    }
-    return 0;
-}
-
-int bmp280_writePressureMsb(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_PRESSUREMSB, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}
-
-int bmp280_readPressureLsb(
-    uint8_t* val,
-    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (read(DEVICE_ADDRESS, REGISTER_PRESSURELSB, val, 1) != 0) {
-        return -2;
-    }
-    return 0;
-}
-
-int bmp280_writePressureLsb(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_PRESSURELSB, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}
-
-int bmp280_readPressureXlsb(
-    uint8_t* val,
-    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (read(DEVICE_ADDRESS, REGISTER_PRESSUREXLSB, val, 1) != 0) {
-        return -2;
-    }
-    return 0;
-}
-
-int bmp280_writePressureXlsb(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_PRESSUREXLSB, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
 }
 
 int bmp280_readDigP1(
@@ -288,9 +81,7 @@ int bmp280_writeDigP1(
         return -1;
     }
     return 0;
-}
-
-int bmp280_readDigP2(
+}int bmp280_readDigP2(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
@@ -311,9 +102,7 @@ int bmp280_writeDigP2(
         return -1;
     }
     return 0;
-}
-
-int bmp280_readDigP3(
+}int bmp280_readDigP3(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
@@ -334,9 +123,7 @@ int bmp280_writeDigP3(
         return -1;
     }
     return 0;
-}
-
-int bmp280_readDigP4(
+}int bmp280_readDigP4(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
@@ -357,9 +144,7 @@ int bmp280_writeDigP4(
         return -1;
     }
     return 0;
-}
-
-int bmp280_readDigP5(
+}int bmp280_readDigP5(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
@@ -380,9 +165,7 @@ int bmp280_writeDigP5(
         return -1;
     }
     return 0;
-}
-
-int bmp280_readDigP6(
+}int bmp280_readDigP6(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
@@ -403,9 +186,7 @@ int bmp280_writeDigP6(
         return -1;
     }
     return 0;
-}
-
-int bmp280_readDigP7(
+}int bmp280_readDigP7(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
@@ -426,9 +207,7 @@ int bmp280_writeDigP7(
         return -1;
     }
     return 0;
-}
-
-int bmp280_readDigP8(
+}int bmp280_readDigP8(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
@@ -449,9 +228,7 @@ int bmp280_writeDigP8(
         return -1;
     }
     return 0;
-}
-
-int bmp280_readDigP9(
+}int bmp280_readDigP9(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
@@ -472,9 +249,196 @@ int bmp280_writeDigP9(
         return -1;
     }
     return 0;
+}int bmp280_readDigT1(
+    uint16_t* val,
+    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
+) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (read(DEVICE_ADDRESS, REGISTER_DIGT1, val, 2) != 0) {
+        return -2;
+    }
+    return 0;
 }
 
+int bmp280_writeDigT1(
+    uint16_t* data,
+    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
+) {
+    if (write(DEVICE_ADDRESS, REGISTER_DIGT1, data, 2) != 0) {
+        return -1;
+    }
+    return 0;
+}int bmp280_readDigT2(
+    uint16_t* val,
+    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
+) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (read(DEVICE_ADDRESS, REGISTER_DIGT2, val, 2) != 0) {
+        return -2;
+    }
+    return 0;
+}
 
+int bmp280_writeDigT2(
+    uint16_t* data,
+    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
+) {
+    if (write(DEVICE_ADDRESS, REGISTER_DIGT2, data, 2) != 0) {
+        return -1;
+    }
+    return 0;
+}int bmp280_readDigT3(
+    uint16_t* val,
+    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
+) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (read(DEVICE_ADDRESS, REGISTER_DIGT3, val, 2) != 0) {
+        return -2;
+    }
+    return 0;
+}
+
+int bmp280_writeDigT3(
+    uint16_t* data,
+    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
+) {
+    if (write(DEVICE_ADDRESS, REGISTER_DIGT3, data, 2) != 0) {
+        return -1;
+    }
+    return 0;
+}int bmp280_readPressureLsb(
+    uint8_t* val,
+    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
+) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (read(DEVICE_ADDRESS, REGISTER_PRESSURELSB, val, 1) != 0) {
+        return -2;
+    }
+    return 0;
+}
+
+int bmp280_writePressureLsb(
+    uint8_t* data,
+    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
+) {
+    if (write(DEVICE_ADDRESS, REGISTER_PRESSURELSB, data, 1) != 0) {
+        return -1;
+    }
+    return 0;
+}int bmp280_readPressureMsb(
+    uint8_t* val,
+    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
+) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (read(DEVICE_ADDRESS, REGISTER_PRESSUREMSB, val, 1) != 0) {
+        return -2;
+    }
+    return 0;
+}
+
+int bmp280_writePressureMsb(
+    uint8_t* data,
+    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
+) {
+    if (write(DEVICE_ADDRESS, REGISTER_PRESSUREMSB, data, 1) != 0) {
+        return -1;
+    }
+    return 0;
+}int bmp280_readPressureXlsb(
+    uint8_t* val,
+    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
+) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (read(DEVICE_ADDRESS, REGISTER_PRESSUREXLSB, val, 1) != 0) {
+        return -2;
+    }
+    return 0;
+}
+
+int bmp280_writePressureXlsb(
+    uint8_t* data,
+    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
+) {
+    if (write(DEVICE_ADDRESS, REGISTER_PRESSUREXLSB, data, 1) != 0) {
+        return -1;
+    }
+    return 0;
+}int bmp280_readTempLsb(
+    uint8_t* val,
+    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
+) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (read(DEVICE_ADDRESS, REGISTER_TEMPLSB, val, 1) != 0) {
+        return -2;
+    }
+    return 0;
+}
+
+int bmp280_writeTempLsb(
+    uint8_t* data,
+    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
+) {
+    if (write(DEVICE_ADDRESS, REGISTER_TEMPLSB, data, 1) != 0) {
+        return -1;
+    }
+    return 0;
+}int bmp280_readTempMsb(
+    uint8_t* val,
+    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
+) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (read(DEVICE_ADDRESS, REGISTER_TEMPMSB, val, 1) != 0) {
+        return -2;
+    }
+    return 0;
+}
+
+int bmp280_writeTempMsb(
+    uint8_t* data,
+    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
+) {
+    if (write(DEVICE_ADDRESS, REGISTER_TEMPMSB, data, 1) != 0) {
+        return -1;
+    }
+    return 0;
+}int bmp280_readTempXlsb(
+    uint8_t* val,
+    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
+) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (read(DEVICE_ADDRESS, REGISTER_TEMPXLSB, val, 1) != 0) {
+        return -2;
+    }
+    return 0;
+}
+
+int bmp280_writeTempXlsb(
+    uint8_t* data,
+    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
+) {
+    if (write(DEVICE_ADDRESS, REGISTER_TEMPXLSB, data, 1) != 0) {
+        return -1;
+    }
+    return 0;
+}
 
 void bmp280_temperature_asraw(
     short* val,

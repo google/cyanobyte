@@ -36,106 +36,106 @@ i2c:
 registers:
   # Raw temperature value is defined as:
   #   (msb << 12) + (lsb << 4) + (xlsb >> 4)
-  - TempMsb:
-      address: 0xFA
-      length: 8
-      title: Temperature MSB
-      description: Part 1 of temperature
-  - TempLsb:
-      address: 0xFB
-      length: 8
-      title: Temperature LSB
-      description: Part 2 of temperature
-  - TempXlsb:
-      address: 0xFC
-      length: 8
-      title: Temperature XLSB
-      description: Final part of temperature
-  - DigT1:
-      address: 0x88
-      length: 16
-      title: Digital Temperature Compensation 1
-      description: Used for Celcius conversion
-  - DigT2:
-      address: 0x8A
-      length: 16
-      title: Digital Temperature Compensation 2
-      description: Used for Celcius conversion
-  - DigT3:
-      address: 0x8C
-      length: 16
-      title: Digital Temperature Compensation 3
-      description: Used for Celcius conversion
-      signed: true
-  - PressureMsb:
-      address: 0xF7
-      length: 8
-      title: Pressure MSB
-      description: Part 1 of Pressure
-  - PressureLsb:
-      address: 0xF8
-      length: 8
-      title: Pressure LSB
-      description: Part 2 of Pressure
-  - PressureXlsb:
-      address: 0xF9
-      length: 8
-      title: Pressure XLSB
-      description: Part 3 of Pressure
-  - DigP1:
-      address: 0x8E
-      length: 16
-      signed: false
-      title: Digital Pressure Compensation 1
-      description: Used for Pascals conversion
-  - DigP2:
-      address: 0x90
-      length: 16
-      signed: true
-      title: Digital Pressure Compensation 2
-      description: Used for Pascals conversion
-  - DigP3:
-      address: 0x92
-      length: 16
-      signed: true
-      title: Digital Pressure Compensation 3
-      description: Used for Pascals conversion
-  - DigP4:
-      address: 0x94
-      length: 16
-      signed: true
-      title: Digital Pressure Compensation 4
-      description: Used for Pascals conversion
-  - DigP5:
-      address: 0x96
-      length: 16
-      signed: true
-      title: Digital Pressure Compensation 5
-      description: Used for Pascals conversion
-  - DigP6:
-      address: 0x98
-      length: 16
-      signed: true
-      title: Digital Pressure Compensation 6
-      description: Used for Pascals conversion
-  - DigP7:
-      address: 0x9A
-      length: 16
-      signed: true
-      title: Digital Pressure Compensation 7
-      description: Used for Pascals conversion
-  - DigP8:
-      address: 0x9C
-      length: 16
-      signed: true
-      title: Digital Pressure Compensation 8
-      description: Used for Pascals conversion
-  - DigP9:
-      address: 0x9E
-      length: 16
-      signed: true
-      title: Digital Pressure Compensation 9
-      description: Used for Pascals conversion
+  TempMsb:
+    address: 0xFA
+    length: 8
+    title: Temperature MSB
+    description: Part 1 of temperature
+  TempLsb:
+    address: 0xFB
+    length: 8
+    title: Temperature LSB
+    description: Part 2 of temperature
+  TempXlsb:
+    address: 0xFC
+    length: 8
+    title: Temperature XLSB
+    description: Final part of temperature
+  DigT1:
+    address: 0x88
+    length: 16
+    title: Digital Temperature Compensation 1
+    description: Used for Celcius conversion
+  DigT2:
+    address: 0x8A
+    length: 16
+    title: Digital Temperature Compensation 2
+    description: Used for Celcius conversion
+  DigT3:
+    address: 0x8C
+    length: 16
+    title: Digital Temperature Compensation 3
+    description: Used for Celcius conversion
+    signed: true
+  PressureMsb:
+    address: 0xF7
+    length: 8
+    title: Pressure MSB
+    description: Part 1 of Pressure
+  PressureLsb:
+    address: 0xF8
+    length: 8
+    title: Pressure LSB
+    description: Part 2 of Pressure
+  PressureXlsb:
+    address: 0xF9
+    length: 8
+    title: Pressure XLSB
+    description: Part 3 of Pressure
+  DigP1:
+    address: 0x8E
+    length: 16
+    signed: false
+    title: Digital Pressure Compensation 1
+    description: Used for Pascals conversion
+  DigP2:
+    address: 0x90
+    length: 16
+    signed: true
+    title: Digital Pressure Compensation 2
+    description: Used for Pascals conversion
+  DigP3:
+    address: 0x92
+    length: 16
+    signed: true
+    title: Digital Pressure Compensation 3
+    description: Used for Pascals conversion
+  DigP4:
+    address: 0x94
+    length: 16
+    signed: true
+    title: Digital Pressure Compensation 4
+    description: Used for Pascals conversion
+  DigP5:
+    address: 0x96
+    length: 16
+    signed: true
+    title: Digital Pressure Compensation 5
+    description: Used for Pascals conversion
+  DigP6:
+    address: 0x98
+    length: 16
+    signed: true
+    title: Digital Pressure Compensation 6
+    description: Used for Pascals conversion
+  DigP7:
+    address: 0x9A
+    length: 16
+    signed: true
+    title: Digital Pressure Compensation 7
+    description: Used for Pascals conversion
+  DigP8:
+    address: 0x9C
+    length: 16
+    signed: true
+    title: Digital Pressure Compensation 8
+    description: Used for Pascals conversion
+  DigP9:
+    address: 0x9E
+    length: 16
+    signed: true
+    title: Digital Pressure Compensation 9
+    description: Used for Pascals conversion
 functions:
   - temperature:
       title: Temperature as read by sensor

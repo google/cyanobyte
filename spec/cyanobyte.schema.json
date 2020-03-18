@@ -150,7 +150,7 @@
     },
     "registers": {
       "description": "Chip registers",
-      "type": "array",
+      "type": "object",
       "items": {
         "description": "Outer object",
         "type": "object",

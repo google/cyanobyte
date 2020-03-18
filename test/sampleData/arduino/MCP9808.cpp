@@ -74,8 +74,6 @@ int MCP9808::writeconfiguration(uint16_t data) {
     }
     return 1;
 }
-
-
 uint16_t MCP9808::getlimitHysteresis() {
     // Read register data
     // '#/registers/configuration' > 'configuration'

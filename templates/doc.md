@@ -7,12 +7,10 @@ description: >
 ---
 
 ## Registers
-{% for register in registers %}
-{% for key in register.keys() %}
+{% for key,register in registers|dictsort %}
 
-### {{ register[key].title }}
-{{ register[key].description }}
-{% endfor %}
+### {{ register.title }}
+{{ register.description }}
 {% endfor %}
 
 ## License

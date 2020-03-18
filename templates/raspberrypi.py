@@ -81,9 +81,8 @@ def _swap_endian(val):
 {% endif %}
 
 {# Add signing function if needed #}
-{% for register in registers %}
-{% for key in register.keys() %}
-{% if register[key].signed %}
+{% for key,register in registers|dictsort %}
+{% if register.signed %}
 {# Optionally import class #}
 {% if template.sign is sameas false %}
 def _sign(val, length):
@@ -97,7 +96,6 @@ def _sign(val, length):
 {% endif %}
 {% endif %}
 {% endfor %}
-{% endfor %}
 
 class {{ info.title }}:
     """
@@ -106,10 +104,8 @@ class {{ info.title }}:
     {% if i2c.address is number %}
     device_address = {{i2c.address}}
     {% endif %}
-    {% for register in registers %}
-    {% for key in register.keys() %}
-    REGISTER_{{key.upper()}} = {{register[key].address}}
-    {% endfor %}
+    {% for key,register in registers|dictsort %}
+    REGISTER_{{key.upper()}} = {{register.address}}
     {% endfor %}
 
     {% if i2c.address is iterable and i2c.address is not string %}
@@ -123,18 +119,17 @@ class {{ info.title }}:
         self.bus = smbus.SMBus(1)
     {% endif %}
 
-    {% for register in registers -%}
-    {% for key in register.keys() %}
+    {% for key,register in registers|dictsort %}
     def get_{{key.lower()}}(self):
         """
-{{utils.pad_string("        ", register[key].description)}}
+{{utils.pad_string("        ", register.description)}}
         """
-        {% if register[key].length <= 8 %}
+        {% if register.length <= 8 %}
         val = self.bus.read_byte_data(
             self.device_address,
             self.REGISTER_{{key.upper()}}
         )
-        {% elif register[key].length <= 16 %}
+        {% elif register.length <= 16 %}
         val = self.bus.read_word_data(
             self.device_address,
             self.REGISTER_{{key.upper()}}
@@ -143,26 +138,26 @@ class {{ info.title }}:
         {% if i2c.endian == 'little' %}
         val = _swap_endian(val)
         {% endif %}
-        {% if register[key].signed %}
+        {% if register.signed %}
         # Unsigned > Signed integer
-        val = _sign(val, {{register[key].length}})
+        val = _sign(val, {{register.length}})
         {% endif %}
         return val
 
     def set_{{key.lower()}}(self, data):
         """
-{{utils.pad_string("        ", register[key].description)}}
+{{utils.pad_string("        ", register.description)}}
         """
         {% if i2c.endian == 'little' %}
         data = _swap_endian(data)
         {% endif %}
-        {% if register[key].length <= 8 %}
+        {% if register.length <= 8 %}
         self.bus.write_byte_data(
             self.device_address,
             self.REGISTER_{{key.upper()}},
             data
         )
-        {% elif register[key].length <= 16 %}
+        {% elif register.length <= 16 %}
         self.bus.write_word_data(
             self.device_address,
             self.REGISTER_{{key.upper()}},
@@ -170,7 +165,6 @@ class {{ info.title }}:
         )
         {% endif %}
     {% endfor %}
-    {%- endfor %}
 
     {% for field in fields %}
     {% for key in field.keys() %}

@@ -26,18 +26,18 @@
 #include "LSM303D.h"
 #define DEVICE_ADDRESS 29
 
-#define REGISTER_ACCELEROMETERX_LOW 168
 #define REGISTER_ACCELEROMETERX_HIGH 169
-#define REGISTER_ACCELEROMETERY_LOW 170
+#define REGISTER_ACCELEROMETERX_LOW 168
 #define REGISTER_ACCELEROMETERY_HIGH 171
-#define REGISTER_ACCELEROMETERZ_LOW 172
+#define REGISTER_ACCELEROMETERY_LOW 170
 #define REGISTER_ACCELEROMETERZ_HIGH 173
-#define REGISTER_MAGNETOMETERX_LOW 136
+#define REGISTER_ACCELEROMETERZ_LOW 172
 #define REGISTER_MAGNETOMETERX_HIGH 137
-#define REGISTER_MAGNETOMETERY_LOW 138
+#define REGISTER_MAGNETOMETERX_LOW 136
 #define REGISTER_MAGNETOMETERY_HIGH 139
-#define REGISTER_MAGNETOMETERZ_LOW 140
+#define REGISTER_MAGNETOMETERY_LOW 138
 #define REGISTER_MAGNETOMETERZ_HIGH 141
+#define REGISTER_MAGNETOMETERZ_LOW 140
 
 // Provide an I2C connect function, return status
 int lsm303d_init(int (*connect)(uint8_t)) {
@@ -45,29 +45,6 @@ int lsm303d_init(int (*connect)(uint8_t)) {
     if (connect(DEVICE_ADDRESS) != 0) {
         return -1;
     }
-}
-
-int lsm303d_readAccelerometerX_Low(
-    uint8_t* val,
-    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (read(DEVICE_ADDRESS, REGISTER_ACCELEROMETERX_LOW, val, 1) != 0) {
-        return -2;
-    }
-    return 0;
-}
-
-int lsm303d_writeAccelerometerX_Low(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_ACCELEROMETERX_LOW, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
 }
 
 int lsm303d_readAccelerometerX_High(
@@ -91,32 +68,28 @@ int lsm303d_writeAccelerometerX_High(
         return -1;
     }
     return 0;
-}
-
-int lsm303d_readAccelerometerY_Low(
+}int lsm303d_readAccelerometerX_Low(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
     if (val == NULL) {
         return -1; // Need to provide a valid value pointer
     }
-    if (read(DEVICE_ADDRESS, REGISTER_ACCELEROMETERY_LOW, val, 1) != 0) {
+    if (read(DEVICE_ADDRESS, REGISTER_ACCELEROMETERX_LOW, val, 1) != 0) {
         return -2;
     }
     return 0;
 }
 
-int lsm303d_writeAccelerometerY_Low(
+int lsm303d_writeAccelerometerX_Low(
     uint8_t* data,
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
-    if (write(DEVICE_ADDRESS, REGISTER_ACCELEROMETERY_LOW, data, 1) != 0) {
+    if (write(DEVICE_ADDRESS, REGISTER_ACCELEROMETERX_LOW, data, 1) != 0) {
         return -1;
     }
     return 0;
-}
-
-int lsm303d_readAccelerometerY_High(
+}int lsm303d_readAccelerometerY_High(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -137,32 +110,28 @@ int lsm303d_writeAccelerometerY_High(
         return -1;
     }
     return 0;
-}
-
-int lsm303d_readAccelerometerZ_Low(
+}int lsm303d_readAccelerometerY_Low(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
     if (val == NULL) {
         return -1; // Need to provide a valid value pointer
     }
-    if (read(DEVICE_ADDRESS, REGISTER_ACCELEROMETERZ_LOW, val, 1) != 0) {
+    if (read(DEVICE_ADDRESS, REGISTER_ACCELEROMETERY_LOW, val, 1) != 0) {
         return -2;
     }
     return 0;
 }
 
-int lsm303d_writeAccelerometerZ_Low(
+int lsm303d_writeAccelerometerY_Low(
     uint8_t* data,
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
-    if (write(DEVICE_ADDRESS, REGISTER_ACCELEROMETERZ_LOW, data, 1) != 0) {
+    if (write(DEVICE_ADDRESS, REGISTER_ACCELEROMETERY_LOW, data, 1) != 0) {
         return -1;
     }
     return 0;
-}
-
-int lsm303d_readAccelerometerZ_High(
+}int lsm303d_readAccelerometerZ_High(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -183,32 +152,28 @@ int lsm303d_writeAccelerometerZ_High(
         return -1;
     }
     return 0;
-}
-
-int lsm303d_readMagnetometerX_Low(
+}int lsm303d_readAccelerometerZ_Low(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
     if (val == NULL) {
         return -1; // Need to provide a valid value pointer
     }
-    if (read(DEVICE_ADDRESS, REGISTER_MAGNETOMETERX_LOW, val, 1) != 0) {
+    if (read(DEVICE_ADDRESS, REGISTER_ACCELEROMETERZ_LOW, val, 1) != 0) {
         return -2;
     }
     return 0;
 }
 
-int lsm303d_writeMagnetometerX_Low(
+int lsm303d_writeAccelerometerZ_Low(
     uint8_t* data,
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
-    if (write(DEVICE_ADDRESS, REGISTER_MAGNETOMETERX_LOW, data, 1) != 0) {
+    if (write(DEVICE_ADDRESS, REGISTER_ACCELEROMETERZ_LOW, data, 1) != 0) {
         return -1;
     }
     return 0;
-}
-
-int lsm303d_readMagnetometerX_High(
+}int lsm303d_readMagnetometerX_High(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -229,32 +194,28 @@ int lsm303d_writeMagnetometerX_High(
         return -1;
     }
     return 0;
-}
-
-int lsm303d_readMagnetometerY_Low(
+}int lsm303d_readMagnetometerX_Low(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
     if (val == NULL) {
         return -1; // Need to provide a valid value pointer
     }
-    if (read(DEVICE_ADDRESS, REGISTER_MAGNETOMETERY_LOW, val, 1) != 0) {
+    if (read(DEVICE_ADDRESS, REGISTER_MAGNETOMETERX_LOW, val, 1) != 0) {
         return -2;
     }
     return 0;
 }
 
-int lsm303d_writeMagnetometerY_Low(
+int lsm303d_writeMagnetometerX_Low(
     uint8_t* data,
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
-    if (write(DEVICE_ADDRESS, REGISTER_MAGNETOMETERY_LOW, data, 1) != 0) {
+    if (write(DEVICE_ADDRESS, REGISTER_MAGNETOMETERX_LOW, data, 1) != 0) {
         return -1;
     }
     return 0;
-}
-
-int lsm303d_readMagnetometerY_High(
+}int lsm303d_readMagnetometerY_High(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -275,9 +236,49 @@ int lsm303d_writeMagnetometerY_High(
         return -1;
     }
     return 0;
+}int lsm303d_readMagnetometerY_Low(
+    uint8_t* val,
+    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
+) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (read(DEVICE_ADDRESS, REGISTER_MAGNETOMETERY_LOW, val, 1) != 0) {
+        return -2;
+    }
+    return 0;
 }
 
-int lsm303d_readMagnetometerZ_Low(
+int lsm303d_writeMagnetometerY_Low(
+    uint8_t* data,
+    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
+) {
+    if (write(DEVICE_ADDRESS, REGISTER_MAGNETOMETERY_LOW, data, 1) != 0) {
+        return -1;
+    }
+    return 0;
+}int lsm303d_readMagnetometerZ_High(
+    uint8_t* val,
+    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
+) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (read(DEVICE_ADDRESS, REGISTER_MAGNETOMETERZ_HIGH, val, 1) != 0) {
+        return -2;
+    }
+    return 0;
+}
+
+int lsm303d_writeMagnetometerZ_High(
+    uint8_t* data,
+    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
+) {
+    if (write(DEVICE_ADDRESS, REGISTER_MAGNETOMETERZ_HIGH, data, 1) != 0) {
+        return -1;
+    }
+    return 0;
+}int lsm303d_readMagnetometerZ_Low(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -299,31 +300,6 @@ int lsm303d_writeMagnetometerZ_Low(
     }
     return 0;
 }
-
-int lsm303d_readMagnetometerZ_High(
-    uint8_t* val,
-    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (read(DEVICE_ADDRESS, REGISTER_MAGNETOMETERZ_HIGH, val, 1) != 0) {
-        return -2;
-    }
-    return 0;
-}
-
-int lsm303d_writeMagnetometerZ_High(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_MAGNETOMETERZ_HIGH, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}
-
-
 
 void lsm303d_acceleration_xplane(
     short* val,

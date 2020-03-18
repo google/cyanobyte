@@ -29,10 +29,8 @@
 {%- endmacro %}
 
 {% macro registerSize(registers, name) %}
-{% for reg in registers %}
-{% for key in reg.keys() %}
-{% if key == name %}{{numtype(reg[key].length)}}{% endif %}
-{% endfor %}
+{% for key in registers.keys() %}
+{% if key == name %}{{numtype(registers[key].length)}}{% endif %}
 {% endfor %}
 {% endmacro %}
 

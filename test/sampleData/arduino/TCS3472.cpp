@@ -26,11 +26,11 @@
 #include "TCS3472.h"
 #define DEVICE_ADDRESS 41
 
-#define REGISTER_ENABLE 128
-#define REGISTER_CLEAR 180
-#define REGISTER_RED 182
-#define REGISTER_GREEN 184
 #define REGISTER_BLUE 186
+#define REGISTER_CLEAR 180
+#define REGISTER_ENABLE 128
+#define REGISTER_GREEN 184
+#define REGISTER_RED 182
 
 TCS3472::TCS3472(TwoWire& wire) :
     _wire(&wire)
@@ -43,139 +43,6 @@ void TCS3472::begin() {
 
 void TCS3472::end() {
     _wire->end();
-}
-
-uint8_t TCS3472::readenable() {
-    uint8_t datum;
-    uint8_t value;
-    _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_ENABLE);
-    if (_wire->endTransmission(false) != 0) {
-        return -1;
-    }
-
-    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
-        return 0;
-    }
-
-    datum = _wire->read();
-    value = value << 8 | datum;
-
-    return value;
-}
-
-int TCS3472::writeenable(uint8_t data) {
-    _wire->beginTransmission(DEVICE_ADDRESS);
-    // Put our data into uint8_t buffer
-    uint8_t buffer[2] = { (uint8_t) REGISTER_ENABLE };
-    buffer[1] = (data >> 0) & 0xFF;
-    _wire->write(buffer, 2);
-    if (_wire->endTransmission() != 0) {
-        return 0;
-    }
-    return 1;
-}
-
-uint16_t TCS3472::readclear() {
-    uint8_t datum;
-    uint16_t value;
-    _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_CLEAR);
-    if (_wire->endTransmission(false) != 0) {
-        return -1;
-    }
-
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
-        return 0;
-    }
-
-    datum = _wire->read();
-    value = value << 8 | datum;
-    datum = _wire->read();
-    value = value << 8 | datum;
-
-    return value;
-}
-
-int TCS3472::writeclear(uint16_t data) {
-    _wire->beginTransmission(DEVICE_ADDRESS);
-    // Put our data into uint8_t buffer
-    uint8_t buffer[3] = { (uint8_t) REGISTER_CLEAR };
-    buffer[1] = (data >> 8) & 0xFF;
-    buffer[2] = (data >> 0) & 0xFF;
-    _wire->write(buffer, 3);
-    if (_wire->endTransmission() != 0) {
-        return 0;
-    }
-    return 1;
-}
-
-uint16_t TCS3472::readred() {
-    uint8_t datum;
-    uint16_t value;
-    _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_RED);
-    if (_wire->endTransmission(false) != 0) {
-        return -1;
-    }
-
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
-        return 0;
-    }
-
-    datum = _wire->read();
-    value = value << 8 | datum;
-    datum = _wire->read();
-    value = value << 8 | datum;
-
-    return value;
-}
-
-int TCS3472::writered(uint16_t data) {
-    _wire->beginTransmission(DEVICE_ADDRESS);
-    // Put our data into uint8_t buffer
-    uint8_t buffer[3] = { (uint8_t) REGISTER_RED };
-    buffer[1] = (data >> 8) & 0xFF;
-    buffer[2] = (data >> 0) & 0xFF;
-    _wire->write(buffer, 3);
-    if (_wire->endTransmission() != 0) {
-        return 0;
-    }
-    return 1;
-}
-
-uint16_t TCS3472::readgreen() {
-    uint8_t datum;
-    uint16_t value;
-    _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_GREEN);
-    if (_wire->endTransmission(false) != 0) {
-        return -1;
-    }
-
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
-        return 0;
-    }
-
-    datum = _wire->read();
-    value = value << 8 | datum;
-    datum = _wire->read();
-    value = value << 8 | datum;
-
-    return value;
-}
-
-int TCS3472::writegreen(uint16_t data) {
-    _wire->beginTransmission(DEVICE_ADDRESS);
-    // Put our data into uint8_t buffer
-    uint8_t buffer[3] = { (uint8_t) REGISTER_GREEN };
-    buffer[1] = (data >> 8) & 0xFF;
-    buffer[2] = (data >> 0) & 0xFF;
-    _wire->write(buffer, 3);
-    if (_wire->endTransmission() != 0) {
-        return 0;
-    }
-    return 1;
 }
 
 uint16_t TCS3472::readblue() {
@@ -210,9 +77,132 @@ int TCS3472::writeblue(uint16_t data) {
         return 0;
     }
     return 1;
+}uint16_t TCS3472::readclear() {
+    uint8_t datum;
+    uint16_t value;
+    _wire->beginTransmission(DEVICE_ADDRESS);
+    _wire->write(REGISTER_CLEAR);
+    if (_wire->endTransmission(false) != 0) {
+        return -1;
+    }
+
+    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+        return 0;
+    }
+
+    datum = _wire->read();
+    value = value << 8 | datum;
+    datum = _wire->read();
+    value = value << 8 | datum;
+
+    return value;
 }
 
+int TCS3472::writeclear(uint16_t data) {
+    _wire->beginTransmission(DEVICE_ADDRESS);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[3] = { (uint8_t) REGISTER_CLEAR };
+    buffer[1] = (data >> 8) & 0xFF;
+    buffer[2] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 3);
+    if (_wire->endTransmission() != 0) {
+        return 0;
+    }
+    return 1;
+}uint8_t TCS3472::readenable() {
+    uint8_t datum;
+    uint8_t value;
+    _wire->beginTransmission(DEVICE_ADDRESS);
+    _wire->write(REGISTER_ENABLE);
+    if (_wire->endTransmission(false) != 0) {
+        return -1;
+    }
 
+    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
+        return 0;
+    }
+
+    datum = _wire->read();
+    value = value << 8 | datum;
+
+    return value;
+}
+
+int TCS3472::writeenable(uint8_t data) {
+    _wire->beginTransmission(DEVICE_ADDRESS);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[2] = { (uint8_t) REGISTER_ENABLE };
+    buffer[1] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 2);
+    if (_wire->endTransmission() != 0) {
+        return 0;
+    }
+    return 1;
+}uint16_t TCS3472::readgreen() {
+    uint8_t datum;
+    uint16_t value;
+    _wire->beginTransmission(DEVICE_ADDRESS);
+    _wire->write(REGISTER_GREEN);
+    if (_wire->endTransmission(false) != 0) {
+        return -1;
+    }
+
+    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+        return 0;
+    }
+
+    datum = _wire->read();
+    value = value << 8 | datum;
+    datum = _wire->read();
+    value = value << 8 | datum;
+
+    return value;
+}
+
+int TCS3472::writegreen(uint16_t data) {
+    _wire->beginTransmission(DEVICE_ADDRESS);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[3] = { (uint8_t) REGISTER_GREEN };
+    buffer[1] = (data >> 8) & 0xFF;
+    buffer[2] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 3);
+    if (_wire->endTransmission() != 0) {
+        return 0;
+    }
+    return 1;
+}uint16_t TCS3472::readred() {
+    uint8_t datum;
+    uint16_t value;
+    _wire->beginTransmission(DEVICE_ADDRESS);
+    _wire->write(REGISTER_RED);
+    if (_wire->endTransmission(false) != 0) {
+        return -1;
+    }
+
+    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+        return 0;
+    }
+
+    datum = _wire->read();
+    value = value << 8 | datum;
+    datum = _wire->read();
+    value = value << 8 | datum;
+
+    return value;
+}
+
+int TCS3472::writered(uint16_t data) {
+    _wire->beginTransmission(DEVICE_ADDRESS);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[3] = { (uint8_t) REGISTER_RED };
+    buffer[1] = (data >> 8) & 0xFF;
+    buffer[2] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 3);
+    if (_wire->endTransmission() != 0) {
+        return 0;
+    }
+    return 1;
+}
 uint8_t TCS3472::getinit() {
     // Read register data
     // '#/registers/enable' > 'enable'

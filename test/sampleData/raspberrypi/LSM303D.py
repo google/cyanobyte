@@ -31,44 +31,23 @@ class LSM303D:
 
     """
     device_address = 29
-    REGISTER_ACCELEROMETERX_LOW = 168
     REGISTER_ACCELEROMETERX_HIGH = 169
-    REGISTER_ACCELEROMETERY_LOW = 170
+    REGISTER_ACCELEROMETERX_LOW = 168
     REGISTER_ACCELEROMETERY_HIGH = 171
-    REGISTER_ACCELEROMETERZ_LOW = 172
+    REGISTER_ACCELEROMETERY_LOW = 170
     REGISTER_ACCELEROMETERZ_HIGH = 173
-    REGISTER_MAGNETOMETERX_LOW = 136
+    REGISTER_ACCELEROMETERZ_LOW = 172
     REGISTER_MAGNETOMETERX_HIGH = 137
-    REGISTER_MAGNETOMETERY_LOW = 138
+    REGISTER_MAGNETOMETERX_LOW = 136
     REGISTER_MAGNETOMETERY_HIGH = 139
-    REGISTER_MAGNETOMETERZ_LOW = 140
+    REGISTER_MAGNETOMETERY_LOW = 138
     REGISTER_MAGNETOMETERZ_HIGH = 141
+    REGISTER_MAGNETOMETERZ_LOW = 140
 
     def __init__(self):
         # Initialize connection to peripheral
         self.bus = smbus.SMBus(1)
 
-    def get_accelerometerx_low(self):
-        """
-        Raw accelerometer data on X plane
-
-        """
-        val = self.bus.read_byte_data(
-            self.device_address,
-            self.REGISTER_ACCELEROMETERX_LOW
-        )
-        return val
-
-    def set_accelerometerx_low(self, data):
-        """
-        Raw accelerometer data on X plane
-
-        """
-        self.bus.write_byte_data(
-            self.device_address,
-            self.REGISTER_ACCELEROMETERX_LOW,
-            data
-        )
     def get_accelerometerx_high(self):
         """
         Raw accelerometer data on X plane
@@ -90,25 +69,25 @@ class LSM303D:
             self.REGISTER_ACCELEROMETERX_HIGH,
             data
         )
-    def get_accelerometery_low(self):
+    def get_accelerometerx_low(self):
         """
-        Raw accelerometer data on Y plane
+        Raw accelerometer data on X plane
 
         """
         val = self.bus.read_byte_data(
             self.device_address,
-            self.REGISTER_ACCELEROMETERY_LOW
+            self.REGISTER_ACCELEROMETERX_LOW
         )
         return val
 
-    def set_accelerometery_low(self, data):
+    def set_accelerometerx_low(self, data):
         """
-        Raw accelerometer data on Y plane
+        Raw accelerometer data on X plane
 
         """
         self.bus.write_byte_data(
             self.device_address,
-            self.REGISTER_ACCELEROMETERY_LOW,
+            self.REGISTER_ACCELEROMETERX_LOW,
             data
         )
     def get_accelerometery_high(self):
@@ -132,25 +111,25 @@ class LSM303D:
             self.REGISTER_ACCELEROMETERY_HIGH,
             data
         )
-    def get_accelerometerz_low(self):
+    def get_accelerometery_low(self):
         """
-        Raw accelerometer data on Z plane
+        Raw accelerometer data on Y plane
 
         """
         val = self.bus.read_byte_data(
             self.device_address,
-            self.REGISTER_ACCELEROMETERZ_LOW
+            self.REGISTER_ACCELEROMETERY_LOW
         )
         return val
 
-    def set_accelerometerz_low(self, data):
+    def set_accelerometery_low(self, data):
         """
-        Raw accelerometer data on Z plane
+        Raw accelerometer data on Y plane
 
         """
         self.bus.write_byte_data(
             self.device_address,
-            self.REGISTER_ACCELEROMETERZ_LOW,
+            self.REGISTER_ACCELEROMETERY_LOW,
             data
         )
     def get_accelerometerz_high(self):
@@ -174,25 +153,25 @@ class LSM303D:
             self.REGISTER_ACCELEROMETERZ_HIGH,
             data
         )
-    def get_magnetometerx_low(self):
+    def get_accelerometerz_low(self):
         """
-        Raw magnetometer data on X plane
+        Raw accelerometer data on Z plane
 
         """
         val = self.bus.read_byte_data(
             self.device_address,
-            self.REGISTER_MAGNETOMETERX_LOW
+            self.REGISTER_ACCELEROMETERZ_LOW
         )
         return val
 
-    def set_magnetometerx_low(self, data):
+    def set_accelerometerz_low(self, data):
         """
-        Raw magnetometer data on X plane
+        Raw accelerometer data on Z plane
 
         """
         self.bus.write_byte_data(
             self.device_address,
-            self.REGISTER_MAGNETOMETERX_LOW,
+            self.REGISTER_ACCELEROMETERZ_LOW,
             data
         )
     def get_magnetometerx_high(self):
@@ -216,25 +195,25 @@ class LSM303D:
             self.REGISTER_MAGNETOMETERX_HIGH,
             data
         )
-    def get_magnetometery_low(self):
+    def get_magnetometerx_low(self):
         """
-        Raw magnetometer data on Y plane
+        Raw magnetometer data on X plane
 
         """
         val = self.bus.read_byte_data(
             self.device_address,
-            self.REGISTER_MAGNETOMETERY_LOW
+            self.REGISTER_MAGNETOMETERX_LOW
         )
         return val
 
-    def set_magnetometery_low(self, data):
+    def set_magnetometerx_low(self, data):
         """
-        Raw magnetometer data on Y plane
+        Raw magnetometer data on X plane
 
         """
         self.bus.write_byte_data(
             self.device_address,
-            self.REGISTER_MAGNETOMETERY_LOW,
+            self.REGISTER_MAGNETOMETERX_LOW,
             data
         )
     def get_magnetometery_high(self):
@@ -258,25 +237,25 @@ class LSM303D:
             self.REGISTER_MAGNETOMETERY_HIGH,
             data
         )
-    def get_magnetometerz_low(self):
+    def get_magnetometery_low(self):
         """
-        Raw magnetometer data on Z plane
+        Raw magnetometer data on Y plane
 
         """
         val = self.bus.read_byte_data(
             self.device_address,
-            self.REGISTER_MAGNETOMETERZ_LOW
+            self.REGISTER_MAGNETOMETERY_LOW
         )
         return val
 
-    def set_magnetometerz_low(self, data):
+    def set_magnetometery_low(self, data):
         """
-        Raw magnetometer data on Z plane
+        Raw magnetometer data on Y plane
 
         """
         self.bus.write_byte_data(
             self.device_address,
-            self.REGISTER_MAGNETOMETERZ_LOW,
+            self.REGISTER_MAGNETOMETERY_LOW,
             data
         )
     def get_magnetometerz_high(self):
@@ -298,6 +277,27 @@ class LSM303D:
         self.bus.write_byte_data(
             self.device_address,
             self.REGISTER_MAGNETOMETERZ_HIGH,
+            data
+        )
+    def get_magnetometerz_low(self):
+        """
+        Raw magnetometer data on Z plane
+
+        """
+        val = self.bus.read_byte_data(
+            self.device_address,
+            self.REGISTER_MAGNETOMETERZ_LOW
+        )
+        return val
+
+    def set_magnetometerz_low(self, data):
+        """
+        Raw magnetometer data on Z plane
+
+        """
+        self.bus.write_byte_data(
+            self.device_address,
+            self.REGISTER_MAGNETOMETERZ_LOW,
             data
         )
 

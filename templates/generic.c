@@ -52,9 +52,8 @@ static short _swap_endian(short val) {
 {% endif %}
 
 {# Add signing function if needed #}
-{% for register in registers %}
-{% for key in register.keys() %}
-{% if register[key].signed %}
+{% for key,register in registers|dictsort %}
+{% if register.signed %}
 {% if template.sign is sameas false %}
 static short _sign(short val, short length) {
     // Convert unsigned integer to signed integer
@@ -67,17 +66,14 @@ static short _sign(short val, short length) {
 {% endif %}
 {% endif %}
 {% endfor %}
-{% endfor %}
 
 #include "{{info.title}}.h"
 {% if i2c.address is number %}
 #define DEVICE_ADDRESS {{i2c.address}}
 {% endif %}
 
-{% for register in registers %}
-{% for key in register.keys() %}
-#define REGISTER_{{key.upper()}} {{register[key].address}}
-{% endfor %}
+{% for key,register in registers|dictsort %}
+#define REGISTER_{{key.upper()}} {{register.address}}
 {% endfor %}
 
 // Provide an I2C connect function, return status
@@ -100,12 +96,11 @@ int {{info.title.lower()}}_init(int (*connect)(uint8_t)) {
 }
 {% endif %}
 
-{% for register in registers -%}
-{% for key in register.keys() %}
-{% set length = (register[key].length / 8) | round(1, 'ceil') | int %}
+{% for key,register in registers|dictsort -%}
+{% set length = (register.length / 8) | round(1, 'ceil') | int %}
 int {{info.title.lower()}}_read{{key}}(
-    {{cpp.numtype(register[key].length)}}* val,
-    int (*read)(uint8_t, uint8_t, {{cpp.numtype(register[key].length)}}*, uint8_t)
+    {{cpp.numtype(register.length)}}* val,
+    int (*read)(uint8_t, uint8_t, {{cpp.numtype(register.length)}}*, uint8_t)
 ) {
     if (val == NULL) {
         return -1; // Need to provide a valid value pointer
@@ -117,8 +112,8 @@ int {{info.title.lower()}}_read{{key}}(
 }
 
 int {{info.title.lower()}}_write{{key}}(
-    {{cpp.numtype(register[key].length)}}* data,
-    int (*write)(uint8_t, uint8_t, {{cpp.numtype(register[key].length)}}*, uint8_t)
+    {{cpp.numtype(register.length)}}* data,
+    int (*write)(uint8_t, uint8_t, {{cpp.numtype(register.length)}}*, uint8_t)
 ) {
     if (write(DEVICE_ADDRESS, REGISTER_{{key.upper()}}, data, {{length}}) != 0) {
         return -1;
@@ -126,7 +121,6 @@ int {{info.title.lower()}}_write{{key}}(
     return 0;
 }
 
-{% endfor %}
 {%- endfor %}
 
 {% for field in fields %}

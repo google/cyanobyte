@@ -37,6 +37,26 @@ typedef enum digitalOut digitalOut_t;
 int mcp4725_init(int (*connect)(uint8_t));
    
 /**
+  * If EEPROM is set, the saved voltage output will
+ * be loaded from power-on.
+
+*/
+int mcp4725_readEEPROM(
+    uint16_t* val,
+    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
+);
+
+/**
+ * If EEPROM is set, the saved voltage output will
+ * be loaded from power-on.
+
+ */
+int mcp4725_writeEEPROM(
+    uint16_t* data,
+    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
+    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
+);   
+/**
   * VOut = (Vcc * value) / 4096
  * The output is a range between 0 and Vcc with
  * steps of Vcc/4096.
@@ -60,28 +80,6 @@ int mcp4725_writeVOut(
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
 );
-   
-/**
-  * If EEPROM is set, the saved voltage output will
- * be loaded from power-on.
-
-*/
-int mcp4725_readEEPROM(
-    uint16_t* val,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
-);
-
-/**
- * If EEPROM is set, the saved voltage output will
- * be loaded from power-on.
-
- */
-int mcp4725_writeEEPROM(
-    uint16_t* data,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-);
-
 /**
  * Only allows you to send fully on or off
 

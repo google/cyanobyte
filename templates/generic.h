@@ -78,26 +78,24 @@ int {{info.title.lower()}}_init(deviceAddress_t address, int (*connect)(uint8_t)
 {% else %}
 int {{info.title.lower()}}_init(int (*connect)(uint8_t));
 {% endif %}
-{% for register in registers -%}
-{% for key in register.keys() %}
-{% set length = (register[key].length / 8) | round(1, 'ceil') | int %}   
+{% for key,register in registers|dictsort -%}
+{% set length = (register.length / 8) | round(1, 'ceil') | int %}   
 /**
- {{utils.pad_string(" * ", register[key].description)}}
+ {{utils.pad_string(" * ", register.description)}}
 */
 int {{info.title.lower()}}_read{{key}}(
-    {{cpp.numtype(register[key].length)}}* val,
-    int (*read)(uint8_t, uint8_t, {{cpp.numtype(register[key].length)}}*, uint8_t)
+    {{cpp.numtype(register.length)}}* val,
+    int (*read)(uint8_t, uint8_t, {{cpp.numtype(register.length)}}*, uint8_t)
 );
 
 /**
-{{utils.pad_string(" * ", register[key].description)}}
+{{utils.pad_string(" * ", register.description)}}
  */
 int {{info.title.lower()}}_write{{key}}(
-    {{cpp.numtype(register[key].length)}}* data,
-    int (*read)(uint8_t, uint8_t, {{cpp.numtype(register[key].length)}}*, uint8_t),
-    int (*write)(uint8_t, uint8_t, {{cpp.numtype(register[key].length)}}*, uint8_t)
+    {{cpp.numtype(register.length)}}* data,
+    int (*read)(uint8_t, uint8_t, {{cpp.numtype(register.length)}}*, uint8_t),
+    int (*write)(uint8_t, uint8_t, {{cpp.numtype(register.length)}}*, uint8_t)
 );
-{% endfor %}
 {%- endfor %}
 
 {% for field in fields %}

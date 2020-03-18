@@ -52,9 +52,8 @@ short _swap_endian(val) {
 {% endif %}
 
 {# Add signing function if needed #}
-{% for register in registers %}
-{% for key in register.keys() %}
-{% if register[key].signed %}
+{% for key,register in registers|dictsort %}
+{% if register.signed %}
 {% if template.sign is sameas false %}
 short _sign(val, length) {
     // Convert unsigned integer to signed integer
@@ -67,17 +66,14 @@ short _sign(val, length) {
 {% endif %}
 {% endif %}
 {% endfor %}
-{% endfor %}
 
 #include "{{info.title}}.h"
 {% if i2c.address is number %}
 #define DEVICE_ADDRESS {{i2c.address}}
 {% endif %}
 
-{% for register in registers %}
-{% for key in register.keys() %}
-#define REGISTER_{{key.upper()}} {{register[key].address}}
-{% endfor %}
+{% for key,register in registers|dictsort %}
+#define REGISTER_{{key.upper()}} {{register.address}}
 {% endfor %}
 
 static int i2c_bus = 0; // Pointer to bus
@@ -107,10 +103,9 @@ void {{info.title.lower()}}_terminate() {
     k_i2c_terminate(&i2c_bus);
 }
 
-{% for register in registers -%}
-{% for key in register.keys() %}
-{% set length = (register[key].length / 8) | round(1, 'ceil') | int %}
-int {{info.title.lower()}}_read{{key}}({{cpp.numtype(register[key].length)}}* val) {
+{% for key,register in registers|dictsort -%}
+{% set length = (register.length / 8) | round(1, 'ceil') | int %}
+int {{info.title.lower()}}_read{{key}}({{cpp.numtype(register.length)}}* val) {
     if (val == NULL) {
         return -1; // Need to provide a valid value pointer
     }
@@ -120,7 +115,7 @@ int {{info.title.lower()}}_read{{key}}({{cpp.numtype(register[key].length)}}* va
     return 0;
 }
 
-int {{info.title.lower()}}_write{{key}}({{cpp.numtype(register[key].length)}}* data) {
+int {{info.title.lower()}}_write{{key}}({{cpp.numtype(register.length)}}* data) {
     // Put our data into uint8_t buffer
     uint8_t buffer[{{length + 1}}] = { (uint8_t) REGISTER_{{key.upper()}} };
     {% for n in range(length) %}
@@ -133,7 +128,6 @@ int {{info.title.lower()}}_write{{key}}({{cpp.numtype(register[key].length)}}* d
     return 0;
 }
 
-{% endfor %}
 {%- endfor %}
 
 {% for field in fields %}

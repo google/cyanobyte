@@ -36,15 +36,6 @@ class BMP280:
 
     """
     device_address = 119
-    REGISTER_TEMPMSB = 250
-    REGISTER_TEMPLSB = 251
-    REGISTER_TEMPXLSB = 252
-    REGISTER_DIGT1 = 136
-    REGISTER_DIGT2 = 138
-    REGISTER_DIGT3 = 140
-    REGISTER_PRESSUREMSB = 247
-    REGISTER_PRESSURELSB = 248
-    REGISTER_PRESSUREXLSB = 249
     REGISTER_DIGP1 = 142
     REGISTER_DIGP2 = 144
     REGISTER_DIGP3 = 146
@@ -54,202 +45,20 @@ class BMP280:
     REGISTER_DIGP7 = 154
     REGISTER_DIGP8 = 156
     REGISTER_DIGP9 = 158
+    REGISTER_DIGT1 = 136
+    REGISTER_DIGT2 = 138
+    REGISTER_DIGT3 = 140
+    REGISTER_PRESSURELSB = 248
+    REGISTER_PRESSUREMSB = 247
+    REGISTER_PRESSUREXLSB = 249
+    REGISTER_TEMPLSB = 251
+    REGISTER_TEMPMSB = 250
+    REGISTER_TEMPXLSB = 252
 
     def __init__(self):
         # Initialize connection to peripheral
         self.bus = smbus.SMBus(1)
 
-    def get_tempmsb(self):
-        """
-        Part 1 of temperature
-
-        """
-        val = self.bus.read_byte_data(
-            self.device_address,
-            self.REGISTER_TEMPMSB
-        )
-        return val
-
-    def set_tempmsb(self, data):
-        """
-        Part 1 of temperature
-
-        """
-        self.bus.write_byte_data(
-            self.device_address,
-            self.REGISTER_TEMPMSB,
-            data
-        )
-    def get_templsb(self):
-        """
-        Part 2 of temperature
-
-        """
-        val = self.bus.read_byte_data(
-            self.device_address,
-            self.REGISTER_TEMPLSB
-        )
-        return val
-
-    def set_templsb(self, data):
-        """
-        Part 2 of temperature
-
-        """
-        self.bus.write_byte_data(
-            self.device_address,
-            self.REGISTER_TEMPLSB,
-            data
-        )
-    def get_tempxlsb(self):
-        """
-        Final part of temperature
-
-        """
-        val = self.bus.read_byte_data(
-            self.device_address,
-            self.REGISTER_TEMPXLSB
-        )
-        return val
-
-    def set_tempxlsb(self, data):
-        """
-        Final part of temperature
-
-        """
-        self.bus.write_byte_data(
-            self.device_address,
-            self.REGISTER_TEMPXLSB,
-            data
-        )
-    def get_digt1(self):
-        """
-        Used for Celcius conversion
-
-        """
-        val = self.bus.read_word_data(
-            self.device_address,
-            self.REGISTER_DIGT1
-        )
-        return val
-
-    def set_digt1(self, data):
-        """
-        Used for Celcius conversion
-
-        """
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_DIGT1,
-            data
-        )
-    def get_digt2(self):
-        """
-        Used for Celcius conversion
-
-        """
-        val = self.bus.read_word_data(
-            self.device_address,
-            self.REGISTER_DIGT2
-        )
-        return val
-
-    def set_digt2(self, data):
-        """
-        Used for Celcius conversion
-
-        """
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_DIGT2,
-            data
-        )
-    def get_digt3(self):
-        """
-        Used for Celcius conversion
-
-        """
-        val = self.bus.read_word_data(
-            self.device_address,
-            self.REGISTER_DIGT3
-        )
-        # Unsigned > Signed integer
-        val = _sign(val, 16)
-        return val
-
-    def set_digt3(self, data):
-        """
-        Used for Celcius conversion
-
-        """
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_DIGT3,
-            data
-        )
-    def get_pressuremsb(self):
-        """
-        Part 1 of Pressure
-
-        """
-        val = self.bus.read_byte_data(
-            self.device_address,
-            self.REGISTER_PRESSUREMSB
-        )
-        return val
-
-    def set_pressuremsb(self, data):
-        """
-        Part 1 of Pressure
-
-        """
-        self.bus.write_byte_data(
-            self.device_address,
-            self.REGISTER_PRESSUREMSB,
-            data
-        )
-    def get_pressurelsb(self):
-        """
-        Part 2 of Pressure
-
-        """
-        val = self.bus.read_byte_data(
-            self.device_address,
-            self.REGISTER_PRESSURELSB
-        )
-        return val
-
-    def set_pressurelsb(self, data):
-        """
-        Part 2 of Pressure
-
-        """
-        self.bus.write_byte_data(
-            self.device_address,
-            self.REGISTER_PRESSURELSB,
-            data
-        )
-    def get_pressurexlsb(self):
-        """
-        Part 3 of Pressure
-
-        """
-        val = self.bus.read_byte_data(
-            self.device_address,
-            self.REGISTER_PRESSUREXLSB
-        )
-        return val
-
-    def set_pressurexlsb(self, data):
-        """
-        Part 3 of Pressure
-
-        """
-        self.bus.write_byte_data(
-            self.device_address,
-            self.REGISTER_PRESSUREXLSB,
-            data
-        )
     def get_digp1(self):
         """
         Used for Pascals conversion
@@ -453,6 +262,197 @@ class BMP280:
         self.bus.write_word_data(
             self.device_address,
             self.REGISTER_DIGP9,
+            data
+        )
+    def get_digt1(self):
+        """
+        Used for Celcius conversion
+
+        """
+        val = self.bus.read_word_data(
+            self.device_address,
+            self.REGISTER_DIGT1
+        )
+        return val
+
+    def set_digt1(self, data):
+        """
+        Used for Celcius conversion
+
+        """
+        self.bus.write_word_data(
+            self.device_address,
+            self.REGISTER_DIGT1,
+            data
+        )
+    def get_digt2(self):
+        """
+        Used for Celcius conversion
+
+        """
+        val = self.bus.read_word_data(
+            self.device_address,
+            self.REGISTER_DIGT2
+        )
+        return val
+
+    def set_digt2(self, data):
+        """
+        Used for Celcius conversion
+
+        """
+        self.bus.write_word_data(
+            self.device_address,
+            self.REGISTER_DIGT2,
+            data
+        )
+    def get_digt3(self):
+        """
+        Used for Celcius conversion
+
+        """
+        val = self.bus.read_word_data(
+            self.device_address,
+            self.REGISTER_DIGT3
+        )
+        # Unsigned > Signed integer
+        val = _sign(val, 16)
+        return val
+
+    def set_digt3(self, data):
+        """
+        Used for Celcius conversion
+
+        """
+        self.bus.write_word_data(
+            self.device_address,
+            self.REGISTER_DIGT3,
+            data
+        )
+    def get_pressurelsb(self):
+        """
+        Part 2 of Pressure
+
+        """
+        val = self.bus.read_byte_data(
+            self.device_address,
+            self.REGISTER_PRESSURELSB
+        )
+        return val
+
+    def set_pressurelsb(self, data):
+        """
+        Part 2 of Pressure
+
+        """
+        self.bus.write_byte_data(
+            self.device_address,
+            self.REGISTER_PRESSURELSB,
+            data
+        )
+    def get_pressuremsb(self):
+        """
+        Part 1 of Pressure
+
+        """
+        val = self.bus.read_byte_data(
+            self.device_address,
+            self.REGISTER_PRESSUREMSB
+        )
+        return val
+
+    def set_pressuremsb(self, data):
+        """
+        Part 1 of Pressure
+
+        """
+        self.bus.write_byte_data(
+            self.device_address,
+            self.REGISTER_PRESSUREMSB,
+            data
+        )
+    def get_pressurexlsb(self):
+        """
+        Part 3 of Pressure
+
+        """
+        val = self.bus.read_byte_data(
+            self.device_address,
+            self.REGISTER_PRESSUREXLSB
+        )
+        return val
+
+    def set_pressurexlsb(self, data):
+        """
+        Part 3 of Pressure
+
+        """
+        self.bus.write_byte_data(
+            self.device_address,
+            self.REGISTER_PRESSUREXLSB,
+            data
+        )
+    def get_templsb(self):
+        """
+        Part 2 of temperature
+
+        """
+        val = self.bus.read_byte_data(
+            self.device_address,
+            self.REGISTER_TEMPLSB
+        )
+        return val
+
+    def set_templsb(self, data):
+        """
+        Part 2 of temperature
+
+        """
+        self.bus.write_byte_data(
+            self.device_address,
+            self.REGISTER_TEMPLSB,
+            data
+        )
+    def get_tempmsb(self):
+        """
+        Part 1 of temperature
+
+        """
+        val = self.bus.read_byte_data(
+            self.device_address,
+            self.REGISTER_TEMPMSB
+        )
+        return val
+
+    def set_tempmsb(self, data):
+        """
+        Part 1 of temperature
+
+        """
+        self.bus.write_byte_data(
+            self.device_address,
+            self.REGISTER_TEMPMSB,
+            data
+        )
+    def get_tempxlsb(self):
+        """
+        Final part of temperature
+
+        """
+        val = self.bus.read_byte_data(
+            self.device_address,
+            self.REGISTER_TEMPXLSB
+        )
+        return val
+
+    def set_tempxlsb(self, data):
+        """
+        Final part of temperature
+
+        """
+        self.bus.write_byte_data(
+            self.device_address,
+            self.REGISTER_TEMPXLSB,
             data
         )
 

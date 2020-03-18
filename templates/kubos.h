@@ -81,19 +81,17 @@ int {{info.title.lower()}}_init(deviceAddress_t address, char* bus_name);
 int {{info.title.lower()}}_init(char* bus_name);
 {% endif %}
 void {{info.title.lower()}}_terminate();
-{% for register in registers -%}
-{% for key in register.keys() %}
-{% set length = (register[key].length / 8) | round(1, 'ceil') | int %}   
+{% for key,register in registers|dictsort -%}
+{% set length = (register.length / 8) | round(1, 'ceil') | int %}
 /**
- {{utils.pad_string(" * ", register[key].description)}}
+ {{utils.pad_string(" * ", register.description)}}
 */
-int {{info.title.lower()}}_read{{key}}({{cpp.numtype(register[key].length)}}* val);
+int {{info.title.lower()}}_read{{key}}({{cpp.numtype(register.length)}}* val);
 
 /**
-{{utils.pad_string(" * ", register[key].description)}}
+{{utils.pad_string(" * ", register.description)}}
  */
-int {{info.title.lower()}}_write{{key}}({{cpp.numtype(register[key].length)}}* data);
-{% endfor %}
+int {{info.title.lower()}}_write{{key}}({{cpp.numtype(register.length)}}* data);
 {%- endfor %}
 
 {% for field in fields %}

@@ -30,8 +30,8 @@ short _swap_endian(val) {
 #include "MCP4725.h"
 #define DEVICE_ADDRESS 98
 
-#define REGISTER_VOUT 64
 #define REGISTER_EEPROM 96
+#define REGISTER_VOUT 64
 
 static int i2c_bus = 0; // Pointer to bus
 
@@ -46,27 +46,6 @@ int mcp4725_init(char* bus_name) {
 
 void mcp4725_terminate() {
     k_i2c_terminate(&i2c_bus);
-}
-
-int mcp4725_readVOut(uint16_t* val) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 1) != I2C_OK) {
-        return -2;
-    }
-    return 0;
-}
-
-int mcp4725_writeVOut(uint16_t* data) {
-    // Put our data into uint8_t buffer
-    uint8_t buffer[2] = { (uint8_t) REGISTER_VOUT };
-    uint8_t buffer[1] = (data >> 8) & 0xFF;
-    // First write our register address
-    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 2) != I2C_OK) {
-        return -1;
-    }
-    return 0;
 }
 
 int mcp4725_readEEPROM(uint16_t* val) {
@@ -88,9 +67,26 @@ int mcp4725_writeEEPROM(uint16_t* data) {
         return -1;
     }
     return 0;
+}int mcp4725_readVOut(uint16_t* val) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 1) != I2C_OK) {
+        return -2;
+    }
+    return 0;
 }
 
-
+int mcp4725_writeVOut(uint16_t* data) {
+    // Put our data into uint8_t buffer
+    uint8_t buffer[2] = { (uint8_t) REGISTER_VOUT };
+    uint8_t buffer[1] = (data >> 8) & 0xFF;
+    // First write our register address
+    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 2) != I2C_OK) {
+        return -1;
+    }
+    return 0;
+}
 int mcp4725_get_digitalout(uint16_t* val) {
     // Read register data
     // '#/registers/EEPROM' > 'EEPROM'

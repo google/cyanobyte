@@ -49,11 +49,11 @@
 
 \section{Register Description}
 \begin{itemize}
-\item Enable - Enable specific components of the peripheral
-\item Clear channel - This is the ambient amount of detected light.
-\item Red channel - Red light as an int. Divide by ambient light to get scaled number.
-\item Green channel - Green light as an int. Divide by ambient light to get scaled number.
 \item Blue channel - Blue light as an int. Divide by ambient light to get scaled number.
+\item Clear channel - This is the ambient amount of detected light.
+\item Enable - Enable specific components of the peripheral
+\item Green channel - Green light as an int. Divide by ambient light to get scaled number.
+\item Red channel - Red light as an int. Divide by ambient light to get scaled number.
 \end{itemize}
 
 \section{Technical specification}
@@ -62,11 +62,11 @@
 \toprule
  & Register Name & Register Address & Register Length \\
 \midrule
-enable & Enable & 128 & 8 \\
-clear & Clear channel & 180 & 16 \\
-red & Red channel & 182 & 16 \\
-green & Green channel & 184 & 16 \\
 blue & Blue channel & 186 & 16 \\
+clear & Clear channel & 180 & 16 \\
+enable & Enable & 128 & 8 \\
+green & Green channel & 184 & 16 \\
+red & Red channel & 182 & 16 \\
 \bottomrule
 \end{tabular}
 

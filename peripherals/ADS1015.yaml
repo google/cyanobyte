@@ -33,16 +33,16 @@ i2c:
   addressMask: 0xFF
   endian: little
 registers:
-  - Config:
-      address: 0x01
-      length: 16
-      title: ADC config
-      description: Describes the specifics of the sensing implementation
-  - Conversion:
-      address: 0x00
-      length: 16
-      title: ADC Value
-      description: Conversion register contains the result of the last conversion
+  Config:
+    address: 0x01
+    length: 16
+    title: ADC config
+    description: Describes the specifics of the sensing implementation
+  Conversion:
+    address: 0x00
+    length: 16
+    title: ADC Value
+    description: Conversion register contains the result of the last conversion
 fields:
   - SampleRate:
       title: Setup sample rate for reading analog voltage

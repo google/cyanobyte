@@ -39,7 +39,7 @@ limitations under the License.
                 <usage>registers</usage>
             </addressBlock>
             <registers>
-                <register>
+<register>
                     <name>configuration</name>
                     <description>The MCP9808 has a 16-bit Configuration register (CONFIG) that
 allows the user to set various functions for a robust temperature
