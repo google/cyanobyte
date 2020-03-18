@@ -67,7 +67,7 @@
 \midrule
 {% for register in registers %}
 {% for key in register.keys() %}
-{{key}} & {{register[key].title}} & {{register[key].address}} & {{register[key].length}} \\
+{{key | regex_replace('_', '\_')}} & {{register[key].title}} & {{register[key].address}} & {{register[key].length}} \\
 {% endfor %}
 {% endfor %}
 \bottomrule
@@ -117,6 +117,48 @@
 {% endfor %}
 \bottomrule
 \end{tabular}
+
+{% for function in functions %}
+{% for key in function.keys() %}
+
+\raggedright
+\subsection{Function {{key}} }
+{{function[key].description}} \\
+
+\centering
+\begin{tabular}{lcr}
+\toprule
+  & Inputs & Return \\
+\midrule
+{% for compute in function[key].computed %}
+{% for ckey in compute.keys() %}
+{{ckey}} &
+{% if compute[ckey].input %}
+{% for input in compute[ckey].input %}
+{% for ikey in input.keys() %}
+{{ikey}} ({{input[ikey]}})
+{% endfor %}
+{{ ", " if not loop.last }}
+{% endfor %}
+{% endif %}
+&
+{% if compute[ckey].return is iterable and compute[ckey].return is not string %}
+{% for returnable in compute[ckey].return %}
+{{returnable}}{{ ", " if not loop.last }}
+{% endfor %}
+{% endif %}
+{% if compute[ckey].return is string %}
+{{compute[ckey].return}}
+{% endif %}
+\\
+{% endfor %}
+{% endfor %}
+\bottomrule
+\end{tabular}
+
+
+{% endfor %}
+{% endfor %}
 
 \raggedright
 {% endif %}

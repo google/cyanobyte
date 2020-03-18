@@ -69,18 +69,18 @@
 \toprule
  & Register Name & Register Address & Register Length \\
 \midrule
-AccelerometerX_Low & Accelerometer X & 168 & 8 \\
-AccelerometerX_High & Accelerometer X & 169 & 8 \\
-AccelerometerY_Low & Accelerometer Y & 170 & 8 \\
-AccelerometerY_High & Accelerometer Y & 171 & 8 \\
-AccelerometerZ_Low & Accelerometer Z & 172 & 8 \\
-AccelerometerZ_High & Accelerometer Z & 173 & 8 \\
-MagnetometerX_Low & Magnetometer X & 136 & 8 \\
-MagnetometerX_High & Magnetometer X & 137 & 8 \\
-MagnetometerY_Low & Magnetometer Y & 138 & 8 \\
-MagnetometerY_High & Magnetometer Y & 139 & 8 \\
-MagnetometerZ_Low & Magnetometer Z & 140 & 8 \\
-MagnetometerZ_High & Magnetometer Z & 141 & 8 \\
+AccelerometerX\_Low & Accelerometer X & 168 & 8 \\
+AccelerometerX\_High & Accelerometer X & 169 & 8 \\
+AccelerometerY\_Low & Accelerometer Y & 170 & 8 \\
+AccelerometerY\_High & Accelerometer Y & 171 & 8 \\
+AccelerometerZ\_Low & Accelerometer Z & 172 & 8 \\
+AccelerometerZ\_High & Accelerometer Z & 173 & 8 \\
+MagnetometerX\_Low & Magnetometer X & 136 & 8 \\
+MagnetometerX\_High & Magnetometer X & 137 & 8 \\
+MagnetometerY\_Low & Magnetometer Y & 138 & 8 \\
+MagnetometerY\_High & Magnetometer Y & 139 & 8 \\
+MagnetometerZ\_Low & Magnetometer Z & 140 & 8 \\
+MagnetometerZ\_High & Magnetometer Z & 141 & 8 \\
 \bottomrule
 \end{tabular}
 
@@ -98,6 +98,69 @@ acceleration & Measures the current acceleration \\
 orientation & Reads the magnetic orientation \\
 \bottomrule
 \end{tabular}
+
+
+\raggedright
+\subsection{Function acceleration }
+Measures the current acceleration \\
+
+\centering
+\begin{tabular}{lcr}
+\toprule
+  & Inputs & Return \\
+\midrule
+xPlane &
+&
+datum
+\\
+yPlane &
+&
+datum
+\\
+zPlane &
+&
+datum
+\\
+asG &
+&
+valueX, 
+valueY, 
+valueZ
+\\
+\bottomrule
+\end{tabular}
+
+
+
+\raggedright
+\subsection{Function orientation }
+Reads the magnetic orientation \\
+
+\centering
+\begin{tabular}{lcr}
+\toprule
+  & Inputs & Return \\
+\midrule
+xPlane &
+&
+datum
+\\
+yPlane &
+&
+datum
+\\
+zPlane &
+&
+datum
+\\
+heading &
+&
+heading
+\\
+\bottomrule
+\end{tabular}
+
+
 
 \raggedright
 
