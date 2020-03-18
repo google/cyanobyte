@@ -69,32 +69,100 @@ Conversion & ADC Value & 0 & 16 \\
 
 \section{Fields}
 
-\centering
-\begin{tabular}{lcrr}
-\toprule
-  & Field Name & Register & Bits \\
-\midrule
-SampleRate & Setup sample rate for reading analog voltage & Config &
-7:5
-\\
+ 
 
-ProgrammableGain & Setup programmable gain & Config &
-11:9
-\\
-
-DeviceOperatingMode & Set the operating mode & Config &
-8
-\\
-
-Channel & Set the channel to read & config &
-14:12
-\\
-
-\bottomrule
-\end{tabular}
 
 \raggedright
 
+\subsection{Register Config}
+\centering
+\begin{tabular}{lcr}
+\toprule
+  & Field Name & Bits \\
+\midrule
+SampleRate & Setup sample rate for reading analog voltage & 
+7:5
+\\
+ProgrammableGain & Setup programmable gain & 
+11:9
+\\
+DeviceOperatingMode & Set the operating mode & 
+8
+\\
+Channel & Set the channel to read & 
+14:12
+\\
+\bottomrule
+
+\end{tabular}
+
+
+\raggedright
+
+\subsubsection{Field SampleRate }
+
+This sets the samples-per-second value
+
+
+\begin{itemize}
+\item HZ128 (0) - 128 samples/second
+\item HZ250 (1) - 250 samples/second
+\item HZ490 (2) - 490 samples/second
+\item HZ920 (3) - 920 samples/second
+\item HZ1600 (4) - 1600 samples/second
+\item HZ2400 (5) - 2400 samples/second
+\item HZ3300 (6) - 3300 samples/second
+\end{itemize}
+
+
+\raggedright
+
+\subsubsection{Field ProgrammableGain }
+
+This sets the programmable gain for reading analog voltage
+
+
+\begin{itemize}
+\item PGA6\_144V (0) - Plus/minus 6.144V
+\item PGA4\_096V (1) - Plus/minus 4.096V
+\item PGA2\_048V (2) - Plus/minus 2.048V
+\item PGA1\_024V (3) - Plus/minus 1.024V
+\item PGA0\_512 (4) - Plus/minus 0.512V
+\item PGA0\_256 (5) - Plus/minus 0.256V
+\end{itemize}
+
+
+\raggedright
+
+\subsubsection{Field DeviceOperatingMode }
+
+This bit controls the operating mode
+
+
+\begin{itemize}
+\item CONTINUOUS\_CONVERSION (0) - Continuous Conversion
+\item SINGLE\_SHOT (1) - Single-shot or power-down state
+\end{itemize}
+
+
+\raggedright
+
+\subsubsection{Field Channel }
+
+This sets the channel for reading analog voltage
+
+
+\begin{itemize}
+\item CHANNEL\_1 (0) - Channel 1
+\item CHANNEL\_2 (1) - Channel 2
+\item CHANNEL\_3 (2) - Channel 3
+\item CHANNEL\_4 (3) - Channel 4
+\end{itemize}
+
+
+
+
+\raggedright
 
 \section{Functions}
 

@@ -74,19 +74,37 @@ blue & Blue channel & 186 & 16 \\
 
 \section{Fields}
 
-\centering
-\begin{tabular}{lcrr}
-\toprule
-  & Field Name & Register & Bits \\
-\midrule
-init & Setup the device configuration & enable &
-7:0
-\\
+ 
 
-\bottomrule
-\end{tabular}
 
 \raggedright
+
+\subsection{Register enable}
+\centering
+\begin{tabular}{lcr}
+\toprule
+  & Field Name & Bits \\
+\midrule
+init & Setup the device configuration & 
+7:0
+\\
+\bottomrule
+
+\end{tabular}
+
+
+\raggedright
+
+\subsubsection{Field init }
+
+Enable RGBC and Power
+
+\begin{itemize}
+\item Power (1) - Power
+\item RGBC (2) - Color
+\end{itemize}
+
+
 
 
 

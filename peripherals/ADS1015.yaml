@@ -123,7 +123,7 @@ fields:
       title: Set the channel to read
       description: |
         This sets the channel for reading analog voltage
-      register: '#/registers/config'
+      register: '#/registers/Config'
       readWrite: 'n'
       bitStart: 14
       bitEnd: 12

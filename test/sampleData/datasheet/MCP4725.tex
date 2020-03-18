@@ -75,20 +75,41 @@ EEPROM & EEPROM & 96 & 12 \\
 
 \section{Fields}
 
-\centering
-\begin{tabular}{lcrr}
-\toprule
-  & Field Name & Register & Bits \\
-\midrule
-digitalOut & Digital (binary) output & EEPROM &
-12:0
-\\
+ 
 
-\bottomrule
-\end{tabular}
 
 \raggedright
 
+\subsection{Register EEPROM}
+\centering
+\begin{tabular}{lcr}
+\toprule
+  & Field Name & Bits \\
+\midrule
+digitalOut & Digital (binary) output & 
+12:0
+\\
+\bottomrule
+
+\end{tabular}
+
+
+\raggedright
+
+\subsubsection{Field digitalOut }
+
+Only allows you to send fully on or off
+
+
+\begin{itemize}
+\item VCC (4095) - Vcc (full power)
+\item GND (0) - Ground
+\end{itemize}
+
+
+
+
+\raggedright
 
 \section{Functions}
 
