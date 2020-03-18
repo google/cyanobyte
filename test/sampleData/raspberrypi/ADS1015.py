@@ -18,13 +18,8 @@
 Class for ADS1015
 """
 
-import sys
-try:
-    import smbus
-except ImportError:
-    print("Fatal error! Make sure to install smbus!")
-    sys.exit(1)
 from enum import Enum
+import smbus
 
 class SampleRateValues(Enum):
     """

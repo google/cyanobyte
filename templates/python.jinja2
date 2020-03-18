@@ -138,7 +138,6 @@ import struct
 {% set template.struct = true %}
 {% endif %}
 {% endif %}
-
 {% macro scanForMathLib(logicKeys) -%}
 {% for logic in logicKeys %}
 {% if logic is mapping %}
@@ -160,5 +159,4 @@ import math
 {% endfor %}
 {% endfor %}
 {% endfor %}
-
 {%- endmacro %}
