@@ -47,7 +47,178 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
+                    <dataType>uint16_t</dataType>
                     <fields>
+                        <field>
+                            <name>SampleRate</name>
+                            <description>
+                            This sets the samples-per-second value
+
+                            </description>
+                            <lsb>5</lsb>
+                            <msb>7</msb>
+                            <access>write-only</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>HZ128</name>
+                                    <description>128 samples/second</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>HZ250</name>
+                                    <description>250 samples/second</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>HZ490</name>
+                                    <description>490 samples/second</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>HZ920</name>
+                                    <description>920 samples/second</description>
+                                    <value>3</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>HZ1600</name>
+                                    <description>1600 samples/second</description>
+                                    <value>4</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>HZ2400</name>
+                                    <description>2400 samples/second</description>
+                                    <value>5</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>HZ3300</name>
+                                    <description>3300 samples/second</description>
+                                    <value>6</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                            <writeConstraint>
+                                <useEnumeratedValues>true</useEnumeratedValues>
+                                <range>
+                                    <minimum>5</minimum>
+                                    <maximum>7</maximum>
+                                </range>
+                            </writeConstraint>
+                        </field>
+                        <field>
+                            <name>ProgrammableGain</name>
+                            <description>
+                            This sets the programmable gain for reading analog voltage
+
+                            </description>
+                            <lsb>9</lsb>
+                            <msb>11</msb>
+                            <access>write-only</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>PGA6_144V</name>
+                                    <description>Plus/minus 6.144V</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>PGA4_096V</name>
+                                    <description>Plus/minus 4.096V</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>PGA2_048V</name>
+                                    <description>Plus/minus 2.048V</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>PGA1_024V</name>
+                                    <description>Plus/minus 1.024V</description>
+                                    <value>3</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>PGA0_512</name>
+                                    <description>Plus/minus 0.512V</description>
+                                    <value>4</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>PGA0_256</name>
+                                    <description>Plus/minus 0.256V</description>
+                                    <value>5</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                            <writeConstraint>
+                                <useEnumeratedValues>true</useEnumeratedValues>
+                                <range>
+                                    <minimum>9</minimum>
+                                    <maximum>11</maximum>
+                                </range>
+                            </writeConstraint>
+                        </field>
+                        <field>
+                            <name>DeviceOperatingMode</name>
+                            <description>
+                            This bit controls the operating mode
+
+                            </description>
+                            <lsb>8</lsb>
+                            <msb>8</msb>
+                            <access>write-only</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>CONTINUOUS_CONVERSION</name>
+                                    <description>Continuous Conversion</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>SINGLE_SHOT</name>
+                                    <description>Single-shot or power-down state</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                            <writeConstraint>
+                                <useEnumeratedValues>true</useEnumeratedValues>
+                                <range>
+                                    <minimum>8</minimum>
+                                    <maximum>8</maximum>
+                                </range>
+                            </writeConstraint>
+                        </field>
+                        <field>
+                            <name>Channel</name>
+                            <description>
+                            This sets the channel for reading analog voltage
+
+                            </description>
+                            <lsb>12</lsb>
+                            <msb>14</msb>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>CHANNEL_1</name>
+                                    <description>Channel 1</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>CHANNEL_2</name>
+                                    <description>Channel 2</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>CHANNEL_3</name>
+                                    <description>Channel 3</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>CHANNEL_4</name>
+                                    <description>Channel 4</description>
+                                    <value>3</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                            <writeConstraint>
+                                <useEnumeratedValues>true</useEnumeratedValues>
+                                <range>
+                                    <minimum>12</minimum>
+                                    <maximum>14</maximum>
+                                </range>
+                            </writeConstraint>
+                        </field>
                     </fields>
                 </register>
                 <register>
@@ -58,6 +229,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
+                    <dataType>uint16_t</dataType>
                     <fields>
                     </fields>
                 </register>
