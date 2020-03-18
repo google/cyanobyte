@@ -51,6 +51,7 @@ In a 3.3v system, each step is 800 microvolts.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
+                    <dataType>uint16_t</dataType>
                     <fields>
                     </fields>
                 </register>
@@ -64,22 +65,36 @@ be loaded from power-on.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
+                    <dataType>uint16_t</dataType>
                     <fields>
                         <field>
-                            <name>setVOut</name>
+                            <name>digitalOut</name>
                             <description>
-                            set vout
+                            Only allows you to send fully on or off
+
                             </description>
                             <lsb>0</lsb>
                             <msb>12</msb>
-                        </field>
-                        <field>
-                            <name>getVOut</name>
-                            <description>
-                            get vout
-                            </description>
-                            <lsb>0</lsb>
-                            <msb>12</msb>
+                            <access>read-write</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>VCC</name>
+                                    <description>Vcc (full power)</description>
+                                    <value>4095</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>GND</name>
+                                    <description>Ground</description>
+                                    <value>0</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                            <writeConstraint>
+                                <useEnumeratedValues>true</useEnumeratedValues>
+                                <range>
+                                    <minimum>0</minimum>
+                                    <maximum>12</maximum>
+                                </range>
+                            </writeConstraint>
                         </field>
                     </fields>
                 </register>

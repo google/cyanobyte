@@ -47,7 +47,36 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
+                    <dataType>uint8_t</dataType>
                     <fields>
+                        <field>
+                            <name>init</name>
+                            <description>
+                            Enable RGBC and Power
+                            </description>
+                            <lsb>0</lsb>
+                            <msb>7</msb>
+                            <access>read-write</access>
+                            <enumeratedValues>
+                                <enumeratedValue>
+                                    <name>Power</name>
+                                    <description>Power</description>
+                                    <value>1</value>
+                                </enumeratedValue>
+                                <enumeratedValue>
+                                    <name>RGBC</name>
+                                    <description>Color</description>
+                                    <value>2</value>
+                                </enumeratedValue>
+                            </enumeratedValues>
+                            <writeConstraint>
+                                <useEnumeratedValues>true</useEnumeratedValues>
+                                <range>
+                                    <minimum>0</minimum>
+                                    <maximum>7</maximum>
+                                </range>
+                            </writeConstraint>
+                        </field>
                     </fields>
                 </register>
                 <register>
@@ -58,6 +87,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
+                    <dataType>uint16_t</dataType>
                     <fields>
                     </fields>
                 </register>
@@ -69,6 +99,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
+                    <dataType>uint16_t</dataType>
                     <fields>
                     </fields>
                 </register>
@@ -80,6 +111,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
+                    <dataType>uint16_t</dataType>
                     <fields>
                     </fields>
                 </register>
@@ -91,6 +123,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
+                    <dataType>uint16_t</dataType>
                     <fields>
                     </fields>
                 </register>

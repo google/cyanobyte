@@ -47,8 +47,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint8_t</dataType>
                 </register>
                 <register>
                     <name>AccelerometerX_High</name>
@@ -58,8 +57,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint8_t</dataType>
                 </register>
                 <register>
                     <name>AccelerometerY_Low</name>
@@ -69,8 +67,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint8_t</dataType>
                 </register>
                 <register>
                     <name>AccelerometerY_High</name>
@@ -80,8 +77,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint8_t</dataType>
                 </register>
                 <register>
                     <name>AccelerometerZ_Low</name>
@@ -91,8 +87,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint8_t</dataType>
                 </register>
                 <register>
                     <name>AccelerometerZ_High</name>
@@ -102,8 +97,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint8_t</dataType>
                 </register>
                 <register>
                     <name>MagnetometerX_Low</name>
@@ -113,8 +107,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint8_t</dataType>
                 </register>
                 <register>
                     <name>MagnetometerX_High</name>
@@ -124,8 +117,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint8_t</dataType>
                 </register>
                 <register>
                     <name>MagnetometerY_Low</name>
@@ -135,8 +127,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint8_t</dataType>
                 </register>
                 <register>
                     <name>MagnetometerY_High</name>
@@ -146,8 +137,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint8_t</dataType>
                 </register>
                 <register>
                     <name>MagnetometerZ_Low</name>
@@ -157,8 +147,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint8_t</dataType>
                 </register>
                 <register>
                     <name>MagnetometerZ_High</name>
@@ -168,8 +157,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint8_t</dataType>
                 </register>
             </registers>
         </peripheral>

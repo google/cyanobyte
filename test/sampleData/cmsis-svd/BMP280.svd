@@ -47,8 +47,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint8_t</dataType>
                 </register>
                 <register>
                     <name>TempLsb</name>
@@ -58,8 +57,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint8_t</dataType>
                 </register>
                 <register>
                     <name>TempXlsb</name>
@@ -69,8 +67,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint8_t</dataType>
                 </register>
                 <register>
                     <name>DigT1</name>
@@ -80,8 +77,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint16_t</dataType>
                 </register>
                 <register>
                     <name>DigT2</name>
@@ -91,8 +87,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint16_t</dataType>
                 </register>
                 <register>
                     <name>DigT3</name>
@@ -102,8 +97,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint16_t</dataType>
                 </register>
                 <register>
                     <name>PressureMsb</name>
@@ -113,8 +107,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint8_t</dataType>
                 </register>
                 <register>
                     <name>PressureLsb</name>
@@ -124,8 +117,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint8_t</dataType>
                 </register>
                 <register>
                     <name>PressureXlsb</name>
@@ -135,8 +127,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint8_t</dataType>
                 </register>
                 <register>
                     <name>DigP1</name>
@@ -146,8 +137,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint16_t</dataType>
                 </register>
                 <register>
                     <name>DigP2</name>
@@ -157,8 +147,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint16_t</dataType>
                 </register>
                 <register>
                     <name>DigP3</name>
@@ -168,8 +157,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint16_t</dataType>
                 </register>
                 <register>
                     <name>DigP4</name>
@@ -179,8 +167,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint16_t</dataType>
                 </register>
                 <register>
                     <name>DigP5</name>
@@ -190,8 +177,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint16_t</dataType>
                 </register>
                 <register>
                     <name>DigP6</name>
@@ -201,8 +187,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint16_t</dataType>
                 </register>
                 <register>
                     <name>DigP7</name>
@@ -212,8 +197,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint16_t</dataType>
                 </register>
                 <register>
                     <name>DigP8</name>
@@ -223,8 +207,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint16_t</dataType>
                 </register>
                 <register>
                     <name>DigP9</name>
@@ -234,8 +217,7 @@ limitations under the License.
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <fields>
-                    </fields>
+                    <dataType>uint16_t</dataType>
                 </register>
             </registers>
         </peripheral>
