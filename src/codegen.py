@@ -72,7 +72,10 @@ def generate_source_file(template, peripheral, template_extension, output_dir):
         # Take into consideration the package
         if _DEBUG:
             print(peripheral_data["info"]["title"])
-        package_path = peripheral_data["info"]["package"].replace(".", "/")
+        if 'package' in peripheral_data["info"]:
+            package_path = peripheral_data["info"]["package"].replace(".", "/")
+        else:
+            package_path = ''
         output_file_path = os.path.join(
             output_dir,
             os.path.normpath(package_path)
