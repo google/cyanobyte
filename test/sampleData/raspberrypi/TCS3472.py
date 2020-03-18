@@ -18,9 +18,8 @@
 Class for TCS3472
 """
 
-import sys
-import smbus
 from enum import Enum
+import smbus
 class InitValues(Enum):
     """
     Valid values for Setup the device configuration

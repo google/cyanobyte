@@ -42,8 +42,6 @@ Class for {{ info.title }}
 {%- endfor %}
 {%- endmacro %}
 
-import sys
-import smbus
 {{ py.importStdLibs(fields, functions, template) -}}
 {# Create enums for fields #}
 {% for field in fields %}

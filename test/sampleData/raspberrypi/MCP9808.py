@@ -5,9 +5,8 @@
 Class for MCP9808
 """
 
-import sys
-import smbus
 from enum import Enum
+import smbus
 class LimitHysteresisValues(Enum):
     """
     Valid values for TUPPER and TLOWER Limit Hysteresis bits

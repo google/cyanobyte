@@ -18,7 +18,6 @@
 Class for LSM303D
 """
 
-import sys
 import smbus
 import struct
 

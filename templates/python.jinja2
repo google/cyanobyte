@@ -127,6 +127,7 @@ from enum import Enum
 {% endif %}
 {% endfor %}
 {% endfor %}
+import smbus
 {% for function in functions %}
 {% for key in function.keys() %}
 {# Check if we need to import `math` lib #}

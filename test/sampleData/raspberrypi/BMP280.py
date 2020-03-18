@@ -18,7 +18,6 @@
 Class for BMP280
 """
 
-import sys
 import smbus
 
 

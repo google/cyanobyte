@@ -18,9 +18,8 @@
 Class for ADS1015
 """
 
-import sys
-import smbus
 from enum import Enum
+import smbus
 
 class SampleRateValues(Enum):
     """

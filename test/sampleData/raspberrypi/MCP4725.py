@@ -18,9 +18,8 @@
 Class for MCP4725
 """
 
-import sys
-import smbus
 from enum import Enum
+import smbus
 
 
 class DigitalOutValues(Enum):
