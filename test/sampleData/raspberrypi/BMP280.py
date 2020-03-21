@@ -36,15 +36,6 @@ class BMP280:
 
     """
     device_address = 119
-    REGISTER_TEMPMSB = 250
-    REGISTER_TEMPLSB = 251
-    REGISTER_TEMPXLSB = 252
-    REGISTER_DIGT1 = 136
-    REGISTER_DIGT2 = 138
-    REGISTER_DIGT3 = 140
-    REGISTER_PRESSUREMSB = 247
-    REGISTER_PRESSURELSB = 248
-    REGISTER_PRESSUREXLSB = 249
     REGISTER_DIGP1 = 142
     REGISTER_DIGP2 = 144
     REGISTER_DIGP3 = 146
@@ -54,202 +45,20 @@ class BMP280:
     REGISTER_DIGP7 = 154
     REGISTER_DIGP8 = 156
     REGISTER_DIGP9 = 158
+    REGISTER_DIGT1 = 136
+    REGISTER_DIGT2 = 138
+    REGISTER_DIGT3 = 140
+    REGISTER_PRESSURELSB = 248
+    REGISTER_PRESSUREMSB = 247
+    REGISTER_PRESSUREXLSB = 249
+    REGISTER_TEMPLSB = 251
+    REGISTER_TEMPMSB = 250
+    REGISTER_TEMPXLSB = 252
 
     def __init__(self):
         # Initialize connection to peripheral
         self.bus = smbus.SMBus(1)
 
-    def get_tempmsb(self):
-        """
-        Part 1 of temperature
-
-        """
-        val = self.bus.read_byte_data(
-            self.device_address,
-            self.REGISTER_TEMPMSB
-        )
-        return val
-
-    def set_tempmsb(self, data):
-        """
-        Part 1 of temperature
-
-        """
-        self.bus.write_byte_data(
-            self.device_address,
-            self.REGISTER_TEMPMSB,
-            data
-        )
-    def get_templsb(self):
-        """
-        Part 2 of temperature
-
-        """
-        val = self.bus.read_byte_data(
-            self.device_address,
-            self.REGISTER_TEMPLSB
-        )
-        return val
-
-    def set_templsb(self, data):
-        """
-        Part 2 of temperature
-
-        """
-        self.bus.write_byte_data(
-            self.device_address,
-            self.REGISTER_TEMPLSB,
-            data
-        )
-    def get_tempxlsb(self):
-        """
-        Final part of temperature
-
-        """
-        val = self.bus.read_byte_data(
-            self.device_address,
-            self.REGISTER_TEMPXLSB
-        )
-        return val
-
-    def set_tempxlsb(self, data):
-        """
-        Final part of temperature
-
-        """
-        self.bus.write_byte_data(
-            self.device_address,
-            self.REGISTER_TEMPXLSB,
-            data
-        )
-    def get_digt1(self):
-        """
-        Used for Celcius conversion
-
-        """
-        val = self.bus.read_word_data(
-            self.device_address,
-            self.REGISTER_DIGT1
-        )
-        return val
-
-    def set_digt1(self, data):
-        """
-        Used for Celcius conversion
-
-        """
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_DIGT1,
-            data
-        )
-    def get_digt2(self):
-        """
-        Used for Celcius conversion
-
-        """
-        val = self.bus.read_word_data(
-            self.device_address,
-            self.REGISTER_DIGT2
-        )
-        return val
-
-    def set_digt2(self, data):
-        """
-        Used for Celcius conversion
-
-        """
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_DIGT2,
-            data
-        )
-    def get_digt3(self):
-        """
-        Used for Celcius conversion
-
-        """
-        val = self.bus.read_word_data(
-            self.device_address,
-            self.REGISTER_DIGT3
-        )
-        # Unsigned > Signed integer
-        val = _sign(val, 16)
-        return val
-
-    def set_digt3(self, data):
-        """
-        Used for Celcius conversion
-
-        """
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_DIGT3,
-            data
-        )
-    def get_pressuremsb(self):
-        """
-        Part 1 of Pressure
-
-        """
-        val = self.bus.read_byte_data(
-            self.device_address,
-            self.REGISTER_PRESSUREMSB
-        )
-        return val
-
-    def set_pressuremsb(self, data):
-        """
-        Part 1 of Pressure
-
-        """
-        self.bus.write_byte_data(
-            self.device_address,
-            self.REGISTER_PRESSUREMSB,
-            data
-        )
-    def get_pressurelsb(self):
-        """
-        Part 2 of Pressure
-
-        """
-        val = self.bus.read_byte_data(
-            self.device_address,
-            self.REGISTER_PRESSURELSB
-        )
-        return val
-
-    def set_pressurelsb(self, data):
-        """
-        Part 2 of Pressure
-
-        """
-        self.bus.write_byte_data(
-            self.device_address,
-            self.REGISTER_PRESSURELSB,
-            data
-        )
-    def get_pressurexlsb(self):
-        """
-        Part 3 of Pressure
-
-        """
-        val = self.bus.read_byte_data(
-            self.device_address,
-            self.REGISTER_PRESSUREXLSB
-        )
-        return val
-
-    def set_pressurexlsb(self, data):
-        """
-        Part 3 of Pressure
-
-        """
-        self.bus.write_byte_data(
-            self.device_address,
-            self.REGISTER_PRESSUREXLSB,
-            data
-        )
     def get_digp1(self):
         """
         Used for Pascals conversion
@@ -455,77 +264,209 @@ class BMP280:
             self.REGISTER_DIGP9,
             data
         )
-
-    def temperature_asraw(self):
+    def get_digt1(self):
         """
-        Reads the temperature
-
-        """
-        value_msb = None # Variable declaration
-        value_lsb = None # Variable declaration
-        value_xlsb = None # Variable declaration
-        output = None # Variable declaration
-
-        value_msb = self.get_tempmsb()
-        value_lsb = self.get_templsb()
-        value_xlsb = self.get_tempxlsb()
-        output = ((value_msb << 12)+(value_lsb << 4)+(value_xlsb >> 4))
-
-        return output
-    def temperature_ascelsius(self):
-        """
-        Reads the temperature
+        Used for Celcius conversion
 
         """
-        value_msb = None # Variable declaration
-        value_lsb = None # Variable declaration
-        value_xlsb = None # Variable declaration
-        value_d_t1 = None # Variable declaration
-        value_d_t2 = None # Variable declaration
-        value_d_t3 = None # Variable declaration
-        raw_temp = None # Variable declaration
-        raw_comp1 = None # Variable declaration
-        raw_comp2 = None # Variable declaration
-        raw_comp3 = None # Variable declaration
-        celsius = None # Variable declaration
+        val = self.bus.read_word_data(
+            self.device_address,
+            self.REGISTER_DIGT1
+        )
+        return val
 
-        value_msb = self.get_tempmsb()
-        value_lsb = self.get_templsb()
-        value_xlsb = self.get_tempxlsb()
-        value_d_t1 = self.get_digt1()
-        value_d_t2 = self.get_digt2()
-        value_d_t3 = self.get_digt3()
-        raw_temp = ((value_msb << 12)+(value_lsb << 4)+(value_xlsb >> 4))
-        raw_comp1 = (((raw_temp/16384.0)-(value_d_t1/1024.0))*value_d_t2)
-        raw_comp3 = ((raw_temp/131072.0)-(value_d_t1/8192.0))
-        raw_comp2 = (raw_comp3*raw_comp3*value_d_t3)
-        celsius = ((raw_comp1+raw_comp2)/5120.0)
-
-        return celsius
-    def pressure_asraw(self):
+    def set_digt1(self, data):
         """
-        Reads the atmospheric pressure
+        Used for Celcius conversion
 
         """
-        value_msb = None # Variable declaration
-        value_lsb = None # Variable declaration
-        value_xlsb = None # Variable declaration
-        output = None # Variable declaration
+        self.bus.write_word_data(
+            self.device_address,
+            self.REGISTER_DIGT1,
+            data
+        )
+    def get_digt2(self):
+        """
+        Used for Celcius conversion
 
-        value_msb = self.get_pressuremsb()
-        value_lsb = self.get_pressurelsb()
-        value_xlsb = self.get_pressurexlsb()
-        output = ((value_msb << 12)+(value_lsb << 4)+(value_xlsb >> 4))
+        """
+        val = self.bus.read_word_data(
+            self.device_address,
+            self.REGISTER_DIGT2
+        )
+        return val
 
-        return output
+    def set_digt2(self, data):
+        """
+        Used for Celcius conversion
+
+        """
+        self.bus.write_word_data(
+            self.device_address,
+            self.REGISTER_DIGT2,
+            data
+        )
+    def get_digt3(self):
+        """
+        Used for Celcius conversion
+
+        """
+        val = self.bus.read_word_data(
+            self.device_address,
+            self.REGISTER_DIGT3
+        )
+        # Unsigned > Signed integer
+        val = _sign(val, 16)
+        return val
+
+    def set_digt3(self, data):
+        """
+        Used for Celcius conversion
+
+        """
+        self.bus.write_word_data(
+            self.device_address,
+            self.REGISTER_DIGT3,
+            data
+        )
+    def get_pressurelsb(self):
+        """
+        Part 2 of Pressure
+
+        """
+        val = self.bus.read_byte_data(
+            self.device_address,
+            self.REGISTER_PRESSURELSB
+        )
+        return val
+
+    def set_pressurelsb(self, data):
+        """
+        Part 2 of Pressure
+
+        """
+        self.bus.write_byte_data(
+            self.device_address,
+            self.REGISTER_PRESSURELSB,
+            data
+        )
+    def get_pressuremsb(self):
+        """
+        Part 1 of Pressure
+
+        """
+        val = self.bus.read_byte_data(
+            self.device_address,
+            self.REGISTER_PRESSUREMSB
+        )
+        return val
+
+    def set_pressuremsb(self, data):
+        """
+        Part 1 of Pressure
+
+        """
+        self.bus.write_byte_data(
+            self.device_address,
+            self.REGISTER_PRESSUREMSB,
+            data
+        )
+    def get_pressurexlsb(self):
+        """
+        Part 3 of Pressure
+
+        """
+        val = self.bus.read_byte_data(
+            self.device_address,
+            self.REGISTER_PRESSUREXLSB
+        )
+        return val
+
+    def set_pressurexlsb(self, data):
+        """
+        Part 3 of Pressure
+
+        """
+        self.bus.write_byte_data(
+            self.device_address,
+            self.REGISTER_PRESSUREXLSB,
+            data
+        )
+    def get_templsb(self):
+        """
+        Part 2 of temperature
+
+        """
+        val = self.bus.read_byte_data(
+            self.device_address,
+            self.REGISTER_TEMPLSB
+        )
+        return val
+
+    def set_templsb(self, data):
+        """
+        Part 2 of temperature
+
+        """
+        self.bus.write_byte_data(
+            self.device_address,
+            self.REGISTER_TEMPLSB,
+            data
+        )
+    def get_tempmsb(self):
+        """
+        Part 1 of temperature
+
+        """
+        val = self.bus.read_byte_data(
+            self.device_address,
+            self.REGISTER_TEMPMSB
+        )
+        return val
+
+    def set_tempmsb(self, data):
+        """
+        Part 1 of temperature
+
+        """
+        self.bus.write_byte_data(
+            self.device_address,
+            self.REGISTER_TEMPMSB,
+            data
+        )
+    def get_tempxlsb(self):
+        """
+        Final part of temperature
+
+        """
+        val = self.bus.read_byte_data(
+            self.device_address,
+            self.REGISTER_TEMPXLSB
+        )
+        return val
+
+    def set_tempxlsb(self, data):
+        """
+        Final part of temperature
+
+        """
+        self.bus.write_byte_data(
+            self.device_address,
+            self.REGISTER_TEMPXLSB,
+            data
+        )
+
     def pressure_ashpa(self):
         """
         Reads the atmospheric pressure
 
         """
-        value_msb = None # Variable declaration
-        value_lsb = None # Variable declaration
-        value_xlsb = None # Variable declaration
+        hpa = None # Variable declaration
+        raw_comp1 = None # Variable declaration
+        raw_comp2 = None # Variable declaration
+        raw_comp3 = None # Variable declaration
+        raw_pressure = None # Variable declaration
+        raw_temperature = None # Variable declaration
         value_d_p1 = None # Variable declaration
         value_d_p2 = None # Variable declaration
         value_d_p3 = None # Variable declaration
@@ -535,12 +476,9 @@ class BMP280:
         value_d_p7 = None # Variable declaration
         value_d_p8 = None # Variable declaration
         value_d_p9 = None # Variable declaration
-        raw_pressure = None # Variable declaration
-        raw_temperature = None # Variable declaration
-        raw_comp1 = None # Variable declaration
-        raw_comp2 = None # Variable declaration
-        raw_comp3 = None # Variable declaration
-        hpa = None # Variable declaration
+        value_lsb = None # Variable declaration
+        value_msb = None # Variable declaration
+        value_xlsb = None # Variable declaration
 
         value_msb = self.get_pressuremsb()
         value_lsb = self.get_pressurelsb()
@@ -572,3 +510,65 @@ class BMP280:
         hpa = (hpa/100.0)
 
         return hpa
+    def pressure_asraw(self):
+        """
+        Reads the atmospheric pressure
+
+        """
+        output = None # Variable declaration
+        value_lsb = None # Variable declaration
+        value_msb = None # Variable declaration
+        value_xlsb = None # Variable declaration
+
+        value_msb = self.get_pressuremsb()
+        value_lsb = self.get_pressurelsb()
+        value_xlsb = self.get_pressurexlsb()
+        output = ((value_msb << 12)+(value_lsb << 4)+(value_xlsb >> 4))
+
+        return output
+    def temperature_ascelsius(self):
+        """
+        Reads the temperature
+
+        """
+        celsius = None # Variable declaration
+        raw_comp1 = None # Variable declaration
+        raw_comp2 = None # Variable declaration
+        raw_comp3 = None # Variable declaration
+        raw_temp = None # Variable declaration
+        value_d_t1 = None # Variable declaration
+        value_d_t2 = None # Variable declaration
+        value_d_t3 = None # Variable declaration
+        value_lsb = None # Variable declaration
+        value_msb = None # Variable declaration
+        value_xlsb = None # Variable declaration
+
+        value_msb = self.get_tempmsb()
+        value_lsb = self.get_templsb()
+        value_xlsb = self.get_tempxlsb()
+        value_d_t1 = self.get_digt1()
+        value_d_t2 = self.get_digt2()
+        value_d_t3 = self.get_digt3()
+        raw_temp = ((value_msb << 12)+(value_lsb << 4)+(value_xlsb >> 4))
+        raw_comp1 = (((raw_temp/16384.0)-(value_d_t1/1024.0))*value_d_t2)
+        raw_comp3 = ((raw_temp/131072.0)-(value_d_t1/8192.0))
+        raw_comp2 = (raw_comp3*raw_comp3*value_d_t3)
+        celsius = ((raw_comp1+raw_comp2)/5120.0)
+
+        return celsius
+    def temperature_asraw(self):
+        """
+        Reads the temperature
+
+        """
+        output = None # Variable declaration
+        value_lsb = None # Variable declaration
+        value_msb = None # Variable declaration
+        value_xlsb = None # Variable declaration
+
+        value_msb = self.get_tempmsb()
+        value_lsb = self.get_templsb()
+        value_xlsb = self.get_tempxlsb()
+        output = ((value_msb << 12)+(value_lsb << 4)+(value_xlsb >> 4))
+
+        return output

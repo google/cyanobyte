@@ -33,15 +33,26 @@
 
  */
 enum digitalOut {
-    DIGITALOUT_VCC = 4095, // Vcc (full power)
-    DIGITALOUT_GND = 0 // Ground
+    DIGITALOUT_GND = 0, // Ground
+    DIGITALOUT_VCC = 4095 // Vcc (full power)
 };
 typedef enum digitalOut digitalOut_t;
 
 int mcp4725_init(char* bus_name);
 void mcp4725_terminate();
-   
 /**
+  * If EEPROM is set, the saved voltage output will
+ * be loaded from power-on.
+
+*/
+int mcp4725_readEEPROM(uint16_t* val);
+
+/**
+ * If EEPROM is set, the saved voltage output will
+ * be loaded from power-on.
+
+ */
+int mcp4725_writeEEPROM(uint16_t* data);/**
   * VOut = (Vcc * value) / 4096
  * The output is a range between 0 and Vcc with
  * steps of Vcc/4096.
@@ -58,21 +69,6 @@ int mcp4725_readVOut(uint16_t* val);
 
  */
 int mcp4725_writeVOut(uint16_t* data);
-   
-/**
-  * If EEPROM is set, the saved voltage output will
- * be loaded from power-on.
-
-*/
-int mcp4725_readEEPROM(uint16_t* val);
-
-/**
- * If EEPROM is set, the saved voltage output will
- * be loaded from power-on.
-
- */
-int mcp4725_writeEEPROM(uint16_t* data);
-
 /**
  * Only allows you to send fully on or off
 
@@ -85,16 +81,16 @@ int mcp4725_get_digitalout(uint16_t* val);
 int mcp4725_set_digitalout(uint16_t* data);
 
 /**
- * set vout
-
-*/
-void mcp4725_setvout_asvoltage(void* val, );
-
-/**
  * get vout
 
 */
 void mcp4725_getvout_asvoltage(float* val, );
+
+/**
+ * set vout
+
+*/
+void mcp4725_setvout_asvoltage(void* val, );
 
 
 #endif

@@ -150,7 +150,7 @@
     },
     "registers": {
       "description": "Chip registers",
-      "type": "array",
+      "type": "object",
       "items": {
         "description": "Outer object",
         "type": "object",
@@ -193,7 +193,7 @@
     },
     "fields": {
       "description": "Subcomponents of a register",
-      "type": "array",
+      "type": "object",
       "items": {
         "description": "Outer object",
         "type": "object",
@@ -242,7 +242,7 @@
               },
               "enum": {
                 "description": "List of values",
-                "type": "array",
+                "type": "object",
                 "items": {
                   "description": "Enum value",
                   "type": "object",
@@ -270,7 +270,7 @@
     },
     "functions": {
       "description": "Chip functions",
-      "type": "array",
+      "type": "object",
       "items": {
         "description": "Outer object",
         "type": "object",
@@ -293,7 +293,7 @@
               },
               "computed": {
                 "description": "Properties for a computed element",
-                "type": "array",
+                "type": "object",
                 "items": {
                   "description": "A computation",
                   "type": "object",
@@ -304,7 +304,7 @@
                       "properties": {
                         "variables": {
                           "description": "All variables used in the computation",
-                          "type": "array",
+                          "type": "object",
                           "items": {
                             "description": "Variable name",
                             "type": "object",

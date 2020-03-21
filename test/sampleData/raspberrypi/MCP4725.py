@@ -26,8 +26,8 @@ class DigitalOutValues(Enum):
     Valid values for Digital (binary) output
 
     """
-    VCC = 4095 # Vcc (full power)
     GND = 0 # Ground
+    VCC = 4095 # Vcc (full power)
 
 def _swap_endian(val):
     """
@@ -42,13 +42,38 @@ class MCP4725:
 
     """
     device_address = 98
-    REGISTER_VOUT = 64
     REGISTER_EEPROM = 96
+    REGISTER_VOUT = 64
 
     def __init__(self):
         # Initialize connection to peripheral
         self.bus = smbus.SMBus(1)
 
+    def get_eeprom(self):
+        """
+        If EEPROM is set, the saved voltage output will
+        be loaded from power-on.
+
+        """
+        val = self.bus.read_word_data(
+            self.device_address,
+            self.REGISTER_EEPROM
+        )
+        val = _swap_endian(val)
+        return val
+
+    def set_eeprom(self, data):
+        """
+        If EEPROM is set, the saved voltage output will
+        be loaded from power-on.
+
+        """
+        data = _swap_endian(data)
+        self.bus.write_word_data(
+            self.device_address,
+            self.REGISTER_EEPROM,
+            data
+        )
     def get_vout(self):
         """
         VOut = (Vcc * value) / 4096
@@ -78,31 +103,6 @@ class MCP4725:
             self.REGISTER_VOUT,
             data
         )
-    def get_eeprom(self):
-        """
-        If EEPROM is set, the saved voltage output will
-        be loaded from power-on.
-
-        """
-        val = self.bus.read_word_data(
-            self.device_address,
-            self.REGISTER_EEPROM
-        )
-        val = _swap_endian(val)
-        return val
-
-    def set_eeprom(self, data):
-        """
-        If EEPROM is set, the saved voltage output will
-        be loaded from power-on.
-
-        """
-        data = _swap_endian(data)
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_EEPROM,
-            data
-        )
 
 
     def get_digitalout(self):
@@ -127,16 +127,6 @@ class MCP4725:
         register_data = self.get_eeprom()
         register_data = register_data | data
         self.set_eeprom(register_data)
-    def setvout_asvoltage(self, vcc, output):
-        """
-        set vout
-
-        """
-
-        output = output / vcc * 4096
-        self.set_eeprom(output)
-
-        return []
     def getvout_asvoltage(self, vcc):
         """
         get vout
@@ -149,3 +139,13 @@ class MCP4725:
         voltage = value / 4096 * vcc
 
         return voltage
+    def setvout_asvoltage(self, output, vcc):
+        """
+        set vout
+
+        """
+
+        output = output / vcc * 4096
+        self.set_eeprom(output)
+
+        return []

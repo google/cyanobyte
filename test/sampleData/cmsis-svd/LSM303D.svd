@@ -39,17 +39,7 @@ limitations under the License.
                 <usage>registers</usage>
             </addressBlock>
             <registers>
-                <register>
-                    <name>AccelerometerX_Low</name>
-                    <description>Raw accelerometer data on X plane</description>
-                    <addressOffset>168</addressOffset>
-                    <size>8</size>
-                    <access>read-write</access>
-                    <resetValue>0x00</resetValue>
-                    <resetMask>0xFF</resetMask>
-                    <dataType>uint8_t</dataType>
-                </register>
-                <register>
+<register>
                     <name>AccelerometerX_High</name>
                     <description>Raw accelerometer data on X plane</description>
                     <addressOffset>169</addressOffset>
@@ -59,17 +49,17 @@ limitations under the License.
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
                 </register>
-                <register>
-                    <name>AccelerometerY_Low</name>
-                    <description>Raw accelerometer data on Y plane</description>
-                    <addressOffset>170</addressOffset>
+<register>
+                    <name>AccelerometerX_Low</name>
+                    <description>Raw accelerometer data on X plane</description>
+                    <addressOffset>168</addressOffset>
                     <size>8</size>
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
                 </register>
-                <register>
+<register>
                     <name>AccelerometerY_High</name>
                     <description>Raw accelerometer data on Y plane</description>
                     <addressOffset>171</addressOffset>
@@ -79,17 +69,17 @@ limitations under the License.
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
                 </register>
-                <register>
-                    <name>AccelerometerZ_Low</name>
-                    <description>Raw accelerometer data on Z plane</description>
-                    <addressOffset>172</addressOffset>
+<register>
+                    <name>AccelerometerY_Low</name>
+                    <description>Raw accelerometer data on Y plane</description>
+                    <addressOffset>170</addressOffset>
                     <size>8</size>
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
                 </register>
-                <register>
+<register>
                     <name>AccelerometerZ_High</name>
                     <description>Raw accelerometer data on Z plane</description>
                     <addressOffset>173</addressOffset>
@@ -99,17 +89,17 @@ limitations under the License.
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
                 </register>
-                <register>
-                    <name>MagnetometerX_Low</name>
-                    <description>Raw magnetometer data on X plane</description>
-                    <addressOffset>136</addressOffset>
+<register>
+                    <name>AccelerometerZ_Low</name>
+                    <description>Raw accelerometer data on Z plane</description>
+                    <addressOffset>172</addressOffset>
                     <size>8</size>
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
                 </register>
-                <register>
+<register>
                     <name>MagnetometerX_High</name>
                     <description>Raw magnetometer data on X plane</description>
                     <addressOffset>137</addressOffset>
@@ -119,17 +109,17 @@ limitations under the License.
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
                 </register>
-                <register>
-                    <name>MagnetometerY_Low</name>
-                    <description>Raw magnetometer data on Y plane</description>
-                    <addressOffset>138</addressOffset>
+<register>
+                    <name>MagnetometerX_Low</name>
+                    <description>Raw magnetometer data on X plane</description>
+                    <addressOffset>136</addressOffset>
                     <size>8</size>
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
                 </register>
-                <register>
+<register>
                     <name>MagnetometerY_High</name>
                     <description>Raw magnetometer data on Y plane</description>
                     <addressOffset>139</addressOffset>
@@ -139,20 +129,30 @@ limitations under the License.
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
                 </register>
-                <register>
-                    <name>MagnetometerZ_Low</name>
-                    <description>Raw magnetometer data on Z plane</description>
-                    <addressOffset>140</addressOffset>
+<register>
+                    <name>MagnetometerY_Low</name>
+                    <description>Raw magnetometer data on Y plane</description>
+                    <addressOffset>138</addressOffset>
                     <size>8</size>
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
                 </register>
-                <register>
+<register>
                     <name>MagnetometerZ_High</name>
                     <description>Raw magnetometer data on Z plane</description>
                     <addressOffset>141</addressOffset>
+                    <size>8</size>
+                    <access>read-write</access>
+                    <resetValue>0x00</resetValue>
+                    <resetMask>0xFF</resetMask>
+                    <dataType>uint8_t</dataType>
+                </register>
+<register>
+                    <name>MagnetometerZ_Low</name>
+                    <description>Raw magnetometer data on Z plane</description>
+                    <addressOffset>140</addressOffset>
                     <size>8</size>
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>

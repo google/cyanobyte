@@ -49,15 +49,6 @@
 
 \section{Register Description}
 \begin{itemize}
-\item Temperature MSB - Part 1 of temperature
-\item Temperature LSB - Part 2 of temperature
-\item Temperature XLSB - Final part of temperature
-\item Digital Temperature Compensation 1 - Used for Celcius conversion
-\item Digital Temperature Compensation 2 - Used for Celcius conversion
-\item Digital Temperature Compensation 3 - Used for Celcius conversion
-\item Pressure MSB - Part 1 of Pressure
-\item Pressure LSB - Part 2 of Pressure
-\item Pressure XLSB - Part 3 of Pressure
 \item Digital Pressure Compensation 1 - Used for Pascals conversion
 \item Digital Pressure Compensation 2 - Used for Pascals conversion
 \item Digital Pressure Compensation 3 - Used for Pascals conversion
@@ -67,6 +58,15 @@
 \item Digital Pressure Compensation 7 - Used for Pascals conversion
 \item Digital Pressure Compensation 8 - Used for Pascals conversion
 \item Digital Pressure Compensation 9 - Used for Pascals conversion
+\item Digital Temperature Compensation 1 - Used for Celcius conversion
+\item Digital Temperature Compensation 2 - Used for Celcius conversion
+\item Digital Temperature Compensation 3 - Used for Celcius conversion
+\item Pressure LSB - Part 2 of Pressure
+\item Pressure MSB - Part 1 of Pressure
+\item Pressure XLSB - Part 3 of Pressure
+\item Temperature LSB - Part 2 of temperature
+\item Temperature MSB - Part 1 of temperature
+\item Temperature XLSB - Final part of temperature
 \end{itemize}
 
 \section{Technical specification}
@@ -75,15 +75,6 @@
 \toprule
  & Register Name & Register Address & Register Length \\
 \midrule
-TempMsb & Temperature MSB & 250 & 8 \\
-TempLsb & Temperature LSB & 251 & 8 \\
-TempXlsb & Temperature XLSB & 252 & 8 \\
-DigT1 & Digital Temperature Compensation 1 & 136 & 16 \\
-DigT2 & Digital Temperature Compensation 2 & 138 & 16 \\
-DigT3 & Digital Temperature Compensation 3 & 140 & 16 \\
-PressureMsb & Pressure MSB & 247 & 8 \\
-PressureLsb & Pressure LSB & 248 & 8 \\
-PressureXlsb & Pressure XLSB & 249 & 8 \\
 DigP1 & Digital Pressure Compensation 1 & 142 & 16 \\
 DigP2 & Digital Pressure Compensation 2 & 144 & 16 \\
 DigP3 & Digital Pressure Compensation 3 & 146 & 16 \\
@@ -93,6 +84,15 @@ DigP6 & Digital Pressure Compensation 6 & 152 & 16 \\
 DigP7 & Digital Pressure Compensation 7 & 154 & 16 \\
 DigP8 & Digital Pressure Compensation 8 & 156 & 16 \\
 DigP9 & Digital Pressure Compensation 9 & 158 & 16 \\
+DigT1 & Digital Temperature Compensation 1 & 136 & 16 \\
+DigT2 & Digital Temperature Compensation 2 & 138 & 16 \\
+DigT3 & Digital Temperature Compensation 3 & 140 & 16 \\
+PressureLsb & Pressure LSB & 248 & 8 \\
+PressureMsb & Pressure MSB & 247 & 8 \\
+PressureXlsb & Pressure XLSB & 249 & 8 \\
+TempLsb & Temperature LSB & 251 & 8 \\
+TempMsb & Temperature MSB & 250 & 8 \\
+TempXlsb & Temperature XLSB & 252 & 8 \\
 \bottomrule
 \end{tabular}
 
@@ -106,32 +106,10 @@ DigP9 & Digital Pressure Compensation 9 & 158 & 16 \\
 \toprule
   & Description \\
 \midrule
-temperature & Reads the temperature \\
 pressure & Reads the atmospheric pressure \\
+temperature & Reads the temperature \\
 \bottomrule
 \end{tabular}
-
-
-\raggedright
-\subsection{Function temperature }
-Reads the temperature \\
-
-\centering
-\begin{tabular}{lcr}
-\toprule
-  & Inputs & Return \\
-\midrule
-asRaw &
-&
-output
-\\
-asCelsius &
-&
-celsius
-\\
-\bottomrule
-\end{tabular}
-
 
 
 \raggedright
@@ -143,13 +121,35 @@ Reads the atmospheric pressure \\
 \toprule
   & Inputs & Return \\
 \midrule
+asHpa &
+&
+hpa
+\\
 asRaw &
 &
 output
 \\
-asHpa &
+\bottomrule
+\end{tabular}
+
+
+
+\raggedright
+\subsection{Function temperature }
+Reads the temperature \\
+
+\centering
+\begin{tabular}{lcr}
+\toprule
+  & Inputs & Return \\
+\midrule
+asCelsius &
 &
-hpa
+celsius
+\\
+asRaw &
+&
+output
 \\
 \bottomrule
 \end{tabular}

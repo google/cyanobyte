@@ -33,17 +33,156 @@ class BMP280 {
         void begin();
         void end();
         /**
-         * Part 1 of temperature
+         * Used for Pascals conversion
 
          */
-        uint8_t readTempMsb();
+        uint16_t readDigP1();
 
         /**
-         * Part 1 of temperature
+         * Used for Pascals conversion
 
          */
-        int writeTempMsb(uint8_t data);
+        int writeDigP1(uint16_t data);        /**
+         * Used for Pascals conversion
+
+         */
+        uint16_t readDigP2();
+
         /**
+         * Used for Pascals conversion
+
+         */
+        int writeDigP2(uint16_t data);        /**
+         * Used for Pascals conversion
+
+         */
+        uint16_t readDigP3();
+
+        /**
+         * Used for Pascals conversion
+
+         */
+        int writeDigP3(uint16_t data);        /**
+         * Used for Pascals conversion
+
+         */
+        uint16_t readDigP4();
+
+        /**
+         * Used for Pascals conversion
+
+         */
+        int writeDigP4(uint16_t data);        /**
+         * Used for Pascals conversion
+
+         */
+        uint16_t readDigP5();
+
+        /**
+         * Used for Pascals conversion
+
+         */
+        int writeDigP5(uint16_t data);        /**
+         * Used for Pascals conversion
+
+         */
+        uint16_t readDigP6();
+
+        /**
+         * Used for Pascals conversion
+
+         */
+        int writeDigP6(uint16_t data);        /**
+         * Used for Pascals conversion
+
+         */
+        uint16_t readDigP7();
+
+        /**
+         * Used for Pascals conversion
+
+         */
+        int writeDigP7(uint16_t data);        /**
+         * Used for Pascals conversion
+
+         */
+        uint16_t readDigP8();
+
+        /**
+         * Used for Pascals conversion
+
+         */
+        int writeDigP8(uint16_t data);        /**
+         * Used for Pascals conversion
+
+         */
+        uint16_t readDigP9();
+
+        /**
+         * Used for Pascals conversion
+
+         */
+        int writeDigP9(uint16_t data);        /**
+         * Used for Celcius conversion
+
+         */
+        uint16_t readDigT1();
+
+        /**
+         * Used for Celcius conversion
+
+         */
+        int writeDigT1(uint16_t data);        /**
+         * Used for Celcius conversion
+
+         */
+        uint16_t readDigT2();
+
+        /**
+         * Used for Celcius conversion
+
+         */
+        int writeDigT2(uint16_t data);        /**
+         * Used for Celcius conversion
+
+         */
+        uint16_t readDigT3();
+
+        /**
+         * Used for Celcius conversion
+
+         */
+        int writeDigT3(uint16_t data);        /**
+         * Part 2 of Pressure
+
+         */
+        uint8_t readPressureLsb();
+
+        /**
+         * Part 2 of Pressure
+
+         */
+        int writePressureLsb(uint8_t data);        /**
+         * Part 1 of Pressure
+
+         */
+        uint8_t readPressureMsb();
+
+        /**
+         * Part 1 of Pressure
+
+         */
+        int writePressureMsb(uint8_t data);        /**
+         * Part 3 of Pressure
+
+         */
+        uint8_t readPressureXlsb();
+
+        /**
+         * Part 3 of Pressure
+
+         */
+        int writePressureXlsb(uint8_t data);        /**
          * Part 2 of temperature
 
          */
@@ -53,8 +192,17 @@ class BMP280 {
          * Part 2 of temperature
 
          */
-        int writeTempLsb(uint8_t data);
+        int writeTempLsb(uint8_t data);        /**
+         * Part 1 of temperature
+
+         */
+        uint8_t readTempMsb();
+
         /**
+         * Part 1 of temperature
+
+         */
+        int writeTempMsb(uint8_t data);        /**
          * Final part of temperature
 
          */
@@ -66,192 +214,26 @@ class BMP280 {
          */
         int writeTempXlsb(uint8_t data);
         /**
-         * Used for Celcius conversion
+         * Reads the atmospheric pressure
 
          */
-        uint16_t readDigT1();
-
-        /**
-         * Used for Celcius conversion
-
-         */
-        int writeDigT1(uint16_t data);
-        /**
-         * Used for Celcius conversion
-
-         */
-        uint16_t readDigT2();
-
-        /**
-         * Used for Celcius conversion
-
-         */
-        int writeDigT2(uint16_t data);
-        /**
-         * Used for Celcius conversion
-
-         */
-        uint16_t readDigT3();
-
-        /**
-         * Used for Celcius conversion
-
-         */
-        int writeDigT3(uint16_t data);
-        /**
-         * Part 1 of Pressure
-
-         */
-        uint8_t readPressureMsb();
-
-        /**
-         * Part 1 of Pressure
-
-         */
-        int writePressureMsb(uint8_t data);
-        /**
-         * Part 2 of Pressure
-
-         */
-        uint8_t readPressureLsb();
-
-        /**
-         * Part 2 of Pressure
-
-         */
-        int writePressureLsb(uint8_t data);
-        /**
-         * Part 3 of Pressure
-
-         */
-        uint8_t readPressureXlsb();
-
-        /**
-         * Part 3 of Pressure
-
-         */
-        int writePressureXlsb(uint8_t data);
-        /**
-         * Used for Pascals conversion
-
-         */
-        uint16_t readDigP1();
-
-        /**
-         * Used for Pascals conversion
-
-         */
-        int writeDigP1(uint16_t data);
-        /**
-         * Used for Pascals conversion
-
-         */
-        uint16_t readDigP2();
-
-        /**
-         * Used for Pascals conversion
-
-         */
-        int writeDigP2(uint16_t data);
-        /**
-         * Used for Pascals conversion
-
-         */
-        uint16_t readDigP3();
-
-        /**
-         * Used for Pascals conversion
-
-         */
-        int writeDigP3(uint16_t data);
-        /**
-         * Used for Pascals conversion
-
-         */
-        uint16_t readDigP4();
-
-        /**
-         * Used for Pascals conversion
-
-         */
-        int writeDigP4(uint16_t data);
-        /**
-         * Used for Pascals conversion
-
-         */
-        uint16_t readDigP5();
-
-        /**
-         * Used for Pascals conversion
-
-         */
-        int writeDigP5(uint16_t data);
-        /**
-         * Used for Pascals conversion
-
-         */
-        uint16_t readDigP6();
-
-        /**
-         * Used for Pascals conversion
-
-         */
-        int writeDigP6(uint16_t data);
-        /**
-         * Used for Pascals conversion
-
-         */
-        uint16_t readDigP7();
-
-        /**
-         * Used for Pascals conversion
-
-         */
-        int writeDigP7(uint16_t data);
-        /**
-         * Used for Pascals conversion
-
-         */
-        uint16_t readDigP8();
-
-        /**
-         * Used for Pascals conversion
-
-         */
-        int writeDigP8(uint16_t data);
-        /**
-         * Used for Pascals conversion
-
-         */
-        uint16_t readDigP9();
-
-        /**
-         * Used for Pascals conversion
-
-         */
-        int writeDigP9(uint16_t data);
-
-        /**
-         * Reads the temperature
-
-         */
-        short temperatureasRaw();
-        /**
-         * Reads the temperature
-
-         */
-        float temperatureasCelsius();
-
+        float pressureasHpa();
         /**
          * Reads the atmospheric pressure
 
          */
         short pressureasRaw();
+
         /**
-         * Reads the atmospheric pressure
+         * Reads the temperature
 
          */
-        float pressureasHpa();
+        float temperatureasCelsius();
+        /**
+         * Reads the temperature
+
+         */
+        short temperatureasRaw();
 
 
     private:

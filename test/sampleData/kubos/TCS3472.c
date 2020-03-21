@@ -26,11 +26,11 @@
 #include "TCS3472.h"
 #define DEVICE_ADDRESS 41
 
-#define REGISTER_ENABLE 128
-#define REGISTER_CLEAR 180
-#define REGISTER_RED 182
-#define REGISTER_GREEN 184
 #define REGISTER_BLUE 186
+#define REGISTER_CLEAR 180
+#define REGISTER_ENABLE 128
+#define REGISTER_GREEN 184
+#define REGISTER_RED 182
 
 static int i2c_bus = 0; // Pointer to bus
 
@@ -45,93 +45,6 @@ int tcs3472_init(char* bus_name) {
 
 void tcs3472_terminate() {
     k_i2c_terminate(&i2c_bus);
-}
-
-int tcs3472_readenable(uint8_t* val) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 1) != I2C_OK) {
-        return -2;
-    }
-    return 0;
-}
-
-int tcs3472_writeenable(uint8_t* data) {
-    // Put our data into uint8_t buffer
-    uint8_t buffer[2] = { (uint8_t) REGISTER_ENABLE };
-    uint8_t buffer[1] = (data >> 8) & 0xFF;
-    // First write our register address
-    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 2) != I2C_OK) {
-        return -1;
-    }
-    return 0;
-}
-
-int tcs3472_readclear(uint16_t* val) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 2) != I2C_OK) {
-        return -2;
-    }
-    return 0;
-}
-
-int tcs3472_writeclear(uint16_t* data) {
-    // Put our data into uint8_t buffer
-    uint8_t buffer[3] = { (uint8_t) REGISTER_CLEAR };
-    uint8_t buffer[1] = (data >> 16) & 0xFF;
-    uint8_t buffer[2] = (data >> 8) & 0xFF;
-    // First write our register address
-    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 3) != I2C_OK) {
-        return -1;
-    }
-    return 0;
-}
-
-int tcs3472_readred(uint16_t* val) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 2) != I2C_OK) {
-        return -2;
-    }
-    return 0;
-}
-
-int tcs3472_writered(uint16_t* data) {
-    // Put our data into uint8_t buffer
-    uint8_t buffer[3] = { (uint8_t) REGISTER_RED };
-    uint8_t buffer[1] = (data >> 16) & 0xFF;
-    uint8_t buffer[2] = (data >> 8) & 0xFF;
-    // First write our register address
-    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 3) != I2C_OK) {
-        return -1;
-    }
-    return 0;
-}
-
-int tcs3472_readgreen(uint16_t* val) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 2) != I2C_OK) {
-        return -2;
-    }
-    return 0;
-}
-
-int tcs3472_writegreen(uint16_t* data) {
-    // Put our data into uint8_t buffer
-    uint8_t buffer[3] = { (uint8_t) REGISTER_GREEN };
-    uint8_t buffer[1] = (data >> 16) & 0xFF;
-    uint8_t buffer[2] = (data >> 8) & 0xFF;
-    // First write our register address
-    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 3) != I2C_OK) {
-        return -1;
-    }
-    return 0;
 }
 
 int tcs3472_readblue(uint16_t* val) {
@@ -154,9 +67,86 @@ int tcs3472_writeblue(uint16_t* data) {
         return -1;
     }
     return 0;
+}int tcs3472_readclear(uint16_t* val) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 2) != I2C_OK) {
+        return -2;
+    }
+    return 0;
 }
 
+int tcs3472_writeclear(uint16_t* data) {
+    // Put our data into uint8_t buffer
+    uint8_t buffer[3] = { (uint8_t) REGISTER_CLEAR };
+    uint8_t buffer[1] = (data >> 16) & 0xFF;
+    uint8_t buffer[2] = (data >> 8) & 0xFF;
+    // First write our register address
+    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 3) != I2C_OK) {
+        return -1;
+    }
+    return 0;
+}int tcs3472_readenable(uint8_t* val) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 1) != I2C_OK) {
+        return -2;
+    }
+    return 0;
+}
 
+int tcs3472_writeenable(uint8_t* data) {
+    // Put our data into uint8_t buffer
+    uint8_t buffer[2] = { (uint8_t) REGISTER_ENABLE };
+    uint8_t buffer[1] = (data >> 8) & 0xFF;
+    // First write our register address
+    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 2) != I2C_OK) {
+        return -1;
+    }
+    return 0;
+}int tcs3472_readgreen(uint16_t* val) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 2) != I2C_OK) {
+        return -2;
+    }
+    return 0;
+}
+
+int tcs3472_writegreen(uint16_t* data) {
+    // Put our data into uint8_t buffer
+    uint8_t buffer[3] = { (uint8_t) REGISTER_GREEN };
+    uint8_t buffer[1] = (data >> 16) & 0xFF;
+    uint8_t buffer[2] = (data >> 8) & 0xFF;
+    // First write our register address
+    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 3) != I2C_OK) {
+        return -1;
+    }
+    return 0;
+}int tcs3472_readred(uint16_t* val) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 2) != I2C_OK) {
+        return -2;
+    }
+    return 0;
+}
+
+int tcs3472_writered(uint16_t* data) {
+    // Put our data into uint8_t buffer
+    uint8_t buffer[3] = { (uint8_t) REGISTER_RED };
+    uint8_t buffer[1] = (data >> 16) & 0xFF;
+    uint8_t buffer[2] = (data >> 8) & 0xFF;
+    // First write our register address
+    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 3) != I2C_OK) {
+        return -1;
+    }
+    return 0;
+}
 int tcs3472_get_init(uint8_t* val) {
     // Read register data
     // '#/registers/enable' > 'enable'

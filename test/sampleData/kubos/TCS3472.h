@@ -40,55 +40,6 @@ typedef enum init init_t;
 
 int tcs3472_init(char* bus_name);
 void tcs3472_terminate();
-   
-/**
-  * Enable specific components of the peripheral
-
-*/
-int tcs3472_readenable(uint8_t* val);
-
-/**
- * Enable specific components of the peripheral
-
- */
-int tcs3472_writeenable(uint8_t* data);
-   
-/**
-  * This is the ambient amount of detected light.
-
-*/
-int tcs3472_readclear(uint16_t* val);
-
-/**
- * This is the ambient amount of detected light.
-
- */
-int tcs3472_writeclear(uint16_t* data);
-   
-/**
-  * Red light as an int. Divide by ambient light to get scaled number.
-
-*/
-int tcs3472_readred(uint16_t* val);
-
-/**
- * Red light as an int. Divide by ambient light to get scaled number.
-
- */
-int tcs3472_writered(uint16_t* data);
-   
-/**
-  * Green light as an int. Divide by ambient light to get scaled number.
-
-*/
-int tcs3472_readgreen(uint16_t* val);
-
-/**
- * Green light as an int. Divide by ambient light to get scaled number.
-
- */
-int tcs3472_writegreen(uint16_t* data);
-   
 /**
   * Blue light as an int. Divide by ambient light to get scaled number.
 
@@ -99,8 +50,47 @@ int tcs3472_readblue(uint16_t* val);
  * Blue light as an int. Divide by ambient light to get scaled number.
 
  */
-int tcs3472_writeblue(uint16_t* data);
+int tcs3472_writeblue(uint16_t* data);/**
+  * This is the ambient amount of detected light.
 
+*/
+int tcs3472_readclear(uint16_t* val);
+
+/**
+ * This is the ambient amount of detected light.
+
+ */
+int tcs3472_writeclear(uint16_t* data);/**
+  * Enable specific components of the peripheral
+
+*/
+int tcs3472_readenable(uint8_t* val);
+
+/**
+ * Enable specific components of the peripheral
+
+ */
+int tcs3472_writeenable(uint8_t* data);/**
+  * Green light as an int. Divide by ambient light to get scaled number.
+
+*/
+int tcs3472_readgreen(uint16_t* val);
+
+/**
+ * Green light as an int. Divide by ambient light to get scaled number.
+
+ */
+int tcs3472_writegreen(uint16_t* data);/**
+  * Red light as an int. Divide by ambient light to get scaled number.
+
+*/
+int tcs3472_readred(uint16_t* val);
+
+/**
+ * Red light as an int. Divide by ambient light to get scaled number.
+
+ */
+int tcs3472_writered(uint16_t* data);
 /**
  * Enable RGBC and Power
 

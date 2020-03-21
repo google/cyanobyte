@@ -1,21 +1,19 @@
 {% macro params(input) -%}
 {% set args = namespace(index=0) %}
-{% for variable in input %}
-{% for key in variable.keys() -%}
+{% for key,variable in input|dictsort %}
 {% if key != 'value' -%}
 {{- ", " if args.index > 0 -}}{{- key -}}
 {%- set args.index = args.index + 1 -%}
 {%- endif %}
 {%- endfor %}
-{% endfor %}
 {%- endmacro %}
 
 {% macro variables(vars) -%}
-{% for var in vars %}
-{% for key in var.keys() %}
+{% if vars %}
+{% for key,var in vars|dictsort %}
         {{key | camel_to_snake}} = None # Variable declaration
 {% endfor %}
-{% endfor %}
+{% endif %}
 {%- endmacro %}
 
 {% macro recursiveAssignLogic(logicalStep, keys) -%}
@@ -116,9 +114,9 @@
 {%- endmacro %}
 
 {% macro importStdLibs(fields, functions, template) %}
-{% for field in fields %}
-{% for key in field.keys() %}
-{% if field[key].enum %}
+{% if fields %}
+{% for key,field in fields|dictsort %}
+{% if field.enum %}
 {# Optionally import class #}
 {% if template.enum is sameas false %}
 from enum import Enum
@@ -126,13 +124,12 @@ from enum import Enum
 {% endif %}
 {% endif %}
 {% endfor %}
-{% endfor %}
-{% for function in functions %}
-{% for key in function.keys() %}
+{% endif %}
+{% if functions %}
+{% for key,function in functions|dictsort %}
 {# Check if we need to import `math` lib #}
-{% for compute in function[key].computed %}
-{% for computeKey in compute.keys() %}
-{% if compute[computeKey].output == 'int16' %}
+{% for ckey,compute in function.computed|dictsort %}
+{% if compute.output == 'int16' %}
 {% if template.struct is sameas false %}
 import struct
 {% set template.struct = true %}
@@ -154,9 +151,8 @@ import math
 {% endif %}
 {% endfor %}
 {%- endmacro %}
-{{- scanForMathLib(compute[computeKey].logic) -}}
+{{- scanForMathLib(compute.logic) -}}
 {% endfor %}
 {% endfor %}
-{% endfor %}
-{% endfor %}
+{% endif %}
 {%- endmacro %}

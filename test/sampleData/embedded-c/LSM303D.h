@@ -32,25 +32,6 @@ int lsm303d_init(int (*connect)(uint8_t));
   * Raw accelerometer data on X plane
 
 */
-int lsm303d_readAccelerometerX_Low(
-    uint8_t* val,
-    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);
-
-/**
- * Raw accelerometer data on X plane
-
- */
-int lsm303d_writeAccelerometerX_Low(
-    uint8_t* data,
-    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);
-   
-/**
-  * Raw accelerometer data on X plane
-
-*/
 int lsm303d_readAccelerometerX_High(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
@@ -64,27 +45,25 @@ int lsm303d_writeAccelerometerX_High(
     uint8_t* data,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);
-   
+);   
 /**
-  * Raw accelerometer data on Y plane
+  * Raw accelerometer data on X plane
 
 */
-int lsm303d_readAccelerometerY_Low(
+int lsm303d_readAccelerometerX_Low(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 );
 
 /**
- * Raw accelerometer data on Y plane
+ * Raw accelerometer data on X plane
 
  */
-int lsm303d_writeAccelerometerY_Low(
+int lsm303d_writeAccelerometerX_Low(
     uint8_t* data,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);
-   
+);   
 /**
   * Raw accelerometer data on Y plane
 
@@ -102,27 +81,25 @@ int lsm303d_writeAccelerometerY_High(
     uint8_t* data,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);
-   
+);   
 /**
-  * Raw accelerometer data on Z plane
+  * Raw accelerometer data on Y plane
 
 */
-int lsm303d_readAccelerometerZ_Low(
+int lsm303d_readAccelerometerY_Low(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 );
 
 /**
- * Raw accelerometer data on Z plane
+ * Raw accelerometer data on Y plane
 
  */
-int lsm303d_writeAccelerometerZ_Low(
+int lsm303d_writeAccelerometerY_Low(
     uint8_t* data,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);
-   
+);   
 /**
   * Raw accelerometer data on Z plane
 
@@ -140,27 +117,25 @@ int lsm303d_writeAccelerometerZ_High(
     uint8_t* data,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);
-   
+);   
 /**
-  * Raw magnetometer data on X plane
+  * Raw accelerometer data on Z plane
 
 */
-int lsm303d_readMagnetometerX_Low(
+int lsm303d_readAccelerometerZ_Low(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 );
 
 /**
- * Raw magnetometer data on X plane
+ * Raw accelerometer data on Z plane
 
  */
-int lsm303d_writeMagnetometerX_Low(
+int lsm303d_writeAccelerometerZ_Low(
     uint8_t* data,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);
-   
+);   
 /**
   * Raw magnetometer data on X plane
 
@@ -178,27 +153,25 @@ int lsm303d_writeMagnetometerX_High(
     uint8_t* data,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);
-   
+);   
 /**
-  * Raw magnetometer data on Y plane
+  * Raw magnetometer data on X plane
 
 */
-int lsm303d_readMagnetometerY_Low(
+int lsm303d_readMagnetometerX_Low(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 );
 
 /**
- * Raw magnetometer data on Y plane
+ * Raw magnetometer data on X plane
 
  */
-int lsm303d_writeMagnetometerY_Low(
+int lsm303d_writeMagnetometerX_Low(
     uint8_t* data,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);
-   
+);   
 /**
   * Raw magnetometer data on Y plane
 
@@ -216,8 +189,43 @@ int lsm303d_writeMagnetometerY_High(
     uint8_t* data,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
+);   
+/**
+  * Raw magnetometer data on Y plane
+
+*/
+int lsm303d_readMagnetometerY_Low(
+    uint8_t* val,
+    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 );
-   
+
+/**
+ * Raw magnetometer data on Y plane
+
+ */
+int lsm303d_writeMagnetometerY_Low(
+    uint8_t* data,
+    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
+    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
+);   
+/**
+  * Raw magnetometer data on Z plane
+
+*/
+int lsm303d_readMagnetometerZ_High(
+    uint8_t* val,
+    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
+);
+
+/**
+ * Raw magnetometer data on Z plane
+
+ */
+int lsm303d_writeMagnetometerZ_High(
+    uint8_t* data,
+    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
+    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
+);   
 /**
   * Raw magnetometer data on Z plane
 
@@ -236,27 +244,16 @@ int lsm303d_writeMagnetometerZ_Low(
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
 );
-   
+
 /**
-  * Raw magnetometer data on Z plane
+ * Measures the current acceleration
 
 */
-int lsm303d_readMagnetometerZ_High(
-    uint8_t* val,
-    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
+void lsm303d_acceleration_asg(
+    void* val,
+    int (*read)(uint8_t, uint8_t, int*, uint8_t),
+    int (*write)(uint8_t, uint8_t, int*, uint8_t)
 );
-
-/**
- * Raw magnetometer data on Z plane
-
- */
-int lsm303d_writeMagnetometerZ_High(
-    uint8_t* data,
-    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);
-
-
 /**
  * Measures the current acceleration
 
@@ -284,16 +281,16 @@ void lsm303d_acceleration_zplane(
     int (*read)(uint8_t, uint8_t, int*, uint8_t),
     int (*write)(uint8_t, uint8_t, int*, uint8_t)
 );
+
 /**
- * Measures the current acceleration
+ * Reads the magnetic orientation
 
 */
-void lsm303d_acceleration_asg(
-    void* val,
+void lsm303d_orientation_heading(
+    short* val,
     int (*read)(uint8_t, uint8_t, int*, uint8_t),
     int (*write)(uint8_t, uint8_t, int*, uint8_t)
 );
-
 /**
  * Reads the magnetic orientation
 
@@ -317,15 +314,6 @@ void lsm303d_orientation_yplane(
 
 */
 void lsm303d_orientation_zplane(
-    short* val,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
-);
-/**
- * Reads the magnetic orientation
-
-*/
-void lsm303d_orientation_heading(
     short* val,
     int (*read)(uint8_t, uint8_t, int*, uint8_t),
     int (*write)(uint8_t, uint8_t, int*, uint8_t)

@@ -51,9 +51,8 @@ static short _swap_endian(short val) {
 {% endif %}
 
 {# Add signing function if needed #}
-{% for register in registers %}
-{% for key in register.keys() %}
-{% if register[key].signed %}
+{% for key,register in registers|dictsort %}
+{% if register.signed %}
 {% if template.sign is sameas false %}
 static short _sign(short val, char length) {
     // Convert unsigned integer to signed integer
@@ -66,17 +65,14 @@ static short _sign(short val, char length) {
 {% endif %}
 {% endif %}
 {% endfor %}
-{% endfor %}
 
 #include "{{info.title}}.h"
 {% if i2c.address is number %}
 #define DEVICE_ADDRESS {{i2c.address}}
 {% endif %}
 
-{% for register in registers %}
-{% for key in register.keys() %}
-#define REGISTER_{{key.upper()}} {{register[key].address}}
-{% endfor %}
+{% for key,register in registers|dictsort %}
+#define REGISTER_{{key.upper()}} {{register.address}}
 {% endfor %}
 
 {% if i2c.address is iterable and i2c.address is not string %}
@@ -100,10 +96,9 @@ void {{info.title}}::end() {
     _wire->end();
 }
 
-{% for register in registers -%}
-{% for key in register.keys() %}
-{% set length = register[key].length %}
-{% set bytes = (register[key].length / 8) | round(1, 'ceil') | int %}
+{% for key,register in registers|dictsort -%}
+{% set length = register.length %}
+{% set bytes = (register.length / 8) | round(1, 'ceil') | int %}
 {{cpp.numtype(length)}} {{info.title}}::read{{key}}() {
     uint8_t datum;
     {{cpp.numtype(length)}} value;
@@ -140,84 +135,81 @@ int {{info.title}}::write{{key}}({{cpp.numtype(length)}} data) {
     return 1;
 }
 
-{% endfor %}
 {%- endfor %}
 
-{% for field in fields %}
-{% for key in field.keys() %}
-{% if 'R' is in(field[key].readWrite) %}
+{% if fields %}
+{% for key,field in fields|dictsort %}
+{% if 'R' is in(field.readWrite) %}
 {# Getter #}
-{{cpp.registerSize(registers, field[key].register[12:])}} {{info.title}}::get{{key}}() {
+{{cpp.registerSize(registers, field.register[12:])}} {{info.title}}::get{{key}}() {
     // Read register data
-    // '#/registers/{{field[key].register[12:]}}' > '{{field[key].register[12:]}}'
-    uint8_t val = read{{field[key].register[12:]}}();
+    // '#/registers/{{field.register[12:]}}' > '{{field.register[12:]}}'
+    uint8_t val = read{{field.register[12:]}}();
     // Mask register value
-    val = val & {{utils.mask(field[key].bitStart, field[key].bitEnd)}};
-    {% if field[key].bitEnd %}
+    val = val & {{utils.mask(field.bitStart, field.bitEnd)}};
+    {% if field.bitEnd %}
     // Bitshift value
-    val = val >> {{field[key].bitEnd}};
+    val = val >> {{field.bitEnd}};
     {% endif %}
     return val;
 }
 {% endif -%}
 
-{%- if 'W' is in(field[key].readWrite) %}
+{%- if 'W' is in(field.readWrite) %}
 {# Setter #}
 
 int {{info.title}}::set{{key}}(uint8_t data) {
-    {% if field[key].bitEnd %}
+    {% if field.bitEnd %}
     // Bitshift value
-    data = data << {{field[key].bitEnd}};
+    data = data << {{field.bitEnd}};
     {% endif %}
     // Read current register data
-    // '#/registers/{{field[key].register[12:]}}' > '{{field[key].register[12:]}}'
-    uint8_t register_data = read{{field[key].register[12:]}}();
+    // '#/registers/{{field.register[12:]}}' > '{{field.register[12:]}}'
+    uint8_t register_data = read{{field.register[12:]}}();
     register_data = register_data | data;
-    return write{{field[key].register[12:]}}(register_data);
+    return write{{field.register[12:]}}(register_data);
 }
 {% endif %}
 {% endfor %}
-{% endfor %}
+{% endif %}
 
-{% for function in functions %}
-{% for key in function.keys() %}
-{% for compute in function[key].computed %}
-{% for computeKey in compute.keys() %}
-{% if compute[computeKey].input %}
-{{cpp.returnType(compute[computeKey])}} {{info.title}}::{{key}}{{computeKey}}({{cpp.params(compute[computeKey])}}) {
+{% if functions %}
+{% for key,function in functions|dictsort %}
+{% for ckey,compute in function.computed|dictsort %}
+{% if 'input' in compute %}
+{{cpp.returnType(compute)}} {{info.title}}::{{key}}{{ckey}}({{cpp.params(compute)}}) {
 {% else %}
-{{cpp.returnType(compute[computeKey])}} {{info.title}}::{{key}}{{computeKey}}({{cpp.params(compute[computeKey])}}) {
+{{cpp.returnType(compute)}} {{info.title}}::{{key}}{{ckey}}({{cpp.params(compute)}}) {
 {% endif %}
     {# Declare our variables #}
-{{ cpp.variables(compute[computeKey].variables) }}
+{{ cpp.variables(compute.variables) }}
 
     {# Read `value` if applicable #}
-    {%- for variable in compute[computeKey].input %}
-    {% for varKey in variable.keys() %}
-    {% if varKey == 'value' %}
+    {% if 'input' in compute %}
+    {%- for vkey,variable in compute.input|dictsort %}
+    {% if vkey == 'value' %}
     // Read value of register into a variable
-    {{cpp.numconv(variable[varKey])}} value = read{{function[key].register[12:]}}();
+    {{cpp.numconv(variable)}} value = read{{function.register[12:]}}();
     {% endif %}
     {% endfor %}
-    {% endfor -%}
+    {% endif %}
     {# Handle the logic #}
-{{ logic(compute[computeKey].logic, function[key]) }}
+{{ logic(compute.logic, function) }}
 
     {# Return if applicable #}
     {# Return a tuple #}
-    {% if compute[computeKey].return is iterable and compute[computeKey].return is not string %}
+    {% if compute.return is iterable and compute.return is not string %}
     {# In C languages, the array is a parameter `returnArray` you fill #}
-    {% for variable in compute[computeKey].return %}
+    {% for variable in compute.return %}
     returnArray[{{loop.index - 1}}] = {{variable}};
     {% endfor %}
     {% endif %}
     {# Return a plain value #}
-    {% if compute[computeKey].return is string %}
-    return {{compute[computeKey].return}};
+    {% if compute.return is string %}
+    return {{compute.return}};
     {% endif %}
 }
 
 {% endfor %}
 {% endfor %}
-{% endfor %}
-{% endfor %}
+{% endif %}

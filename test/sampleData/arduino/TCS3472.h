@@ -42,50 +42,6 @@ class TCS3472 {
         void begin();
         void end();
         /**
-         * Enable specific components of the peripheral
-
-         */
-        uint8_t readenable();
-
-        /**
-         * Enable specific components of the peripheral
-
-         */
-        int writeenable(uint8_t data);
-        /**
-         * This is the ambient amount of detected light.
-
-         */
-        uint16_t readclear();
-
-        /**
-         * This is the ambient amount of detected light.
-
-         */
-        int writeclear(uint16_t data);
-        /**
-         * Red light as an int. Divide by ambient light to get scaled number.
-
-         */
-        uint16_t readred();
-
-        /**
-         * Red light as an int. Divide by ambient light to get scaled number.
-
-         */
-        int writered(uint16_t data);
-        /**
-         * Green light as an int. Divide by ambient light to get scaled number.
-
-         */
-        uint16_t readgreen();
-
-        /**
-         * Green light as an int. Divide by ambient light to get scaled number.
-
-         */
-        int writegreen(uint16_t data);
-        /**
          * Blue light as an int. Divide by ambient light to get scaled number.
 
          */
@@ -95,8 +51,47 @@ class TCS3472 {
          * Blue light as an int. Divide by ambient light to get scaled number.
 
          */
-        int writeblue(uint16_t data);
+        int writeblue(uint16_t data);        /**
+         * This is the ambient amount of detected light.
+
+         */
+        uint16_t readclear();
+
         /**
+         * This is the ambient amount of detected light.
+
+         */
+        int writeclear(uint16_t data);        /**
+         * Enable specific components of the peripheral
+
+         */
+        uint8_t readenable();
+
+        /**
+         * Enable specific components of the peripheral
+
+         */
+        int writeenable(uint8_t data);        /**
+         * Green light as an int. Divide by ambient light to get scaled number.
+
+         */
+        uint16_t readgreen();
+
+        /**
+         * Green light as an int. Divide by ambient light to get scaled number.
+
+         */
+        int writegreen(uint16_t data);        /**
+         * Red light as an int. Divide by ambient light to get scaled number.
+
+         */
+        uint16_t readred();
+
+        /**
+         * Red light as an int. Divide by ambient light to get scaled number.
+
+         */
+        int writered(uint16_t data);        /**
          * Enable RGBC and Power
 
          */

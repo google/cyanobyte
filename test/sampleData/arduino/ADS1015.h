@@ -26,42 +26,6 @@
 #include <Wire.h>
 
 /*
- * Valid values for Setup sample rate for reading analog voltage
-
- */
-enum SampleRate {
-    SAMPLERATE_HZ128 = 0, // 128 samples/second
-    SAMPLERATE_HZ250 = 1, // 250 samples/second
-    SAMPLERATE_HZ490 = 2, // 490 samples/second
-    SAMPLERATE_HZ920 = 3, // 920 samples/second
-    SAMPLERATE_HZ1600 = 4, // 1600 samples/second
-    SAMPLERATE_HZ2400 = 5, // 2400 samples/second
-    SAMPLERATE_HZ3300 = 6 // 3300 samples/second
-};
-typedef enum SampleRate SampleRate_t;
-/*
- * Valid values for Setup programmable gain
-
- */
-enum ProgrammableGain {
-    PROGRAMMABLEGAIN_PGA6_144V = 0, // Plus/minus 6.144V
-    PROGRAMMABLEGAIN_PGA4_096V = 1, // Plus/minus 4.096V
-    PROGRAMMABLEGAIN_PGA2_048V = 2, // Plus/minus 2.048V
-    PROGRAMMABLEGAIN_PGA1_024V = 3, // Plus/minus 1.024V
-    PROGRAMMABLEGAIN_PGA0_512 = 4, // Plus/minus 0.512V
-    PROGRAMMABLEGAIN_PGA0_256 = 5 // Plus/minus 0.256V
-};
-typedef enum ProgrammableGain ProgrammableGain_t;
-/*
- * Valid values for Set the operating mode
-
- */
-enum DeviceOperatingMode {
-    DEVICEOPERATINGMODE_CONTINUOUS_CONVERSION = 0, // Continuous Conversion
-    DEVICEOPERATINGMODE_SINGLE_SHOT = 1 // Single-shot or power-down state
-};
-typedef enum DeviceOperatingMode DeviceOperatingMode_t;
-/*
  * Valid values for Set the channel to read
 
  */
@@ -72,6 +36,42 @@ enum Channel {
     CHANNEL_CHANNEL_4 = 3 // Channel 4
 };
 typedef enum Channel Channel_t;
+/*
+ * Valid values for Set the operating mode
+
+ */
+enum DeviceOperatingMode {
+    DEVICEOPERATINGMODE_CONTINUOUS_CONVERSION = 0, // Continuous Conversion
+    DEVICEOPERATINGMODE_SINGLE_SHOT = 1 // Single-shot or power-down state
+};
+typedef enum DeviceOperatingMode DeviceOperatingMode_t;
+/*
+ * Valid values for Setup programmable gain
+
+ */
+enum ProgrammableGain {
+    PROGRAMMABLEGAIN_PGA0_256 = 5, // Plus/minus 0.256V
+    PROGRAMMABLEGAIN_PGA0_512 = 4, // Plus/minus 0.512V
+    PROGRAMMABLEGAIN_PGA1_024V = 3, // Plus/minus 1.024V
+    PROGRAMMABLEGAIN_PGA2_048V = 2, // Plus/minus 2.048V
+    PROGRAMMABLEGAIN_PGA4_096V = 1, // Plus/minus 4.096V
+    PROGRAMMABLEGAIN_PGA6_144V = 0 // Plus/minus 6.144V
+};
+typedef enum ProgrammableGain ProgrammableGain_t;
+/*
+ * Valid values for Setup sample rate for reading analog voltage
+
+ */
+enum SampleRate {
+    SAMPLERATE_HZ128 = 0, // 128 samples/second
+    SAMPLERATE_HZ1600 = 4, // 1600 samples/second
+    SAMPLERATE_HZ2400 = 5, // 2400 samples/second
+    SAMPLERATE_HZ250 = 1, // 250 samples/second
+    SAMPLERATE_HZ3300 = 6, // 3300 samples/second
+    SAMPLERATE_HZ490 = 2, // 490 samples/second
+    SAMPLERATE_HZ920 = 3 // 920 samples/second
+};
+typedef enum SampleRate SampleRate_t;
 
 class ADS1015 {
     public:
@@ -89,8 +89,7 @@ class ADS1015 {
          * Describes the specifics of the sensing implementation
 
          */
-        int writeConfig(uint16_t data);
-        /**
+        int writeConfig(uint16_t data);        /**
          * Conversion register contains the result of the last conversion
 
          */
@@ -100,22 +99,21 @@ class ADS1015 {
          * Conversion register contains the result of the last conversion
 
          */
-        int writeConversion(uint16_t data);
-        /**
-         * This sets the samples-per-second value
+        int writeConversion(uint16_t data);        /**
+         * This bit controls the operating mode
 
          */
-        int setSampleRate(uint8_t data);
+        int setDeviceOperatingMode(uint8_t data);
         /**
          * This sets the programmable gain for reading analog voltage
 
          */
         int setProgrammableGain(uint8_t data);
         /**
-         * This bit controls the operating mode
+         * This sets the samples-per-second value
 
          */
-        int setDeviceOperatingMode(uint8_t data);
+        int setSampleRate(uint8_t data);
 
         /**
          * Reads the analog voltage in Volts

@@ -37,35 +37,35 @@ class TCS3472:
 
     """
     device_address = 41
-    REGISTER_ENABLE = 128
-    REGISTER_CLEAR = 180
-    REGISTER_RED = 182
-    REGISTER_GREEN = 184
     REGISTER_BLUE = 186
+    REGISTER_CLEAR = 180
+    REGISTER_ENABLE = 128
+    REGISTER_GREEN = 184
+    REGISTER_RED = 182
 
     def __init__(self):
         # Initialize connection to peripheral
         self.bus = smbus.SMBus(1)
 
-    def get_enable(self):
+    def get_blue(self):
         """
-        Enable specific components of the peripheral
+        Blue light as an int. Divide by ambient light to get scaled number.
 
         """
-        val = self.bus.read_byte_data(
+        val = self.bus.read_word_data(
             self.device_address,
-            self.REGISTER_ENABLE
+            self.REGISTER_BLUE
         )
         return val
 
-    def set_enable(self, data):
+    def set_blue(self, data):
         """
-        Enable specific components of the peripheral
+        Blue light as an int. Divide by ambient light to get scaled number.
 
         """
-        self.bus.write_byte_data(
+        self.bus.write_word_data(
             self.device_address,
-            self.REGISTER_ENABLE,
+            self.REGISTER_BLUE,
             data
         )
     def get_clear(self):
@@ -89,25 +89,25 @@ class TCS3472:
             self.REGISTER_CLEAR,
             data
         )
-    def get_red(self):
+    def get_enable(self):
         """
-        Red light as an int. Divide by ambient light to get scaled number.
+        Enable specific components of the peripheral
 
         """
-        val = self.bus.read_word_data(
+        val = self.bus.read_byte_data(
             self.device_address,
-            self.REGISTER_RED
+            self.REGISTER_ENABLE
         )
         return val
 
-    def set_red(self, data):
+    def set_enable(self, data):
         """
-        Red light as an int. Divide by ambient light to get scaled number.
+        Enable specific components of the peripheral
 
         """
-        self.bus.write_word_data(
+        self.bus.write_byte_data(
             self.device_address,
-            self.REGISTER_RED,
+            self.REGISTER_ENABLE,
             data
         )
     def get_green(self):
@@ -131,25 +131,25 @@ class TCS3472:
             self.REGISTER_GREEN,
             data
         )
-    def get_blue(self):
+    def get_red(self):
         """
-        Blue light as an int. Divide by ambient light to get scaled number.
+        Red light as an int. Divide by ambient light to get scaled number.
 
         """
         val = self.bus.read_word_data(
             self.device_address,
-            self.REGISTER_BLUE
+            self.REGISTER_RED
         )
         return val
 
-    def set_blue(self, data):
+    def set_red(self, data):
         """
-        Blue light as an int. Divide by ambient light to get scaled number.
+        Red light as an int. Divide by ambient light to get scaled number.
 
         """
         self.bus.write_word_data(
             self.device_address,
-            self.REGISTER_BLUE,
+            self.REGISTER_RED,
             data
         )
 

@@ -30,8 +30,8 @@ static short _swap_endian(short val) {
 #include "MCP4725.h"
 #define DEVICE_ADDRESS 98
 
-#define REGISTER_VOUT 64
 #define REGISTER_EEPROM 96
+#define REGISTER_VOUT 64
 
 // Provide an I2C connect function, return status
 int mcp4725_init(int (*connect)(uint8_t)) {
@@ -39,29 +39,6 @@ int mcp4725_init(int (*connect)(uint8_t)) {
     if (connect(DEVICE_ADDRESS) != 0) {
         return -1;
     }
-}
-
-int mcp4725_readVOut(
-    uint16_t* val,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
-    }
-    if (read(DEVICE_ADDRESS, REGISTER_VOUT, val, 1) != 0) {
-        return -2;
-    }
-    return 0;
-}
-
-int mcp4725_writeVOut(
-    uint16_t* data,
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_VOUT, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
 }
 
 int mcp4725_readEEPROM(
@@ -85,9 +62,28 @@ int mcp4725_writeEEPROM(
         return -1;
     }
     return 0;
+}int mcp4725_readVOut(
+    uint16_t* val,
+    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
+) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (read(DEVICE_ADDRESS, REGISTER_VOUT, val, 1) != 0) {
+        return -2;
+    }
+    return 0;
 }
 
-
+int mcp4725_writeVOut(
+    uint16_t* data,
+    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
+) {
+    if (write(DEVICE_ADDRESS, REGISTER_VOUT, data, 1) != 0) {
+        return -1;
+    }
+    return 0;
+}
 int mcp4725_get_digitalout(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, int*, uint8_t)
@@ -123,6 +119,21 @@ int mcp4725_set_digitalout(
     return 0;
 }
 
+void mcp4725_getvout_asvoltage(
+    float* val,
+    ,
+    int (*read)(uint8_t, uint8_t, int*, uint8_t),
+    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+) {
+    float voltage; // Variable declaration
+
+
+    voltage = value / 4096 * vcc
+
+
+    *val = voltage;
+}
+
 void mcp4725_setvout_asvoltage(
     void* val,
     ,
@@ -136,22 +147,5 @@ void mcp4725_setvout_asvoltage(
 
 
     *val = [];
-}
-
-void mcp4725_getvout_asvoltage(
-    float* val,
-    ,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
-) {
-    float voltage; // Variable declaration
-
-
-    // Read value of register into a variable
-    value = mcp4725_get_EEPROM(val, read);
-    voltage = value / 4096 * vcc
-
-
-    *val = voltage;
 }
 

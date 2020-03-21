@@ -1,49 +1,45 @@
 {% macro params(compute) -%}
 {% set input = compute.input %}
 {% set args = namespace(index=0, dict={}) %}
-{% for variable in input %}
-{% for key in variable.keys() -%}
+{% if 'input' in compute %}
+{% for key,variable in input|dictsort %}
 {% if key != 'value' -%}
-{{- ", " if args.index > 0 -}}{{- numconv(variable[key]) }} {{ key -}}
+{{- ", " if args.index > 0 -}}{{- numconv(variable) }} {{ key -}}
 {%- set args.index = args.index + 1 -%}
 {%- endif %}
-{%- endfor %}
 {% endfor %}
 {# In C languages, you pass in array as a parameter #}
 {% if 'return' in compute and compute.return is iterable and compute.return is not string %}
-{% for var in compute.variables %}
-{% for key in var.keys() %}
-    {% set x=args.dict.__setitem__(key, var[key]) %}
-{% endfor %}
+{% for key,var in compute.variables|dictsort %}
+    {% set x=args.dict.__setitem__(key, var) %}
 {% endfor %}
 {{- ", " if args.index > 0 -}}{{numconv(args.dict[compute.return[0]])}} * returnArray
+{% endif %}
 {%- endif %}
 {%- endmacro %}
 
 {% macro variables(vars) -%}
-{% for var in vars %}
-{% for key in var.keys() %}
-    {{ numconv(var[key]) }} {{key}}; // Variable declaration
+{% if vars %}
+{% for key,var in vars|dictsort %}
+    {{ numconv(var) }} {{key}}; // Variable declaration
 {% endfor %}
-{% endfor %}
+{% endif %}
 {%- endmacro %}
 
 {% macro registerSize(registers, name) %}
-{% for reg in registers %}
-{% for key in reg.keys() %}
-{% if key == name %}{{numtype(reg[key].length)}}{% endif %}
-{% endfor %}
+{% for key,register in registers|dictsort %}
+{% if key == name %}{{numtype(register.length)}}{% endif %}
 {% endfor %}
 {% endmacro %}
 
 {% macro returnType(compute) -%}
 {# Create a dictionary of all the variables #}
 {% set vars = namespace(dict={}) %}
-{% for var in compute.variables %}
-{% for key in var.keys() %}
-    {% set x=vars.dict.__setitem__(key, var[key]) %}
+{% if 'variables' in compute %}
+{% for key,var in compute.variables|dictsort %}
+    {% set x=vars.dict.__setitem__(key, var) %}
 {% endfor %}
-{% endfor %}
+{% endif %}
 {% if compute.return is iterable and compute.return is not string %}
 {# In C languages, you do not return arrays. Rather the arg is an array #}
 void

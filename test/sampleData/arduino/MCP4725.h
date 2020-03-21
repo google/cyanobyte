@@ -30,8 +30,8 @@
 
  */
 enum digitalOut {
-    DIGITALOUT_VCC = 4095, // Vcc (full power)
-    DIGITALOUT_GND = 0 // Ground
+    DIGITALOUT_GND = 0, // Ground
+    DIGITALOUT_VCC = 4095 // Vcc (full power)
 };
 typedef enum digitalOut digitalOut_t;
 
@@ -42,6 +42,18 @@ class MCP4725 {
         void begin();
         void end();
         /**
+         * If EEPROM is set, the saved voltage output will
+         * be loaded from power-on.
+
+         */
+        uint16_t readEEPROM();
+
+        /**
+         * If EEPROM is set, the saved voltage output will
+         * be loaded from power-on.
+
+         */
+        int writeEEPROM(uint16_t data);        /**
          * VOut = (Vcc * value) / 4096
          * The output is a range between 0 and Vcc with
          * steps of Vcc/4096.
@@ -57,21 +69,7 @@ class MCP4725 {
          * In a 3.3v system, each step is 800 microvolts.
 
          */
-        int writeVOut(uint16_t data);
-        /**
-         * If EEPROM is set, the saved voltage output will
-         * be loaded from power-on.
-
-         */
-        uint16_t readEEPROM();
-
-        /**
-         * If EEPROM is set, the saved voltage output will
-         * be loaded from power-on.
-
-         */
-        int writeEEPROM(uint16_t data);
-        /**
+        int writeVOut(uint16_t data);        /**
          * Only allows you to send fully on or off
 
          */
@@ -83,16 +81,16 @@ class MCP4725 {
         int setdigitalOut(uint8_t data);
 
         /**
-         * set vout
-
-         */
-        void setVOutasVoltage(float vcc, float output);
-
-        /**
          * get vout
 
          */
         float getVOutasVoltage(float vcc);
+
+        /**
+         * set vout
+
+         */
+        void setVOutasVoltage(float output, float vcc);
 
 
     private:

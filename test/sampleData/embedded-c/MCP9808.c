@@ -60,8 +60,6 @@ int mcp9808_writeconfiguration(
     }
     return 0;
 }
-
-
 int mcp9808_get_limithysteresis(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, int*, uint8_t)

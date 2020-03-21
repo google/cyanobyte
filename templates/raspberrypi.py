@@ -46,22 +46,20 @@ Class for {{ info.title }}
 import smbus
 
 {# Create enums for fields #}
-{% for field in fields %}
-{% for key in field.keys() %}
-{% if field[key].enum %}
+{% if fields %}
+{% for key,field in fields|dictsort %}
+{% if field.enum %}
 {# Create enum class #}
 class {{key[0].upper()}}{{key[1:]}}Values(Enum):
     """
-{{utils.pad_string("    ", "Valid values for " + field[key].title)}}
+{{utils.pad_string("    ", "Valid values for " + field.title)}}
     """
-    {% for enumObject in field[key].enum %}
-    {% for enumKey in enumObject.keys() %}
-    {{enumKey.upper()}} = {{enumObject[enumKey].value}} # {{enumObject[enumKey].title}}
-    {% endfor %}
+    {% for ekey,enum in field.enum|dictsort %}
+    {{ekey.upper()}} = {{enum.value}} # {{enum.title}}
     {% endfor %}
 {% endif %}
 {% endfor %}
-{% endfor %}
+{% endif %}
 {% if i2c.address is iterable and i2c.address is not string %}
 class DeviceAddressValues(Enum):
     """
@@ -81,9 +79,8 @@ def _swap_endian(val):
 {% endif %}
 
 {# Add signing function if needed #}
-{% for register in registers %}
-{% for key in register.keys() %}
-{% if register[key].signed %}
+{% for key,register in registers|dictsort %}
+{% if register.signed %}
 {# Optionally import class #}
 {% if template.sign is sameas false %}
 def _sign(val, length):
@@ -97,7 +94,6 @@ def _sign(val, length):
 {% endif %}
 {% endif %}
 {% endfor %}
-{% endfor %}
 
 class {{ info.title }}:
     """
@@ -106,10 +102,8 @@ class {{ info.title }}:
     {% if i2c.address is number %}
     device_address = {{i2c.address}}
     {% endif %}
-    {% for register in registers %}
-    {% for key in register.keys() %}
-    REGISTER_{{key.upper()}} = {{register[key].address}}
-    {% endfor %}
+    {% for key,register in registers|dictsort %}
+    REGISTER_{{key.upper()}} = {{register.address}}
     {% endfor %}
 
     {% if i2c.address is iterable and i2c.address is not string %}
@@ -123,18 +117,17 @@ class {{ info.title }}:
         self.bus = smbus.SMBus(1)
     {% endif %}
 
-    {% for register in registers -%}
-    {% for key in register.keys() %}
+    {% for key,register in registers|dictsort %}
     def get_{{key.lower()}}(self):
         """
-{{utils.pad_string("        ", register[key].description)}}
+{{utils.pad_string("        ", register.description)}}
         """
-        {% if register[key].length <= 8 %}
+        {% if register.length <= 8 %}
         val = self.bus.read_byte_data(
             self.device_address,
             self.REGISTER_{{key.upper()}}
         )
-        {% elif register[key].length <= 16 %}
+        {% elif register.length <= 16 %}
         val = self.bus.read_word_data(
             self.device_address,
             self.REGISTER_{{key.upper()}}
@@ -143,26 +136,26 @@ class {{ info.title }}:
         {% if i2c.endian == 'little' %}
         val = _swap_endian(val)
         {% endif %}
-        {% if register[key].signed %}
+        {% if register.signed %}
         # Unsigned > Signed integer
-        val = _sign(val, {{register[key].length}})
+        val = _sign(val, {{register.length}})
         {% endif %}
         return val
 
     def set_{{key.lower()}}(self, data):
         """
-{{utils.pad_string("        ", register[key].description)}}
+{{utils.pad_string("        ", register.description)}}
         """
         {% if i2c.endian == 'little' %}
         data = _swap_endian(data)
         {% endif %}
-        {% if register[key].length <= 8 %}
+        {% if register.length <= 8 %}
         self.bus.write_byte_data(
             self.device_address,
             self.REGISTER_{{key.upper()}},
             data
         )
-        {% elif register[key].length <= 16 %}
+        {% elif register.length <= 16 %}
         self.bus.write_word_data(
             self.device_address,
             self.REGISTER_{{key.upper()}},
@@ -170,88 +163,85 @@ class {{ info.title }}:
         )
         {% endif %}
     {% endfor %}
-    {%- endfor %}
 
-    {% for field in fields %}
-    {% for key in field.keys() %}
-    {% if 'R' is in(field[key].readWrite) %}
+    {% if fields %}
+    {% for key,field in fields|dictsort %}
+    {% if 'R' is in(field.readWrite) %}
     {# Getter #}
 
     def get_{{key.lower()}}(self):
         """
-{{utils.pad_string("        ", field[key].description)}}
+{{utils.pad_string("        ", field.description)}}
         """
         # Read register data
-        # '#/registers/{{field[key].register[12:]}}' > '{{field[key].register[12:]}}'
-        val = self.get_{{field[key].register[12:].lower()}}()
+        # '#/registers/{{field.register[12:]}}' > '{{field.register[12:]}}'
+        val = self.get_{{field.register[12:].lower()}}()
         # Mask register value
-        val = val & {{utils.mask(field[key].bitStart, field[key].bitEnd)}}
-        {% if field[key].bitEnd %}
+        val = val & {{utils.mask(field.bitStart, field.bitEnd)}}
+        {% if field.bitEnd %}
         # Bitshift value
-        val = val >> {{field[key].bitEnd}}
+        val = val >> {{field.bitEnd}}
         {% endif %}
         return val
     {% endif -%}
 
-    {%- if 'W' is in(field[key].readWrite) %}
+    {%- if 'W' is in(field.readWrite) %}
     {# Setter #}
 
     def set_{{key.lower()}}(self, data):
         """
-{{utils.pad_string("        ", field[key].description)}}
+{{utils.pad_string("        ", field.description)}}
         """
-        {% if field[key].bitEnd %}
+        {% if field.bitEnd %}
         # Bitshift value
-        data = data << {{field[key].bitEnd}}
+        data = data << {{field.bitEnd}}
         {% endif %}
         # Read current register data
-        # '#/registers/{{field[key].register[12:]}}' > '{{field[key].register[12:]}}'
-        register_data = self.get_{{field[key].register[12:].lower()}}()
+        # '#/registers/{{field.register[12:]}}' > '{{field.register[12:]}}'
+        register_data = self.get_{{field.register[12:].lower()}}()
         register_data = register_data | data
-        self.set_{{field[key].register[12:].lower()}}(register_data)
+        self.set_{{field.register[12:].lower()}}(register_data)
     {% endif %}
     {% endfor %}
-    {% endfor %}
-    {% for function in functions %}
-    {% for key in function.keys() %}
-    {% for compute in function[key].computed %}
-    {% for computeKey in compute.keys() %}
-    {% if compute[computeKey].input %}
-    def {{key.lower()}}_{{computeKey.lower()}}(self, {{py.params(compute[computeKey].input)}}):
+    {% endif %}
+    {% if functions %}
+    {% for key,function in functions|dictsort %}
+    {% for ckey,compute in function.computed|dictsort %}
+    {% if compute.input %}
+    def {{key.lower()}}_{{ckey.lower()}}(self, {{py.params(compute.input)}}):
     {% else %}
-    def {{key.lower()}}_{{computeKey.lower()}}(self):
+    def {{key.lower()}}_{{ckey.lower()}}(self):
     {% endif %}
         """
-{{utils.pad_string("        ", function[key].description)}}
+{{utils.pad_string("        ", function.description)}}
         """
         {# Declare our variables #}
-{{ py.variables(compute[computeKey].variables) }}
+{{ py.variables(compute.variables) }}
         {# Read `value` if applicable #}
-        {%- for variable in compute[computeKey].input %}
-        {% for varKey in variable.keys() %}
-        {% if varKey == 'value' %}
+        {% if 'input' in compute %}
+        {%- for vkey,variable in compute.input|dictsort %}
+        {% if vkey == 'value' %}
         # Read value of register into a variable
-        value = self.get_{{function[key].register[12:].lower()}}()
+        value = self.get_{{function.register[12:].lower()}}()
         {% endif %}
-        {% endfor %}
         {% endfor -%}
+        {% endif %}
         {# Handle the logic #}
-{{ logic(compute[computeKey].logic, function[key]) }}
+{{ logic(compute.logic, function) }}
         {# Return if applicable #}
         {# Return a tuple #}
-        {% if compute[computeKey].return is iterable and compute[computeKey].return is not string %}
-        return [{% for returnValue in compute[computeKey].return %}{{ returnValue | camel_to_snake }}{{ ", " if not loop.last }}{% endfor %}]
+        {% if compute.return is iterable and compute.return is not string %}
+        return [{% for returnValue in compute.return %}{{ returnValue | camel_to_snake }}{{ ", " if not loop.last }}{% endfor %}]
         {% endif %}
         {# Return a plain value #}
-        {% if compute[computeKey].return is string %}
+        {% if compute.return is string %}
             {# See if we need to massage the data type #}
-            {% if compute[computeKey].output == 'int16' %}
+            {% if compute.output == 'int16' %}
         # Convert from a unsigned short to a signed short
-        {{compute[computeKey].return}} = struct.unpack("h", struct.pack("H", {{compute[computeKey].return}}))[0]
+        {{compute.return}} = struct.unpack("h", struct.pack("H", {{compute.return}}))[0]
             {% endif %}
-        return {{compute[computeKey].return}}
+        return {{compute.return}}
         {% endif %}
     {% endfor %}
     {% endfor %}
-    {% endfor %}
-    {% endfor %}
+    {% endif %}

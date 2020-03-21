@@ -62,7 +62,6 @@ typedef enum deviceAddress deviceAddress_t;
 
 int mcp9808_init(deviceAddress_t address, char* bus_name);
 void mcp9808_terminate();
-   
 /**
   * The MCP9808 has a 16-bit Configuration register (CONFIG) that
  * allows the user to set various functions for a robust temperature
@@ -94,7 +93,6 @@ int mcp9808_readconfiguration(uint16_t* val);
 
  */
 int mcp9808_writeconfiguration(uint16_t* data);
-
 /**
  * This bit can not be altered when either of the Lock bits are set
  * (bit 6 and bit 7). This bit can be programmed in Shutdown mode.

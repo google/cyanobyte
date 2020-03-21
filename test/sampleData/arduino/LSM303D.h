@@ -37,36 +37,23 @@ class LSM303D {
          * Raw accelerometer data on X plane
 
          */
-        uint8_t readAccelerometerX_Low();
-
-        /**
-         * Raw accelerometer data on X plane
-
-         */
-        int writeAccelerometerX_Low(uint8_t data);
-        /**
-         * Raw accelerometer data on X plane
-
-         */
         uint8_t readAccelerometerX_High();
 
         /**
          * Raw accelerometer data on X plane
 
          */
-        int writeAccelerometerX_High(uint8_t data);
-        /**
-         * Raw accelerometer data on Y plane
+        int writeAccelerometerX_High(uint8_t data);        /**
+         * Raw accelerometer data on X plane
 
          */
-        uint8_t readAccelerometerY_Low();
+        uint8_t readAccelerometerX_Low();
 
         /**
-         * Raw accelerometer data on Y plane
+         * Raw accelerometer data on X plane
 
          */
-        int writeAccelerometerY_Low(uint8_t data);
-        /**
+        int writeAccelerometerX_Low(uint8_t data);        /**
          * Raw accelerometer data on Y plane
 
          */
@@ -76,19 +63,17 @@ class LSM303D {
          * Raw accelerometer data on Y plane
 
          */
-        int writeAccelerometerY_High(uint8_t data);
-        /**
-         * Raw accelerometer data on Z plane
+        int writeAccelerometerY_High(uint8_t data);        /**
+         * Raw accelerometer data on Y plane
 
          */
-        uint8_t readAccelerometerZ_Low();
+        uint8_t readAccelerometerY_Low();
 
         /**
-         * Raw accelerometer data on Z plane
+         * Raw accelerometer data on Y plane
 
          */
-        int writeAccelerometerZ_Low(uint8_t data);
-        /**
+        int writeAccelerometerY_Low(uint8_t data);        /**
          * Raw accelerometer data on Z plane
 
          */
@@ -98,19 +83,17 @@ class LSM303D {
          * Raw accelerometer data on Z plane
 
          */
-        int writeAccelerometerZ_High(uint8_t data);
-        /**
-         * Raw magnetometer data on X plane
+        int writeAccelerometerZ_High(uint8_t data);        /**
+         * Raw accelerometer data on Z plane
 
          */
-        uint8_t readMagnetometerX_Low();
+        uint8_t readAccelerometerZ_Low();
 
         /**
-         * Raw magnetometer data on X plane
+         * Raw accelerometer data on Z plane
 
          */
-        int writeMagnetometerX_Low(uint8_t data);
-        /**
+        int writeAccelerometerZ_Low(uint8_t data);        /**
          * Raw magnetometer data on X plane
 
          */
@@ -120,19 +103,17 @@ class LSM303D {
          * Raw magnetometer data on X plane
 
          */
-        int writeMagnetometerX_High(uint8_t data);
-        /**
-         * Raw magnetometer data on Y plane
+        int writeMagnetometerX_High(uint8_t data);        /**
+         * Raw magnetometer data on X plane
 
          */
-        uint8_t readMagnetometerY_Low();
+        uint8_t readMagnetometerX_Low();
 
         /**
-         * Raw magnetometer data on Y plane
+         * Raw magnetometer data on X plane
 
          */
-        int writeMagnetometerY_Low(uint8_t data);
-        /**
+        int writeMagnetometerX_Low(uint8_t data);        /**
          * Raw magnetometer data on Y plane
 
          */
@@ -142,8 +123,27 @@ class LSM303D {
          * Raw magnetometer data on Y plane
 
          */
-        int writeMagnetometerY_High(uint8_t data);
+        int writeMagnetometerY_High(uint8_t data);        /**
+         * Raw magnetometer data on Y plane
+
+         */
+        uint8_t readMagnetometerY_Low();
+
         /**
+         * Raw magnetometer data on Y plane
+
+         */
+        int writeMagnetometerY_Low(uint8_t data);        /**
+         * Raw magnetometer data on Z plane
+
+         */
+        uint8_t readMagnetometerZ_High();
+
+        /**
+         * Raw magnetometer data on Z plane
+
+         */
+        int writeMagnetometerZ_High(uint8_t data);        /**
          * Raw magnetometer data on Z plane
 
          */
@@ -155,17 +155,10 @@ class LSM303D {
          */
         int writeMagnetometerZ_Low(uint8_t data);
         /**
-         * Raw magnetometer data on Z plane
+         * Measures the current acceleration
 
          */
-        uint8_t readMagnetometerZ_High();
-
-        /**
-         * Raw magnetometer data on Z plane
-
-         */
-        int writeMagnetometerZ_High(uint8_t data);
-
+        void accelerationasG();
         /**
          * Measures the current acceleration
 
@@ -181,12 +174,12 @@ class LSM303D {
 
          */
         short accelerationzPlane();
+
         /**
-         * Measures the current acceleration
+         * Reads the magnetic orientation
 
          */
-        void accelerationasG(short * returnArray);
-
+        short orientationheading();
         /**
          * Reads the magnetic orientation
 
@@ -202,11 +195,6 @@ class LSM303D {
 
          */
         short orientationzPlane();
-        /**
-         * Reads the magnetic orientation
-
-         */
-        short orientationheading();
 
 
     private:

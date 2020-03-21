@@ -66,8 +66,6 @@ int mcp9808_writeconfiguration(uint16_t* data) {
     }
     return 0;
 }
-
-
 int mcp9808_get_limithysteresis(uint16_t* val) {
     // Read register data
     // '#/registers/configuration' > 'configuration'
