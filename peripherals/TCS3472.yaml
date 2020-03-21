@@ -56,18 +56,18 @@ registers:
     description: Blue light as an int. Divide by ambient light to get scaled number.
 
 fields:
-  - init:
-      title: Setup the device configuration
-      description: Enable RGBC and Power
-      register: '#/registers/enable'
-      readWrite: 'R/W'
-      bitStart: 7 # The whole register
-      bitEnd: 0
-      type: 'enum'
-      enum:
-        - Power:
-            title: Power
-            value: 1
-        - RGBC:
-            title: Color
-            value: 0b10
+  init:
+    title: Setup the device configuration
+    description: Enable RGBC and Power
+    register: '#/registers/enable'
+    readWrite: 'R/W'
+    bitStart: 7 # The whole register
+    bitEnd: 0
+    type: 'enum'
+    enum:
+      Power:
+        title: Power
+        value: 1
+      RGBC:
+        title: Color
+        value: 0b10

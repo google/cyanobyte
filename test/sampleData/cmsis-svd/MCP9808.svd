@@ -71,22 +71,22 @@ Output mode) are user-configurable.
                             <msb>10</msb>
                             <access>read-only</access>
                             <enumeratedValues>
-                                <enumeratedValue>
+<enumeratedValue>
                                     <name>Temp_0C</name>
                                     <description>0°C (power-up default)</description>
                                     <value>0</value>
                                 </enumeratedValue>
-                                <enumeratedValue>
+<enumeratedValue>
                                     <name>Temp_1C5</name>
                                     <description>+1.5°C</description>
                                     <value>1</value>
                                 </enumeratedValue>
-                                <enumeratedValue>
+<enumeratedValue>
                                     <name>Temp_3C</name>
                                     <description>+3.0°C</description>
                                     <value>2</value>
                                 </enumeratedValue>
-                                <enumeratedValue>
+<enumeratedValue>
                                     <name>Temp_6C</name>
                                     <description>+6.0°C</description>
                                     <value>3</value>
@@ -114,12 +114,12 @@ locked.
                             <msb>8</msb>
                             <access>read-only</access>
                             <enumeratedValues>
-                                <enumeratedValue>
+<enumeratedValue>
                                     <name>continousConversion</name>
                                     <description>Continuous conversion (power-up default)</description>
                                     <value>0</value>
                                 </enumeratedValue>
-                                <enumeratedValue>
+<enumeratedValue>
                                     <name>shutdown</name>
                                     <description>Shutdown (Low-Power mode)</description>
                                     <value>1</value>

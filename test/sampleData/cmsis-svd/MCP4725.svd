@@ -61,15 +61,15 @@ be loaded from power-on.
                             <msb>12</msb>
                             <access>read-write</access>
                             <enumeratedValues>
-                                <enumeratedValue>
-                                    <name>VCC</name>
-                                    <description>Vcc (full power)</description>
-                                    <value>4095</value>
-                                </enumeratedValue>
-                                <enumeratedValue>
+<enumeratedValue>
                                     <name>GND</name>
                                     <description>Ground</description>
                                     <value>0</value>
+                                </enumeratedValue>
+<enumeratedValue>
+                                    <name>VCC</name>
+                                    <description>Vcc (full power)</description>
+                                    <value>4095</value>
                                 </enumeratedValue>
                             </enumeratedValues>
                             <writeConstraint>

@@ -97,177 +97,177 @@ registers:
     description: Raw magnetometer data on Z plane
 
 functions:
-  - acceleration:
-      title: Acceleration as read by sensor
-      description: Measures the current acceleration
-      readWrite: 'n'
-      computed:
-        - xPlane:
-            output: int16
-            variables:
-              - lower: int8
-              - upper: int8
-              - datum: int16
-            logic:
-              - lower: '#/registers/AccelerometerX_Low'
-              - upper: '#/registers/AccelerometerX_High'
-              - datum:
-                - sum:
-                  - bitShiftLeft:
-                    var: upper
-                    bits: 8
-                  - lower
-            return: datum
-        - yPlane:
-            output: int16
-            variables:
-              - lower: int8
-              - upper: int8
-              - datum: int16
-            logic:
-              - lower: '#/registers/AccelerometerY_Low'
-              - upper: '#/registers/AccelerometerY_High'
-              - datum:
-                - sum:
-                  - bitShiftLeft:
-                    var: upper
-                    bits: 8
-                  - lower
-            return: datum
-        - zPlane:
-            output: int16
-            variables:
-              - lower: int8
-              - upper: int8
-              - datum: int16
-            logic:
-              - lower: '#/registers/AccelerometerZ_Low'
-              - upper: '#/registers/AccelerometerZ_High'
-              - datum:
-                - sum:
-                  - bitShiftLeft:
-                    var: upper
-                    bits: 8
-                  - lower
-            return: datum
-        - asG:
-            variables:
-              - valueX: int16
-              - valueY: int16
-              - valueZ: int16
-              - accelerationScale: int8 # Linear acceleration scale variable
-            logic:
-              - accelerationScale: = 2 # Default scale level
-              - valueX: '#/functions/acceleration/xPlane'
-              - valueY: '#/functions/acceleration/yPlane'
-              - valueZ: '#/functions/acceleration/zPlane'
-              - valueX:
-                - product:
-                  - division:
-                    - valueX
-                    - power:
-                      - 2
-                      - 15
-                  - accelerationScale
-              - valueY:
-                - product:
-                  - division:
-                    - valueY
-                    - power:
-                      - 2
-                      - 15
-                  - accelerationScale
-              - valueZ:
-                - product:
-                  - division:
-                    - valueZ
-                    - power:
-                      - 2
-                      - 15
-                  - accelerationScale
-            return:
+  acceleration:
+    title: Acceleration as read by sensor
+    description: Measures the current acceleration
+    readWrite: 'n'
+    computed:
+      xPlane:
+        output: int16
+        variables:
+          lower: int8
+          upper: int8
+          datum: int16
+        logic:
+          - lower: '#/registers/AccelerometerX_Low'
+          - upper: '#/registers/AccelerometerX_High'
+          - datum:
+            - sum:
+              - bitShiftLeft:
+                var: upper
+                bits: 8
+              - lower
+        return: datum
+      yPlane:
+        output: int16
+        variables:
+          lower: int8
+          upper: int8
+          datum: int16
+        logic:
+          - lower: '#/registers/AccelerometerY_Low'
+          - upper: '#/registers/AccelerometerY_High'
+          - datum:
+            - sum:
+              - bitShiftLeft:
+                var: upper
+                bits: 8
+              - lower
+        return: datum
+      zPlane:
+        output: int16
+        variables:
+          lower: int8
+          upper: int8
+          datum: int16
+        logic:
+          - lower: '#/registers/AccelerometerZ_Low'
+          - upper: '#/registers/AccelerometerZ_High'
+          - datum:
+            - sum:
+              - bitShiftLeft:
+                var: upper
+                bits: 8
+              - lower
+        return: datum
+      asG:
+        variables:
+          valueX: int16
+          valueY: int16
+          valueZ: int16
+          accelerationScale: int8 # Linear acceleration scale variable
+        logic:
+          - accelerationScale: = 2 # Default scale level
+          - valueX: '#/functions/acceleration/xPlane'
+          - valueY: '#/functions/acceleration/yPlane'
+          - valueZ: '#/functions/acceleration/zPlane'
+          - valueX:
+            - product:
+              - division:
+                - valueX
+                - power:
+                  - 2
+                  - 15
+              - accelerationScale
+          - valueY:
+            - product:
+              - division:
+                - valueY
+                - power:
+                  - 2
+                  - 15
+              - accelerationScale
+          - valueZ:
+            - product:
+              - division:
+                - valueZ
+                - power:
+                  - 2
+                  - 15
+              - accelerationScale
+        return:
+          - valueX
+          - valueY
+          - valueZ
+  orientation:
+    title: Orientation data as read by sensor
+    description: Reads the magnetic orientation
+    readWrite: 'n'
+    computed:
+      xPlane:
+        output: int16
+        variables:
+          lower: int8
+          upper: int8
+          datum: int16
+        logic:
+          - lower: '#/registers/MagnetometerX_Low'
+          - upper: '#/registers/MagnetometerX_High'
+          - datum:
+            - sum:
+              - bitShiftLeft:
+                var: upper
+                bits: 8
+              - lower
+        return: datum
+      yPlane:
+        output: int16
+        variables:
+          lower: int8
+          upper: int8
+          datum: int16
+        logic:
+          - lower: '#/registers/MagnetometerY_Low'
+          - upper: '#/registers/MagnetometerY_High'
+          - datum:
+            - sum:
+              - bitShiftLeft:
+                var: upper
+                bits: 8
+              - lower
+        return: datum
+      zPlane:
+        output: int16
+        variables:
+          lower: int8
+          upper: int8
+          datum: int16
+        logic:
+          - lower: '#/registers/MagnetometerZ_Low'
+          - upper: '#/registers/MagnetometerZ_High'
+          - datum:
+            - sum:
+              - bitShiftLeft:
+                var: upper
+                bits: 8
+              - lower
+        return: datum
+      heading:
+        variables:
+          valueX: int16
+          valueY: int16
+          dividend: int16
+          heading: int16
+        logic:
+          - valueX: '#/functions/orientation/xPlane'
+          - valueY: '#/functions/orientation/yPlane'
+          - dividend:
+            - division:
               - valueX
               - valueY
-              - valueZ
-  - orientation:
-      title: Orientation data as read by sensor
-      description: Reads the magnetic orientation
-      readWrite: 'n'
-      computed:
-        - xPlane:
-            output: int16
-            variables:
-              - lower: int8
-              - upper: int8
-              - datum: int16
-            logic:
-              - lower: '#/registers/MagnetometerX_Low'
-              - upper: '#/registers/MagnetometerX_High'
-              - datum:
-                - sum:
-                  - bitShiftLeft:
-                    var: upper
-                    bits: 8
-                  - lower
-            return: datum
-        - yPlane:
-            output: int16
-            variables:
-              - lower: int8
-              - upper: int8
-              - datum: int16
-            logic:
-              - lower: '#/registers/MagnetometerY_Low'
-              - upper: '#/registers/MagnetometerY_High'
-              - datum:
-                - sum:
-                  - bitShiftLeft:
-                    var: upper
-                    bits: 8
-                  - lower
-            return: datum
-        - zPlane:
-            output: int16
-            variables:
-              - lower: int8
-              - upper: int8
-              - datum: int16
-            logic:
-              - lower: '#/registers/MagnetometerZ_Low'
-              - upper: '#/registers/MagnetometerZ_High'
-              - datum:
-                - sum:
-                  - bitShiftLeft:
-                    var: upper
-                    bits: 8
-                  - lower
-            return: datum
-        - heading:
-            variables:
-              - valueX: int16
-              - valueY: int16
-              - dividend: int16
-              - heading: int16
-            logic:
-              - valueX: '#/functions/orientation/xPlane'
-              - valueY: '#/functions/orientation/yPlane'
-              - dividend:
-                - division:
-                  - valueX
-                  - valueY
-              - heading:
-                - arc tangent: dividend
-              - heading:
-                - modulus:
-                  - heading
-                  - product:
-                    - 2
-                    - 3.141592653589793 # Pi
-              # Convert from radians to degrees
-              - heading:
-                - product:
-                  - division:
-                    - heading
-                    - 3.141592653589793 # Pi
-                  - 180
-            return: heading
+          - heading:
+            - arc tangent: dividend
+          - heading:
+            - modulus:
+              - heading
+              - product:
+                - 2
+                - 3.141592653589793 # Pi
+          # Convert from radians to degrees
+          - heading:
+            - product:
+              - division:
+                - heading
+                - 3.141592653589793 # Pi
+              - 180
+        return: heading

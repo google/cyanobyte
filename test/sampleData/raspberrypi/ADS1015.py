@@ -21,36 +21,6 @@ Class for ADS1015
 from enum import Enum
 import smbus
 
-class SampleRateValues(Enum):
-    """
-    Valid values for Setup sample rate for reading analog voltage
-
-    """
-    HZ128 = 0 # 128 samples/second
-    HZ250 = 1 # 250 samples/second
-    HZ490 = 2 # 490 samples/second
-    HZ920 = 3 # 920 samples/second
-    HZ1600 = 4 # 1600 samples/second
-    HZ2400 = 5 # 2400 samples/second
-    HZ3300 = 6 # 3300 samples/second
-class ProgrammableGainValues(Enum):
-    """
-    Valid values for Setup programmable gain
-
-    """
-    PGA6_144V = 0 # Plus/minus 6.144V
-    PGA4_096V = 1 # Plus/minus 4.096V
-    PGA2_048V = 2 # Plus/minus 2.048V
-    PGA1_024V = 3 # Plus/minus 1.024V
-    PGA0_512 = 4 # Plus/minus 0.512V
-    PGA0_256 = 5 # Plus/minus 0.256V
-class DeviceOperatingModeValues(Enum):
-    """
-    Valid values for Set the operating mode
-
-    """
-    CONTINUOUS_CONVERSION = 0 # Continuous Conversion
-    SINGLE_SHOT = 1 # Single-shot or power-down state
 class ChannelValues(Enum):
     """
     Valid values for Set the channel to read
@@ -60,6 +30,36 @@ class ChannelValues(Enum):
     CHANNEL_2 = 1 # Channel 2
     CHANNEL_3 = 2 # Channel 3
     CHANNEL_4 = 3 # Channel 4
+class DeviceOperatingModeValues(Enum):
+    """
+    Valid values for Set the operating mode
+
+    """
+    CONTINUOUS_CONVERSION = 0 # Continuous Conversion
+    SINGLE_SHOT = 1 # Single-shot or power-down state
+class ProgrammableGainValues(Enum):
+    """
+    Valid values for Setup programmable gain
+
+    """
+    PGA0_256 = 5 # Plus/minus 0.256V
+    PGA0_512 = 4 # Plus/minus 0.512V
+    PGA1_024V = 3 # Plus/minus 1.024V
+    PGA2_048V = 2 # Plus/minus 2.048V
+    PGA4_096V = 1 # Plus/minus 4.096V
+    PGA6_144V = 0 # Plus/minus 6.144V
+class SampleRateValues(Enum):
+    """
+    Valid values for Setup sample rate for reading analog voltage
+
+    """
+    HZ128 = 0 # 128 samples/second
+    HZ1600 = 4 # 1600 samples/second
+    HZ2400 = 5 # 2400 samples/second
+    HZ250 = 1 # 250 samples/second
+    HZ3300 = 6 # 3300 samples/second
+    HZ490 = 2 # 490 samples/second
+    HZ920 = 3 # 920 samples/second
 
 def _swap_endian(val):
     """
@@ -129,13 +129,13 @@ class ADS1015:
         )
 
 
-    def set_samplerate(self, data):
+    def set_deviceoperatingmode(self, data):
         """
-        This sets the samples-per-second value
+        This bit controls the operating mode
 
         """
         # Bitshift value
-        data = data << 5
+        data = data << 8
         # Read current register data
         # '#/registers/Config' > 'Config'
         register_data = self.get_config()
@@ -155,13 +155,13 @@ class ADS1015:
         register_data = register_data | data
         self.set_config(register_data)
 
-    def set_deviceoperatingmode(self, data):
+    def set_samplerate(self, data):
         """
-        This bit controls the operating mode
+        This sets the samples-per-second value
 
         """
         # Bitshift value
-        data = data << 8
+        data = data << 5
         # Read current register data
         # '#/registers/Config' > 'Config'
         register_data = self.get_config()
@@ -173,11 +173,11 @@ class ADS1015:
 
         """
         config = None # Variable declaration
-        raw = None # Variable declaration
         datum_a = None # Variable declaration
         datum_b = None # Variable declaration
-        programmable_gain = None # Variable declaration
         processed = None # Variable declaration
+        programmable_gain = None # Variable declaration
+        raw = None # Variable declaration
 
         config = self.get_config()
         config = (config|(channel << 12))

@@ -30,8 +30,8 @@
 
  */
 enum digitalOut {
-    DIGITALOUT_VCC = 4095, // Vcc (full power)
-    DIGITALOUT_GND = 0 // Ground
+    DIGITALOUT_GND = 0, // Ground
+    DIGITALOUT_VCC = 4095 // Vcc (full power)
 };
 typedef enum digitalOut digitalOut_t;
 
@@ -81,16 +81,16 @@ class MCP4725 {
         int setdigitalOut(uint8_t data);
 
         /**
-         * set vout
-
-         */
-        void setVOutasVoltage(float vcc, float output);
-
-        /**
          * get vout
 
          */
         float getVOutasVoltage(float vcc);
+
+        /**
+         * set vout
+
+         */
+        void setVOutasVoltage(float output, float vcc);
 
 
     private:

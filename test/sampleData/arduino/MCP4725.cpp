@@ -122,15 +122,6 @@ int MCP4725::setdigitalOut(uint8_t data) {
     return writeEEPROM(register_data);
 }
 
-void MCP4725::setVOutasVoltage(float vcc, float output) {
-
-
-    output = output / vcc * 4096;
-    writeEEPROM(output);
-
-
-}
-
 float MCP4725::getVOutasVoltage(float vcc) {
     float voltage; // Variable declaration
 
@@ -141,5 +132,14 @@ float MCP4725::getVOutasVoltage(float vcc) {
 
 
     return voltage;
+}
+
+void MCP4725::setVOutasVoltage(float output, float vcc) {
+
+
+    output = output / vcc * 4096;
+    writeEEPROM(output);
+
+
 }
 

@@ -423,72 +423,13 @@ int bmp280_writeTempXlsb(uint8_t* data) {
     return 0;
 }
 
-void bmp280_temperature_asraw(short* val) {
-    char valueMsb; // Variable declaration
-    char valueLsb; // Variable declaration
-    char valueXlsb; // Variable declaration
-    short output; // Variable declaration
-
-
-    bmp280_readTempMsb(&valueMsb);
-    bmp280_readTempLsb(&valueLsb);
-    bmp280_readTempXlsb(&valueXlsb);
-    output = ((valueMsb << 12)+(valueLsb << 4)+(valueXlsb >> 4));
-
-
-    return output;
-}
-
-void bmp280_temperature_ascelsius(float* val) {
-    char valueMsb; // Variable declaration
-    char valueLsb; // Variable declaration
-    char valueXlsb; // Variable declaration
-    char valueDT1; // Variable declaration
-    char valueDT2; // Variable declaration
-    char valueDT3; // Variable declaration
-    short rawTemp; // Variable declaration
+void bmp280_pressure_ashpa(float* val) {
+    float hpa; // Variable declaration
     short rawComp1; // Variable declaration
     short rawComp2; // Variable declaration
     short rawComp3; // Variable declaration
-    float celsius; // Variable declaration
-
-
-    bmp280_readTempMsb(&valueMsb);
-    bmp280_readTempLsb(&valueLsb);
-    bmp280_readTempXlsb(&valueXlsb);
-    bmp280_readDigT1(&valueDT1);
-    bmp280_readDigT2(&valueDT2);
-    bmp280_readDigT3(&valueDT3);
-    rawTemp = ((valueMsb << 12)+(valueLsb << 4)+(valueXlsb >> 4));
-    rawComp1 = (((rawTemp/16384.0)-(valueDT1/1024.0))*valueDT2);
-    rawComp3 = ((rawTemp/131072.0)-(valueDT1/8192.0));
-    rawComp2 = (rawComp3*rawComp3*valueDT3);
-    celsius = ((rawComp1+rawComp2)/5120.0);
-
-
-    return celsius;
-}
-
-void bmp280_pressure_asraw(short* val) {
-    char valueMsb; // Variable declaration
-    char valueLsb; // Variable declaration
-    char valueXlsb; // Variable declaration
-    short output; // Variable declaration
-
-
-    bmp280_readPressureMsb(&valueMsb);
-    bmp280_readPressureLsb(&valueLsb);
-    bmp280_readPressureXlsb(&valueXlsb);
-    output = ((valueMsb << 12)+(valueLsb << 4)+(valueXlsb >> 4));
-
-
-    return output;
-}
-
-void bmp280_pressure_ashpa(float* val) {
-    char valueMsb; // Variable declaration
-    char valueLsb; // Variable declaration
-    char valueXlsb; // Variable declaration
+    short rawPressure; // Variable declaration
+    short rawTemperature; // Variable declaration
     char valueDP1; // Variable declaration
     char valueDP2; // Variable declaration
     char valueDP3; // Variable declaration
@@ -498,12 +439,9 @@ void bmp280_pressure_ashpa(float* val) {
     char valueDP7; // Variable declaration
     char valueDP8; // Variable declaration
     char valueDP9; // Variable declaration
-    short rawPressure; // Variable declaration
-    short rawTemperature; // Variable declaration
-    short rawComp1; // Variable declaration
-    short rawComp2; // Variable declaration
-    short rawComp3; // Variable declaration
-    float hpa; // Variable declaration
+    char valueLsb; // Variable declaration
+    char valueMsb; // Variable declaration
+    char valueXlsb; // Variable declaration
 
 
     bmp280_readPressureMsb(&valueMsb);
@@ -537,5 +475,67 @@ void bmp280_pressure_ashpa(float* val) {
 
 
     return hpa;
+}
+
+void bmp280_pressure_asraw(short* val) {
+    short output; // Variable declaration
+    char valueLsb; // Variable declaration
+    char valueMsb; // Variable declaration
+    char valueXlsb; // Variable declaration
+
+
+    bmp280_readPressureMsb(&valueMsb);
+    bmp280_readPressureLsb(&valueLsb);
+    bmp280_readPressureXlsb(&valueXlsb);
+    output = ((valueMsb << 12)+(valueLsb << 4)+(valueXlsb >> 4));
+
+
+    return output;
+}
+
+void bmp280_temperature_ascelsius(float* val) {
+    float celsius; // Variable declaration
+    short rawComp1; // Variable declaration
+    short rawComp2; // Variable declaration
+    short rawComp3; // Variable declaration
+    short rawTemp; // Variable declaration
+    char valueDT1; // Variable declaration
+    char valueDT2; // Variable declaration
+    char valueDT3; // Variable declaration
+    char valueLsb; // Variable declaration
+    char valueMsb; // Variable declaration
+    char valueXlsb; // Variable declaration
+
+
+    bmp280_readTempMsb(&valueMsb);
+    bmp280_readTempLsb(&valueLsb);
+    bmp280_readTempXlsb(&valueXlsb);
+    bmp280_readDigT1(&valueDT1);
+    bmp280_readDigT2(&valueDT2);
+    bmp280_readDigT3(&valueDT3);
+    rawTemp = ((valueMsb << 12)+(valueLsb << 4)+(valueXlsb >> 4));
+    rawComp1 = (((rawTemp/16384.0)-(valueDT1/1024.0))*valueDT2);
+    rawComp3 = ((rawTemp/131072.0)-(valueDT1/8192.0));
+    rawComp2 = (rawComp3*rawComp3*valueDT3);
+    celsius = ((rawComp1+rawComp2)/5120.0);
+
+
+    return celsius;
+}
+
+void bmp280_temperature_asraw(short* val) {
+    short output; // Variable declaration
+    char valueLsb; // Variable declaration
+    char valueMsb; // Variable declaration
+    char valueXlsb; // Variable declaration
+
+
+    bmp280_readTempMsb(&valueMsb);
+    bmp280_readTempLsb(&valueLsb);
+    bmp280_readTempXlsb(&valueXlsb);
+    output = ((valueMsb << 12)+(valueLsb << 4)+(valueXlsb >> 4));
+
+
+    return output;
 }
 

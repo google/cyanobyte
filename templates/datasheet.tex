@@ -85,18 +85,16 @@
 
 {# Create a dictionary linking a register to its associated fields #}
 {# for hierarchical display #} 
-{% for field in fields %}
-{% for key in field.keys() %}
-{% set rkey = field[key].register %}
+{% for key,field in fields|dictsort %}
+{% set rkey = field.register %}
 {% if rkey in template.registersToFields %}
-{% set _dummy = field[key].update({ 'key': key }) %}
-{{- template.registersToFields[rkey].append(field[key]) or "" -}}
+{% set _dummy = field.update({ 'key': key }) %}
+{{- template.registersToFields[rkey].append(field) or "" -}}
 {% else %}
-{% set _dummy = field[key].update({ 'key': key }) %}
+{% set _dummy = field.update({ 'key': key }) %}
 {% set _dummy = template.registersToFields.update({ rkey: [] }) %}
-{{- template.registersToFields[rkey].append(field[key]) or "" -}}
+{{- template.registersToFields[rkey].append(field) or "" -}}
 {% endif %}
-{% endfor %}
 {% endfor %}
 
 {% for key in template.registersToFields.keys() %}
@@ -134,10 +132,8 @@
 {{field.description}}
 
 \begin{itemize}
-{% for enum in field.enum %}
-{% for key in enum.keys() %}
-\item {{key | regex_replace('_', '\_')}} ({{enum[key].value}}) - {{enum[key].title}}
-{% endfor %}
+{% for key,enum in field.enum|dictsort %}
+\item {{key | regex_replace('_', '\_')}} ({{enum.value}}) - {{enum.title}}
 {% endfor %}
 \end{itemize}
 
@@ -159,54 +155,46 @@
 \toprule
   & Description \\
 \midrule
-{% for function in functions %}
-{% for key in function.keys() %}
-{{key}} & {{function[key].description}} \\
-{% endfor %}
+{% for key,function in functions|dictsort %}
+{{key}} & {{function.description}} \\
 {% endfor %}
 \bottomrule
 \end{tabular}
 
-{% for function in functions %}
-{% for key in function.keys() %}
+{% for key,function in functions|dictsort %}
 
 \raggedright
 \subsection{Function {{key}} }
-{{function[key].description}} \\
+{{function.description}} \\
 
 \centering
 \begin{tabular}{lcr}
 \toprule
   & Inputs & Return \\
 \midrule
-{% for compute in function[key].computed %}
-{% for ckey in compute.keys() %}
+{% for ckey,compute in function.computed|dictsort %}
 {{ckey}} &
-{% if compute[ckey].input %}
-{% for input in compute[ckey].input %}
-{% for ikey in input.keys() %}
-{{ikey}} ({{input[ikey]}})
-{% endfor %}
+{% if compute.input %}
+{% for ikey,input in compute.input|dictsort %}
+{{ikey}} ({{input}})
 {{ ", " if not loop.last }}
 {% endfor %}
 {% endif %}
 &
-{% if compute[ckey].return is iterable and compute[ckey].return is not string %}
-{% for returnable in compute[ckey].return %}
+{% if compute.return is iterable and compute.return is not string %}
+{% for returnable in compute.return %}
 {{returnable}}{{ ", " if not loop.last }}
 {% endfor %}
 {% endif %}
-{% if compute[ckey].return is string %}
-{{compute[ckey].return}}
+{% if compute.return is string %}
+{{compute.return}}
 {% endif %}
 \\
-{% endfor %}
 {% endfor %}
 \bottomrule
 \end{tabular}
 
 
-{% endfor %}
 {% endfor %}
 
 \raggedright

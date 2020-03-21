@@ -158,6 +158,11 @@ int lsm303d_writeMagnetometerZ_Low(uint8_t* data);
  * Measures the current acceleration
 
 */
+void lsm303d_acceleration_asg(void* val);
+/**
+ * Measures the current acceleration
+
+*/
 void lsm303d_acceleration_xplane(short* val);
 /**
  * Measures the current acceleration
@@ -169,12 +174,12 @@ void lsm303d_acceleration_yplane(short* val);
 
 */
 void lsm303d_acceleration_zplane(short* val);
+
 /**
- * Measures the current acceleration
+ * Reads the magnetic orientation
 
 */
-void lsm303d_acceleration_asg(void* val);
-
+void lsm303d_orientation_heading(short* val);
 /**
  * Reads the magnetic orientation
 
@@ -190,11 +195,6 @@ void lsm303d_orientation_yplane(short* val);
 
 */
 void lsm303d_orientation_zplane(short* val);
-/**
- * Reads the magnetic orientation
-
-*/
-void lsm303d_orientation_heading(short* val);
 
 
 #endif

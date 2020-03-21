@@ -102,8 +102,8 @@ Only allows you to send fully on or off
 
 
 \begin{itemize}
-\item VCC (4095) - Vcc (full power)
 \item GND (0) - Ground
+\item VCC (4095) - Vcc (full power)
 \end{itemize}
 
 
@@ -118,31 +118,10 @@ Only allows you to send fully on or off
 \toprule
   & Description \\
 \midrule
-setVOut & set vout \\
 getVOut & get vout \\
+setVOut & set vout \\
 \bottomrule
 \end{tabular}
-
-
-\raggedright
-\subsection{Function setVOut }
-set vout \\
-
-\centering
-\begin{tabular}{lcr}
-\toprule
-  & Inputs & Return \\
-\midrule
-asVoltage &
-vcc (float32)
-, 
-output (float32)
-
-&
-\\
-\bottomrule
-\end{tabular}
-
 
 
 \raggedright
@@ -155,12 +134,33 @@ get vout \\
   & Inputs & Return \\
 \midrule
 asVoltage &
-vcc (float32)
-, 
 value (float32)
+, 
+vcc (float32)
 
 &
 voltage
+\\
+\bottomrule
+\end{tabular}
+
+
+
+\raggedright
+\subsection{Function setVOut }
+set vout \\
+
+\centering
+\begin{tabular}{lcr}
+\toprule
+  & Inputs & Return \\
+\midrule
+asVoltage &
+output (float32)
+, 
+vcc (float32)
+
+&
 \\
 \bottomrule
 \end{tabular}

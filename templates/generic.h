@@ -14,12 +14,11 @@
 #define _{{info.title}}_H_
 
 {# Create enums for functions #}
-{% for function in functions %}
-{% for key in function.keys() %}
+{% if functions %}
+{% for key,function in functions|dictsort %}
 {# Check if we need to import `math` lib #}
-{% if function[key].computed %}
-{% for compute in function[key].computed %}
-{% for computeKey in compute.keys() %}
+{% if 'computed' in function %}
+{% for ckey,compute in function.computed|dictsort %}
 {% macro scanForMathLib(logicKeys) -%}
 {% for logic in logicKeys %}
 {% if logic is mapping %}
@@ -36,34 +35,31 @@
 {% endif %}
 {% endfor %}
 {%- endmacro %}
-{{- scanForMathLib(compute[computeKey].logic) -}}
-{% endfor %}
+{{- scanForMathLib(compute.logic) -}}
 {% endfor %}
 {% endif %}
 {% endfor %}
-{% endfor %}
+{% endif %}
 
 {# Create enums for fields #}
-{% for field in fields %}
-{% for key in field.keys() %}
-{% if field[key].enum %}
+{% if fields %}
+{% for key,field in fields|dictsort %}
+{% if field.enum %}
 {# Create enum #}
 /*
-{{utils.pad_string(" * ", "Valid values for " + field[key].title)}}
+{{utils.pad_string(" * ", "Valid values for " + field.title)}}
  */
 enum {{key}} {
     {% set args = namespace(index=0) %}
-    {% for enumObject in field[key].enum %}
-    {% for enumKey in enumObject.keys() %}
-    {{key.upper()}}_{{enumKey.upper()}} = {{enumObject[enumKey].value}}{{- "," if args.index + 1 < field[key].enum | length }} // {{enumObject[enumKey].title}}
+    {% for ekey,enum in field.enum|dictsort %}
+    {{key.upper()}}_{{ekey.upper()}} = {{enum.value}}{{- "," if args.index + 1 < field.enum | length }} // {{enum.title}}
     {% set args.index = args.index + 1 %}
-    {% endfor %}
     {% endfor %}
 };
 typedef enum {{key}} {{key}}_t;
 {% endif %}
 {% endfor %}
-{% endfor %}
+{% endif %}
 {% if i2c.address is iterable and i2c.address is not string %}
 enum deviceAddress {
     {% for address in i2c.address %}
@@ -98,22 +94,22 @@ int {{info.title.lower()}}_write{{key}}(
 );
 {%- endfor %}
 
-{% for field in fields %}
-{% for key in field.keys() %}
-{% if 'R' is in(field[key].readWrite) %}
-{% set int_t = cpp.registerSize(registers, field[key].register[12:]) %}
+{% if fields %}
+{% for key,field in fields|dictsort %}
+{% if 'R' is in(field.readWrite) %}
+{% set int_t = cpp.registerSize(registers, field.register[12:]) %}
 /**
-{{utils.pad_string(" * ", field[key].description)}}
+{{utils.pad_string(" * ", field.description)}}
  */
 int {{info.title.lower()}}_get_{{key.lower()}}(
     {{int_t}}* val,
     int (*read)(uint8_t, uint8_t, int*, uint8_t)
 );
 {% endif %}
-{% if 'W' is in(field[key].readWrite) %}
-{% set int_t = cpp.registerSize(registers, field[key].register[12:]) %}
+{% if 'W' is in(field.readWrite) %}
+{% set int_t = cpp.registerSize(registers, field.register[12:]) %}
 /**
-{{utils.pad_string(" * ", field[key].description)}}
+{{utils.pad_string(" * ", field.description)}}
  */
 int {{info.title.lower()}}_set_{{key.lower()}}(
     {{int_t}}* data,
@@ -122,34 +118,32 @@ int {{info.title.lower()}}_set_{{key.lower()}}(
 );
 {% endif %}
 {% endfor %}
-{% endfor %}
+{% endif %}
 
-{% for function in functions %}
-{% for key in function.keys() %}
-{% for compute in function[key].computed %}
-{% for computeKey in compute.keys() %}
-{% set int_t = cpp.returnType(compute[computeKey]) %}
+{% if functions %}
+{% for key,function in functions|dictsort %}
+{% for ckey,compute in function.computed|dictsort %}
+{% set int_t = cpp.returnType(compute) %}
 /**
-{{utils.pad_string(" * ", function[key].description)}}
+{{utils.pad_string(" * ", function.description)}}
 */
-{% if compute[computeKey].input %}
-void {{info.title.lower()}}_{{key.lower()}}_{{computeKey.lower()}}(
+{% if compute.input %}
+void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
     {{int_t}}* val,
-    {{cpp.params(compute[computeKey].input)}},
+    {{cpp.params(compute.input)}},
     int (*read)(uint8_t, uint8_t, int*, uint8_t),
     int (*write)(uint8_t, uint8_t, int*, uint8_t)
 );
 {% else %}
-void {{info.title.lower()}}_{{key.lower()}}_{{computeKey.lower()}}(
+void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
     {{int_t}}* val,
     int (*read)(uint8_t, uint8_t, int*, uint8_t),
     int (*write)(uint8_t, uint8_t, int*, uint8_t)
 );
 {% endif %}
 {% endfor %}
-{% endfor %}
 
 {% endfor %}
-{% endfor %}
+{% endif %}
 
 #endif

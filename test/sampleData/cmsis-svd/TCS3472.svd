@@ -82,12 +82,12 @@ limitations under the License.
                             <msb>7</msb>
                             <access>read-write</access>
                             <enumeratedValues>
-                                <enumeratedValue>
+<enumeratedValue>
                                     <name>Power</name>
                                     <description>Power</description>
                                     <value>1</value>
                                 </enumeratedValue>
-                                <enumeratedValue>
+<enumeratedValue>
                                     <name>RGBC</name>
                                     <description>Color</description>
                                     <value>2</value>

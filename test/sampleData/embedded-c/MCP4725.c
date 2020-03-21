@@ -119,6 +119,21 @@ int mcp4725_set_digitalout(
     return 0;
 }
 
+void mcp4725_getvout_asvoltage(
+    float* val,
+    ,
+    int (*read)(uint8_t, uint8_t, int*, uint8_t),
+    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+) {
+    float voltage; // Variable declaration
+
+
+    voltage = value / 4096 * vcc
+
+
+    *val = voltage;
+}
+
 void mcp4725_setvout_asvoltage(
     void* val,
     ,
@@ -132,22 +147,5 @@ void mcp4725_setvout_asvoltage(
 
 
     *val = [];
-}
-
-void mcp4725_getvout_asvoltage(
-    float* val,
-    ,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
-) {
-    float voltage; // Variable declaration
-
-
-    // Read value of register into a variable
-    value = mcp4725_get_EEPROM(val, read);
-    voltage = value / 4096 * vcc
-
-
-    *val = voltage;
 }
 

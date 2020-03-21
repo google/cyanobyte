@@ -112,9 +112,9 @@ int ADS1015::writeConversion(uint16_t data) {
     return 1;
 }
 
-int ADS1015::setSampleRate(uint8_t data) {
+int ADS1015::setDeviceOperatingMode(uint8_t data) {
     // Bitshift value
-    data = data << 5;
+    data = data << 8;
     // Read current register data
     // '#/registers/Config' > 'Config'
     uint8_t register_data = readConfig();
@@ -132,9 +132,9 @@ int ADS1015::setProgrammableGain(uint8_t data) {
     return writeConfig(register_data);
 }
 
-int ADS1015::setDeviceOperatingMode(uint8_t data) {
+int ADS1015::setSampleRate(uint8_t data) {
     // Bitshift value
-    data = data << 8;
+    data = data << 5;
     // Read current register data
     // '#/registers/Config' > 'Config'
     uint8_t register_data = readConfig();
@@ -144,11 +144,11 @@ int ADS1015::setDeviceOperatingMode(uint8_t data) {
 
 short ADS1015::analogread(char channel) {
     short config; // Variable declaration
-    short raw; // Variable declaration
     char datumA; // Variable declaration
     char datumB; // Variable declaration
-    short programmableGain; // Variable declaration
     short processed; // Variable declaration
+    short programmableGain; // Variable declaration
+    short raw; // Variable declaration
 
 
     config = readConfig();

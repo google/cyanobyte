@@ -42,6 +42,16 @@ class TCS3472 {
         void begin();
         void end();
         /**
+         * Blue light as an int. Divide by ambient light to get scaled number.
+
+         */
+        uint16_t readblue();
+
+        /**
+         * Blue light as an int. Divide by ambient light to get scaled number.
+
+         */
+        int writeblue(uint16_t data);        /**
          * This is the ambient amount of detected light.
 
          */
@@ -62,16 +72,6 @@ class TCS3472 {
 
          */
         int writeenable(uint8_t data);        /**
-         * Red light as an int. Divide by ambient light to get scaled number.
-
-         */
-        uint16_t readred();
-
-        /**
-         * Red light as an int. Divide by ambient light to get scaled number.
-
-         */
-        int writered(uint16_t data);        /**
          * Green light as an int. Divide by ambient light to get scaled number.
 
          */
@@ -82,16 +82,16 @@ class TCS3472 {
 
          */
         int writegreen(uint16_t data);        /**
-         * Blue light as an int. Divide by ambient light to get scaled number.
+         * Red light as an int. Divide by ambient light to get scaled number.
 
          */
-        uint16_t readblue();
+        uint16_t readred();
 
         /**
-         * Blue light as an int. Divide by ambient light to get scaled number.
+         * Red light as an int. Divide by ambient light to get scaled number.
 
          */
-        int writeblue(uint16_t data);        /**
+        int writered(uint16_t data);        /**
          * Enable RGBC and Power
 
          */

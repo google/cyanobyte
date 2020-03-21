@@ -249,6 +249,15 @@ int lsm303d_writeMagnetometerZ_Low(
  * Measures the current acceleration
 
 */
+void lsm303d_acceleration_asg(
+    void* val,
+    int (*read)(uint8_t, uint8_t, int*, uint8_t),
+    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+);
+/**
+ * Measures the current acceleration
+
+*/
 void lsm303d_acceleration_xplane(
     short* val,
     int (*read)(uint8_t, uint8_t, int*, uint8_t),
@@ -272,16 +281,16 @@ void lsm303d_acceleration_zplane(
     int (*read)(uint8_t, uint8_t, int*, uint8_t),
     int (*write)(uint8_t, uint8_t, int*, uint8_t)
 );
+
 /**
- * Measures the current acceleration
+ * Reads the magnetic orientation
 
 */
-void lsm303d_acceleration_asg(
-    void* val,
+void lsm303d_orientation_heading(
+    short* val,
     int (*read)(uint8_t, uint8_t, int*, uint8_t),
     int (*write)(uint8_t, uint8_t, int*, uint8_t)
 );
-
 /**
  * Reads the magnetic orientation
 
@@ -305,15 +314,6 @@ void lsm303d_orientation_yplane(
 
 */
 void lsm303d_orientation_zplane(
-    short* val,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
-);
-/**
- * Reads the magnetic orientation
-
-*/
-void lsm303d_orientation_heading(
     short* val,
     int (*read)(uint8_t, uint8_t, int*, uint8_t),
     int (*write)(uint8_t, uint8_t, int*, uint8_t)

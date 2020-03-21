@@ -625,72 +625,13 @@ int BMP280::writeTempXlsb(uint8_t data) {
     return 1;
 }
 
-short BMP280::temperatureasRaw() {
-    char valueMsb; // Variable declaration
-    char valueLsb; // Variable declaration
-    char valueXlsb; // Variable declaration
-    short output; // Variable declaration
-
-
-    valueMsb = readTempMsb();
-    valueLsb = readTempLsb();
-    valueXlsb = readTempXlsb();
-    output = ((valueMsb << 12)+(valueLsb << 4)+(valueXlsb >> 4));
-
-
-    return output;
-}
-
-float BMP280::temperatureasCelsius() {
-    char valueMsb; // Variable declaration
-    char valueLsb; // Variable declaration
-    char valueXlsb; // Variable declaration
-    char valueDT1; // Variable declaration
-    char valueDT2; // Variable declaration
-    char valueDT3; // Variable declaration
-    short rawTemp; // Variable declaration
+float BMP280::pressureasHpa() {
+    float hpa; // Variable declaration
     short rawComp1; // Variable declaration
     short rawComp2; // Variable declaration
     short rawComp3; // Variable declaration
-    float celsius; // Variable declaration
-
-
-    valueMsb = readTempMsb();
-    valueLsb = readTempLsb();
-    valueXlsb = readTempXlsb();
-    valueDT1 = readDigT1();
-    valueDT2 = readDigT2();
-    valueDT3 = readDigT3();
-    rawTemp = ((valueMsb << 12)+(valueLsb << 4)+(valueXlsb >> 4));
-    rawComp1 = (((rawTemp/16384.0)-(valueDT1/1024.0))*valueDT2);
-    rawComp3 = ((rawTemp/131072.0)-(valueDT1/8192.0));
-    rawComp2 = (rawComp3*rawComp3*valueDT3);
-    celsius = ((rawComp1+rawComp2)/5120.0);
-
-
-    return celsius;
-}
-
-short BMP280::pressureasRaw() {
-    char valueMsb; // Variable declaration
-    char valueLsb; // Variable declaration
-    char valueXlsb; // Variable declaration
-    short output; // Variable declaration
-
-
-    valueMsb = readPressureMsb();
-    valueLsb = readPressureLsb();
-    valueXlsb = readPressureXlsb();
-    output = ((valueMsb << 12)+(valueLsb << 4)+(valueXlsb >> 4));
-
-
-    return output;
-}
-
-float BMP280::pressureasHpa() {
-    char valueMsb; // Variable declaration
-    char valueLsb; // Variable declaration
-    char valueXlsb; // Variable declaration
+    short rawPressure; // Variable declaration
+    short rawTemperature; // Variable declaration
     char valueDP1; // Variable declaration
     char valueDP2; // Variable declaration
     char valueDP3; // Variable declaration
@@ -700,12 +641,9 @@ float BMP280::pressureasHpa() {
     char valueDP7; // Variable declaration
     char valueDP8; // Variable declaration
     char valueDP9; // Variable declaration
-    short rawPressure; // Variable declaration
-    short rawTemperature; // Variable declaration
-    short rawComp1; // Variable declaration
-    short rawComp2; // Variable declaration
-    short rawComp3; // Variable declaration
-    float hpa; // Variable declaration
+    char valueLsb; // Variable declaration
+    char valueMsb; // Variable declaration
+    char valueXlsb; // Variable declaration
 
 
     valueMsb = readPressureMsb();
@@ -739,5 +677,67 @@ float BMP280::pressureasHpa() {
 
 
     return hpa;
+}
+
+short BMP280::pressureasRaw() {
+    short output; // Variable declaration
+    char valueLsb; // Variable declaration
+    char valueMsb; // Variable declaration
+    char valueXlsb; // Variable declaration
+
+
+    valueMsb = readPressureMsb();
+    valueLsb = readPressureLsb();
+    valueXlsb = readPressureXlsb();
+    output = ((valueMsb << 12)+(valueLsb << 4)+(valueXlsb >> 4));
+
+
+    return output;
+}
+
+float BMP280::temperatureasCelsius() {
+    float celsius; // Variable declaration
+    short rawComp1; // Variable declaration
+    short rawComp2; // Variable declaration
+    short rawComp3; // Variable declaration
+    short rawTemp; // Variable declaration
+    char valueDT1; // Variable declaration
+    char valueDT2; // Variable declaration
+    char valueDT3; // Variable declaration
+    char valueLsb; // Variable declaration
+    char valueMsb; // Variable declaration
+    char valueXlsb; // Variable declaration
+
+
+    valueMsb = readTempMsb();
+    valueLsb = readTempLsb();
+    valueXlsb = readTempXlsb();
+    valueDT1 = readDigT1();
+    valueDT2 = readDigT2();
+    valueDT3 = readDigT3();
+    rawTemp = ((valueMsb << 12)+(valueLsb << 4)+(valueXlsb >> 4));
+    rawComp1 = (((rawTemp/16384.0)-(valueDT1/1024.0))*valueDT2);
+    rawComp3 = ((rawTemp/131072.0)-(valueDT1/8192.0));
+    rawComp2 = (rawComp3*rawComp3*valueDT3);
+    celsius = ((rawComp1+rawComp2)/5120.0);
+
+
+    return celsius;
+}
+
+short BMP280::temperatureasRaw() {
+    short output; // Variable declaration
+    char valueLsb; // Variable declaration
+    char valueMsb; // Variable declaration
+    char valueXlsb; // Variable declaration
+
+
+    valueMsb = readTempMsb();
+    valueLsb = readTempLsb();
+    valueXlsb = readTempXlsb();
+    output = ((valueMsb << 12)+(valueLsb << 4)+(valueXlsb >> 4));
+
+
+    return output;
 }
 

@@ -15,11 +15,10 @@
 #include <Arduino.h>
 #include <Wire.h>
 {# Create enums for functions #}
-{% for function in functions %}
-{% for key in function.keys() %}
+{% if functions %}
+{% for key,function in functions|dictsort %}
 {# Check if we need to import `math` lib #}
-{% for compute in function[key].computed %}
-{% for computeKey in compute.keys() %}
+{% for ckey,compute in function.computed|dictsort %}
 {% macro scanForMathLib(logicKeys) -%}
 {% for logic in logicKeys %}
 {% if logic is mapping %}
@@ -36,33 +35,30 @@
 {% endif %}
 {% endfor %}
 {%- endmacro %}
-{{- scanForMathLib(compute[computeKey].logic) -}}
+{{- scanForMathLib(compute.logic) -}}
 {% endfor %}
 {% endfor %}
-{% endfor %}
-{% endfor %}
+{% endif %}
 
 {# Create enums for fields #}
-{% for field in fields %}
-{% for key in field.keys() %}
-{% if field[key].enum %}
+{% if fields %}
+{% for key,field in fields|dictsort %}
+{% if field.enum %}
 {# Create enum #}
 /*
-{{utils.pad_string(" * ", "Valid values for " + field[key].title)}}
+{{utils.pad_string(" * ", "Valid values for " + field.title)}}
  */
 enum {{key}} {
     {% set args = namespace(index=0) %}
-    {% for enumObject in field[key].enum %}
-    {% for enumKey in enumObject.keys() %}
-    {{key.upper()}}_{{enumKey.upper()}} = {{enumObject[enumKey].value}}{{- "," if args.index + 1 < field[key].enum | length }} // {{enumObject[enumKey].title}}
+    {% for ekey,enum in field.enum|dictsort %}
+    {{key.upper()}}_{{ekey.upper()}} = {{enum.value}}{{- "," if args.index + 1 < field.enum | length }} // {{enum.title}}
     {% set args.index = args.index + 1 %}
-    {% endfor %}
     {% endfor %}
 };
 typedef enum {{key}} {{key}}_t;
 {% endif %}
 {% endfor %}
-{% endfor %}
+{% endif %}
 {% if i2c.address is iterable and i2c.address is not string %}
 enum deviceAddress {
     {% for address in i2c.address %}
@@ -83,52 +79,50 @@ class {{info.title}} {
 
         void begin();
         void end();
-        {% for key in registers.keys() -%}
-        {% set length = registers[key].length %}
+        {% for key,register in registers|dictsort -%}
+        {% set length = register.length %}
         /**
-{{utils.pad_string("         * ", registers[key].description)}}
+{{utils.pad_string("         * ", register.description)}}
          */
-        {{cpp.numtype(registers[key].length)}} read{{key}}();
+        {{cpp.numtype(register.length)}} read{{key}}();
 
         /**
-{{utils.pad_string("         * ", registers[key].description)}}
+{{utils.pad_string("         * ", register.description)}}
          */
         int write{{key}}({{cpp.numtype(length)}} data);
         {%- endfor %}
-        {% for field in fields %}
-        {% for key in field.keys() %}
-        {% if 'R' is in(field[key].readWrite) %}
+        {% if fields %}
+        {% for key,field in fields|dictsort %}
+        {% if 'R' is in(field.readWrite) %}
         /**
-{{utils.pad_string("         * ", field[key].description)}}
+{{utils.pad_string("         * ", field.description)}}
          */
-        {{cpp.registerSize(registers, field[key].register[12:])}} get{{key}}();
+        {{cpp.registerSize(registers, field.register[12:])}} get{{key}}();
         {% endif %}
-        {% if 'W' is in(field[key].readWrite) %}
+        {% if 'W' is in(field.readWrite) %}
         /**
-{{utils.pad_string("         * ", field[key].description)}}
+{{utils.pad_string("         * ", field.description)}}
          */
         int set{{key}}(uint8_t data);
         {% endif %}
         {% endfor %}
-        {% endfor %}
+        {% endif %}
 
-        {% for function in functions %}
-        {% for key in function.keys() %}
-        {% for compute in function[key].computed %}
-        {% for computeKey in compute.keys() %}
+        {% if functions %}
+        {% for key,function in functions|dictsort %}
+        {% for ckey,compute in function.computed|dictsort %}
         /**
-{{utils.pad_string("         * ", function[key].description)}}
+{{utils.pad_string("         * ", function.description)}}
          */
-        {% if compute[computeKey].input %}
-        {{cpp.returnType(compute[computeKey])}} {{key}}{{computeKey}}({{cpp.params(compute[computeKey])}});
+        {% if 'input' in compute %}
+        {{cpp.returnType(compute)}} {{key}}{{ckey}}({{cpp.params(compute)}});
         {% else %}
-        {{cpp.returnType(compute[computeKey])}} {{key}}{{computeKey}}({{cpp.params(compute[computeKey])}});
+        {{cpp.returnType(compute)}} {{key}}{{ckey}}({{cpp.params(compute)}});
         {% endif %}
         {% endfor %}
-        {% endfor %}
 
         {% endfor %}
-        {% endfor %}
+        {% endif %}
 
     private:
         TwoWire* _wire;

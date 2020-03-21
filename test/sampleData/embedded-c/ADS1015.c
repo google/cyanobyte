@@ -85,13 +85,13 @@ int ads1015_writeConversion(
     return 0;
 }
 
-int ads1015_set_samplerate(
+int ads1015_set_deviceoperatingmode(
     uint16_t* data,
     int (*read)(uint8_t, uint8_t, int*, uint8_t),
     int (*write)(uint8_t, uint8_t, int*, uint8_t)
 ) {
     // Bitshift value
-    data = data << 5;
+    data = data << 8;
     // Read current register data
     // '#/registers/Config' > 'Config'
     uint16_t register_data;
@@ -129,13 +129,13 @@ int ads1015_set_programmablegain(
     return 0;
 }
 
-int ads1015_set_deviceoperatingmode(
+int ads1015_set_samplerate(
     uint16_t* data,
     int (*read)(uint8_t, uint8_t, int*, uint8_t),
     int (*write)(uint8_t, uint8_t, int*, uint8_t)
 ) {
     // Bitshift value
-    data = data << 8;
+    data = data << 5;
     // Read current register data
     // '#/registers/Config' > 'Config'
     uint16_t register_data;
@@ -158,11 +158,11 @@ void ads1015_analog_read(
     int (*write)(uint8_t, uint8_t, int*, uint8_t)
 ) {
     short config; // Variable declaration
-    short raw; // Variable declaration
     char datumA; // Variable declaration
     char datumB; // Variable declaration
-    short programmableGain; // Variable declaration
     short processed; // Variable declaration
+    short programmableGain; // Variable declaration
+    short raw; // Variable declaration
 
 
     ads1015_readConfig(&config, read);

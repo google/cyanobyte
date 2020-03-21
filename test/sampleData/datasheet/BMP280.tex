@@ -106,32 +106,10 @@ TempXlsb & Temperature XLSB & 252 & 8 \\
 \toprule
   & Description \\
 \midrule
-temperature & Reads the temperature \\
 pressure & Reads the atmospheric pressure \\
+temperature & Reads the temperature \\
 \bottomrule
 \end{tabular}
-
-
-\raggedright
-\subsection{Function temperature }
-Reads the temperature \\
-
-\centering
-\begin{tabular}{lcr}
-\toprule
-  & Inputs & Return \\
-\midrule
-asRaw &
-&
-output
-\\
-asCelsius &
-&
-celsius
-\\
-\bottomrule
-\end{tabular}
-
 
 
 \raggedright
@@ -143,13 +121,35 @@ Reads the atmospheric pressure \\
 \toprule
   & Inputs & Return \\
 \midrule
+asHpa &
+&
+hpa
+\\
 asRaw &
 &
 output
 \\
-asHpa &
+\bottomrule
+\end{tabular}
+
+
+
+\raggedright
+\subsection{Function temperature }
+Reads the temperature \\
+
+\centering
+\begin{tabular}{lcr}
+\toprule
+  & Inputs & Return \\
+\midrule
+asCelsius &
 &
-hpa
+celsius
+\\
+asRaw &
+&
+output
 \\
 \bottomrule
 \end{tabular}

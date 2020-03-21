@@ -402,53 +402,11 @@ int LSM303D::writeMagnetometerZ_Low(uint8_t data) {
     return 1;
 }
 
-short LSM303D::accelerationxPlane() {
-    char lower; // Variable declaration
-    char upper; // Variable declaration
-    short datum; // Variable declaration
-
-
-    lower = readAccelerometerX_Low();
-    upper = readAccelerometerX_High();
-    datum = ((upper << 8)+lower);
-
-
-    return datum;
-}
-
-short LSM303D::accelerationyPlane() {
-    char lower; // Variable declaration
-    char upper; // Variable declaration
-    short datum; // Variable declaration
-
-
-    lower = readAccelerometerY_Low();
-    upper = readAccelerometerY_High();
-    datum = ((upper << 8)+lower);
-
-
-    return datum;
-}
-
-short LSM303D::accelerationzPlane() {
-    char lower; // Variable declaration
-    char upper; // Variable declaration
-    short datum; // Variable declaration
-
-
-    lower = readAccelerometerZ_Low();
-    upper = readAccelerometerZ_High();
-    datum = ((upper << 8)+lower);
-
-
-    return datum;
-}
-
-void LSM303D::accelerationasG(short * returnArray) {
+void LSM303D::accelerationasG() {
+    char accelerationScale; // Variable declaration
     short valueX; // Variable declaration
     short valueY; // Variable declaration
     short valueZ; // Variable declaration
-    char accelerationScale; // Variable declaration
 
 
     accelerationScale = 2;
@@ -465,42 +423,42 @@ void LSM303D::accelerationasG(short * returnArray) {
     returnArray[2] = valueZ;
 }
 
-short LSM303D::orientationxPlane() {
+short LSM303D::accelerationxPlane() {
+    short datum; // Variable declaration
     char lower; // Variable declaration
     char upper; // Variable declaration
-    short datum; // Variable declaration
 
 
-    lower = readMagnetometerX_Low();
-    upper = readMagnetometerX_High();
+    lower = readAccelerometerX_Low();
+    upper = readAccelerometerX_High();
     datum = ((upper << 8)+lower);
 
 
     return datum;
 }
 
-short LSM303D::orientationyPlane() {
+short LSM303D::accelerationyPlane() {
+    short datum; // Variable declaration
     char lower; // Variable declaration
     char upper; // Variable declaration
-    short datum; // Variable declaration
 
 
-    lower = readMagnetometerY_Low();
-    upper = readMagnetometerY_High();
+    lower = readAccelerometerY_Low();
+    upper = readAccelerometerY_High();
     datum = ((upper << 8)+lower);
 
 
     return datum;
 }
 
-short LSM303D::orientationzPlane() {
+short LSM303D::accelerationzPlane() {
+    short datum; // Variable declaration
     char lower; // Variable declaration
     char upper; // Variable declaration
-    short datum; // Variable declaration
 
 
-    lower = readMagnetometerZ_Low();
-    upper = readMagnetometerZ_High();
+    lower = readAccelerometerZ_Low();
+    upper = readAccelerometerZ_High();
     datum = ((upper << 8)+lower);
 
 
@@ -508,10 +466,10 @@ short LSM303D::orientationzPlane() {
 }
 
 short LSM303D::orientationheading() {
-    short valueX; // Variable declaration
-    short valueY; // Variable declaration
     short dividend; // Variable declaration
     short heading; // Variable declaration
+    short valueX; // Variable declaration
+    short valueY; // Variable declaration
 
 
     valueX = orientationxPlane();
@@ -523,5 +481,47 @@ short LSM303D::orientationheading() {
 
 
     return heading;
+}
+
+short LSM303D::orientationxPlane() {
+    short datum; // Variable declaration
+    char lower; // Variable declaration
+    char upper; // Variable declaration
+
+
+    lower = readMagnetometerX_Low();
+    upper = readMagnetometerX_High();
+    datum = ((upper << 8)+lower);
+
+
+    return datum;
+}
+
+short LSM303D::orientationyPlane() {
+    short datum; // Variable declaration
+    char lower; // Variable declaration
+    char upper; // Variable declaration
+
+
+    lower = readMagnetometerY_Low();
+    upper = readMagnetometerY_High();
+    datum = ((upper << 8)+lower);
+
+
+    return datum;
+}
+
+short LSM303D::orientationzPlane() {
+    short datum; // Variable declaration
+    char lower; // Variable declaration
+    char upper; // Variable declaration
+
+
+    lower = readMagnetometerZ_Low();
+    upper = readMagnetometerZ_High();
+    datum = ((upper << 8)+lower);
+
+
+    return datum;
 }
 

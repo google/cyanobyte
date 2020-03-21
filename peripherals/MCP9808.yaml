@@ -45,7 +45,7 @@ registers:
             Output mode) are user-configurable.
 
 fields:
-    - limitHysteresis:
+    limitHysteresis:
         title: TUPPER and TLOWER Limit Hysteresis bits
         description: |
             This bit can not be altered when either of the Lock bits are set
@@ -56,19 +56,19 @@ fields:
         bitEnd: 9
         type: 'enum'
         enum:
-            - Temp_0C:
+            Temp_0C:
                 title: 0°C (power-up default)
                 value: 0b00
-            - Temp_1C5:
+            Temp_1C5:
                 title: +1.5°C
                 value: 0b01
-            - Temp_3C:
+            Temp_3C:
                 title: +3.0°C
                 value: 0b10
-            - Temp_6C:
+            Temp_6C:
                 title: +6.0°C
                 value: 0b11
-    - shutdownMode:
+    shutdownMode:
         title: Shutdown Mode bit
         description: |
             In shutdown, all power-consuming activities are disabled, though
@@ -82,9 +82,9 @@ fields:
         bitEnd: 8
         type: 'enum'
         enum:
-            - continousConversion:
+            continousConversion:
                 title: Continuous conversion (power-up default)
                 value: 0
-            - shutdown:
+            shutdown:
                 title: Shutdown (Low-Power mode)
                 value: 1

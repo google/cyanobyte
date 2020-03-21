@@ -130,46 +130,46 @@ int {{info.title.lower()}}_write{{key}}({{cpp.numtype(register.length)}}* data) 
 
 {%- endfor %}
 
-{% for field in fields %}
-{% for key in field.keys() %}
-{% if 'R' is in(field[key].readWrite) %}
-{% set int_t = cpp.registerSize(registers, field[key].register[12:]) %}
+{% if fields %}
+{% for key,field in fields|dictsort %}
+{% if 'R' is in(field.readWrite) %}
+{% set int_t = cpp.registerSize(registers, field.register[12:]) %}
 {# Getter #}
 int {{info.title.lower()}}_get_{{key.lower()}}({{int_t}}* val) {
     // Read register data
-    // '#/registers/{{field[key].register[12:]}}' > '{{field[key].register[12:]}}'
-    int result = {{info.title.lower()}}_read{{field[key].register[12:]}}(val);
+    // '#/registers/{{field.register[12:]}}' > '{{field.register[12:]}}'
+    int result = {{info.title.lower()}}_read{{field.register[12:]}}(val);
     if (result != 0) {
         return result;
     }
     // Mask register value
-    val = val & {{utils.mask(field[key].bitStart, field[key].bitEnd)}};
-    {% if field[key].bitEnd %}
+    val = val & {{utils.mask(field.bitStart, field.bitEnd)}};
+    {% if field.bitEnd %}
     // Bitshift value
-    val = val >> {{field[key].bitEnd}};
+    val = val >> {{field.bitEnd}};
     {% endif %}
     return 0;
 }
 {% endif -%}
 
-{%- if 'W' is in(field[key].readWrite) %}
-{% set int_t = cpp.registerSize(registers, field[key].register[12:]) %}
+{%- if 'W' is in(field.readWrite) %}
+{% set int_t = cpp.registerSize(registers, field.register[12:]) %}
 {# Setter #}
 
 int {{info.title.lower()}}_set_{{key.lower()}}({{int_t}}* data) {
-    {% if field[key].bitEnd %}
+    {% if field.bitEnd %}
     // Bitshift value
-    data = data << {{field[key].bitEnd}};
+    data = data << {{field.bitEnd}};
     {% endif %}
     // Read current register data
-    // '#/registers/{{field[key].register[12:]}}' > '{{field[key].register[12:]}}'
+    // '#/registers/{{field.register[12:]}}' > '{{field.register[12:]}}'
     {{int_t}} register_data;
-    int result = {{info.title.lower()}}_read{{field[key].register[12:]}}(&register_data);
+    int result = {{info.title.lower()}}_read{{field.register[12:]}}(&register_data);
     if (result != 0) {
         return -1;
     }
     register_data = register_data | data;
-    result = {{info.title.lower()}}_write{{field[key].register[12:]}}(&register_data);
+    result = {{info.title.lower()}}_write{{field.register[12:]}}(&register_data);
     if (result != 0) {
         return -2;
     }
@@ -177,45 +177,43 @@ int {{info.title.lower()}}_set_{{key.lower()}}({{int_t}}* data) {
 }
 {% endif %}
 {% endfor %}
-{% endfor %}
+{% endif %}
 
-{% for function in functions %}
-{% for key in function.keys() %}
-{% for compute in function[key].computed %}
-{% for computeKey in compute.keys() %}
-{% set int_t = cpp.returnType(compute[computeKey]) %}
-{% if compute[computeKey].input %}
-void {{info.title.lower()}}_{{key.lower()}}_{{computeKey.lower()}}({{int_t}}* val, {{cpp.params(compute[computeKey].input)}}) {
+{% if functions %}
+{% for key,function in functions|dictsort %}
+{% for ckey,compute in function.computed|dictsort %}
+{% set int_t = cpp.returnType(compute) %}
+{% if compute.input %}
+void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}({{int_t}}* val, {{cpp.params(compute.input)}}) {
 {% else %}
-void {{info.title.lower()}}_{{key.lower()}}_{{computeKey.lower()}}({{int_t}}* val) {
+void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}({{int_t}}* val) {
 {% endif %}
     {# Declare our variables #}
-{{ cpp.variables(compute[computeKey].variables) }}
+{{ cpp.variables(compute.variables) }}
 
     {# Read `value` if applicable #}
-    {%- for variable in compute[computeKey].input %}
-    {% for varKey in variable.keys() %}
-    {% if varKey == 'value' %}
+    {% if 'input' in compute %}
+    {%- for vkey,variable in compute.input|dictsort %}
+    {% if vkey == 'value' %}
     // Read value of register into a variable
-    value = {{info.title.lower()}}_get_{{function[key].register[12:]}}(val);
+    value = {{info.title.lower()}}_get_{{function.register[12:]}}(val);
     {% endif %}
-    {% endfor %}
     {% endfor -%}
+    {% endif %}
     {# Handle the logic #}
-{{ logic(compute[computeKey].logic, function[key]) }}
+{{ logic(compute.logic, function) }}
 
     {# Return if applicable #}
     {# Return a tuple #}
-    {% if compute[computeKey].return is iterable and compute[computeKey].return is not string %}
-    return [{% for returnValue in compute[computeKey].return %}{{ returnValue | camel_to_snake }}{{ ", " if not loop.last }}{% endfor %}];
+    {% if compute.return is iterable and compute.return is not string %}
+    return [{% for returnValue in compute.return %}{{ returnValue | camel_to_snake }}{{ ", " if not loop.last }}{% endfor %}];
     {% endif %}
     {# Return a plain value #}
-    {% if compute[computeKey].return is string %}
-    return {{compute[computeKey].return}};
+    {% if compute.return is string %}
+    return {{compute.return}};
     {% endif %}
 }
 
 {% endfor %}
 {% endfor %}
-{% endfor %}
-{% endfor %}
+{% endif %}

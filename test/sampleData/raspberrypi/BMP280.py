@@ -456,76 +456,17 @@ class BMP280:
             data
         )
 
-    def temperature_asraw(self):
-        """
-        Reads the temperature
-
-        """
-        value_msb = None # Variable declaration
-        value_lsb = None # Variable declaration
-        value_xlsb = None # Variable declaration
-        output = None # Variable declaration
-
-        value_msb = self.get_tempmsb()
-        value_lsb = self.get_templsb()
-        value_xlsb = self.get_tempxlsb()
-        output = ((value_msb << 12)+(value_lsb << 4)+(value_xlsb >> 4))
-
-        return output
-    def temperature_ascelsius(self):
-        """
-        Reads the temperature
-
-        """
-        value_msb = None # Variable declaration
-        value_lsb = None # Variable declaration
-        value_xlsb = None # Variable declaration
-        value_d_t1 = None # Variable declaration
-        value_d_t2 = None # Variable declaration
-        value_d_t3 = None # Variable declaration
-        raw_temp = None # Variable declaration
-        raw_comp1 = None # Variable declaration
-        raw_comp2 = None # Variable declaration
-        raw_comp3 = None # Variable declaration
-        celsius = None # Variable declaration
-
-        value_msb = self.get_tempmsb()
-        value_lsb = self.get_templsb()
-        value_xlsb = self.get_tempxlsb()
-        value_d_t1 = self.get_digt1()
-        value_d_t2 = self.get_digt2()
-        value_d_t3 = self.get_digt3()
-        raw_temp = ((value_msb << 12)+(value_lsb << 4)+(value_xlsb >> 4))
-        raw_comp1 = (((raw_temp/16384.0)-(value_d_t1/1024.0))*value_d_t2)
-        raw_comp3 = ((raw_temp/131072.0)-(value_d_t1/8192.0))
-        raw_comp2 = (raw_comp3*raw_comp3*value_d_t3)
-        celsius = ((raw_comp1+raw_comp2)/5120.0)
-
-        return celsius
-    def pressure_asraw(self):
-        """
-        Reads the atmospheric pressure
-
-        """
-        value_msb = None # Variable declaration
-        value_lsb = None # Variable declaration
-        value_xlsb = None # Variable declaration
-        output = None # Variable declaration
-
-        value_msb = self.get_pressuremsb()
-        value_lsb = self.get_pressurelsb()
-        value_xlsb = self.get_pressurexlsb()
-        output = ((value_msb << 12)+(value_lsb << 4)+(value_xlsb >> 4))
-
-        return output
     def pressure_ashpa(self):
         """
         Reads the atmospheric pressure
 
         """
-        value_msb = None # Variable declaration
-        value_lsb = None # Variable declaration
-        value_xlsb = None # Variable declaration
+        hpa = None # Variable declaration
+        raw_comp1 = None # Variable declaration
+        raw_comp2 = None # Variable declaration
+        raw_comp3 = None # Variable declaration
+        raw_pressure = None # Variable declaration
+        raw_temperature = None # Variable declaration
         value_d_p1 = None # Variable declaration
         value_d_p2 = None # Variable declaration
         value_d_p3 = None # Variable declaration
@@ -535,12 +476,9 @@ class BMP280:
         value_d_p7 = None # Variable declaration
         value_d_p8 = None # Variable declaration
         value_d_p9 = None # Variable declaration
-        raw_pressure = None # Variable declaration
-        raw_temperature = None # Variable declaration
-        raw_comp1 = None # Variable declaration
-        raw_comp2 = None # Variable declaration
-        raw_comp3 = None # Variable declaration
-        hpa = None # Variable declaration
+        value_lsb = None # Variable declaration
+        value_msb = None # Variable declaration
+        value_xlsb = None # Variable declaration
 
         value_msb = self.get_pressuremsb()
         value_lsb = self.get_pressurelsb()
@@ -572,3 +510,65 @@ class BMP280:
         hpa = (hpa/100.0)
 
         return hpa
+    def pressure_asraw(self):
+        """
+        Reads the atmospheric pressure
+
+        """
+        output = None # Variable declaration
+        value_lsb = None # Variable declaration
+        value_msb = None # Variable declaration
+        value_xlsb = None # Variable declaration
+
+        value_msb = self.get_pressuremsb()
+        value_lsb = self.get_pressurelsb()
+        value_xlsb = self.get_pressurexlsb()
+        output = ((value_msb << 12)+(value_lsb << 4)+(value_xlsb >> 4))
+
+        return output
+    def temperature_ascelsius(self):
+        """
+        Reads the temperature
+
+        """
+        celsius = None # Variable declaration
+        raw_comp1 = None # Variable declaration
+        raw_comp2 = None # Variable declaration
+        raw_comp3 = None # Variable declaration
+        raw_temp = None # Variable declaration
+        value_d_t1 = None # Variable declaration
+        value_d_t2 = None # Variable declaration
+        value_d_t3 = None # Variable declaration
+        value_lsb = None # Variable declaration
+        value_msb = None # Variable declaration
+        value_xlsb = None # Variable declaration
+
+        value_msb = self.get_tempmsb()
+        value_lsb = self.get_templsb()
+        value_xlsb = self.get_tempxlsb()
+        value_d_t1 = self.get_digt1()
+        value_d_t2 = self.get_digt2()
+        value_d_t3 = self.get_digt3()
+        raw_temp = ((value_msb << 12)+(value_lsb << 4)+(value_xlsb >> 4))
+        raw_comp1 = (((raw_temp/16384.0)-(value_d_t1/1024.0))*value_d_t2)
+        raw_comp3 = ((raw_temp/131072.0)-(value_d_t1/8192.0))
+        raw_comp2 = (raw_comp3*raw_comp3*value_d_t3)
+        celsius = ((raw_comp1+raw_comp2)/5120.0)
+
+        return celsius
+    def temperature_asraw(self):
+        """
+        Reads the temperature
+
+        """
+        output = None # Variable declaration
+        value_lsb = None # Variable declaration
+        value_msb = None # Variable declaration
+        value_xlsb = None # Variable declaration
+
+        value_msb = self.get_tempmsb()
+        value_lsb = self.get_templsb()
+        value_xlsb = self.get_tempxlsb()
+        output = ((value_msb << 12)+(value_lsb << 4)+(value_xlsb >> 4))
+
+        return output

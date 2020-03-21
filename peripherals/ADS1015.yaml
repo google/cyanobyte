@@ -44,161 +44,161 @@ registers:
     title: ADC Value
     description: Conversion register contains the result of the last conversion
 fields:
-  - SampleRate:
-      title: Setup sample rate for reading analog voltage
-      description: |
-        This sets the samples-per-second value
-      register: '#/registers/Config'
-      readWrite: 'W'
-      bitStart: 7
-      bitEnd: 5
-      type: 'enum'
-      enum:
-        - HZ128:
-            title: 128 samples/second
-            value: 0b000
-        - HZ250:
-            title: 250 samples/second
-            value: 0b001
-        - HZ490:
-            title: 490 samples/second
-            value: 0b010
-        - HZ920:
-            title: 920 samples/second
-            value: 0b011
-        - HZ1600:
-            title: 1600 samples/second
-            value: 0b100
-        - HZ2400:
-            title: 2400 samples/second
-            value: 0b101
-        - HZ3300:
-            title: 3300 samples/second
-            value: 0b110
-  - ProgrammableGain:
-      title: Setup programmable gain
-      description: |
-        This sets the programmable gain for reading analog voltage
-      register: '#/registers/Config'
-      readWrite: 'W'
-      bitStart: 11
-      bitEnd: 9
-      type: enum
-      enum:
-        - PGA6_144V:
-            title: Plus/minus 6.144V
-            value: 0b000
-        - PGA4_096V:
-            title: Plus/minus 4.096V
-            value: 0b001
-        - PGA2_048V:
-            title: Plus/minus 2.048V
-            value: 0b010
-        - PGA1_024V:
-            title: Plus/minus 1.024V
-            value: 0b011
-        - PGA0_512:
-            title: Plus/minus 0.512V
-            value: 0b100
-        - PGA0_256:
-            title: Plus/minus 0.256V
-            value: 0b101
-  - DeviceOperatingMode:
-      title: Set the operating mode
-      description: |
-        This bit controls the operating mode
-      register: '#/registers/Config'
-      readWrite: 'W'
-      bitStart: 8
-      bitEnd: 8
-      type: enum
-      enum:
-        - CONTINUOUS_CONVERSION:
-            title: Continuous Conversion
-            value: 0
-        - SINGLE_SHOT:
-            title: Single-shot or power-down state
-            value: 1
-  - Channel:
-      title: Set the channel to read
-      description: |
-        This sets the channel for reading analog voltage
-      register: '#/registers/Config'
-      readWrite: 'n'
-      bitStart: 14
-      bitEnd: 12
-      type: enum
-      enum:
-        - CHANNEL_1:
-            title: Channel 1
-            value: 0b00
-        - CHANNEL_2:
-            title: Channel 2
-            value: 0b01
-        - CHANNEL_3:
-            title: Channel 3
-            value: 0b10
-        - CHANNEL_4:
-            title: Channel 4
-            value: 0b11
+  SampleRate:
+    title: Setup sample rate for reading analog voltage
+    description: |
+      This sets the samples-per-second value
+    register: '#/registers/Config'
+    readWrite: 'W'
+    bitStart: 7
+    bitEnd: 5
+    type: 'enum'
+    enum:
+      HZ128:
+        title: 128 samples/second
+        value: 0b000
+      HZ250:
+        title: 250 samples/second
+        value: 0b001
+      HZ490:
+        title: 490 samples/second
+        value: 0b010
+      HZ920:
+        title: 920 samples/second
+        value: 0b011
+      HZ1600:
+        title: 1600 samples/second
+        value: 0b100
+      HZ2400:
+        title: 2400 samples/second
+        value: 0b101
+      HZ3300:
+        title: 3300 samples/second
+        value: 0b110
+  ProgrammableGain:
+    title: Setup programmable gain
+    description: |
+      This sets the programmable gain for reading analog voltage
+    register: '#/registers/Config'
+    readWrite: 'W'
+    bitStart: 11
+    bitEnd: 9
+    type: enum
+    enum:
+      PGA6_144V:
+        title: Plus/minus 6.144V
+        value: 0b000
+      PGA4_096V:
+        title: Plus/minus 4.096V
+        value: 0b001
+      PGA2_048V:
+        title: Plus/minus 2.048V
+        value: 0b010
+      PGA1_024V:
+        title: Plus/minus 1.024V
+        value: 0b011
+      PGA0_512:
+        title: Plus/minus 0.512V
+        value: 0b100
+      PGA0_256:
+        title: Plus/minus 0.256V
+        value: 0b101
+  DeviceOperatingMode:
+    title: Set the operating mode
+    description: |
+      This bit controls the operating mode
+    register: '#/registers/Config'
+    readWrite: 'W'
+    bitStart: 8
+    bitEnd: 8
+    type: enum
+    enum:
+      CONTINUOUS_CONVERSION:
+        title: Continuous Conversion
+        value: 0
+      SINGLE_SHOT:
+          title: Single-shot or power-down state
+          value: 1
+  Channel:
+    title: Set the channel to read
+    description: |
+      This sets the channel for reading analog voltage
+    register: '#/registers/Config'
+    readWrite: 'n'
+    bitStart: 14
+    bitEnd: 12
+    type: enum
+    enum:
+      CHANNEL_1:
+        title: Channel 1
+        value: 0b00
+      CHANNEL_2:
+        title: Channel 2
+        value: 0b01
+      CHANNEL_3:
+        title: Channel 3
+        value: 0b10
+      CHANNEL_4:
+        title: Channel 4
+        value: 0b11
 functions:
-  - analog:
-      title: Value read from ADC
-      description: Reads the analog voltage in Volts
-      computed:
-        - read:
-            input:
-              - channel: int8
-            variables:
-              - config: int16
-              - raw: int16
-              - datumA: int8
-              - datumB: int8
-              - programmableGain: int16
-              - processed: int16
-            logic:
-              - config: '#/registers/Config'
-              - config:
-                - bitwiseOr:
-                  - config
-                  - bitShiftLeft:
-                    var: channel
-                    bits: 12
-              - config:
-                  - bitwiseOr:
-                    - config
-                    - 0x8000 # Set single-shot mode
-              - cmdWrite:
-                  register: '#/registers/Config'
-                  value: config
-              - raw: '#/registers/Conversion'
-              - datumA:
-                - bitwiseAnd:
-                  - raw
-                  - 0xFF00
-              - datumA:
-                - bitShiftRight:
-                  var: datumA
-                  bits: 8
-              - datumB:
-                - bitwiseAnd:
-                  - raw
-                  - 0x00FF
-              - processed:
-                - bitwiseOr:
-                  - bitShiftLeft:
-                    var: datumA
-                    bits: 4
-                  - bitShiftRight:
-                    var: datumB
-                    bits: 4
-              # Get gain from config
-              - programmableGain: = 6144 # FIXME need an enum lookup
-              - processed:
-                - product:
-                  - division:
-                    - processed
-                    - 2047
-                    - 1000
-                  - programmableGain
-            return: processed
+  analog:
+    title: Value read from ADC
+    description: Reads the analog voltage in Volts
+    computed:
+      read:
+        input:
+          channel: int8
+        variables:
+          config: int16
+          raw: int16
+          datumA: int8
+          datumB: int8
+          programmableGain: int16
+          processed: int16
+        logic:
+          - config: '#/registers/Config'
+          - config:
+            - bitwiseOr:
+              - config
+              - bitShiftLeft:
+                var: channel
+                bits: 12
+          - config:
+              - bitwiseOr:
+                - config
+                - 0x8000 # Set single-shot mode
+          - cmdWrite:
+              register: '#/registers/Config'
+              value: config
+          - raw: '#/registers/Conversion'
+          - datumA:
+            - bitwiseAnd:
+              - raw
+              - 0xFF00
+          - datumA:
+            - bitShiftRight:
+              var: datumA
+              bits: 8
+          - datumB:
+            - bitwiseAnd:
+              - raw
+              - 0x00FF
+          - processed:
+            - bitwiseOr:
+              - bitShiftLeft:
+                var: datumA
+                bits: 4
+              - bitShiftRight:
+                var: datumB
+                bits: 4
+          # Get gain from config
+          - programmableGain: = 6144 # FIXME need an enum lookup
+          - processed:
+            - product:
+              - division:
+                - processed
+                - 2047
+                - 1000
+              - programmableGain
+        return: processed

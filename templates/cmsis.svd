@@ -66,48 +66,44 @@ uint64_t
                     <dataType>{{ numtype(register.length) }}</dataType>
                     {% if fields %}
                     <fields>
-                    {% for field in fields -%}
-                    {% for fkey in field.keys() %}
-                    {% if field[fkey].register == '#/registers/' + key %}
+                    {% for fkey,field in fields|dictsort -%}
+                    {% if field.register == '#/registers/' + key %}
                         <field>
                             <name>{{ fkey }}</name>
                             <description>
-                            {{ field[fkey].description }}
+                            {{ field.description }}
                             </description>
-                            <lsb>{{ field[fkey].bitEnd }}</lsb>
-                            <msb>{{ field[fkey].bitStart }}</msb>
-                            {% if field[fkey].readWrite == 'W' %}
+                            <lsb>{{ field.bitEnd }}</lsb>
+                            <msb>{{ field.bitStart }}</msb>
+                            {% if field.readWrite == 'W' %}
                             <access>write-only</access>
-                            {% elif field[fkey].readWrite == 'R' %}
+                            {% elif field.readWrite == 'R' %}
                             <access>read-only</access>
-                            {% elif field[fkey].readWrite == 'R/W' %}
+                            {% elif field.readWrite == 'R/W' %}
                             <access>read-write</access>
                             {% endif %}
-                            {% if field[fkey].type == 'enum' %}
+                            {% if field.type == 'enum' %}
                             <enumeratedValues>
-                            {% for enum in field[fkey].enum -%}
-                            {% for ekey in enum.keys() %}
+                            {% for ekey,enum in field.enum|dictsort -%}
                                 <enumeratedValue>
                                     <name>{{ ekey }}</name>
-                                    <description>{{ enum[ekey].title }}</description>
-                                    <value>{{ enum[ekey].value }}</value>
+                                    <description>{{ enum.title }}</description>
+                                    <value>{{ enum.value }}</value>
                                 </enumeratedValue>
-                            {% endfor %}
                             {% endfor %}
                             </enumeratedValues>
                             {% endif %}
                             <writeConstraint>
-                                {% if field[fkey].type == 'enum' %}
+                                {% if field.type == 'enum' %}
                                 <useEnumeratedValues>true</useEnumeratedValues>
                                 {% endif %}
                                 <range>
-                                    <minimum>{{field[fkey].bitEnd}}</minimum>
-                                    <maximum>{{field[fkey].bitStart}}</maximum>
+                                    <minimum>{{field.bitEnd}}</minimum>
+                                    <maximum>{{field.bitStart}}</maximum>
                                 </range>
                             </writeConstraint>
                         </field>
                     {% endif %}
-                    {% endfor %}
                     {% endfor %}
                     </fields>
                     {% endif %}

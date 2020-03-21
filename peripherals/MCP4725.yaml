@@ -52,52 +52,52 @@ registers:
       be loaded from power-on.
 
 fields:
-  - digitalOut:
-      title: Digital (binary) output
-      description: |
-        Only allows you to send fully on or off
-      register: '#/registers/EEPROM'
-      readWrite: 'R/W'
-      bitStart: 12
-      bitEnd: 0
-      type: 'enum'
-      enum:
-        - VCC:
-            title: Vcc (full power)
-            value: 0b111111111111
-        - GND:
-            title: Ground
-            value: 0b000000000000
+  digitalOut:
+    title: Digital (binary) output
+    description: |
+      Only allows you to send fully on or off
+    register: '#/registers/EEPROM'
+    readWrite: 'R/W'
+    bitStart: 12
+    bitEnd: 0
+    type: 'enum'
+    enum:
+      VCC:
+        title: Vcc (full power)
+        value: 0b111111111111
+      GND:
+        title: Ground
+        value: 0b000000000000
 functions:
-  - setVOut:
-      title: Set output voltage
-      description: set vout
-      type: number
-      register: '#/registers/EEPROM'
-      bitStart: 12
-      bitEnd: 0
-      computed:
-        - asVoltage:
-            input:
-              - vcc: float32
-              - output: float32
-            logic:
-              - output: = output / vcc * 4096
-              - send: output
-  - getVOut:
-      title: Get output voltage
-      description: get vout
-      type: number
-      register: '#/registers/EEPROM'
-      bitStart: 12
-      bitEnd: 0
-      computed:
-        - asVoltage:
-            input:
-              - vcc: float32
-              - value: float32 # automatically pulls value
-            variables:
-              - voltage: float32
-            logic:
-              - voltage: = value / 4096 * vcc
-            return: voltage
+  setVOut:
+    title: Set output voltage
+    description: set vout
+    type: number
+    register: '#/registers/EEPROM'
+    bitStart: 12
+    bitEnd: 0
+    computed:
+      asVoltage:
+        input:
+          vcc: float32
+          output: float32
+        logic:
+          - output: = output / vcc * 4096
+          - send: output
+  getVOut:
+    title: Get output voltage
+    description: get vout
+    type: number
+    register: '#/registers/EEPROM'
+    bitStart: 12
+    bitEnd: 0
+    computed:
+      asVoltage:
+        input:
+          vcc: float32
+          value: float32 # automatically pulls value
+        variables:
+          voltage: float32
+        logic:
+          - voltage: = value / 4096 * vcc
+        return: voltage

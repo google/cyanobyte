@@ -214,26 +214,26 @@ int bmp280_readTempXlsb(uint8_t* val);
 int bmp280_writeTempXlsb(uint8_t* data);
 
 /**
- * Reads the temperature
+ * Reads the atmospheric pressure
 
 */
-void bmp280_temperature_asraw(short* val);
-/**
- * Reads the temperature
-
-*/
-void bmp280_temperature_ascelsius(float* val);
-
+void bmp280_pressure_ashpa(float* val);
 /**
  * Reads the atmospheric pressure
 
 */
 void bmp280_pressure_asraw(short* val);
+
 /**
- * Reads the atmospheric pressure
+ * Reads the temperature
 
 */
-void bmp280_pressure_ashpa(float* val);
+void bmp280_temperature_ascelsius(float* val);
+/**
+ * Reads the temperature
+
+*/
+void bmp280_temperature_asraw(short* val);
 
 
 #endif

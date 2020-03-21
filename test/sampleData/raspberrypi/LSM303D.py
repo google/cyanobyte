@@ -18,8 +18,6 @@
 Class for LSM303D
 """
 
-import struct
-import math
 import smbus
 
 
@@ -301,14 +299,33 @@ class LSM303D:
             data
         )
 
+    def acceleration_asg(self):
+        """
+        Measures the current acceleration
+
+        """
+        acceleration_scale = None # Variable declaration
+        value_x = None # Variable declaration
+        value_y = None # Variable declaration
+        value_z = None # Variable declaration
+
+        acceleration_scale = 2
+        value_x = self.acceleration_xplane()
+        value_y = self.acceleration_yplane()
+        value_z = self.acceleration_zplane()
+        value_x = ((value_x/math.pow(2, 15))*acceleration_scale)
+        value_y = ((value_y/math.pow(2, 15))*acceleration_scale)
+        value_z = ((value_z/math.pow(2, 15))*acceleration_scale)
+
+        return [value_x, value_y, value_z]
     def acceleration_xplane(self):
         """
         Measures the current acceleration
 
         """
+        datum = None # Variable declaration
         lower = None # Variable declaration
         upper = None # Variable declaration
-        datum = None # Variable declaration
 
         lower = self.get_accelerometerx_low()
         upper = self.get_accelerometerx_high()
@@ -322,9 +339,9 @@ class LSM303D:
         Measures the current acceleration
 
         """
+        datum = None # Variable declaration
         lower = None # Variable declaration
         upper = None # Variable declaration
-        datum = None # Variable declaration
 
         lower = self.get_accelerometery_low()
         upper = self.get_accelerometery_high()
@@ -338,9 +355,9 @@ class LSM303D:
         Measures the current acceleration
 
         """
+        datum = None # Variable declaration
         lower = None # Variable declaration
         upper = None # Variable declaration
-        datum = None # Variable declaration
 
         lower = self.get_accelerometerz_low()
         upper = self.get_accelerometerz_high()
@@ -349,33 +366,32 @@ class LSM303D:
         # Convert from a unsigned short to a signed short
         datum = struct.unpack("h", struct.pack("H", datum))[0]
         return datum
-    def acceleration_asg(self):
+    def orientation_heading(self):
         """
-        Measures the current acceleration
+        Reads the magnetic orientation
 
         """
+        dividend = None # Variable declaration
+        heading = None # Variable declaration
         value_x = None # Variable declaration
         value_y = None # Variable declaration
-        value_z = None # Variable declaration
-        acceleration_scale = None # Variable declaration
 
-        acceleration_scale = 2
-        value_x = self.acceleration_xplane()
-        value_y = self.acceleration_yplane()
-        value_z = self.acceleration_zplane()
-        value_x = ((value_x/math.pow(2, 15))*acceleration_scale)
-        value_y = ((value_y/math.pow(2, 15))*acceleration_scale)
-        value_z = ((value_z/math.pow(2, 15))*acceleration_scale)
+        value_x = self.orientation_xplane()
+        value_y = self.orientation_yplane()
+        dividend = (value_x/value_y)
+        heading = math.atan(dividend)
+        heading = (heading%(2*3.141592653589793))
+        heading = ((heading/3.141592653589793)*180)
 
-        return [value_x, value_y, value_z]
+        return heading
     def orientation_xplane(self):
         """
         Reads the magnetic orientation
 
         """
+        datum = None # Variable declaration
         lower = None # Variable declaration
         upper = None # Variable declaration
-        datum = None # Variable declaration
 
         lower = self.get_magnetometerx_low()
         upper = self.get_magnetometerx_high()
@@ -389,9 +405,9 @@ class LSM303D:
         Reads the magnetic orientation
 
         """
+        datum = None # Variable declaration
         lower = None # Variable declaration
         upper = None # Variable declaration
-        datum = None # Variable declaration
 
         lower = self.get_magnetometery_low()
         upper = self.get_magnetometery_high()
@@ -405,9 +421,9 @@ class LSM303D:
         Reads the magnetic orientation
 
         """
+        datum = None # Variable declaration
         lower = None # Variable declaration
         upper = None # Variable declaration
-        datum = None # Variable declaration
 
         lower = self.get_magnetometerz_low()
         upper = self.get_magnetometerz_high()
@@ -416,21 +432,3 @@ class LSM303D:
         # Convert from a unsigned short to a signed short
         datum = struct.unpack("h", struct.pack("H", datum))[0]
         return datum
-    def orientation_heading(self):
-        """
-        Reads the magnetic orientation
-
-        """
-        value_x = None # Variable declaration
-        value_y = None # Variable declaration
-        dividend = None # Variable declaration
-        heading = None # Variable declaration
-
-        value_x = self.orientation_xplane()
-        value_y = self.orientation_yplane()
-        dividend = (value_x/value_y)
-        heading = math.atan(dividend)
-        heading = (heading%(2*3.141592653589793))
-        heading = ((heading/3.141592653589793)*180)
-
-        return heading

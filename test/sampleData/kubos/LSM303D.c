@@ -284,53 +284,11 @@ int lsm303d_writeMagnetometerZ_Low(uint8_t* data) {
     return 0;
 }
 
-void lsm303d_acceleration_xplane(short* val) {
-    char lower; // Variable declaration
-    char upper; // Variable declaration
-    short datum; // Variable declaration
-
-
-    lsm303d_readAccelerometerX_Low(&lower);
-    lsm303d_readAccelerometerX_High(&upper);
-    datum = ((upper << 8)+lower);
-
-
-    return datum;
-}
-
-void lsm303d_acceleration_yplane(short* val) {
-    char lower; // Variable declaration
-    char upper; // Variable declaration
-    short datum; // Variable declaration
-
-
-    lsm303d_readAccelerometerY_Low(&lower);
-    lsm303d_readAccelerometerY_High(&upper);
-    datum = ((upper << 8)+lower);
-
-
-    return datum;
-}
-
-void lsm303d_acceleration_zplane(short* val) {
-    char lower; // Variable declaration
-    char upper; // Variable declaration
-    short datum; // Variable declaration
-
-
-    lsm303d_readAccelerometerZ_Low(&lower);
-    lsm303d_readAccelerometerZ_High(&upper);
-    datum = ((upper << 8)+lower);
-
-
-    return datum;
-}
-
 void lsm303d_acceleration_asg(void* val) {
+    char accelerationScale; // Variable declaration
     short valueX; // Variable declaration
     short valueY; // Variable declaration
     short valueZ; // Variable declaration
-    char accelerationScale; // Variable declaration
 
 
     accelerationScale = 2
@@ -345,42 +303,42 @@ void lsm303d_acceleration_asg(void* val) {
     return [value_x, value_y, value_z];
 }
 
-void lsm303d_orientation_xplane(short* val) {
+void lsm303d_acceleration_xplane(short* val) {
+    short datum; // Variable declaration
     char lower; // Variable declaration
     char upper; // Variable declaration
-    short datum; // Variable declaration
 
 
-    lsm303d_readMagnetometerX_Low(&lower);
-    lsm303d_readMagnetometerX_High(&upper);
+    lsm303d_readAccelerometerX_Low(&lower);
+    lsm303d_readAccelerometerX_High(&upper);
     datum = ((upper << 8)+lower);
 
 
     return datum;
 }
 
-void lsm303d_orientation_yplane(short* val) {
+void lsm303d_acceleration_yplane(short* val) {
+    short datum; // Variable declaration
     char lower; // Variable declaration
     char upper; // Variable declaration
-    short datum; // Variable declaration
 
 
-    lsm303d_readMagnetometerY_Low(&lower);
-    lsm303d_readMagnetometerY_High(&upper);
+    lsm303d_readAccelerometerY_Low(&lower);
+    lsm303d_readAccelerometerY_High(&upper);
     datum = ((upper << 8)+lower);
 
 
     return datum;
 }
 
-void lsm303d_orientation_zplane(short* val) {
+void lsm303d_acceleration_zplane(short* val) {
+    short datum; // Variable declaration
     char lower; // Variable declaration
     char upper; // Variable declaration
-    short datum; // Variable declaration
 
 
-    lsm303d_readMagnetometerZ_Low(&lower);
-    lsm303d_readMagnetometerZ_High(&upper);
+    lsm303d_readAccelerometerZ_Low(&lower);
+    lsm303d_readAccelerometerZ_High(&upper);
     datum = ((upper << 8)+lower);
 
 
@@ -388,10 +346,10 @@ void lsm303d_orientation_zplane(short* val) {
 }
 
 void lsm303d_orientation_heading(short* val) {
-    short valueX; // Variable declaration
-    short valueY; // Variable declaration
     short dividend; // Variable declaration
     short heading; // Variable declaration
+    short valueX; // Variable declaration
+    short valueY; // Variable declaration
 
 
     orientationxPlane(&valueX);
@@ -403,5 +361,47 @@ void lsm303d_orientation_heading(short* val) {
 
 
     return heading;
+}
+
+void lsm303d_orientation_xplane(short* val) {
+    short datum; // Variable declaration
+    char lower; // Variable declaration
+    char upper; // Variable declaration
+
+
+    lsm303d_readMagnetometerX_Low(&lower);
+    lsm303d_readMagnetometerX_High(&upper);
+    datum = ((upper << 8)+lower);
+
+
+    return datum;
+}
+
+void lsm303d_orientation_yplane(short* val) {
+    short datum; // Variable declaration
+    char lower; // Variable declaration
+    char upper; // Variable declaration
+
+
+    lsm303d_readMagnetometerY_Low(&lower);
+    lsm303d_readMagnetometerY_High(&upper);
+    datum = ((upper << 8)+lower);
+
+
+    return datum;
+}
+
+void lsm303d_orientation_zplane(short* val) {
+    short datum; // Variable declaration
+    char lower; // Variable declaration
+    char upper; // Variable declaration
+
+
+    lsm303d_readMagnetometerZ_Low(&lower);
+    lsm303d_readMagnetometerZ_High(&upper);
+    datum = ((upper << 8)+lower);
+
+
+    return datum;
 }
 
