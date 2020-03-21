@@ -124,6 +124,7 @@ from enum import Enum
 {% endif %}
 {% endif %}
 {% endfor %}
+{% endif %}
 {% if functions %}
 {% for key,function in functions|dictsort %}
 {# Check if we need to import `math` lib #}
@@ -153,6 +154,5 @@ import math
 {{- scanForMathLib(compute.logic) -}}
 {% endfor %}
 {% endfor %}
-{% endif %}
 {% endif %}
 {%- endmacro %}
