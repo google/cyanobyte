@@ -118,6 +118,7 @@ class {{ info.title }}:
     {% endif %}
 
     {% for key,register in registers|dictsort %}
+    {% if (not 'readWrite' in register) or ('readWrite' in register and 'R' is in(register.readWrite)) %}
     def get_{{key.lower()}}(self):
         """
 {{utils.pad_string("        ", register.description)}}
@@ -141,7 +142,9 @@ class {{ info.title }}:
         val = _sign(val, {{register.length}})
         {% endif %}
         return val
+    {% endif %}
 
+    {% if (not 'readWrite' in register) or ('readWrite' in register and 'W' is in(register.readWrite)) %}
     def set_{{key.lower()}}(self, data):
         """
 {{utils.pad_string("        ", register.description)}}
@@ -162,6 +165,7 @@ class {{ info.title }}:
             data
         )
         {% endif %}
+    {% endif %}
     {% endfor %}
 
     {% if fields %}

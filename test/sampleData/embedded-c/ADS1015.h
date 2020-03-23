@@ -91,7 +91,7 @@ int ads1015_writeConfig(
     uint16_t* data,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-);   
+);
 /**
   * Conversion register contains the result of the last conversion
 

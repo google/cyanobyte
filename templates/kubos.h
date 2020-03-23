@@ -79,15 +79,18 @@ int {{info.title.lower()}}_init(char* bus_name);
 void {{info.title.lower()}}_terminate();
 {% for key,register in registers|dictsort -%}
 {% set length = (register.length / 8) | round(1, 'ceil') | int %}
+{% if (not 'readWrite' in register) or ('readWrite' in register and 'R' is in(register.readWrite)) %}
 /**
  {{utils.pad_string(" * ", register.description)}}
 */
 int {{info.title.lower()}}_read{{key}}({{cpp.numtype(register.length)}}* val);
+{% endif %}
 
+{% if (not 'readWrite' in register) or ('readWrite' in register and 'W' is in(register.readWrite)) %}
 /**
 {{utils.pad_string(" * ", register.description)}}
  */
-int {{info.title.lower()}}_write{{key}}({{cpp.numtype(register.length)}}* data);
+int {{info.title.lower()}}_write{{key}}({{cpp.numtype(register.length)}}* data);{% endif %}
 {%- endfor %}
 
 {% if fields %}

@@ -98,6 +98,7 @@ int {{info.title.lower()}}_init(int (*connect)(uint8_t)) {
 
 {% for key,register in registers|dictsort -%}
 {% set length = (register.length / 8) | round(1, 'ceil') | int %}
+{% if (not 'readWrite' in register) or ('readWrite' in register and 'R' is in(register.readWrite)) %}
 int {{info.title.lower()}}_read{{key}}(
     {{cpp.numtype(register.length)}}* val,
     int (*read)(uint8_t, uint8_t, {{cpp.numtype(register.length)}}*, uint8_t)
@@ -110,7 +111,9 @@ int {{info.title.lower()}}_read{{key}}(
     }
     return 0;
 }
+{% endif %}
 
+{% if (not 'readWrite' in register) or ('readWrite' in register and 'W' is in(register.readWrite)) %}
 int {{info.title.lower()}}_write{{key}}(
     {{cpp.numtype(register.length)}}* data,
     int (*write)(uint8_t, uint8_t, {{cpp.numtype(register.length)}}*, uint8_t)
@@ -119,7 +122,7 @@ int {{info.title.lower()}}_write{{key}}(
         return -1;
     }
     return 0;
-}
+}{% endif %}
 
 {%- endfor %}
 

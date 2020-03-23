@@ -60,7 +60,13 @@ uint64_t
                     <description>{{register.description}}</description>
                     <addressOffset>{{register.address}}</addressOffset>
                     <size>{{register.length}}</size>
+                    {% if (not 'readWrite' in register) or (register.readWrite == 'R/W') %}
                     <access>read-write</access>
+                    {% elif register.readWrite == 'W' %}
+                    <access>write</access>
+                    {% else %}
+                    <access>read</access>
+                    {% endif %}
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>{{ numtype(register.length) }}</dataType>

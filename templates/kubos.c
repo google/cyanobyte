@@ -105,6 +105,7 @@ void {{info.title.lower()}}_terminate() {
 
 {% for key,register in registers|dictsort -%}
 {% set length = (register.length / 8) | round(1, 'ceil') | int %}
+{% if (not 'readWrite' in register) or ('readWrite' in register and 'R' is in(register.readWrite)) %}
 int {{info.title.lower()}}_read{{key}}({{cpp.numtype(register.length)}}* val) {
     if (val == NULL) {
         return -1; // Need to provide a valid value pointer
@@ -114,7 +115,9 @@ int {{info.title.lower()}}_read{{key}}({{cpp.numtype(register.length)}}* val) {
     }
     return 0;
 }
+{% endif %}
 
+{% if (not 'readWrite' in register) or ('readWrite' in register and 'W' is in(register.readWrite)) %}
 int {{info.title.lower()}}_write{{key}}({{cpp.numtype(register.length)}}* data) {
     // Put our data into uint8_t buffer
     uint8_t buffer[{{length + 1}}] = { (uint8_t) REGISTER_{{key.upper()}} };
@@ -126,7 +129,7 @@ int {{info.title.lower()}}_write{{key}}({{cpp.numtype(register.length)}}* data) 
         return -1;
     }
     return 0;
-}
+}{% endif %}
 
 {%- endfor %}
 

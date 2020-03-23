@@ -45,7 +45,7 @@ int lsm303d_writeAccelerometerX_High(
     uint8_t* data,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);   
+);
 /**
   * Raw accelerometer data on X plane
 
@@ -63,7 +63,7 @@ int lsm303d_writeAccelerometerX_Low(
     uint8_t* data,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);   
+);
 /**
   * Raw accelerometer data on Y plane
 
@@ -81,7 +81,7 @@ int lsm303d_writeAccelerometerY_High(
     uint8_t* data,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);   
+);
 /**
   * Raw accelerometer data on Y plane
 
@@ -99,7 +99,7 @@ int lsm303d_writeAccelerometerY_Low(
     uint8_t* data,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);   
+);
 /**
   * Raw accelerometer data on Z plane
 
@@ -117,7 +117,7 @@ int lsm303d_writeAccelerometerZ_High(
     uint8_t* data,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);   
+);
 /**
   * Raw accelerometer data on Z plane
 
@@ -135,7 +135,7 @@ int lsm303d_writeAccelerometerZ_Low(
     uint8_t* data,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);   
+);
 /**
   * Raw magnetometer data on X plane
 
@@ -153,7 +153,7 @@ int lsm303d_writeMagnetometerX_High(
     uint8_t* data,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);   
+);
 /**
   * Raw magnetometer data on X plane
 
@@ -171,7 +171,7 @@ int lsm303d_writeMagnetometerX_Low(
     uint8_t* data,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);   
+);
 /**
   * Raw magnetometer data on Y plane
 
@@ -189,7 +189,7 @@ int lsm303d_writeMagnetometerY_High(
     uint8_t* data,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);   
+);
 /**
   * Raw magnetometer data on Y plane
 
@@ -207,7 +207,7 @@ int lsm303d_writeMagnetometerY_Low(
     uint8_t* data,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);   
+);
 /**
   * Raw magnetometer data on Z plane
 
@@ -225,7 +225,7 @@ int lsm303d_writeMagnetometerZ_High(
     uint8_t* data,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);   
+);
 /**
   * Raw magnetometer data on Z plane
 

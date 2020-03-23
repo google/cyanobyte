@@ -58,16 +58,6 @@ class TCS3472:
         )
         return val
 
-    def set_blue(self, data):
-        """
-        Blue light as an int. Divide by ambient light to get scaled number.
-
-        """
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_BLUE,
-            data
-        )
     def get_clear(self):
         """
         This is the ambient amount of detected light.
@@ -79,16 +69,6 @@ class TCS3472:
         )
         return val
 
-    def set_clear(self, data):
-        """
-        This is the ambient amount of detected light.
-
-        """
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_CLEAR,
-            data
-        )
     def get_enable(self):
         """
         Enable specific components of the peripheral
@@ -121,16 +101,6 @@ class TCS3472:
         )
         return val
 
-    def set_green(self, data):
-        """
-        Green light as an int. Divide by ambient light to get scaled number.
-
-        """
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_GREEN,
-            data
-        )
     def get_red(self):
         """
         Red light as an int. Divide by ambient light to get scaled number.
@@ -142,16 +112,6 @@ class TCS3472:
         )
         return val
 
-    def set_red(self, data):
-        """
-        Red light as an int. Divide by ambient light to get scaled number.
-
-        """
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_RED,
-            data
-        )
 
 
     def get_init(self):
