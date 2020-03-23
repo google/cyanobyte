@@ -81,15 +81,18 @@ class {{info.title}} {
         void end();
         {% for key,register in registers|dictsort -%}
         {% set length = register.length %}
+        {% if (not 'readWrite' in register) or ('readWrite' in register and 'R' is in(register.readWrite)) %}
         /**
 {{utils.pad_string("         * ", register.description)}}
          */
         {{cpp.numtype(register.length)}} read{{key}}();
+        {% endif %}
 
+        {% if (not 'readWrite' in register) or ('readWrite' in register and 'W' is in(register.readWrite)) %}
         /**
 {{utils.pad_string("         * ", register.description)}}
          */
-        int write{{key}}({{cpp.numtype(length)}} data);
+        int write{{key}}({{cpp.numtype(length)}} data);{% endif %}
         {%- endfor %}
         {% if fields %}
         {% for key,field in fields|dictsort %}

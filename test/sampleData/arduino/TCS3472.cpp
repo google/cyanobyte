@@ -66,18 +66,7 @@ uint16_t TCS3472::readblue() {
     return value;
 }
 
-int TCS3472::writeblue(uint16_t data) {
-    _wire->beginTransmission(DEVICE_ADDRESS);
-    // Put our data into uint8_t buffer
-    uint8_t buffer[3] = { (uint8_t) REGISTER_BLUE };
-    buffer[1] = (data >> 8) & 0xFF;
-    buffer[2] = (data >> 0) & 0xFF;
-    _wire->write(buffer, 3);
-    if (_wire->endTransmission() != 0) {
-        return 0;
-    }
-    return 1;
-}uint16_t TCS3472::readclear() {
+uint16_t TCS3472::readclear() {
     uint8_t datum;
     uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -98,18 +87,7 @@ int TCS3472::writeblue(uint16_t data) {
     return value;
 }
 
-int TCS3472::writeclear(uint16_t data) {
-    _wire->beginTransmission(DEVICE_ADDRESS);
-    // Put our data into uint8_t buffer
-    uint8_t buffer[3] = { (uint8_t) REGISTER_CLEAR };
-    buffer[1] = (data >> 8) & 0xFF;
-    buffer[2] = (data >> 0) & 0xFF;
-    _wire->write(buffer, 3);
-    if (_wire->endTransmission() != 0) {
-        return 0;
-    }
-    return 1;
-}uint8_t TCS3472::readenable() {
+uint8_t TCS3472::readenable() {
     uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -159,18 +137,7 @@ int TCS3472::writeenable(uint8_t data) {
     return value;
 }
 
-int TCS3472::writegreen(uint16_t data) {
-    _wire->beginTransmission(DEVICE_ADDRESS);
-    // Put our data into uint8_t buffer
-    uint8_t buffer[3] = { (uint8_t) REGISTER_GREEN };
-    buffer[1] = (data >> 8) & 0xFF;
-    buffer[2] = (data >> 0) & 0xFF;
-    _wire->write(buffer, 3);
-    if (_wire->endTransmission() != 0) {
-        return 0;
-    }
-    return 1;
-}uint16_t TCS3472::readred() {
+uint16_t TCS3472::readred() {
     uint8_t datum;
     uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -191,18 +158,7 @@ int TCS3472::writegreen(uint16_t data) {
     return value;
 }
 
-int TCS3472::writered(uint16_t data) {
-    _wire->beginTransmission(DEVICE_ADDRESS);
-    // Put our data into uint8_t buffer
-    uint8_t buffer[3] = { (uint8_t) REGISTER_RED };
-    buffer[1] = (data >> 8) & 0xFF;
-    buffer[2] = (data >> 0) & 0xFF;
-    _wire->write(buffer, 3);
-    if (_wire->endTransmission() != 0) {
-        return 0;
-    }
-    return 1;
-}
+
 uint8_t TCS3472::getinit() {
     // Read register data
     // '#/registers/enable' > 'enable'

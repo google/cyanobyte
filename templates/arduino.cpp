@@ -99,6 +99,7 @@ void {{info.title}}::end() {
 {% for key,register in registers|dictsort -%}
 {% set length = register.length %}
 {% set bytes = (register.length / 8) | round(1, 'ceil') | int %}
+{% if (not 'readWrite' in register) or ('readWrite' in register and 'R' is in(register.readWrite)) %}
 {{cpp.numtype(length)}} {{info.title}}::read{{key}}() {
     uint8_t datum;
     {{cpp.numtype(length)}} value;
@@ -120,7 +121,9 @@ void {{info.title}}::end() {
 
     return value;
 }
+{% endif %}
 
+{% if (not 'readWrite' in register) or ('readWrite' in register and 'W' is in(register.readWrite)) %}
 int {{info.title}}::write{{key}}({{cpp.numtype(length)}} data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
@@ -133,7 +136,7 @@ int {{info.title}}::write{{key}}({{cpp.numtype(length)}} data) {
         return 0;
     }
     return 1;
-}
+}{% endif %}
 
 {%- endfor %}
 

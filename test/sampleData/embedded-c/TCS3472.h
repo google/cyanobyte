@@ -46,15 +46,6 @@ int tcs3472_readblue(
 );
 
 /**
- * Blue light as an int. Divide by ambient light to get scaled number.
-
- */
-int tcs3472_writeblue(
-    uint16_t* data,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-);   
-/**
   * This is the ambient amount of detected light.
 
 */
@@ -63,15 +54,6 @@ int tcs3472_readclear(
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 );
 
-/**
- * This is the ambient amount of detected light.
-
- */
-int tcs3472_writeclear(
-    uint16_t* data,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-);   
 /**
   * Enable specific components of the peripheral
 
@@ -89,7 +71,7 @@ int tcs3472_writeenable(
     uint8_t* data,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);   
+);
 /**
   * Green light as an int. Divide by ambient light to get scaled number.
 
@@ -100,15 +82,6 @@ int tcs3472_readgreen(
 );
 
 /**
- * Green light as an int. Divide by ambient light to get scaled number.
-
- */
-int tcs3472_writegreen(
-    uint16_t* data,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-);   
-/**
   * Red light as an int. Divide by ambient light to get scaled number.
 
 */
@@ -117,15 +90,6 @@ int tcs3472_readred(
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 );
 
-/**
- * Red light as an int. Divide by ambient light to get scaled number.
-
- */
-int tcs3472_writered(
-    uint16_t* data,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-);
 /**
  * Enable RGBC and Power
 

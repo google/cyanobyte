@@ -55,7 +55,7 @@ int mcp4725_writeEEPROM(
     uint16_t* data,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
     int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-);   
+);
 /**
   * VOut = (Vcc * value) / 4096
  * The output is a range between 0 and Vcc with

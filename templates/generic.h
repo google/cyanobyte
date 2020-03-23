@@ -74,8 +74,10 @@ int {{info.title.lower()}}_init(deviceAddress_t address, int (*connect)(uint8_t)
 {% else %}
 int {{info.title.lower()}}_init(int (*connect)(uint8_t));
 {% endif %}
+   
 {% for key,register in registers|dictsort -%}
-{% set length = (register.length / 8) | round(1, 'ceil') | int %}   
+{% set length = (register.length / 8) | round(1, 'ceil') | int %}
+{% if (not 'readWrite' in register) or ('readWrite' in register and 'R' is in(register.readWrite)) %}
 /**
  {{utils.pad_string(" * ", register.description)}}
 */
@@ -83,7 +85,9 @@ int {{info.title.lower()}}_read{{key}}(
     {{cpp.numtype(register.length)}}* val,
     int (*read)(uint8_t, uint8_t, {{cpp.numtype(register.length)}}*, uint8_t)
 );
+{% endif %}
 
+{% if (not 'readWrite' in register) or ('readWrite' in register and 'W' is in(register.readWrite)) %}
 /**
 {{utils.pad_string(" * ", register.description)}}
  */
@@ -92,8 +96,8 @@ int {{info.title.lower()}}_write{{key}}(
     int (*read)(uint8_t, uint8_t, {{cpp.numtype(register.length)}}*, uint8_t),
     int (*write)(uint8_t, uint8_t, {{cpp.numtype(register.length)}}*, uint8_t)
 );
+{% endif %}
 {%- endfor %}
-
 {% if fields %}
 {% for key,field in fields|dictsort %}
 {% if 'R' is in(field.readWrite) %}

@@ -178,6 +178,16 @@
               "signed": {
                 "description": "Whether the integer response should be signed when read",
                 "type": "boolean"
+              },
+              "readWrite": {
+                "description": "Can you read and/or write to this register",
+                "type": "string",
+                "enum": [
+                  "R",
+                  "R/W",
+                  "W",
+                  "n"
+                ]
               }
             },
             "required": [

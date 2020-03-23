@@ -44,7 +44,7 @@ limitations under the License.
                     <description>Blue light as an int. Divide by ambient light to get scaled number.</description>
                     <addressOffset>186</addressOffset>
                     <size>16</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
@@ -56,7 +56,7 @@ limitations under the License.
                     <description>This is the ambient amount of detected light.</description>
                     <addressOffset>180</addressOffset>
                     <size>16</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
@@ -108,7 +108,7 @@ limitations under the License.
                     <description>Green light as an int. Divide by ambient light to get scaled number.</description>
                     <addressOffset>184</addressOffset>
                     <size>16</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
@@ -120,7 +120,7 @@ limitations under the License.
                     <description>Red light as an int. Divide by ambient light to get scaled number.</description>
                     <addressOffset>182</addressOffset>
                     <size>16</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>

@@ -53,15 +53,7 @@ int tcs3472_readblue(
     return 0;
 }
 
-int tcs3472_writeblue(
-    uint16_t* data,
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_BLUE, data, 2) != 0) {
-        return -1;
-    }
-    return 0;
-}int tcs3472_readclear(
+int tcs3472_readclear(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
@@ -74,15 +66,7 @@ int tcs3472_writeblue(
     return 0;
 }
 
-int tcs3472_writeclear(
-    uint16_t* data,
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_CLEAR, data, 2) != 0) {
-        return -1;
-    }
-    return 0;
-}int tcs3472_readenable(
+int tcs3472_readenable(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -116,15 +100,7 @@ int tcs3472_writeenable(
     return 0;
 }
 
-int tcs3472_writegreen(
-    uint16_t* data,
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_GREEN, data, 2) != 0) {
-        return -1;
-    }
-    return 0;
-}int tcs3472_readred(
+int tcs3472_readred(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
@@ -137,15 +113,7 @@ int tcs3472_writegreen(
     return 0;
 }
 
-int tcs3472_writered(
-    uint16_t* data,
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_RED, data, 2) != 0) {
-        return -1;
-    }
-    return 0;
-}
+
 int tcs3472_get_init(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, int*, uint8_t)
