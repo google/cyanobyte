@@ -39,7 +39,7 @@ limitations under the License.
                 <usage>registers</usage>
             </addressBlock>
             <registers>
-<register>
+                <register>
                     <name>EEPROM</name>
                     <description>If EEPROM is set, the saved voltage output will
 be loaded from power-on.
@@ -61,12 +61,12 @@ be loaded from power-on.
                             <msb>12</msb>
                             <access>read-write</access>
                             <enumeratedValues>
-<enumeratedValue>
+                                <enumeratedValue>
                                     <name>GND</name>
                                     <description>Ground</description>
                                     <value>0</value>
                                 </enumeratedValue>
-<enumeratedValue>
+                                <enumeratedValue>
                                     <name>VCC</name>
                                     <description>Vcc (full power)</description>
                                     <value>4095</value>
@@ -82,7 +82,7 @@ be loaded from power-on.
                         </field>
                     </fields>
                 </register>
-<register>
+                <register>
                     <name>VOut</name>
                     <description>VOut = (Vcc * value) / 4096
 The output is a range between 0 and Vcc with

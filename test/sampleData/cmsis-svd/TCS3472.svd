@@ -39,7 +39,7 @@ limitations under the License.
                 <usage>registers</usage>
             </addressBlock>
             <registers>
-<register>
+                <register>
                     <name>blue</name>
                     <description>Blue light as an int. Divide by ambient light to get scaled number.</description>
                     <addressOffset>186</addressOffset>
@@ -51,7 +51,7 @@ limitations under the License.
                     <fields>
                     </fields>
                 </register>
-<register>
+                <register>
                     <name>clear</name>
                     <description>This is the ambient amount of detected light.</description>
                     <addressOffset>180</addressOffset>
@@ -63,7 +63,7 @@ limitations under the License.
                     <fields>
                     </fields>
                 </register>
-<register>
+                <register>
                     <name>enable</name>
                     <description>Enable specific components of the peripheral</description>
                     <addressOffset>128</addressOffset>
@@ -82,12 +82,12 @@ limitations under the License.
                             <msb>7</msb>
                             <access>read-write</access>
                             <enumeratedValues>
-<enumeratedValue>
+                                <enumeratedValue>
                                     <name>Power</name>
                                     <description>Power</description>
                                     <value>1</value>
                                 </enumeratedValue>
-<enumeratedValue>
+                                <enumeratedValue>
                                     <name>RGBC</name>
                                     <description>Color</description>
                                     <value>2</value>
@@ -103,7 +103,7 @@ limitations under the License.
                         </field>
                     </fields>
                 </register>
-<register>
+                <register>
                     <name>green</name>
                     <description>Green light as an int. Divide by ambient light to get scaled number.</description>
                     <addressOffset>184</addressOffset>
@@ -115,7 +115,7 @@ limitations under the License.
                     <fields>
                     </fields>
                 </register>
-<register>
+                <register>
                     <name>red</name>
                     <description>Red light as an int. Divide by ambient light to get scaled number.</description>
                     <addressOffset>182</addressOffset>
