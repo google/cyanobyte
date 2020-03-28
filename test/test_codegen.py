@@ -29,12 +29,13 @@ class TestCodegen(unittest.TestCase):
             -i peripherals/MCP4725.yaml \
             -i peripherals/MCP9808.yaml \
             -i peripherals/TCS3472.yaml \
+            -i peripherals/example.yaml \
             > /dev/null')
 
     def compareFiles(self, platformName, extension):
         peripherals = [
             'ADS1015', 'BMP280', 'LSM303D', 'MCP4725', 'MCP9808',
-            'TCS3472'
+            'TCS3472', 'Example'
         ]
         testPath = 'test/sampleData'
         tmpPath  = 'tmp/com/cyanobyte'

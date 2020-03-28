@@ -1,0 +1,162 @@
+\documentclass[a4paper,12pt,oneside,pdflatex,italian,final,twocolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{parallel}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+
+\usepackage[export]{adjustbox}
+\usepackage[margin=0.5in]{geometry}
+\addtolength{\topmargin}{0in}
+
+\usepackage{libertine}
+\renewcommand*\familydefault{\sfdefault}  %% Only if the base font of the document is to be sans serif
+\usepackage[T1]{fontenc}
+
+\title{ Example }
+\author{ Nick Felker }
+\date{ 2019 }
+
+\begin{document}
+
+\pagestyle{fancy}
+
+\lhead{ Nick Felker }
+\chead { 2019 }
+\rhead{ Example v0.1.0 }
+
+
+\onecolumn
+
+
+\begin{figure}
+\begin{minipage}{0.47\textwidth}
+
+\section{Overview}
+    Example of a package
+    \begin{itemize}
+        \item Device addresses:
+          16,
+          32,
+          48
+        \item Address type 7-bit
+    \end{itemize}
+
+
+\end{minipage}
+\hfill
+
+\end{figure}
+
+
+\section{Register Description}
+\begin{itemize}
+\item First example - An 8-bit register
+\item Second example - A 16-bit register
+\item Third example - A 32-bit register
+\end{itemize}
+
+\section{Technical specification}
+\centering
+\begin{tabular}{lcrr}
+\toprule
+ & Register Name & Register Address & Register Length \\
+\midrule
+RegisterA & First example & 0 & 8 \\
+RegisterB & Second example & 1 & 16 \\
+RegisterC & Third example & 2 & 32 \\
+\bottomrule
+\end{tabular}
+
+\raggedright
+
+\section{Fields}
+
+ 
+
+
+\raggedright
+
+\subsection{Register RegisterA}
+\centering
+\begin{tabular}{lcr}
+\toprule
+  & Field Name & Bits \\
+\midrule
+FieldA & Read-only fields for RegisterA & 
+7:4
+\\
+FieldB & Write-only fields for RegisterA & 
+3:2
+\\
+FieldC & Read/write field for RegisterA & 
+1
+\\
+FieldD & This field should never appear & 
+0
+\\
+\bottomrule
+
+\end{tabular}
+
+
+\raggedright
+
+\subsubsection{Field FieldB }
+
+This is fewer bits
+
+\begin{itemize}
+\item VAL\_1 (1) - Value 1
+\item VAL\_2 (2) - Value 2
+\item VAL\_3 (4) - Value 3
+\item VAL\_4 (8) - Value 4
+\end{itemize}
+
+
+
+
+\raggedright
+
+\section{Functions}
+
+\centering
+\begin{tabular}{lc}
+\toprule
+  & Description \\
+\midrule
+Return & Computes and returns \\
+\bottomrule
+\end{tabular}
+
+
+\raggedright
+\subsection{Function Return }
+Computes and returns \\
+
+\centering
+\begin{tabular}{lcr}
+\toprule
+  & Inputs & Return \\
+\midrule
+Array &
+&
+summation, 
+summation
+\\
+Number &
+&
+summation
+\\
+Void &
+&
+\\
+\bottomrule
+\end{tabular}
+
+
+
+\raggedright
+
+\end{document}
