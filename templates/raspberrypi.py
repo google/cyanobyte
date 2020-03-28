@@ -116,6 +116,9 @@ class {{ info.title }}:
         # Initialize connection to peripheral
         self.bus = smbus.SMBus(1)
     {% endif %}
+        {% if 'init' in functions and 'onCreate' in functions.init.computed %}
+        self.init_oncreate()
+        {% endif %}
 
     {% for key,register in registers|dictsort %}
     {% if (not 'readWrite' in register) or ('readWrite' in register and 'R' is in(register.readWrite)) %}

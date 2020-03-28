@@ -75,3 +75,20 @@ fields:
       RGBC:
         title: Color
         value: 0b10
+
+functions:
+  init:
+    title: Code to run when device class is constructed
+    description: Enables features on device
+    register: '#/registers/enable'
+    computed:
+      onCreate:
+        variables:
+          enables: int8
+        logic:
+          # Enable register = ENABLE_RGBC | ENABLE_POWER
+          - enables:
+            - sum:
+              - 1
+              - 0b10
+          - send: enables
