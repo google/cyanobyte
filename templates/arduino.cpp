@@ -90,6 +90,9 @@ static short _sign(short val, char length) {
 
 void {{info.title}}::begin() {
     _wire->begin();
+    {% if 'init' in functions and 'onCreate' in functions.init.computed %}
+    initonCreate();
+    {% endif %}
 }
 
 void {{info.title}}::end() {

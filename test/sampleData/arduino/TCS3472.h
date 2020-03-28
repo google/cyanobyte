@@ -86,6 +86,12 @@ class TCS3472 {
          */
         int setinit(uint8_t data);
 
+        /**
+         * Enables features on device
+
+         */
+        void initonCreate();
+
 
     private:
         TwoWire* _wire;
