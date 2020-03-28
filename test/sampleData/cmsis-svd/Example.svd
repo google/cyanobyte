@@ -39,7 +39,7 @@ limitations under the License.
                 <usage>registers</usage>
             </addressBlock>
             <registers>
-<register>
+                <register>
                     <name>RegisterA</name>
                     <description>An 8-bit register</description>
                     <addressOffset>0</addressOffset>
@@ -73,22 +73,22 @@ limitations under the License.
                             <msb>3</msb>
                             <access>write-only</access>
                             <enumeratedValues>
-<enumeratedValue>
+                                <enumeratedValue>
                                     <name>VAL_1</name>
                                     <description>Value 1</description>
                                     <value>1</value>
                                 </enumeratedValue>
-<enumeratedValue>
+                                <enumeratedValue>
                                     <name>VAL_2</name>
                                     <description>Value 2</description>
                                     <value>2</value>
                                 </enumeratedValue>
-<enumeratedValue>
+                                <enumeratedValue>
                                     <name>VAL_3</name>
                                     <description>Value 3</description>
                                     <value>4</value>
                                 </enumeratedValue>
-<enumeratedValue>
+                                <enumeratedValue>
                                     <name>VAL_4</name>
                                     <description>Value 4</description>
                                     <value>8</value>
@@ -119,7 +119,7 @@ limitations under the License.
                         </field>
                     </fields>
                 </register>
-<register>
+                <register>
                     <name>RegisterB</name>
                     <description>A 16-bit register</description>
                     <addressOffset>1</addressOffset>
@@ -130,7 +130,7 @@ limitations under the License.
                     <dataType>uint16_t</dataType>
 
                 </register>
-<register>
+                <register>
                     <name>RegisterC</name>
                     <description>A 16-bit register</description>
                     <addressOffset>2</addressOffset>

@@ -402,7 +402,7 @@ int LSM303D::writeMagnetometerZ_Low(uint8_t data) {
     return 1;
 }
 
-void LSM303D::accelerationasG() {
+void LSM303D::accelerationasG(short * returnArray) {
     char accelerationScale; // Variable declaration
     short valueX; // Variable declaration
     short valueY; // Variable declaration
