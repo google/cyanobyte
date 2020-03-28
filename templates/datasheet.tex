@@ -84,7 +84,7 @@
 \section{Fields}
 
 {# Create a dictionary linking a register to its associated fields #}
-{# for hierarchical display #} 
+{# for hierarchical display #}
 {% for key,field in fields|dictsort %}
 {% set rkey = field.register %}
 {% if rkey in template.registersToFields %}
@@ -110,7 +110,7 @@
   & Field Name & Bits \\
 \midrule
 {% for field in register %}
-{{field.key}} & {{field.title}} & 
+{{field.key}} & {{field.title}} &
 {% if field.bitStart == field.bitEnd %}
 {{field.bitStart}}
 {% else %}
