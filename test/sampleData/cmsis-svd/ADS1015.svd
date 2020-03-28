@@ -50,44 +50,6 @@ limitations under the License.
                     <dataType>uint16_t</dataType>
                     <fields>
                         <field>
-                            <name>Channel</name>
-                            <description>
-                            This sets the channel for reading analog voltage
-
-                            </description>
-                            <lsb>12</lsb>
-                            <msb>14</msb>
-                            <enumeratedValues>
-<enumeratedValue>
-                                    <name>CHANNEL_1</name>
-                                    <description>Channel 1</description>
-                                    <value>0</value>
-                                </enumeratedValue>
-<enumeratedValue>
-                                    <name>CHANNEL_2</name>
-                                    <description>Channel 2</description>
-                                    <value>1</value>
-                                </enumeratedValue>
-<enumeratedValue>
-                                    <name>CHANNEL_3</name>
-                                    <description>Channel 3</description>
-                                    <value>2</value>
-                                </enumeratedValue>
-<enumeratedValue>
-                                    <name>CHANNEL_4</name>
-                                    <description>Channel 4</description>
-                                    <value>3</value>
-                                </enumeratedValue>
-                            </enumeratedValues>
-                            <writeConstraint>
-                                <useEnumeratedValues>true</useEnumeratedValues>
-                                <range>
-                                    <minimum>12</minimum>
-                                    <maximum>14</maximum>
-                                </range>
-                            </writeConstraint>
-                        </field>
-                        <field>
                             <name>DeviceOperatingMode</name>
                             <description>
                             This bit controls the operating mode
@@ -230,8 +192,7 @@ limitations under the License.
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
-                    <fields>
-                    </fields>
+
                 </register>
             </registers>
         </peripheral>

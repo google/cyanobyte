@@ -95,8 +95,7 @@ In a 3.3v system, each step is 800 microvolts.
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
-                    <fields>
-                    </fields>
+
                 </register>
             </registers>
         </peripheral>

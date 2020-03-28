@@ -71,9 +71,13 @@ uint64_t
                     <resetMask>0xFF</resetMask>
                     <dataType>{{ numtype(register.length) }}</dataType>
                     {% if fields %}
-                    <fields>
+                    {%- set template = namespace(fields=false) -%}
                     {% for fkey,field in fields|dictsort -%}
-                    {% if field.register == '#/registers/' + key %}
+                    {% if field.register == '#/registers/' + key and field.readWrite != 'n' %}
+                    {% if template.fields == false %}
+                    <fields>
+                    {% set template.fields = true %}
+                    {% endif %}
                         <field>
                             <name>{{ fkey }}</name>
                             <description>
@@ -111,7 +115,7 @@ uint64_t
                         </field>
                     {% endif %}
                     {% endfor %}
-                    </fields>
+                    {{- "                    </fields>" if template.fields == 1 }}
                     {% endif %}
                 </register>
             {% endfor %}
