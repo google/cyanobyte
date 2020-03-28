@@ -49,9 +49,9 @@ registers:
     description: A 16-bit register
   RegisterC:
     address: 0x02
-    length: 32
+    length: 16
     title: Third example
-    description: A 32-bit register
+    description: A 16-bit register
 
 fields:
   FieldA:
@@ -104,6 +104,7 @@ functions:
   Return:
     title: Return a value
     description: Computes and returns
+    register: '#/registers/RegisterA'
     computed:
       Number:
         variables:
@@ -113,6 +114,7 @@ functions:
             - sum:
               - 1024
               - 1024
+          - send: summation
         return: summation
       Array:
         variables:
@@ -122,6 +124,7 @@ functions:
             - sum:
               - 1024
               - 1024
+          - send: summation
         return:
           - summation
           - summation
@@ -133,3 +136,4 @@ functions:
             - sum:
               - 1024
               - 1024
+          - send: summation

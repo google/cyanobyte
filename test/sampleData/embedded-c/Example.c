@@ -83,23 +83,23 @@ int example_writeRegisterB(
     }
     return 0;
 }int example_readRegisterC(
-    uint32_t* val,
-    int (*read)(uint8_t, uint8_t, uint32_t*, uint8_t)
+    uint16_t* val,
+    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
     if (val == NULL) {
         return -1; // Need to provide a valid value pointer
     }
-    if (read(DEVICE_ADDRESS, REGISTER_REGISTERC, val, 4) != 0) {
+    if (read(DEVICE_ADDRESS, REGISTER_REGISTERC, val, 2) != 0) {
         return -2;
     }
     return 0;
 }
 
 int example_writeRegisterC(
-    uint32_t* data,
-    int (*write)(uint8_t, uint8_t, uint32_t*, uint8_t)
+    uint16_t* data,
+    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
-    if (write(DEVICE_ADDRESS, REGISTER_REGISTERC, data, 4) != 0) {
+    if (write(DEVICE_ADDRESS, REGISTER_REGISTERC, data, 2) != 0) {
         return -1;
     }
     return 0;
@@ -190,6 +190,7 @@ void example_return_array(
 
 
     summation = (1024+1024);
+    example_writeRegisterA(&summation, write);
 
 
     *val = [summation, summation];
@@ -204,6 +205,7 @@ void example_return_number(
 
 
     summation = (1024+1024);
+    example_writeRegisterA(&summation, write);
 
 
     *val = summation;
@@ -218,6 +220,7 @@ void example_return_void(
 
 
     summation = (1024+1024);
+    example_writeRegisterA(&summation, write);
 
 
     *val = [];

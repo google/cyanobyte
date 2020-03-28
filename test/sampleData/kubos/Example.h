@@ -69,16 +69,16 @@ int example_readRegisterB(uint16_t* val);
 
  */
 int example_writeRegisterB(uint16_t* data);/**
-  * A 32-bit register
+  * A 16-bit register
 
 */
-int example_readRegisterC(uint32_t* val);
+int example_readRegisterC(uint16_t* val);
 
 /**
- * A 32-bit register
+ * A 16-bit register
 
  */
-int example_writeRegisterC(uint32_t* data);
+int example_writeRegisterC(uint16_t* data);
 /**
  * This is a few bits
 

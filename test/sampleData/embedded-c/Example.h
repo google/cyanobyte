@@ -81,22 +81,22 @@ int example_writeRegisterB(
     int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
 );
 /**
-  * A 32-bit register
+  * A 16-bit register
 
 */
 int example_readRegisterC(
-    uint32_t* val,
-    int (*read)(uint8_t, uint8_t, uint32_t*, uint8_t)
+    uint16_t* val,
+    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 );
 
 /**
- * A 32-bit register
+ * A 16-bit register
 
  */
 int example_writeRegisterC(
-    uint32_t* data,
-    int (*read)(uint8_t, uint8_t, uint32_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint32_t*, uint8_t)
+    uint16_t* data,
+    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
+    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
 );
 /**
  * This is a few bits

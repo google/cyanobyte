@@ -98,16 +98,25 @@ class Example:
         )
     def get_registerc(self):
         """
-        A 32-bit register
+        A 16-bit register
 
         """
+        val = self.bus.read_word_data(
+            self.device_address,
+            self.REGISTER_REGISTERC
+        )
         return val
 
     def set_registerc(self, data):
         """
-        A 32-bit register
+        A 16-bit register
 
         """
+        self.bus.write_word_data(
+            self.device_address,
+            self.REGISTER_REGISTERC,
+            data
+        )
 
 
     def get_fielda(self):
@@ -171,6 +180,7 @@ class Example:
         summation = None # Variable declaration
 
         summation = (1024+1024)
+        self.set_registera(summation)
 
         return [summation, summation]
     def return_number(self):
@@ -181,6 +191,7 @@ class Example:
         summation = None # Variable declaration
 
         summation = (1024+1024)
+        self.set_registera(summation)
 
         return summation
     def return_void(self):
@@ -191,5 +202,6 @@ class Example:
         summation = None # Variable declaration
 
         summation = (1024+1024)
+        self.set_registera(summation)
 
         return []

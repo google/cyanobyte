@@ -104,23 +104,19 @@ int Example::writeRegisterB(uint16_t data) {
         return 0;
     }
     return 1;
-}uint32_t Example::readRegisterC() {
+}uint16_t Example::readRegisterC() {
     uint8_t datum;
-    uint32_t value;
+    uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
     _wire->write(REGISTER_REGISTERC);
     if (_wire->endTransmission(false) != 0) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 32) != 32) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
         return 0;
     }
 
-    datum = _wire->read();
-    value = value << 8 | datum;
-    datum = _wire->read();
-    value = value << 8 | datum;
     datum = _wire->read();
     value = value << 8 | datum;
     datum = _wire->read();
@@ -129,15 +125,13 @@ int Example::writeRegisterB(uint16_t data) {
     return value;
 }
 
-int Example::writeRegisterC(uint32_t data) {
+int Example::writeRegisterC(uint16_t data) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
-    uint8_t buffer[5] = { (uint8_t) REGISTER_REGISTERC };
-    buffer[1] = (data >> 24) & 0xFF;
-    buffer[2] = (data >> 16) & 0xFF;
-    buffer[3] = (data >> 8) & 0xFF;
-    buffer[4] = (data >> 0) & 0xFF;
-    _wire->write(buffer, 5);
+    uint8_t buffer[3] = { (uint8_t) REGISTER_REGISTERC };
+    buffer[1] = (data >> 8) & 0xFF;
+    buffer[2] = (data >> 0) & 0xFF;
+    _wire->write(buffer, 3);
     if (_wire->endTransmission() != 0) {
         return 0;
     }
@@ -189,6 +183,7 @@ void Example::ReturnArray() {
 
 
     summation = (1024+1024);
+    writeRegisterA(summation);
 
 
     returnArray[0] = summation;
@@ -200,6 +195,7 @@ short Example::ReturnNumber() {
 
 
     summation = (1024+1024);
+    writeRegisterA(summation);
 
 
     return summation;
@@ -210,6 +206,7 @@ void Example::ReturnVoid() {
 
 
     summation = (1024+1024);
+    writeRegisterA(summation);
 
 
 }
