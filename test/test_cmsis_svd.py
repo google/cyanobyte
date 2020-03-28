@@ -38,6 +38,9 @@ class TestCodegen(unittest.TestCase):
     def test_BMP280(self):
         self.verify_cmsis_output('BMP280')
 
+    def test_Example(self):
+        self.verify_cmsis_output('Example')
+
     def test_LSM303D(self):
         self.verify_cmsis_output('LSM303D')
 
