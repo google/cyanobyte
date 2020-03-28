@@ -117,20 +117,6 @@ limitations under the License.
                                 </range>
                             </writeConstraint>
                         </field>
-                        <field>
-                            <name>FieldD</name>
-                            <description>
-                            A bit that is neither readable nor writeable
-                            </description>
-                            <lsb>0</lsb>
-                            <msb>0</msb>
-                            <writeConstraint>
-                                <range>
-                                    <minimum>0</minimum>
-                                    <maximum>0</maximum>
-                                </range>
-                            </writeConstraint>
-                        </field>
                     </fields>
                 </register>
                 <register>
@@ -142,8 +128,7 @@ limitations under the License.
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
-                    <fields>
-                    </fields>
+
                 </register>
                 <register>
                     <name>RegisterC</name>
@@ -154,8 +139,7 @@ limitations under the License.
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
-                    <fields>
-                    </fields>
+
                 </register>
             </registers>
         </peripheral>

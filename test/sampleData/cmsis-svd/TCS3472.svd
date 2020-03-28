@@ -48,8 +48,7 @@ limitations under the License.
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
-                    <fields>
-                    </fields>
+
                 </register>
                 <register>
                     <name>clear</name>
@@ -60,8 +59,7 @@ limitations under the License.
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
-                    <fields>
-                    </fields>
+
                 </register>
                 <register>
                     <name>enable</name>
@@ -112,8 +110,7 @@ limitations under the License.
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
-                    <fields>
-                    </fields>
+
                 </register>
                 <register>
                     <name>red</name>
@@ -124,8 +121,7 @@ limitations under the License.
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
-                    <fields>
-                    </fields>
+
                 </register>
             </registers>
         </peripheral>
