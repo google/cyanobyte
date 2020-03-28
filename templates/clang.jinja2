@@ -8,13 +8,13 @@
 {%- set args.index = args.index + 1 -%}
 {%- endif %}
 {% endfor %}
-{# In C languages, you pass in array as a parameter #}
+{%- endif %}
 {% if 'return' in compute and compute.return is iterable and compute.return is not string %}
+{# In C languages, you pass in array as a parameter #}
 {% for key,var in compute.variables|dictsort %}
     {% set x=args.dict.__setitem__(key, var) %}
 {% endfor %}
 {{- ", " if args.index > 0 -}}{{numconv(args.dict[compute.return[0]])}} * returnArray
-{% endif %}
 {%- endif %}
 {%- endmacro %}
 

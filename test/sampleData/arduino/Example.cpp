@@ -178,7 +178,7 @@ int Example::setFieldC(uint8_t data) {
     return writeRegisterA(register_data);
 }
 
-void Example::ReturnArray() {
+void Example::ReturnArray(short * returnArray) {
     short summation; // Variable declaration
 
 

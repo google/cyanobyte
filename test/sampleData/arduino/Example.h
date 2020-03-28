@@ -105,7 +105,7 @@ class Example {
          * Computes and returns
 
          */
-        void ReturnArray();
+        void ReturnArray(short * returnArray);
         /**
          * Computes and returns
 

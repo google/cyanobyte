@@ -158,7 +158,7 @@ class LSM303D {
          * Measures the current acceleration
 
          */
-        void accelerationasG();
+        void accelerationasG(short * returnArray);
         /**
          * Measures the current acceleration
 
