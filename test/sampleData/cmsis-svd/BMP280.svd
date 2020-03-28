@@ -39,7 +39,7 @@ limitations under the License.
                 <usage>registers</usage>
             </addressBlock>
             <registers>
-<register>
+                <register>
                     <name>DigP1</name>
                     <description>Used for Pascals conversion</description>
                     <addressOffset>142</addressOffset>
@@ -49,7 +49,7 @@ limitations under the License.
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
                 </register>
-<register>
+                <register>
                     <name>DigP2</name>
                     <description>Used for Pascals conversion</description>
                     <addressOffset>144</addressOffset>
@@ -59,7 +59,7 @@ limitations under the License.
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
                 </register>
-<register>
+                <register>
                     <name>DigP3</name>
                     <description>Used for Pascals conversion</description>
                     <addressOffset>146</addressOffset>
@@ -69,7 +69,7 @@ limitations under the License.
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
                 </register>
-<register>
+                <register>
                     <name>DigP4</name>
                     <description>Used for Pascals conversion</description>
                     <addressOffset>148</addressOffset>
@@ -79,7 +79,7 @@ limitations under the License.
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
                 </register>
-<register>
+                <register>
                     <name>DigP5</name>
                     <description>Used for Pascals conversion</description>
                     <addressOffset>150</addressOffset>
@@ -89,7 +89,7 @@ limitations under the License.
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
                 </register>
-<register>
+                <register>
                     <name>DigP6</name>
                     <description>Used for Pascals conversion</description>
                     <addressOffset>152</addressOffset>
@@ -99,7 +99,7 @@ limitations under the License.
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
                 </register>
-<register>
+                <register>
                     <name>DigP7</name>
                     <description>Used for Pascals conversion</description>
                     <addressOffset>154</addressOffset>
@@ -109,7 +109,7 @@ limitations under the License.
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
                 </register>
-<register>
+                <register>
                     <name>DigP8</name>
                     <description>Used for Pascals conversion</description>
                     <addressOffset>156</addressOffset>
@@ -119,7 +119,7 @@ limitations under the License.
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
                 </register>
-<register>
+                <register>
                     <name>DigP9</name>
                     <description>Used for Pascals conversion</description>
                     <addressOffset>158</addressOffset>
@@ -129,7 +129,7 @@ limitations under the License.
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
                 </register>
-<register>
+                <register>
                     <name>DigT1</name>
                     <description>Used for Celcius conversion</description>
                     <addressOffset>136</addressOffset>
@@ -139,7 +139,7 @@ limitations under the License.
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
                 </register>
-<register>
+                <register>
                     <name>DigT2</name>
                     <description>Used for Celcius conversion</description>
                     <addressOffset>138</addressOffset>
@@ -149,7 +149,7 @@ limitations under the License.
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
                 </register>
-<register>
+                <register>
                     <name>DigT3</name>
                     <description>Used for Celcius conversion</description>
                     <addressOffset>140</addressOffset>
@@ -159,7 +159,7 @@ limitations under the License.
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
                 </register>
-<register>
+                <register>
                     <name>PressureLsb</name>
                     <description>Part 2 of Pressure</description>
                     <addressOffset>248</addressOffset>
@@ -169,7 +169,7 @@ limitations under the License.
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
                 </register>
-<register>
+                <register>
                     <name>PressureMsb</name>
                     <description>Part 1 of Pressure</description>
                     <addressOffset>247</addressOffset>
@@ -179,7 +179,7 @@ limitations under the License.
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
                 </register>
-<register>
+                <register>
                     <name>PressureXlsb</name>
                     <description>Part 3 of Pressure</description>
                     <addressOffset>249</addressOffset>
@@ -189,7 +189,7 @@ limitations under the License.
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
                 </register>
-<register>
+                <register>
                     <name>TempLsb</name>
                     <description>Part 2 of temperature</description>
                     <addressOffset>251</addressOffset>
@@ -199,7 +199,7 @@ limitations under the License.
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
                 </register>
-<register>
+                <register>
                     <name>TempMsb</name>
                     <description>Part 1 of temperature</description>
                     <addressOffset>250</addressOffset>
@@ -209,7 +209,7 @@ limitations under the License.
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
                 </register>
-<register>
+                <register>
                     <name>TempXlsb</name>
                     <description>Final part of temperature</description>
                     <addressOffset>252</addressOffset>
