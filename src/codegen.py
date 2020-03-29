@@ -31,12 +31,12 @@ _VERSION = "0.1.0"
 _DEBUG = False
 _CLEAN = False
 _TEMPLATES = dict(
-    arduino = ["./templates/arduino.cpp", "./templates/arduino.h"],
-    datasheet = ["./templates/datasheet.tex"],
-    doc = ["./templates/doc.md"],
-    embedded = ["./templates/generic.c", "./templates/generic.h"],
-    kubos = ["./templates/kubos.c", "./templates/kubos.h"],
-    raspberrypi = ["./templates/raspberrypi.py"],
+    arduino=["./templates/arduino.cpp", "./templates/arduino.h"],
+    datasheet=["./templates/datasheet.tex"],
+    doc=["./templates/doc.md"],
+    embedded=["./templates/generic.c", "./templates/generic.h"],
+    kubos=["./templates/kubos.c", "./templates/kubos.h"],
+    raspberrypi=["./templates/raspberrypi.py"],
 )
 
 def camel_to_snake(camel_str):
