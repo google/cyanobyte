@@ -30,6 +30,14 @@ from jinja2 import Environment, FileSystemLoader
 _VERSION = "0.1.0"
 _DEBUG = False
 _CLEAN = False
+_TEMPLATES = dict(
+    arduino = ["./templates/arduino.cpp", "./templates/arduino.h"],
+    datasheet = ["./templates/datasheet.tex"],
+    doc = ["./templates/doc.md"],
+    embedded = ["./templates/generic.c", "./templates/generic.h"],
+    kubos = ["./templates/kubos.c", "./templates/kubos.h"],
+    raspberrypi = ["./templates/raspberrypi.py"],
+)
 
 def camel_to_snake(camel_str):
     """
@@ -165,12 +173,23 @@ def gen(input_files, template_files=None, output_dir='./build', debug=False,
     env.filters['camel_to_snake'] = camel_to_snake
     env.filters['regex_replace'] = regex_replace
     for template_file in template_files:
-        generate_files_for_template(
-            env,
-            template_file,
-            input_files,
-            output_dir
-        )
+        # Check template registry
+        if template_file in _TEMPLATES:
+            # This will be an array of filepaths
+            for filepath in _TEMPLATES[template_file]:
+                generate_files_for_template(
+                    env,
+                    filepath,
+                    input_files,
+                    output_dir
+                )
+        else:
+            generate_files_for_template(
+                env,
+                template_file,
+                input_files,
+                output_dir
+            )
 
 
 if __name__ == "__main__":
