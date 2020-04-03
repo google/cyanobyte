@@ -86,23 +86,25 @@ int example_writeRegisterB(uint16_t* data) {
         return -1;
     }
     return 0;
-}int example_readRegisterC(uint16_t* val) {
+}int example_readRegisterC(uint32_t* val) {
     if (val == NULL) {
         return -1; // Need to provide a valid value pointer
     }
-    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 2) != I2C_OK) {
+    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 4) != I2C_OK) {
         return -2;
     }
     return 0;
 }
 
-int example_writeRegisterC(uint16_t* data) {
+int example_writeRegisterC(uint32_t* data) {
     // Put our data into uint8_t buffer
-    uint8_t buffer[3] = { (uint8_t) REGISTER_REGISTERC };
-    uint8_t buffer[1] = (data >> 16) & 0xFF;
-    uint8_t buffer[2] = (data >> 8) & 0xFF;
+    uint8_t buffer[5] = { (uint8_t) REGISTER_REGISTERC };
+    uint8_t buffer[1] = (data >> 32) & 0xFF;
+    uint8_t buffer[2] = (data >> 24) & 0xFF;
+    uint8_t buffer[3] = (data >> 16) & 0xFF;
+    uint8_t buffer[4] = (data >> 8) & 0xFF;
     // First write our register address
-    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 3) != I2C_OK) {
+    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 5) != I2C_OK) {
         return -1;
     }
     return 0;

@@ -132,13 +132,13 @@ limitations under the License.
                 </register>
                 <register>
                     <name>RegisterC</name>
-                    <description>A 16-bit register</description>
+                    <description>A 32-bit register</description>
                     <addressOffset>2</addressOffset>
-                    <size>16</size>
+                    <size>32</size>
                     <access>read-write</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
-                    <dataType>uint16_t</dataType>
+                    <dataType>uint32_t</dataType>
 
                 </register>
             </registers>
