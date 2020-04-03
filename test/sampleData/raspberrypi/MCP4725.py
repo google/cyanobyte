@@ -29,11 +29,20 @@ class DigitalOutValues(Enum):
     GND = 0 # Ground
     VCC = 4095 # Vcc (full power)
 
-def _swap_endian(val):
+def _swap_endian(val, length):
     """
-    Swap the endianness of a short only
+    Swap the endianness of a number
     """
-    return (val & 0xFF00) >> 8 | (val & 0xFF) << 8
+    if length <= 8:
+        return val
+    if length <= 16:
+        return (val & 0xFF00) >> 8 | (val & 0xFF) << 8
+    if length <= 32:
+        return ((val & 0xFF000000) >> 24 |
+                (val & 0x00FF0000) >> 8 |
+                (val & 0x0000FF00) << 8 |
+                (val & 0x000000FF) << 24)
+    raise Exception('Cannot swap endianness for length ' + length)
 
 
 class MCP4725:
@@ -59,7 +68,7 @@ class MCP4725:
             self.device_address,
             self.REGISTER_EEPROM
         )
-        val = _swap_endian(val)
+        val = _swap_endian(val, 12)
         return val
 
     def set_eeprom(self, data):
@@ -68,7 +77,7 @@ class MCP4725:
         be loaded from power-on.
 
         """
-        data = _swap_endian(data)
+        data = _swap_endian(data, 12)
         self.bus.write_word_data(
             self.device_address,
             self.REGISTER_EEPROM,
@@ -86,7 +95,7 @@ class MCP4725:
             self.device_address,
             self.REGISTER_VOUT
         )
-        val = _swap_endian(val)
+        val = _swap_endian(val, 12)
         return val
 
     def set_vout(self, data):
@@ -97,7 +106,7 @@ class MCP4725:
         In a 3.3v system, each step is 800 microvolts.
 
         """
-        data = _swap_endian(data)
+        data = _swap_endian(data, 12)
         self.bus.write_word_data(
             self.device_address,
             self.REGISTER_VOUT,

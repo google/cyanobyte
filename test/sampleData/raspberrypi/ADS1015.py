@@ -61,11 +61,20 @@ class SampleRateValues(Enum):
     HZ490 = 2 # 490 samples/second
     HZ920 = 3 # 920 samples/second
 
-def _swap_endian(val):
+def _swap_endian(val, length):
     """
-    Swap the endianness of a short only
+    Swap the endianness of a number
     """
-    return (val & 0xFF00) >> 8 | (val & 0xFF) << 8
+    if length <= 8:
+        return val
+    if length <= 16:
+        return (val & 0xFF00) >> 8 | (val & 0xFF) << 8
+    if length <= 32:
+        return ((val & 0xFF000000) >> 24 |
+                (val & 0x00FF0000) >> 8 |
+                (val & 0x0000FF00) << 8 |
+                (val & 0x000000FF) << 24)
+    raise Exception('Cannot swap endianness for length ' + length)
 
 
 class ADS1015:
@@ -90,7 +99,7 @@ class ADS1015:
             self.device_address,
             self.REGISTER_CONFIG
         )
-        val = _swap_endian(val)
+        val = _swap_endian(val, 16)
         return val
 
     def set_config(self, data):
@@ -98,7 +107,7 @@ class ADS1015:
         Describes the specifics of the sensing implementation
 
         """
-        data = _swap_endian(data)
+        data = _swap_endian(data, 16)
         self.bus.write_word_data(
             self.device_address,
             self.REGISTER_CONFIG,
@@ -113,7 +122,7 @@ class ADS1015:
             self.device_address,
             self.REGISTER_CONVERSION
         )
-        val = _swap_endian(val)
+        val = _swap_endian(val, 16)
         return val
 
     def set_conversion(self, data):
@@ -121,7 +130,7 @@ class ADS1015:
         Conversion register contains the result of the last conversion
 
         """
-        data = _swap_endian(data)
+        data = _swap_endian(data, 16)
         self.bus.write_word_data(
             self.device_address,
             self.REGISTER_CONVERSION,

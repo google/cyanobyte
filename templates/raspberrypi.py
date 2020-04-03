@@ -71,11 +71,20 @@ class DeviceAddressValues(Enum):
 {% endif %}
 
 {% if i2c.endian == 'little' %}
-def _swap_endian(val):
+def _swap_endian(val, length):
     """
-    Swap the endianness of a short only
+    Swap the endianness of a number
     """
-    return (val & 0xFF00) >> 8 | (val & 0xFF) << 8
+    if length <= 8:
+        return val
+    if length <= 16:
+        return (val & 0xFF00) >> 8 | (val & 0xFF) << 8
+    if length <= 32:
+        return ((val & 0xFF000000) >> 24 |
+                (val & 0x00FF0000) >> 8 |
+                (val & 0x0000FF00) << 8 |
+                (val & 0x000000FF) << 24)
+    raise Exception('Cannot swap endianness for length ' + length)
 {% endif %}
 
 {# Add signing function if needed #}
@@ -121,6 +130,7 @@ class {{ info.title }}:
         {% endif %}
 
     {% for key,register in registers|dictsort %}
+    {% set bytes = (register.length / 8) | round(1, 'ceil') | int %}
     {% if (not 'readWrite' in register) or ('readWrite' in register and 'R' is in(register.readWrite)) %}
     def get_{{key.lower()}}(self):
         """
@@ -136,9 +146,19 @@ class {{ info.title }}:
             self.device_address,
             self.REGISTER_{{key.upper()}}
         )
+        {% elif register.length <= 32 %}
+        byte_list = self.bus.read_i2c_block_data(
+            self.device_address,
+            self.REGISTER_{{key.upper()}},
+            {{bytes}}
+        )
+        val = 0
+        {% for n in range(bytes) %}
+        val = val << 8 | byte_list[{{n}}]
+        {% endfor %}
         {% endif %}
         {% if i2c.endian == 'little' %}
-        val = _swap_endian(val)
+        val = _swap_endian(val, {{register.length}})
         {% endif %}
         {% if register.signed %}
         # Unsigned > Signed integer
@@ -153,7 +173,7 @@ class {{ info.title }}:
 {{utils.pad_string("        ", register.description)}}
         """
         {% if i2c.endian == 'little' %}
-        data = _swap_endian(data)
+        data = _swap_endian(data, {{register.length}})
         {% endif %}
         {% if register.length <= 8 %}
         self.bus.write_byte_data(
@@ -166,6 +186,16 @@ class {{ info.title }}:
             self.device_address,
             self.REGISTER_{{key.upper()}},
             data
+        )
+        {% elif register.length <= 32 %}
+        buffer = []
+        {% for n in range(bytes) %}
+        buffer[{{n}}] = (data >> {{8 * (bytes - n - 1)}}) & 0xFF
+        {% endfor %}
+        self.bus.write_i2c_block_data(
+            self.device_address,
+            self.REGISTER_{{key.upper()}},
+            buffer
         )
         {% endif %}
     {% endif %}
