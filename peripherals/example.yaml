@@ -49,9 +49,9 @@ registers:
     description: A 16-bit register
   RegisterC:
     address: 0x02
-    length: 16
+    length: 32
     title: Third example
-    description: A 16-bit register
+    description: A 32-bit register
 
 fields:
   FieldA:

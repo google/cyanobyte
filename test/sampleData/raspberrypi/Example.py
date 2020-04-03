@@ -98,24 +98,35 @@ class Example:
         )
     def get_registerc(self):
         """
-        A 16-bit register
+        A 32-bit register
 
         """
-        val = self.bus.read_word_data(
+        byte_list = self.bus.read_i2c_block_data(
             self.device_address,
-            self.REGISTER_REGISTERC
+            self.REGISTER_REGISTERC,
+            4
         )
+        val = 0
+        val = val << 8 | byte_list[0]
+        val = val << 8 | byte_list[1]
+        val = val << 8 | byte_list[2]
+        val = val << 8 | byte_list[3]
         return val
 
     def set_registerc(self, data):
         """
-        A 16-bit register
+        A 32-bit register
 
         """
-        self.bus.write_word_data(
+        buffer = []
+        buffer[0] = (data >> 24) & 0xFF
+        buffer[1] = (data >> 16) & 0xFF
+        buffer[2] = (data >> 8) & 0xFF
+        buffer[3] = (data >> 0) & 0xFF
+        self.bus.write_i2c_block_data(
             self.device_address,
             self.REGISTER_REGISTERC,
-            data
+            buffer
         )
 
 

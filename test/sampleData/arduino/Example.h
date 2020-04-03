@@ -71,16 +71,16 @@ class Example {
 
          */
         int writeRegisterB(uint16_t data);        /**
-         * A 16-bit register
+         * A 32-bit register
 
          */
-        uint16_t readRegisterC();
+        uint32_t readRegisterC();
 
         /**
-         * A 16-bit register
+         * A 32-bit register
 
          */
-        int writeRegisterC(uint16_t data);        /**
+        int writeRegisterC(uint32_t data);        /**
          * This is a few bits
 
          */

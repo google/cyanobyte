@@ -83,23 +83,23 @@ int example_writeRegisterB(
     }
     return 0;
 }int example_readRegisterC(
-    uint16_t* val,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
+    uint32_t* val,
+    int (*read)(uint8_t, uint8_t, uint32_t*, uint8_t)
 ) {
     if (val == NULL) {
         return -1; // Need to provide a valid value pointer
     }
-    if (read(DEVICE_ADDRESS, REGISTER_REGISTERC, val, 2) != 0) {
+    if (read(DEVICE_ADDRESS, REGISTER_REGISTERC, val, 4) != 0) {
         return -2;
     }
     return 0;
 }
 
 int example_writeRegisterC(
-    uint16_t* data,
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
+    uint32_t* data,
+    int (*write)(uint8_t, uint8_t, uint32_t*, uint8_t)
 ) {
-    if (write(DEVICE_ADDRESS, REGISTER_REGISTERC, data, 2) != 0) {
+    if (write(DEVICE_ADDRESS, REGISTER_REGISTERC, data, 4) != 0) {
         return -1;
     }
     return 0;

@@ -15,7 +15,7 @@ An 8-bit register
 A 16-bit register
 
 ### Third example
-A 16-bit register
+A 32-bit register
 
 ## License
 Licensed under [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html#licenseText).
