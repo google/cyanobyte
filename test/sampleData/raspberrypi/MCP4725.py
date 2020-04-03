@@ -35,15 +35,14 @@ def _swap_endian(val, length):
     """
     if length <= 8:
         return val
-    elif length <= 16:
+    if length <= 16:
         return (val & 0xFF00) >> 8 | (val & 0xFF) << 8
-    elif length <= 32:
+    if length <= 32:
         return ((val & 0xFF000000) >> 24 |
                 (val & 0x00FF0000) >> 8 |
                 (val & 0x0000FF00) << 8 |
                 (val & 0x000000FF) << 24)
-    else:
-        raise Exception('Cannot swap endianness for length ' + length)
+    raise Exception('Cannot swap endianness for length ' + length)
 
 
 class MCP4725:
