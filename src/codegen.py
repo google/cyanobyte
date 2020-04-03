@@ -32,6 +32,7 @@ _DEBUG = False
 _CLEAN = False
 _TEMPLATES = dict(
     arduino=["./templates/arduino.cpp", "./templates/arduino.h"],
+    cmsis=["./templates/cmsis.svd"],
     datasheet=["./templates/datasheet.tex"],
     doc=["./templates/doc.md"],
     embedded=["./templates/generic.c", "./templates/generic.h"],
