@@ -73,7 +73,7 @@ class DeviceAddressValues(Enum):
 {% if i2c.endian == 'little' %}
 def _swap_endian(val, length):
     """
-    Swap the endianness of a short only
+    Swap the endianness of a number
     """
     if length <= 8:
         return val
