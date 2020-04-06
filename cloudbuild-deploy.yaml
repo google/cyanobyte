@@ -26,20 +26,14 @@ steps:
   args:
     - 'src/codegen.py'
     - '-t'
-    - 'templates/doc.md'
+    - 'doc'
     - '-o'
     - './docs/content/docs/Reference/Peripheral Docs'
-    - '-i'
     - 'peripherals/ADS1015.yaml'
-    - '-i'
     - 'peripherals/BMP280.yaml'
-    - '-i'
     - 'peripherals/LSM303D.yaml'
-    - '-i'
     - 'peripherals/MCP4725.yaml'
-    - '-i'
     - 'peripherals/MCP9808.yaml'
-    - '-i'
     - 'peripherals/TCS3472.yaml'
 
 - name: gcr.io/cloud-builders/git

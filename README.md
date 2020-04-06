@@ -14,23 +14,23 @@ For more advanced development, also install the dev list.
 `pip install -r requirements-dev.txt --user`
 
 ## Run Codegen
-`python3 src/codegen.py -t templates/doc.md -o ./build -i peripherals/MCP4725.yaml`
+`python3 src/codegen.py -t templates/doc.md -o ./build peripherals/MCP4725.yaml`
 
-### Args
+### Options
 * `-t` - A template file. You can provide multiple template files.
-* `-i` - A peripheral file. You can provide multiple input files.
 * `-o` - The output directory where files will be generated.
 * `-d` - Debug flag to print out additional information
 * `-c` - Clean the output directory before generating files
+
+One or multiple files can be passed as an argument.
 
 ### Clean
 `rm -rf ./build`
 
 ## Run Validator
-`python3 src/validator.py -i peripherals/MCP9808.yaml`
+`python3 src/validator.py peripherals/MCP9808.yaml`
 
-### Args
-* `-i` - A CyanoByte document. You can provide multiple input files.
+One or multiple files can be passed as an argument.
 
 ## Peripheral YAML file
 The current spec is described in `docs/cyanobyte.md`. You can find all examples in the `peripherals/` directory.
