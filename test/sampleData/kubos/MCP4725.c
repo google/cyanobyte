@@ -127,13 +127,12 @@ void mcp4725_getvout_asvoltage(float* val, float vcc) {
     val = voltage;
 }
 
-void mcp4725_setvout_asvoltage(void* val, float output, float vcc) {
+void mcp4725_setvout_asvoltage( float output, float vcc) {
 
 
     output = output / vcc * 4096
     mcp4725_writeEEPROM(&output);
 
 
-    val = [];
 }
 

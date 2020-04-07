@@ -181,13 +181,14 @@
 {% endfor %}
 {% endif %}
 &
-{% if compute.return is iterable and compute.return is not string %}
+{% if 'return' in compute and compute.return is not string %}
 {% for returnable in compute.return %}
 {{returnable}}{{ ", " if not loop.last }}
 {% endfor %}
-{% endif %}
-{% if compute.return is string %}
+{% elif compute.return is string %}
 {{compute.return}}
+{% else %}
+void
 {% endif %}
 \\
 {% endfor %}

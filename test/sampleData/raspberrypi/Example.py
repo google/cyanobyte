@@ -215,4 +215,3 @@ class Example:
         summation = (1024+1024)
         self.set_registera(summation)
 
-        return []

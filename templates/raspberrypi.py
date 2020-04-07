@@ -267,11 +267,10 @@ class {{ info.title }}:
 {{ logic(compute.logic, function) }}
         {# Return if applicable #}
         {# Return a tuple #}
-        {% if compute.return is iterable and compute.return is not string %}
+        {% if 'return' in compute and compute.return is not string %}
         return [{% for returnValue in compute.return %}{{ returnValue | camel_to_snake }}{{ ", " if not loop.last }}{% endfor %}]
-        {% endif %}
         {# Return a plain value #}
-        {% if compute.return is string %}
+        {% elif compute.return is string %}
             {# See if we need to massage the data type #}
             {% if compute.output == 'int16' %}
         # Convert from a unsigned short to a signed short

@@ -136,7 +136,7 @@ int tcs3472_set_init(uint8_t* data) {
     return 0;
 }
 
-void tcs3472_init_oncreate(void* val) {
+void tcs3472_init_oncreate() {
     char enables; // Variable declaration
 
 
@@ -144,6 +144,5 @@ void tcs3472_init_oncreate(void* val) {
     tcs3472_writeenable(&enables);
 
 
-    val = [];
 }
 

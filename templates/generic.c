@@ -186,21 +186,17 @@ int {{info.title.lower()}}_set_{{key.lower()}}(
 {% for key,function in functions|dictsort %}
 {% if function.computed %}
 {% for ckey,compute in function.computed|dictsort %}
+void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
+{% if 'return' in compute %}
 {% set int_t = cpp.returnType(compute) %}
-{% if compute.input %}
-void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
     {{int_t}}* val,
-    {{cpp.params(compute.input)}},
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
-) {
-{% else %}
-void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
-    {{int_t}}* val,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
-) {
 {% endif %}
+{% if 'input' in compute %}
+    {{cpp.params(compute)}},
+{% endif %}
+    int (*read)(uint8_t, uint8_t, int*, uint8_t),
+    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+) {
     {# Declare our variables #}
 {{ cpp.variables(compute.variables) }}
 
@@ -218,11 +214,10 @@ void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
 
     {# Return if applicable #}
     {# Return a tuple #}
-    {% if compute.return is iterable and compute.return is not string %}
+    {% if 'return' in compute and compute.return is not string %}
     *val = [{% for returnValue in compute.return %}{{ returnValue | camel_to_snake }}{{ ", " if not loop.last }}{% endfor %}];
-    {% endif %}
     {# Return a plain value #}
-    {% if compute.return is string %}
+    {% elif compute.return is string %}
     *val = {{compute.return}};
     {% endif %}
 }

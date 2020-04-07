@@ -157,4 +157,3 @@ class MCP4725:
         output = output / vcc * 4096
         self.set_eeprom(output)
 
-        return []

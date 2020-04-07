@@ -192,11 +192,7 @@ int {{info.title.lower()}}_set_{{key.lower()}}({{int_t}}* data) {
 {% for key,function in functions|dictsort %}
 {% for ckey,compute in function.computed|dictsort %}
 {% set int_t = cpp.returnType(compute) %}
-{% if compute.input %}
-void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}({{int_t}}* val, {{cpp.params(compute)}}) {
-{% else %}
-void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}({{int_t}}* val) {
-{% endif %}
+void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}({% if 'return' in compute %}{{int_t}}* val{% if 'input' in compute %},{% endif %}{% endif %}{% if 'input' in compute %} {{cpp.params(compute)}} {% endif %}) {
     {# Declare our variables #}
 {{ cpp.variables(compute.variables) }}
 
@@ -214,11 +210,10 @@ void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}({{int_t}}* val) {
 
     {# Return if applicable #}
     {# Return a tuple #}
-    {% if compute.return is iterable and compute.return is not string %}
+    {% if 'return' in compute and compute.return is not string %}
     val = [{% for returnValue in compute.return %}{{ returnValue | camel_to_snake }}{{ ", " if not loop.last }}{% endfor %}];
-    {% endif %}
     {# Return a plain value #}
-    {% if compute.return is string %}
+    {% elif compute.return is string %}
     val = {{compute.return}};
     {% endif %}
 }

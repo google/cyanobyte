@@ -114,7 +114,7 @@ void example_return_number(short* val);
  * Computes and returns
 
 */
-void example_return_void(void* val);
+void example_return_void();
 
 
 #endif

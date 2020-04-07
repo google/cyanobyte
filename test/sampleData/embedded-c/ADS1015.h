@@ -144,7 +144,7 @@ int ads1015_set_samplerate(
 */
 void ads1015_analog_read(
     short* val,
-    ,
+    char channel,
     int (*read)(uint8_t, uint8_t, int*, uint8_t),
     int (*write)(uint8_t, uint8_t, int*, uint8_t)
 );

@@ -156,7 +156,6 @@ void example_return_number(
 
 */
 void example_return_void(
-    void* val,
     int (*read)(uint8_t, uint8_t, int*, uint8_t),
     int (*write)(uint8_t, uint8_t, int*, uint8_t)
 );

@@ -127,24 +127,20 @@ int {{info.title.lower()}}_set_{{key.lower()}}(
 {% if functions %}
 {% for key,function in functions|dictsort %}
 {% for ckey,compute in function.computed|dictsort %}
-{% set int_t = cpp.returnType(compute) %}
 /**
 {{utils.pad_string(" * ", function.description)}}
 */
-{% if compute.input %}
 void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
+    {% if 'return' in compute %}
+    {% set int_t = cpp.returnType(compute) %}
     {{int_t}}* val,
-    {{cpp.params(compute.input)}},
+    {% endif %}
+    {% if 'input' in compute %}
+    {{cpp.params(compute)}},
+    {% endif %}
     int (*read)(uint8_t, uint8_t, int*, uint8_t),
     int (*write)(uint8_t, uint8_t, int*, uint8_t)
 );
-{% else %}
-void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
-    {{int_t}}* val,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
-);
-{% endif %}
 {% endfor %}
 
 {% endfor %}

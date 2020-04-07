@@ -194,7 +194,7 @@ void example_return_number(short* val) {
     val = summation;
 }
 
-void example_return_void(void* val) {
+void example_return_void() {
     short summation; // Variable declaration
 
 
@@ -202,6 +202,5 @@ void example_return_void(void* val) {
     example_writeRegisterA(&summation);
 
 
-    val = [];
 }
 
