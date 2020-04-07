@@ -30,7 +30,7 @@ def cyanobyte_valdiate(input_files):
 
 
 @click.command()
-@click.option("-i", "--input", "input_files", multiple=True)
+@click.argument("input_files", type=click.Path(exists=True), nargs=-1)
 def click_valdiate(input_files):
     """
     Main command line entrypoint

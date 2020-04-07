@@ -23,13 +23,13 @@ class TestCodegen(unittest.TestCase):
             -c \
             -o ./tmp/ \
             -t templates/' + template + '\
-            -i peripherals/ADS1015.yaml \
-            -i peripherals/BMP280.yaml \
-            -i peripherals/LSM303D.yaml \
-            -i peripherals/MCP4725.yaml \
-            -i peripherals/MCP9808.yaml \
-            -i peripherals/TCS3472.yaml \
-            -i peripherals/example.yaml \
+            peripherals/ADS1015.yaml \
+            peripherals/BMP280.yaml \
+            peripherals/LSM303D.yaml \
+            peripherals/MCP4725.yaml \
+            peripherals/MCP9808.yaml \
+            peripherals/TCS3472.yaml \
+            peripherals/example.yaml \
             > /dev/null')
 
     def compareFiles(self, platformName, extension):

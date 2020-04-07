@@ -134,12 +134,12 @@ def generate_files_for_template(env, template_file, input_files, output_dir):
 
 
 @click.command()
-@click.option("-i", "--input", "input_files", multiple=True)
 @click.option("-t", "--template", "template_files", multiple=True)
 @click.option("-o", "--output", "output_dir", default="./build",
               show_default=True)
 @click.option("-d", "--debug", "debug", default=False)
 @click.option("-c", "--clean", "clean", is_flag=True)
+@click.argument("input_files", type=click.Path(exists=True), nargs=-1)
 def gen(input_files, template_files=None, output_dir='./build', debug=False,
         clean=False):
     """
