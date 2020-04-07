@@ -199,5 +199,4 @@ class ADS1015:
         processed = ((datum_a << 4)|(datum_b >> 4))
         programmable_gain = 6144
         processed = ((processed/2047/1000)*programmable_gain)
-
         return processed

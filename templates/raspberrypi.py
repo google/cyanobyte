@@ -264,7 +264,7 @@ class {{ info.title }}:
         {% endfor -%}
         {% endif %}
         {# Handle the logic #}
-{{ logic(compute.logic, function) }}
+{{ logic(compute.logic, function) -}}
         {# Return if applicable #}
         {# Return a tuple #}
         {% if 'return' in compute and compute.return is not string %}
