@@ -84,13 +84,13 @@ int mcp4725_set_digitalout(uint16_t* data);
  * get vout
 
 */
-void mcp4725_getvout_asvoltage(float* val, );
+void mcp4725_getvout_asvoltage(float* val, float vcc);
 
 /**
  * set vout
 
 */
-void mcp4725_setvout_asvoltage(void* val, );
+void mcp4725_setvout_asvoltage( float output, float vcc);
 
 
 #endif

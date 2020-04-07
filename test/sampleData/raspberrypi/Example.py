@@ -192,7 +192,6 @@ class Example:
 
         summation = (1024+1024)
         self.set_registera(summation)
-
         return [summation, summation]
     def return_number(self):
         """
@@ -203,7 +202,6 @@ class Example:
 
         summation = (1024+1024)
         self.set_registera(summation)
-
         return summation
     def return_void(self):
         """
@@ -214,5 +212,3 @@ class Example:
 
         summation = (1024+1024)
         self.set_registera(summation)
-
-        return []

@@ -318,7 +318,6 @@ class LSM303D:
         value_x = ((value_x/math.pow(2, 15))*acceleration_scale)
         value_y = ((value_y/math.pow(2, 15))*acceleration_scale)
         value_z = ((value_z/math.pow(2, 15))*acceleration_scale)
-
         return [value_x, value_y, value_z]
     def acceleration_xplane(self):
         """
@@ -332,7 +331,6 @@ class LSM303D:
         lower = self.get_accelerometerx_low()
         upper = self.get_accelerometerx_high()
         datum = ((upper << 8)+lower)
-
         # Convert from a unsigned short to a signed short
         datum = struct.unpack("h", struct.pack("H", datum))[0]
         return datum
@@ -348,7 +346,6 @@ class LSM303D:
         lower = self.get_accelerometery_low()
         upper = self.get_accelerometery_high()
         datum = ((upper << 8)+lower)
-
         # Convert from a unsigned short to a signed short
         datum = struct.unpack("h", struct.pack("H", datum))[0]
         return datum
@@ -364,7 +361,6 @@ class LSM303D:
         lower = self.get_accelerometerz_low()
         upper = self.get_accelerometerz_high()
         datum = ((upper << 8)+lower)
-
         # Convert from a unsigned short to a signed short
         datum = struct.unpack("h", struct.pack("H", datum))[0]
         return datum
@@ -384,7 +380,6 @@ class LSM303D:
         heading = math.atan(dividend)
         heading = (heading%(2*3.141592653589793))
         heading = ((heading/3.141592653589793)*180)
-
         return heading
     def orientation_xplane(self):
         """
@@ -398,7 +393,6 @@ class LSM303D:
         lower = self.get_magnetometerx_low()
         upper = self.get_magnetometerx_high()
         datum = ((upper << 8)+lower)
-
         # Convert from a unsigned short to a signed short
         datum = struct.unpack("h", struct.pack("H", datum))[0]
         return datum
@@ -414,7 +408,6 @@ class LSM303D:
         lower = self.get_magnetometery_low()
         upper = self.get_magnetometery_high()
         datum = ((upper << 8)+lower)
-
         # Convert from a unsigned short to a signed short
         datum = struct.unpack("h", struct.pack("H", datum))[0]
         return datum
@@ -430,7 +423,6 @@ class LSM303D:
         lower = self.get_magnetometerz_low()
         upper = self.get_magnetometerz_high()
         datum = ((upper << 8)+lower)
-
         # Convert from a unsigned short to a signed short
         datum = struct.unpack("h", struct.pack("H", datum))[0]
         return datum

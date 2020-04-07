@@ -119,7 +119,7 @@ int ads1015_set_samplerate(uint16_t* data);
  * Reads the analog voltage in Volts
 
 */
-void ads1015_analog_read(short* val, );
+void ads1015_analog_read(short* val, char channel);
 
 
 #endif

@@ -146,5 +146,3 @@ class TCS3472:
 
         enables = (1+2)
         self.set_enable(enables)
-
-        return []

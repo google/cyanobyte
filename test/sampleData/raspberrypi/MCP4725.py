@@ -146,7 +146,6 @@ class MCP4725:
         # Read value of register into a variable
         value = self.get_eeprom()
         voltage = value / 4096 * vcc
-
         return voltage
     def setvout_asvoltage(self, output, vcc):
         """
@@ -156,5 +155,3 @@ class MCP4725:
 
         output = output / vcc * 4096
         self.set_eeprom(output)
-
-        return []

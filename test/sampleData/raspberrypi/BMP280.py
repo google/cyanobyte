@@ -508,7 +508,6 @@ class BMP280:
         raw_comp2 = ((hpa*value_d_p8)/32768.0)
         hpa = (hpa+((raw_comp1+raw_comp2+value_d_p7)/16.0))
         hpa = (hpa/100.0)
-
         return hpa
     def pressure_asraw(self):
         """
@@ -524,7 +523,6 @@ class BMP280:
         value_lsb = self.get_pressurelsb()
         value_xlsb = self.get_pressurexlsb()
         output = ((value_msb << 12)+(value_lsb << 4)+(value_xlsb >> 4))
-
         return output
     def temperature_ascelsius(self):
         """
@@ -554,7 +552,6 @@ class BMP280:
         raw_comp3 = ((raw_temp/131072.0)-(value_d_t1/8192.0))
         raw_comp2 = (raw_comp3*raw_comp3*value_d_t3)
         celsius = ((raw_comp1+raw_comp2)/5120.0)
-
         return celsius
     def temperature_asraw(self):
         """
@@ -570,5 +567,4 @@ class BMP280:
         value_lsb = self.get_templsb()
         value_xlsb = self.get_tempxlsb()
         output = ((value_msb << 12)+(value_lsb << 4)+(value_xlsb >> 4))
-
         return output

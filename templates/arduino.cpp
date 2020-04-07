@@ -204,7 +204,7 @@ int {{info.title}}::set{{key}}(uint8_t data) {
 
     {# Return if applicable #}
     {# Return a tuple #}
-    {% if compute.return is iterable and compute.return is not string %}
+    {% if 'return' in compute and compute.return is not string %}
     {# In C languages, the array is a parameter `returnArray` you fill #}
     {% for variable in compute.return %}
     returnArray[{{loop.index - 1}}] = {{variable}};
