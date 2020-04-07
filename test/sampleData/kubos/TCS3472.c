@@ -144,6 +144,6 @@ void tcs3472_init_oncreate(void* val) {
     tcs3472_writeenable(&enables);
 
 
-    return [];
+    val = [];
 }
 

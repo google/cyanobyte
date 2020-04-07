@@ -115,7 +115,7 @@ int mcp4725_set_digitalout(uint16_t* data) {
     return 0;
 }
 
-void mcp4725_getvout_asvoltage(float* val, ) {
+void mcp4725_getvout_asvoltage(float* val, float vcc) {
     float voltage; // Variable declaration
 
 
@@ -124,16 +124,16 @@ void mcp4725_getvout_asvoltage(float* val, ) {
     voltage = value / 4096 * vcc
 
 
-    return voltage;
+    val = voltage;
 }
 
-void mcp4725_setvout_asvoltage(void* val, ) {
+void mcp4725_setvout_asvoltage(void* val, float output, float vcc) {
 
 
     output = output / vcc * 4096
     mcp4725_writeEEPROM(&output);
 
 
-    return [];
+    val = [];
 }
 

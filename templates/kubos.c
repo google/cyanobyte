@@ -193,7 +193,7 @@ int {{info.title.lower()}}_set_{{key.lower()}}({{int_t}}* data) {
 {% for ckey,compute in function.computed|dictsort %}
 {% set int_t = cpp.returnType(compute) %}
 {% if compute.input %}
-void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}({{int_t}}* val, {{cpp.params(compute.input)}}) {
+void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}({{int_t}}* val, {{cpp.params(compute)}}) {
 {% else %}
 void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}({{int_t}}* val) {
 {% endif %}
@@ -215,11 +215,11 @@ void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}({{int_t}}* val) {
     {# Return if applicable #}
     {# Return a tuple #}
     {% if compute.return is iterable and compute.return is not string %}
-    return [{% for returnValue in compute.return %}{{ returnValue | camel_to_snake }}{{ ", " if not loop.last }}{% endfor %}];
+    val = [{% for returnValue in compute.return %}{{ returnValue | camel_to_snake }}{{ ", " if not loop.last }}{% endfor %}];
     {% endif %}
     {# Return a plain value #}
     {% if compute.return is string %}
-    return {{compute.return}};
+    val = {{compute.return}};
     {% endif %}
 }
 

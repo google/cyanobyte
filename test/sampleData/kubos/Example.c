@@ -180,7 +180,7 @@ void example_return_array(void* val) {
     example_writeRegisterA(&summation);
 
 
-    return [summation, summation];
+    val = [summation, summation];
 }
 
 void example_return_number(short* val) {
@@ -191,7 +191,7 @@ void example_return_number(short* val) {
     example_writeRegisterA(&summation);
 
 
-    return summation;
+    val = summation;
 }
 
 void example_return_void(void* val) {
@@ -202,6 +202,6 @@ void example_return_void(void* val) {
     example_writeRegisterA(&summation);
 
 
-    return [];
+    val = [];
 }
 

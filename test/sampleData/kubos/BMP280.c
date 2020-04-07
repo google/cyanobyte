@@ -474,7 +474,7 @@ void bmp280_pressure_ashpa(float* val) {
     hpa = (hpa/100.0);
 
 
-    return hpa;
+    val = hpa;
 }
 
 void bmp280_pressure_asraw(short* val) {
@@ -490,7 +490,7 @@ void bmp280_pressure_asraw(short* val) {
     output = ((valueMsb << 12)+(valueLsb << 4)+(valueXlsb >> 4));
 
 
-    return output;
+    val = output;
 }
 
 void bmp280_temperature_ascelsius(float* val) {
@@ -520,7 +520,7 @@ void bmp280_temperature_ascelsius(float* val) {
     celsius = ((rawComp1+rawComp2)/5120.0);
 
 
-    return celsius;
+    val = celsius;
 }
 
 void bmp280_temperature_asraw(short* val) {
@@ -536,6 +536,6 @@ void bmp280_temperature_asraw(short* val) {
     output = ((valueMsb << 12)+(valueLsb << 4)+(valueXlsb >> 4));
 
 
-    return output;
+    val = output;
 }
 
