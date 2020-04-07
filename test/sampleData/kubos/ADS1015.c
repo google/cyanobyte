@@ -144,7 +144,7 @@ int ads1015_set_samplerate(uint16_t* data) {
     return 0;
 }
 
-void ads1015_analog_read(short* val, ) {
+void ads1015_analog_read(short* val, char channel) {
     short config; // Variable declaration
     char datumA; // Variable declaration
     char datumB; // Variable declaration
@@ -166,6 +166,6 @@ void ads1015_analog_read(short* val, ) {
     processed = ((processed/2047/1000)*programmableGain);
 
 
-    return processed;
+    val = processed;
 }
 

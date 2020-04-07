@@ -300,7 +300,7 @@ void lsm303d_acceleration_asg(void* val) {
     valueZ = ((valueZ/pow(2, 15))*accelerationScale);
 
 
-    return [value_x, value_y, value_z];
+    val = [value_x, value_y, value_z];
 }
 
 void lsm303d_acceleration_xplane(short* val) {
@@ -314,7 +314,7 @@ void lsm303d_acceleration_xplane(short* val) {
     datum = ((upper << 8)+lower);
 
 
-    return datum;
+    val = datum;
 }
 
 void lsm303d_acceleration_yplane(short* val) {
@@ -328,7 +328,7 @@ void lsm303d_acceleration_yplane(short* val) {
     datum = ((upper << 8)+lower);
 
 
-    return datum;
+    val = datum;
 }
 
 void lsm303d_acceleration_zplane(short* val) {
@@ -342,7 +342,7 @@ void lsm303d_acceleration_zplane(short* val) {
     datum = ((upper << 8)+lower);
 
 
-    return datum;
+    val = datum;
 }
 
 void lsm303d_orientation_heading(short* val) {
@@ -360,7 +360,7 @@ void lsm303d_orientation_heading(short* val) {
     heading = ((heading/3.141592653589793)*180);
 
 
-    return heading;
+    val = heading;
 }
 
 void lsm303d_orientation_xplane(short* val) {
@@ -374,7 +374,7 @@ void lsm303d_orientation_xplane(short* val) {
     datum = ((upper << 8)+lower);
 
 
-    return datum;
+    val = datum;
 }
 
 void lsm303d_orientation_yplane(short* val) {
@@ -388,7 +388,7 @@ void lsm303d_orientation_yplane(short* val) {
     datum = ((upper << 8)+lower);
 
 
-    return datum;
+    val = datum;
 }
 
 void lsm303d_orientation_zplane(short* val) {
@@ -402,6 +402,6 @@ void lsm303d_orientation_zplane(short* val) {
     datum = ((upper << 8)+lower);
 
 
-    return datum;
+    val = datum;
 }
 
