@@ -139,7 +139,6 @@ int example_set_fieldc(
 */
 void example_return_array(
     void* val,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
     int (*write)(uint8_t, uint8_t, int*, uint8_t)
 );
 /**
@@ -148,7 +147,6 @@ void example_return_array(
 */
 void example_return_number(
     short* val,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
     int (*write)(uint8_t, uint8_t, int*, uint8_t)
 );
 /**
@@ -156,7 +154,6 @@ void example_return_number(
 
 */
 void example_return_void(
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
     int (*write)(uint8_t, uint8_t, int*, uint8_t)
 );
 
