@@ -37,6 +37,7 @@ _TEMPLATES = dict(
     doc=["./templates/doc.md"],
     embedded=["./templates/generic.c", "./templates/generic.h"],
     kubos=["./templates/kubos.c", "./templates/kubos.h"],
+    micropython=["./templates/micropython.py"],
     raspberrypi=["./templates/raspberrypi.py"],
 )
 

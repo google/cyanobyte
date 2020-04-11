@@ -156,3 +156,74 @@ import math
 {% endfor %}
 {% endif %}
 {%- endmacro %}
+
+{% macro importUstdLibs(fields, functions, template) %}
+{% if functions %}
+{% for key,function in functions|dictsort %}
+{# Check if we need to import `math` lib #}
+{% for ckey,compute in function.computed|dictsort %}
+{% if compute.output == 'int16' %}
+{% if template.struct is sameas false %}
+import ustruct
+{% set template.struct = true %}
+{% endif %}
+{% endif %}
+{% macro scanForMathLib(logicKeys) -%}
+{% for logic in logicKeys %}
+{% if logic is mapping %}
+{% for logicKey in logic.keys() %}
+{% if logicKey == 'power' or logicKey == 'arc tangent' %}
+{% if template.math is sameas false %}
+import math
+{% set template.math = true %}
+{% endif %}
+{% elif logic[logicKey] is iterable and logic[logicKey] is not string -%}
+{{- scanForMathLib(logic[logicKey]) -}}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{%- endmacro %}
+{{- scanForMathLib(compute.logic) -}}
+{% endfor %}
+{% endfor %}
+{% endif %}
+{%- endmacro %}
+
+{% macro importLittleEndian(i2c) %}
+{% if i2c.endian == 'little' %}
+def _swap_endian(val, length):
+    """
+    Swap the endianness of a number
+    """
+    if length <= 8:
+        return val
+    if length <= 16:
+        return (val & 0xFF00) >> 8 | (val & 0xFF) << 8
+    if length <= 32:
+        return ((val & 0xFF000000) >> 24 |
+                (val & 0x00FF0000) >> 8 |
+                (val & 0x0000FF00) << 8 |
+                (val & 0x000000FF) << 24)
+    raise Exception('Cannot swap endianness for length ' + length)
+{% endif %}
+{%- endmacro %}
+
+{% macro importSign(registers, template) %}
+{# Add signing function if needed #}
+{% for key,register in registers|dictsort %}
+{% if register.signed %}
+{# Optionally import class #}
+{% if template.sign is sameas false %}
+def _sign(val, length):
+    """
+    Convert unsigned integer to signed integer
+    """
+    if val & (1 << (length - 1)):
+        return val - (1 << length)
+    return val
+{% set template.sign = true %}
+{% endif %}
+{% endif %}
+{% endfor %}
+{%- endmacro %}
