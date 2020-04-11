@@ -35,7 +35,9 @@
 {% endif %}
 {# // Check if assignment is function call op #}
 {% if step[key][:12] == '#/functions/' %}
-    {{step[key] | regex_replace('#/functions/(?P<function>.+)/(?P<compute>.+)', '\\g<function>\\g<compute>')}}(&{{key}}, read, write);
+    {% set doread = 'True' in embedded.recursiveReadWrite(functions, step[key][12:], 'r') %}
+    {% set dowrite = 'True' in embedded.recursiveReadWrite(functions, step[key][12:], 'w') %}
+    {{step[key].lower() | regex_replace('#/functions/(?P<function>.+)/(?P<compute>.+)', info.title.lower() + '_\\g<function>_\\g<compute>')}}(&{{key}}{% if doread %}, read{% if dowrite %}, {% endif %}{% endif %}{% if dowrite %}write{% endif %});
 {% endif %}
 {# If the value is a list, then this is a logical setter #}
 {% if step[key] is iterable and step[key] is not string %}

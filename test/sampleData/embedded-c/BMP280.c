@@ -476,7 +476,7 @@ void bmp280_pressure_ashpa(
     bmp280_readDigP7(&valueDP7, read);
     bmp280_readDigP8(&valueDP8, read);
     bmp280_readDigP9(&valueDP9, read);
-    temperatureasCelsius(&rawTemperature, read, write);
+    bmp280_temperature_ascelsius(&rawTemperature, read);
     rawTemperature = (rawTemperature*5120.0);
     rawPressure = ((valueMsb << 12)+(valueLsb << 4)+(valueXlsb >> 4));
     rawComp1 = ((rawTemperature/2)-64000.0);

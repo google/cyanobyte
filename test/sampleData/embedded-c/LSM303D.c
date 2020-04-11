@@ -312,9 +312,9 @@ void lsm303d_acceleration_asg(
 
 
     accelerationScale = 2
-    accelerationxPlane(&valueX, read, write);
-    accelerationyPlane(&valueY, read, write);
-    accelerationzPlane(&valueZ, read, write);
+    lsm303d_acceleration_xplane(&valueX, read);
+    lsm303d_acceleration_yplane(&valueY, read);
+    lsm303d_acceleration_zplane(&valueZ, read);
     valueX = ((valueX/pow(2, 15))*accelerationScale);
     valueY = ((valueY/pow(2, 15))*accelerationScale);
     valueZ = ((valueZ/pow(2, 15))*accelerationScale);
@@ -384,8 +384,8 @@ void lsm303d_orientation_heading(
     short valueY; // Variable declaration
 
 
-    orientationxPlane(&valueX, read, write);
-    orientationyPlane(&valueY, read, write);
+    lsm303d_orientation_xplane(&valueX, read);
+    lsm303d_orientation_yplane(&valueY, read);
     dividend = (valueX/valueY);
     heading = atan(dividend);
     heading = ((int) heading%(int) (2*3.141592653589793));
