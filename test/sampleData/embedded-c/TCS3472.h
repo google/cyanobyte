@@ -113,7 +113,6 @@ int tcs3472_set_init(
 
 */
 void tcs3472_init_oncreate(
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
     int (*write)(uint8_t, uint8_t, int*, uint8_t)
 );
 

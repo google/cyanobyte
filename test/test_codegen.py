@@ -81,6 +81,10 @@ class TestCodegen(unittest.TestCase):
         self.generatePeripheral('generic.h')
         self.compareFiles('embedded-c', 'h')
 
+    def test_Micropython(self):
+        self.generatePeripheral('i2c-device.py')
+        self.compareFiles('i2cdevice', 'py')
+
     def test_Kubos(self):
         self.generatePeripheral('kubos.c')
         self.compareFiles('kubos', 'c')

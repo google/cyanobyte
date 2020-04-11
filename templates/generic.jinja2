@@ -1,0 +1,47 @@
+{% macro doRecursion(functions, compute, rw) %}
+{% for step in compute.logic %}
+{% for key in step.keys() %}
+{% if step[key] is string and step[key][:12] == '#/functions/' %}
+{{ recursiveReadWrite(functions, step[key][12:], rw) }}
+{% endif %}
+{% if step[key] is string and step[key][:12] == '#/registers/' and rw == 'r' %}
+True
+{% endif %}
+{% if key == 'cmdWrite' and rw == 'w' %}
+True
+{% endif %}
+{% if key == 'send' and rw == 'w' %}
+True
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endmacro %}
+
+{% macro recursiveReadWrite(functions, name, rw) %}
+{% set split = name.split('/') %}
+{% set fname = split[0] %}
+{% set cname = split[1] %}
+{% set compute = functions[fname].computed[cname] %}
+{{ doRecursion(functions, compute, rw) }}
+{% endmacro %}
+
+{% macro functionParams(cpp, functions, compute) %}
+{% set doread = doRecursion(functions, compute, 'r') %}
+{% set dowrite = doRecursion(functions, compute, 'w') %}
+{% if 'return' in compute %}
+{% set int_t = cpp.returnType(compute) %}
+    {{int_t}}* val,
+{% endif %}
+{% if 'input' in compute %}
+    {{cpp.params(compute)}}{% if 'True' in dowrite %},
+{% endif %}
+{% endif %}
+{% if 'True' in doread %}
+    int (*read)(uint8_t, uint8_t, int*, uint8_t){% if 'True' in dowrite %},
+{% endif %}
+{%- endif %}
+{% if 'True' in dowrite %}
+    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+
+{%- endif %}
+{%- endmacro %}

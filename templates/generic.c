@@ -1,5 +1,6 @@
 {% import 'macros.jinja2' as utils %}
 {% import 'clang.jinja2' as cpp %}
+{% import 'generic.jinja2' as embedded %}
 {# Consult https://github.com/kubos/kubos/blob/master/test/integration/linux/lsm303dlhc-i2c/source/main.c #}
 {# Also https://docs.kubos.com/1.18.0/deep-dive/apis/kubos-hal/i2c-hal/c-i2c/c-i2c.html #}
 {% set template = namespace(enum=false, sign=false, math=false, struct=false) %}
@@ -187,15 +188,7 @@ int {{info.title.lower()}}_set_{{key.lower()}}(
 {% if function.computed %}
 {% for ckey,compute in function.computed|dictsort %}
 void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
-{% if 'return' in compute %}
-{% set int_t = cpp.returnType(compute) %}
-    {{int_t}}* val,
-{% endif %}
-{% if 'input' in compute %}
-    {{cpp.params(compute)}},
-{% endif %}
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+{{ embedded.functionParams(cpp, functions, compute) }}
 ) {
     {# Declare our variables #}
 {{ cpp.variables(compute.variables) }}

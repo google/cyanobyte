@@ -36,6 +36,7 @@ _TEMPLATES = dict(
     datasheet=["./templates/datasheet.tex"],
     doc=["./templates/doc.md"],
     embedded=["./templates/generic.c", "./templates/generic.h"],
+    i2cdevice=["./templates/i2c-device.py"],
     kubos=["./templates/kubos.c", "./templates/kubos.h"],
     micropython=["./templates/micropython.py"],
     raspberrypi=["./templates/raspberrypi.py"],
