@@ -95,6 +95,10 @@ class TestCodegen(unittest.TestCase):
         self.generatePeripheral('doc.md')
         self.compareFiles('markdown', 'md')
 
+    def test_Micropython(self):
+        self.generatePeripheral('micropython.py')
+        self.compareFiles('micropython', 'py')
+
     def test_RaspberryPi(self):
         self.generatePeripheral('raspberrypi.py')
         self.compareFiles('raspberrypi', 'py')
