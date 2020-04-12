@@ -1,5 +1,6 @@
 {% import 'macros.jinja2' as utils %}
 {% import 'clang.jinja2' as cpp %}
+{% import 'generic.jinja2' as embedded %}
 {% set template = namespace(math=false) %}
 /*
 {{ utils.pad_string('* ', utils.license(info.copyright.name, info.copyright.date, info.license.name)) -}}
@@ -131,15 +132,7 @@ int {{info.title.lower()}}_set_{{key.lower()}}(
 {{utils.pad_string(" * ", function.description)}}
 */
 void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
-    {% if 'return' in compute %}
-    {% set int_t = cpp.returnType(compute) %}
-    {{int_t}}* val,
-    {% endif %}
-    {% if 'input' in compute %}
-    {{cpp.params(compute)}},
-    {% endif %}
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+{{ embedded.functionParams(cpp, functions, compute) }}
 );
 {% endfor %}
 

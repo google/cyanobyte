@@ -121,9 +121,7 @@ int mcp4725_set_digitalout(
 
 void mcp4725_getvout_asvoltage(
     float* val,
-    float vcc,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+    float vcc
 ) {
     float voltage; // Variable declaration
 
@@ -136,7 +134,6 @@ void mcp4725_getvout_asvoltage(
 
 void mcp4725_setvout_asvoltage(
     float output, float vcc,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
     int (*write)(uint8_t, uint8_t, int*, uint8_t)
 ) {
 

@@ -303,8 +303,7 @@ int lsm303d_writeMagnetometerZ_Low(
 
 void lsm303d_acceleration_asg(
     void* val,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+    int (*read)(uint8_t, uint8_t, int*, uint8_t)
 ) {
     char accelerationScale; // Variable declaration
     short valueX; // Variable declaration
@@ -313,9 +312,9 @@ void lsm303d_acceleration_asg(
 
 
     accelerationScale = 2
-    accelerationxPlane(&valueX, read, write);
-    accelerationyPlane(&valueY, read, write);
-    accelerationzPlane(&valueZ, read, write);
+    lsm303d_acceleration_xplane(&valueX, read);
+    lsm303d_acceleration_yplane(&valueY, read);
+    lsm303d_acceleration_zplane(&valueZ, read);
     valueX = ((valueX/pow(2, 15))*accelerationScale);
     valueY = ((valueY/pow(2, 15))*accelerationScale);
     valueZ = ((valueZ/pow(2, 15))*accelerationScale);
@@ -326,8 +325,7 @@ void lsm303d_acceleration_asg(
 
 void lsm303d_acceleration_xplane(
     short* val,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+    int (*read)(uint8_t, uint8_t, int*, uint8_t)
 ) {
     short datum; // Variable declaration
     char lower; // Variable declaration
@@ -344,8 +342,7 @@ void lsm303d_acceleration_xplane(
 
 void lsm303d_acceleration_yplane(
     short* val,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+    int (*read)(uint8_t, uint8_t, int*, uint8_t)
 ) {
     short datum; // Variable declaration
     char lower; // Variable declaration
@@ -362,8 +359,7 @@ void lsm303d_acceleration_yplane(
 
 void lsm303d_acceleration_zplane(
     short* val,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+    int (*read)(uint8_t, uint8_t, int*, uint8_t)
 ) {
     short datum; // Variable declaration
     char lower; // Variable declaration
@@ -380,8 +376,7 @@ void lsm303d_acceleration_zplane(
 
 void lsm303d_orientation_heading(
     short* val,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+    int (*read)(uint8_t, uint8_t, int*, uint8_t)
 ) {
     short dividend; // Variable declaration
     short heading; // Variable declaration
@@ -389,8 +384,8 @@ void lsm303d_orientation_heading(
     short valueY; // Variable declaration
 
 
-    orientationxPlane(&valueX, read, write);
-    orientationyPlane(&valueY, read, write);
+    lsm303d_orientation_xplane(&valueX, read);
+    lsm303d_orientation_yplane(&valueY, read);
     dividend = (valueX/valueY);
     heading = atan(dividend);
     heading = ((int) heading%(int) (2*3.141592653589793));
@@ -402,8 +397,7 @@ void lsm303d_orientation_heading(
 
 void lsm303d_orientation_xplane(
     short* val,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+    int (*read)(uint8_t, uint8_t, int*, uint8_t)
 ) {
     short datum; // Variable declaration
     char lower; // Variable declaration
@@ -420,8 +414,7 @@ void lsm303d_orientation_xplane(
 
 void lsm303d_orientation_yplane(
     short* val,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+    int (*read)(uint8_t, uint8_t, int*, uint8_t)
 ) {
     short datum; // Variable declaration
     char lower; // Variable declaration
@@ -438,8 +431,7 @@ void lsm303d_orientation_yplane(
 
 void lsm303d_orientation_zplane(
     short* val,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+    int (*read)(uint8_t, uint8_t, int*, uint8_t)
 ) {
     short datum; // Variable declaration
     char lower; // Variable declaration

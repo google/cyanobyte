@@ -358,8 +358,7 @@ int bmp280_writeTempXlsb(
 */
 void bmp280_pressure_ashpa(
     float* val,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+    int (*read)(uint8_t, uint8_t, int*, uint8_t)
 );
 /**
  * Reads the atmospheric pressure
@@ -367,8 +366,7 @@ void bmp280_pressure_ashpa(
 */
 void bmp280_pressure_asraw(
     short* val,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+    int (*read)(uint8_t, uint8_t, int*, uint8_t)
 );
 
 /**
@@ -377,8 +375,7 @@ void bmp280_pressure_asraw(
 */
 void bmp280_temperature_ascelsius(
     float* val,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+    int (*read)(uint8_t, uint8_t, int*, uint8_t)
 );
 /**
  * Reads the temperature
@@ -386,8 +383,7 @@ void bmp280_temperature_ascelsius(
 */
 void bmp280_temperature_asraw(
     short* val,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+    int (*read)(uint8_t, uint8_t, int*, uint8_t)
 );
 
 

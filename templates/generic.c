@@ -1,5 +1,6 @@
 {% import 'macros.jinja2' as utils %}
 {% import 'clang.jinja2' as cpp %}
+{% import 'generic.jinja2' as embedded %}
 {# Consult https://github.com/kubos/kubos/blob/master/test/integration/linux/lsm303dlhc-i2c/source/main.c #}
 {# Also https://docs.kubos.com/1.18.0/deep-dive/apis/kubos-hal/i2c-hal/c-i2c/c-i2c.html #}
 {% set template = namespace(enum=false, sign=false, math=false, struct=false) %}
@@ -34,7 +35,9 @@
 {% endif %}
 {# // Check if assignment is function call op #}
 {% if step[key][:12] == '#/functions/' %}
-    {{step[key] | regex_replace('#/functions/(?P<function>.+)/(?P<compute>.+)', '\\g<function>\\g<compute>')}}(&{{key}}, read, write);
+    {% set doread = 'True' in embedded.recursiveReadWrite(functions, step[key][12:], 'r') %}
+    {% set dowrite = 'True' in embedded.recursiveReadWrite(functions, step[key][12:], 'w') %}
+    {{step[key].lower() | regex_replace('#/functions/(?P<function>.+)/(?P<compute>.+)', info.title.lower() + '_\\g<function>_\\g<compute>')}}(&{{key}}{% if doread %}, read{% if dowrite %}, {% endif %}{% endif %}{% if dowrite %}write{% endif %});
 {% endif %}
 {# If the value is a list, then this is a logical setter #}
 {% if step[key] is iterable and step[key] is not string %}
@@ -187,15 +190,7 @@ int {{info.title.lower()}}_set_{{key.lower()}}(
 {% if function.computed %}
 {% for ckey,compute in function.computed|dictsort %}
 void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
-{% if 'return' in compute %}
-{% set int_t = cpp.returnType(compute) %}
-    {{int_t}}* val,
-{% endif %}
-{% if 'input' in compute %}
-    {{cpp.params(compute)}},
-{% endif %}
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+{{ embedded.functionParams(cpp, functions, compute) }}
 ) {
     {# Declare our variables #}
 {{ cpp.variables(compute.variables) }}

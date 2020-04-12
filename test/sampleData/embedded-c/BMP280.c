@@ -442,8 +442,7 @@ int bmp280_writeTempXlsb(
 
 void bmp280_pressure_ashpa(
     float* val,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+    int (*read)(uint8_t, uint8_t, int*, uint8_t)
 ) {
     float hpa; // Variable declaration
     short rawComp1; // Variable declaration
@@ -477,7 +476,7 @@ void bmp280_pressure_ashpa(
     bmp280_readDigP7(&valueDP7, read);
     bmp280_readDigP8(&valueDP8, read);
     bmp280_readDigP9(&valueDP9, read);
-    temperatureasCelsius(&rawTemperature, read, write);
+    bmp280_temperature_ascelsius(&rawTemperature, read);
     rawTemperature = (rawTemperature*5120.0);
     rawPressure = ((valueMsb << 12)+(valueLsb << 4)+(valueXlsb >> 4));
     rawComp1 = ((rawTemperature/2)-64000.0);
@@ -500,8 +499,7 @@ void bmp280_pressure_ashpa(
 
 void bmp280_pressure_asraw(
     short* val,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+    int (*read)(uint8_t, uint8_t, int*, uint8_t)
 ) {
     short output; // Variable declaration
     char valueLsb; // Variable declaration
@@ -520,8 +518,7 @@ void bmp280_pressure_asraw(
 
 void bmp280_temperature_ascelsius(
     float* val,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+    int (*read)(uint8_t, uint8_t, int*, uint8_t)
 ) {
     float celsius; // Variable declaration
     short rawComp1; // Variable declaration
@@ -554,8 +551,7 @@ void bmp280_temperature_ascelsius(
 
 void bmp280_temperature_asraw(
     short* val,
-    int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+    int (*read)(uint8_t, uint8_t, int*, uint8_t)
 ) {
     short output; // Variable declaration
     char valueLsb; // Variable declaration
