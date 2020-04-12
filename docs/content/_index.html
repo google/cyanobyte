@@ -21,18 +21,16 @@ linkTitle = "Goldydocs"
 
 
 {{< blocks/section color="primary" >}}
-{{% blocks/feature %}}
-Cyanobyte goals:
-
+{{% blocks/feature icon="fa-list" title="Cyanobyte goals:" %}}
 <ul style="text-align: left">
 	<li>Open source</li>
 	<li>Standarized</li>
-	<li>Support all embedded platforms</li>
-	<li>Allow quick modifications</li>
+	<li>Support any embedded platforms</li>
+	<li>Easily extensible</li>
 </ul>
 {{% /blocks/feature %}}
 
-{{% blocks/feature %}}
+{{% blocks/feature icon="fa-bookmark" title="TL,DR;" %}}
 Cyanobyte is a specification that defines the types of hardware configurations and functions that
 a hardware peripheral can have.
 
@@ -40,7 +38,7 @@ With a standardized representation, a codegen tool can read the intermediate rep
 convert it into an executable driver in the language and platform of your choice.
 {{% /blocks/feature %}}
 
-{{% blocks/feature %}}
+{{% blocks/feature icon="fa-users" title="Open Spec" %}}
 Think of it as a machine-readable datasheet. By placing not just registers, but logic into a
 static configration, you don't need to worry about converting a temperature sensor into Celsius,
 or finding the exact register values to initialize your device. All the logic is handled for you.
