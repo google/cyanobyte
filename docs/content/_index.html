@@ -12,7 +12,7 @@ linkTitle = "Goldydocs"
 	<a class="btn btn-lg btn-secondary mr-3 mb-4" href="https://github.com/google/cyanobyte">
 		View Source <i class="fab fa-github ml-2 "></i>
 	</a>
-	<p class="lead mt-5">Get hardware drivers with 0 lines of code!</p>
+	<p class="lead mt-5">Automatically generate drivers without writing code!</p>
 	<div class="mx-auto mt-5">
 		{{< blocks/link-down color="info" >}}
 	</div>
@@ -20,7 +20,19 @@ linkTitle = "Goldydocs"
 {{< /blocks/cover >}}
 
 
-{{% blocks/lead color="primary" %}}
+{{< blocks/section color="primary" >}}
+{{% blocks/feature %}}
+Cyanobyte goals:
+
+<ul>
+	<li>Open source</li>
+	<li>Standarized</li>
+	<li>Support all embedded platforms</li>
+	<li>Allow quick modifications</li>
+</ul>
+{{% /blocks/feature %}}
+
+{{% blocks/feature %}}
 Cyanobyte is a specification that defines the types of hardware configurations and functions that
 a hardware peripheral can have.
 
@@ -32,11 +44,12 @@ static configration, you don't need to worry about converting a temperature sens
 or finding the exact register values to initialize your device. All the logic is handled for you.
 
 This is an open spec, and we're looking for more feedback.
-{{% /blocks/lead %}}
+{{% /blocks/feature %}}
+{{< /blocks/section >}}
 
 {{< blocks/section color="dark" >}}
 {{% blocks/feature icon="fa-lightbulb" title="Bright idea!" %}}
-Your LEDs just turn on. Now that's a bright idea.
+Just import the library and use an API. Now that's a bright idea.
 {{% /blocks/feature %}}
 
 
@@ -55,7 +68,110 @@ For announcement of latest features etc.
 
 {{< blocks/section >}}
 <div class="col">
-<h3 class="text-center">Peripherals are defined in yaml files. We've chosen yaml for the ease of readability.</h3>
+	<h2 class="text-center">
+		How it works
+	</h2>
+	<img src="blocks.png" />
+	<p>
+		Peripherals are defined in yaml files. We've chosen yaml for the ease
+		of readability. These peripheral specification files provide metadata,
+		along with list of registers, fields, and relevant computational operations.
+	</p>
+	<p>
+		Code generation tools can take these machine-readable files and interpret
+		them in many ways. They can be used to generate source code, documentation,
+		or other applications.
+	</p>
+	<p>
+		This project includes a series of platform template files based around
+		Python and Jinja2. Different groups may decide to use a different templating
+		engine, but should ensure it is compatible with the peripheral spec files.
+	</p>
+	<h4>Benefits</h4>
+	<ul>
+		<li>Datasheet errata can now be represented with a file diff</li>
+		<li>Reduce time in porting for embedded platforms</li>
+		<li>Continuous deployment systems can patch libraries straight from source</li>
+	</ul>
+</div>
+
+{{< /blocks/section >}}
+
+{{< blocks/section >}}
+<div class="col">
+	<h2 class="text-center">
+		Current Status
+	</h2>
+	At the moment Cyanobyte has support for I2C peripherals.
+
+	<h4>Next goals</h4>
+	<p>
+		<ul>
+			<li>Support ESP32</li>
+			<li>Investigate other I2C peripherals</li>
+		</ul>
+	</p>
+	<h4>Supported peripherals</h4>
+	<ul>
+		<li>ADS1015 A2D Converter</li>
+		<li>BMP280 Temp/Pressure Sensor</li>
+		<li>LSM303D IMU</li>
+		<li>MCP4725 D2A Converter</li>
+		<li>MCP9808 Temperature Sensor</li>
+		<li>TCS3472 Light Sensor</li>
+	</ul>
+	<h4>Supported platforms</h4>
+	<ul>
+		<li>Arduino</li>
+		<li>KubOS</li>
+		<li>Micropython</li>
+		<li>Pimoroni I2C Device</li>
+		<li>Raspberry Pi</li>
+		<li>Miscellaneous embedded C</li>
+		<li>CMSIS</li>
+		<li>LaTeX Datasheets</li>
+		<li>Markdown documentation</li>
+	</ul>
+
+	As Cyanobyte provides code generation support, there is
+	<a href="https://github.com/google/cyanobyte/tree/master/test/sampleData">
+	support for each peripheral on every platform</a>.
+</div>
+
+{{< /blocks/section >}}
+
+{{< blocks/section >}}
+<div class="col">
+	<h2 class="text-center">
+		Talks
+	</h2>
+	<ul>
+		<li>
+			<a href="https://www.youtube.com/watch?v=rIAjqPCg8Ek">
+				IEEE Sensor Application Symposium 2020
+			</a>
+		</li>
+	</ul>
+</div>
+
+{{< /blocks/section >}}
+
+{{< blocks/section >}}
+<div class="col">
+	<h2 class="text-center">
+		Help Wanted!
+	</h2>
+	Do you want to volunteer to help make this project come to life?
+	There are many technologies we need help with.
+	<ul>
+		<li>Several embedded platforms are written in C</li>
+		<li>Several embedded platforms are written in Python</li>
+		<li>Tests are written in Python</li>
+		<li>Documentation is written in Markdown</li>
+		<li>We're always exploring new avenues of exploration</li>
+	</ul>
+	Check out <a href="https://github.com/google/cyanobyte/issues">our issues list</a>
+	to see areas we may be exploring
 </div>
 
 {{< /blocks/section >}}
