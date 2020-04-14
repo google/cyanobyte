@@ -78,7 +78,9 @@ class {{info.title}} {
         {% endif %}
 
         void begin();
+        {% if not options or not options.esp32 or options.esp32.end != False %}
         void end();
+        {% endif %}
         {% for key,register in registers|dictsort -%}
         {% set length = register.length %}
         {% if (not 'readWrite' in register) or ('readWrite' in register and 'R' is in(register.readWrite)) %}

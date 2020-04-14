@@ -36,10 +36,14 @@ _TEMPLATES = dict(
     datasheet=["./templates/datasheet.tex"],
     doc=["./templates/doc.md"],
     embedded=["./templates/generic.c", "./templates/generic.h"],
+    esp32=["./templates/arduino.cpp", "./templates/arduino.h"],
     i2cdevice=["./templates/i2c-device.py"],
     kubos=["./templates/kubos.c", "./templates/kubos.h"],
     micropython=["./templates/micropython.py"],
     raspberrypi=["./templates/raspberrypi.py"],
+)
+_OPTIONS = dict(
+    esp32="./templates/esp32.options.yaml"
 )
 
 def camel_to_snake(camel_str):
@@ -57,7 +61,7 @@ def regex_replace(in_str, regex_pattern, regex_replacement):
     regex = re.compile(regex_pattern)
     return regex.sub(regex_replacement, in_str)
 
-def generate_source_file(template, peripheral, template_extension, output_dir):
+def generate_source_file(template, peripheral, options, template_extension, output_dir):
     """
     Generates a source file for a provided Jinja2 template.
 
@@ -73,6 +77,11 @@ def generate_source_file(template, peripheral, template_extension, output_dir):
         # Add additional metadata to the spec data
         peripheral_data["version"] = _VERSION
         peripheral_data["fileName"] = peripheral
+
+        if options != None:
+            options_file = open(options, "r")
+            options_data = load(options_file, Loader=Loader)
+            peripheral_data["options"] = options_data
 
         if _DEBUG:
             print(peripheral_data)
@@ -106,7 +115,7 @@ def generate_source_file(template, peripheral, template_extension, output_dir):
             peripheral_output_file.write(peripheral_gen)
 
 
-def generate_files_for_template(env, template_file, input_files, output_dir):
+def generate_files_for_template(env, template_file, input_files, options, output_dir):
     """
     Generates a series of source files for a provided template file.
 
@@ -131,7 +140,11 @@ def generate_files_for_template(env, template_file, input_files, output_dir):
 
         for peripheral in input_files:
             generate_source_file(
-                template_object, peripheral, template_extension, output_dir
+                template_object,
+                peripheral,
+                options,
+                template_extension,
+                output_dir
             )
 
 
@@ -140,10 +153,11 @@ def generate_files_for_template(env, template_file, input_files, output_dir):
 @click.option("-o", "--output", "output_dir", default="./build",
               show_default=True)
 @click.option("-d", "--debug", "debug", default=False)
+@click.option("-p", "--options", "options", default=None)
 @click.option("-c", "--clean", "clean", is_flag=True)
 @click.argument("input_files", type=click.Path(exists=True), nargs=-1)
 def gen(input_files, template_files=None, output_dir='./build', debug=False,
-        clean=False):
+        options=None, clean=False):
     """
     Takes command line arguments and generates source files for every
     peripheral to each template file.
@@ -178,12 +192,15 @@ def gen(input_files, template_files=None, output_dir='./build', debug=False,
     for template_file in template_files:
         # Check template registry
         if template_file in _TEMPLATES:
+            if template_file in _OPTIONS and options == None:
+                options = _OPTIONS[template_file]
             # This will be an array of filepaths
             for filepath in _TEMPLATES[template_file]:
                 generate_files_for_template(
                     env,
                     filepath,
                     input_files,
+                    options,
                     output_dir
                 )
         else:
@@ -191,6 +208,7 @@ def gen(input_files, template_files=None, output_dir='./build', debug=False,
                 env,
                 template_file,
                 input_files,
+                options,
                 output_dir
             )
 

@@ -18,11 +18,25 @@ import unittest
 import os
 
 class TestCodegen(unittest.TestCase):
-    def generatePeripheral(self, template):
+    def generatePeripheralTemplate(self, template):
         os.system('python3 src/codegen.py \
             -c \
             -o ./tmp/ \
             -t templates/' + template + '\
+            peripherals/ADS1015.yaml \
+            peripherals/BMP280.yaml \
+            peripherals/LSM303D.yaml \
+            peripherals/MCP4725.yaml \
+            peripherals/MCP9808.yaml \
+            peripherals/TCS3472.yaml \
+            peripherals/example.yaml \
+            > /dev/null')
+
+    def generatePeripheralTag(self, tag):
+        os.system('python3 src/codegen.py \
+            -c \
+            -o ./tmp/ \
+            -t ' + tag + '\
             peripherals/ADS1015.yaml \
             peripherals/BMP280.yaml \
             peripherals/LSM303D.yaml \
@@ -66,45 +80,47 @@ class TestCodegen(unittest.TestCase):
         print('\n')
 
     def test_Arduino(self):
-        self.generatePeripheral('arduino.cpp')
+        self.generatePeripheralTag('arduino')
         self.compareFiles('arduino', 'cpp')
-        self.generatePeripheral('arduino.h')
         self.compareFiles('arduino', 'h')
 
     def test_CMSIS_SVD(self):
-        self.generatePeripheral('cmsis.svd')
+        self.generatePeripheralTemplate('cmsis.svd')
         self.compareFiles('cmsis-svd', 'svd')
 
     def test_EmbeddedC(self):
-        self.generatePeripheral('generic.c')
+        self.generatePeripheralTag('embedded')
         self.compareFiles('embedded-c', 'c')
-        self.generatePeripheral('generic.h')
         self.compareFiles('embedded-c', 'h')
 
+    def test_Arduino(self):
+        self.generatePeripheralTag('esp32')
+        self.compareFiles('esp32', 'cpp')
+        self.compareFiles('esp32', 'h')
+
     def test_Micropython(self):
-        self.generatePeripheral('i2c-device.py')
+        self.generatePeripheralTag('i2cdevice')
         self.compareFiles('i2cdevice', 'py')
 
     def test_Kubos(self):
-        self.generatePeripheral('kubos.c')
+        self.generatePeripheralTag('kubos')
         self.compareFiles('kubos', 'c')
-        self.generatePeripheral('kubos.h')
         self.compareFiles('kubos', 'h')
 
     def test_LaTeX(self):
-        self.generatePeripheral('datasheet.tex')
+        self.generatePeripheralTag('datasheet')
         self.compareFiles('datasheet', 'tex')
     
     def test_Markdown(self):
-        self.generatePeripheral('doc.md')
+        self.generatePeripheralTag('doc')
         self.compareFiles('markdown', 'md')
 
     def test_Micropython(self):
-        self.generatePeripheral('micropython.py')
+        self.generatePeripheralTag('micropython')
         self.compareFiles('micropython', 'py')
 
     def test_RaspberryPi(self):
-        self.generatePeripheral('raspberrypi.py')
+        self.generatePeripheralTag('raspberrypi')
         self.compareFiles('raspberrypi', 'py')
 
 if __name__ == '__main__':
