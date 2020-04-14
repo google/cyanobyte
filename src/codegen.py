@@ -61,15 +61,16 @@ def regex_replace(in_str, regex_pattern, regex_replacement):
     regex = re.compile(regex_pattern)
     return regex.sub(regex_replacement, in_str)
 
-def generate_source_file(template, peripheral, options, template_extension, output_dir):
+def generate_source_file(template, peripheral, opts, template_ext, out_dir):
     """
     Generates a source file for a provided Jinja2 template.
 
     Args:
         template: A single file that is part of the template.
-        peripheral: A single CyanoByte document to generate.
-        template_extension: The file extension of the output.
-        output_dir: The directory to output the generated files.
+        peripheral: A single Cyanobyte document to generate.
+        options: A single options yaml file with additional optinos for merge
+        template_ext: The file extension of the output.
+        out_dir: The directory to output the generated files.
     """
     # Open peripheral file
     with open(peripheral, "r") as peripheral_file:
@@ -78,8 +79,8 @@ def generate_source_file(template, peripheral, options, template_extension, outp
         peripheral_data["version"] = _VERSION
         peripheral_data["fileName"] = peripheral
 
-        if options != None:
-            options_file = open(options, "r")
+        if opts is not None:
+            options_file = open(opts, "r")
             options_data = load(options_file, Loader=Loader)
             peripheral_data["options"] = options_data
 
@@ -97,7 +98,7 @@ def generate_source_file(template, peripheral, options, template_extension, outp
         else:
             package_path = ''
         output_file_path = os.path.join(
-            output_dir,
+            out_dir,
             os.path.normpath(package_path)
         )
         if not os.path.exists(output_file_path):
@@ -109,21 +110,22 @@ def generate_source_file(template, peripheral, options, template_extension, outp
 
         peripheral_output_path = os.path.join(
             output_file_path,
-            peripheral_data["info"]["title"] + template_extension
+            peripheral_data["info"]["title"] + template_ext
         )
         with open(peripheral_output_path, "x") as peripheral_output_file:
             peripheral_output_file.write(peripheral_gen)
 
 
-def generate_files_for_template(env, template_file, input_files, options, output_dir):
+def generate_files_for_template(env, template_file, in_files, opts, out_dir):
     """
     Generates a series of source files for a provided template file.
 
     Args:
         env: Jinja2 environment used during generation.
         template_file: A single file that is part of the template.
-        input_files: A list of CyanoByte documents to generate.
-        output_dir: The directory to output the generated files.
+        in_files: A list of Cyanobyte documents to generate.
+        opts: A single YAML file with additional options to apply
+        out_dir: The directory to output the generated files.
     """
     # Open template
     with open(template_file, "r") as template_contents:
@@ -131,20 +133,20 @@ def generate_files_for_template(env, template_file, input_files, options, output
         _, template_extension = os.path.splitext(template_file)
 
         # Create output dir
-        if not os.path.exists(output_dir):
+        if not os.path.exists(out_dir):
             try:
-                os.makedirs(output_dir)
+                os.makedirs(out_dir)
             except OSError:
-                print("Could not make output directory", output_dir)
+                print("Could not make output directory", out_dir)
                 sys.exit(1)
 
-        for peripheral in input_files:
+        for peripheral in in_files:
             generate_source_file(
                 template_object,
                 peripheral,
-                options,
+                opts,
                 template_extension,
-                output_dir
+                out_dir
             )
 
 
@@ -192,7 +194,7 @@ def gen(input_files, template_files=None, output_dir='./build', debug=False,
     for template_file in template_files:
         # Check template registry
         if template_file in _TEMPLATES:
-            if template_file in _OPTIONS and options == None:
+            if template_file in _OPTIONS and options is None:
                 options = _OPTIONS[template_file]
             # This will be an array of filepaths
             for filepath in _TEMPLATES[template_file]:
