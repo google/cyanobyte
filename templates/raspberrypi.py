@@ -143,7 +143,13 @@ class {{ info.title }}:
         {% if i2c.endian == 'little' %}
         data = _swap_endian(data, {{register.length}})
         {% endif %}
-        {% if register.length <= 8 %}
+        {% if register.length == 0 %}
+        self.bus.write_i2c_block_data(
+            self.device_address,
+            self.REGISTER_{{key.upper()}},
+            []
+        )
+        {% elif register.length <= 8 %}
         self.bus.write_byte_data(
             self.device_address,
             self.REGISTER_{{key.upper()}},

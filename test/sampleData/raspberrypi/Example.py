@@ -145,10 +145,10 @@ class Example:
         A dummy register that has no data
 
         """
-        self.bus.write_byte_data(
+        self.bus.write_i2c_block_data(
             self.device_address,
             self.REGISTER_REGISTERD,
-            data
+            []
         )
 
 
