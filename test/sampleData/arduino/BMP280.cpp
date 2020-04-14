@@ -74,7 +74,7 @@ uint16_t BMP280::readDigP1() {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 2) != 2) {
         return 0;
     }
 
@@ -97,7 +97,9 @@ int BMP280::writeDigP1(uint16_t data) {
         return 0;
     }
     return 1;
-}uint16_t BMP280::readDigP2() {
+}
+
+uint16_t BMP280::readDigP2() {
     uint8_t datum;
     uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -106,7 +108,7 @@ int BMP280::writeDigP1(uint16_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 2) != 2) {
         return 0;
     }
 
@@ -129,7 +131,9 @@ int BMP280::writeDigP2(uint16_t data) {
         return 0;
     }
     return 1;
-}uint16_t BMP280::readDigP3() {
+}
+
+uint16_t BMP280::readDigP3() {
     uint8_t datum;
     uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -138,7 +142,7 @@ int BMP280::writeDigP2(uint16_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 2) != 2) {
         return 0;
     }
 
@@ -161,7 +165,9 @@ int BMP280::writeDigP3(uint16_t data) {
         return 0;
     }
     return 1;
-}uint16_t BMP280::readDigP4() {
+}
+
+uint16_t BMP280::readDigP4() {
     uint8_t datum;
     uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -170,7 +176,7 @@ int BMP280::writeDigP3(uint16_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 2) != 2) {
         return 0;
     }
 
@@ -193,7 +199,9 @@ int BMP280::writeDigP4(uint16_t data) {
         return 0;
     }
     return 1;
-}uint16_t BMP280::readDigP5() {
+}
+
+uint16_t BMP280::readDigP5() {
     uint8_t datum;
     uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -202,7 +210,7 @@ int BMP280::writeDigP4(uint16_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 2) != 2) {
         return 0;
     }
 
@@ -225,7 +233,9 @@ int BMP280::writeDigP5(uint16_t data) {
         return 0;
     }
     return 1;
-}uint16_t BMP280::readDigP6() {
+}
+
+uint16_t BMP280::readDigP6() {
     uint8_t datum;
     uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -234,7 +244,7 @@ int BMP280::writeDigP5(uint16_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 2) != 2) {
         return 0;
     }
 
@@ -257,7 +267,9 @@ int BMP280::writeDigP6(uint16_t data) {
         return 0;
     }
     return 1;
-}uint16_t BMP280::readDigP7() {
+}
+
+uint16_t BMP280::readDigP7() {
     uint8_t datum;
     uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -266,7 +278,7 @@ int BMP280::writeDigP6(uint16_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 2) != 2) {
         return 0;
     }
 
@@ -289,7 +301,9 @@ int BMP280::writeDigP7(uint16_t data) {
         return 0;
     }
     return 1;
-}uint16_t BMP280::readDigP8() {
+}
+
+uint16_t BMP280::readDigP8() {
     uint8_t datum;
     uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -298,7 +312,7 @@ int BMP280::writeDigP7(uint16_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 2) != 2) {
         return 0;
     }
 
@@ -321,7 +335,9 @@ int BMP280::writeDigP8(uint16_t data) {
         return 0;
     }
     return 1;
-}uint16_t BMP280::readDigP9() {
+}
+
+uint16_t BMP280::readDigP9() {
     uint8_t datum;
     uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -330,7 +346,7 @@ int BMP280::writeDigP8(uint16_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 2) != 2) {
         return 0;
     }
 
@@ -353,7 +369,9 @@ int BMP280::writeDigP9(uint16_t data) {
         return 0;
     }
     return 1;
-}uint16_t BMP280::readDigT1() {
+}
+
+uint16_t BMP280::readDigT1() {
     uint8_t datum;
     uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -362,7 +380,7 @@ int BMP280::writeDigP9(uint16_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 2) != 2) {
         return 0;
     }
 
@@ -385,7 +403,9 @@ int BMP280::writeDigT1(uint16_t data) {
         return 0;
     }
     return 1;
-}uint16_t BMP280::readDigT2() {
+}
+
+uint16_t BMP280::readDigT2() {
     uint8_t datum;
     uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -394,7 +414,7 @@ int BMP280::writeDigT1(uint16_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 2) != 2) {
         return 0;
     }
 
@@ -417,7 +437,9 @@ int BMP280::writeDigT2(uint16_t data) {
         return 0;
     }
     return 1;
-}uint16_t BMP280::readDigT3() {
+}
+
+uint16_t BMP280::readDigT3() {
     uint8_t datum;
     uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -426,7 +448,7 @@ int BMP280::writeDigT2(uint16_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 2) != 2) {
         return 0;
     }
 
@@ -449,7 +471,9 @@ int BMP280::writeDigT3(uint16_t data) {
         return 0;
     }
     return 1;
-}uint8_t BMP280::readPressureLsb() {
+}
+
+uint8_t BMP280::readPressureLsb() {
     uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -458,7 +482,7 @@ int BMP280::writeDigT3(uint16_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 1) != 1) {
         return 0;
     }
 
@@ -478,7 +502,9 @@ int BMP280::writePressureLsb(uint8_t data) {
         return 0;
     }
     return 1;
-}uint8_t BMP280::readPressureMsb() {
+}
+
+uint8_t BMP280::readPressureMsb() {
     uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -487,7 +513,7 @@ int BMP280::writePressureLsb(uint8_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 1) != 1) {
         return 0;
     }
 
@@ -507,7 +533,9 @@ int BMP280::writePressureMsb(uint8_t data) {
         return 0;
     }
     return 1;
-}uint8_t BMP280::readPressureXlsb() {
+}
+
+uint8_t BMP280::readPressureXlsb() {
     uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -516,7 +544,7 @@ int BMP280::writePressureMsb(uint8_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 1) != 1) {
         return 0;
     }
 
@@ -536,7 +564,9 @@ int BMP280::writePressureXlsb(uint8_t data) {
         return 0;
     }
     return 1;
-}uint8_t BMP280::readTempLsb() {
+}
+
+uint8_t BMP280::readTempLsb() {
     uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -545,7 +575,7 @@ int BMP280::writePressureXlsb(uint8_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 1) != 1) {
         return 0;
     }
 
@@ -565,7 +595,9 @@ int BMP280::writeTempLsb(uint8_t data) {
         return 0;
     }
     return 1;
-}uint8_t BMP280::readTempMsb() {
+}
+
+uint8_t BMP280::readTempMsb() {
     uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -574,7 +606,7 @@ int BMP280::writeTempLsb(uint8_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 1) != 1) {
         return 0;
     }
 
@@ -594,7 +626,9 @@ int BMP280::writeTempMsb(uint8_t data) {
         return 0;
     }
     return 1;
-}uint8_t BMP280::readTempXlsb() {
+}
+
+uint8_t BMP280::readTempXlsb() {
     uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -603,7 +637,7 @@ int BMP280::writeTempMsb(uint8_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 1) != 1) {
         return 0;
     }
 
@@ -624,6 +658,8 @@ int BMP280::writeTempXlsb(uint8_t data) {
     }
     return 1;
 }
+
+
 
 float BMP280::pressureasHpa() {
     float hpa; // Variable declaration

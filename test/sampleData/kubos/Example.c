@@ -28,6 +28,7 @@
 #define REGISTER_REGISTERA 0
 #define REGISTER_REGISTERB 1
 #define REGISTER_REGISTERC 2
+#define REGISTER_REGISTERD 3
 
 static int i2c_bus = 0; // Pointer to bus
 
@@ -105,6 +106,24 @@ int example_writeRegisterC(uint32_t* data) {
     uint8_t buffer[4] = (data >> 8) & 0xFF;
     // First write our register address
     if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 5) != I2C_OK) {
+        return -1;
+    }
+    return 0;
+}int example_readRegisterD(uint8_t* val) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, 0) != I2C_OK) {
+        return -2;
+    }
+    return 0;
+}
+
+int example_writeRegisterD() {
+    // Put our data into uint8_t buffer
+    uint8_t buffer[1] = { (uint8_t) REGISTER_REGISTERD };
+    // First write our register address
+    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 1) != I2C_OK) {
         return -1;
     }
     return 0;

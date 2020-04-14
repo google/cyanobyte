@@ -118,7 +118,9 @@ int {{info.title.lower()}}_read{{key}}(
 
 {% if (not 'readWrite' in register) or ('readWrite' in register and 'W' is in(register.readWrite)) %}
 int {{info.title.lower()}}_write{{key}}(
+    {% if register.length > 0 %}
     {{cpp.numtype(register.length)}}* data,
+    {% endif %}
     int (*write)(uint8_t, uint8_t, {{cpp.numtype(register.length)}}*, uint8_t)
 ) {
     if (write(DEVICE_ADDRESS, REGISTER_{{key.upper()}}, data, {{length}}) != 0) {

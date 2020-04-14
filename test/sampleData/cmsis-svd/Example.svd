@@ -141,6 +141,17 @@ limitations under the License.
                     <dataType>uint32_t</dataType>
 
                 </register>
+                <register>
+                    <name>RegisterD</name>
+                    <description>A dummy register that has no data</description>
+                    <addressOffset>3</addressOffset>
+                    <size>0</size>
+                    <access>read-write</access>
+                    <resetValue>0x00</resetValue>
+                    <resetMask>0xFF</resetMask>
+                    <dataType>uint8_t</dataType>
+
+                </register>
             </registers>
         </peripheral>
     </peripherals>

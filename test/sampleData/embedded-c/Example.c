@@ -28,6 +28,7 @@
 #define REGISTER_REGISTERA 0
 #define REGISTER_REGISTERB 1
 #define REGISTER_REGISTERC 2
+#define REGISTER_REGISTERD 3
 
 // Provide an I2C connect function, return status
 static deviceAddress_t DEVICE_ADDRESS;
@@ -100,6 +101,26 @@ int example_writeRegisterC(
     int (*write)(uint8_t, uint8_t, uint32_t*, uint8_t)
 ) {
     if (write(DEVICE_ADDRESS, REGISTER_REGISTERC, data, 4) != 0) {
+        return -1;
+    }
+    return 0;
+}int example_readRegisterD(
+    uint8_t* val,
+    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
+) {
+    if (val == NULL) {
+        return -1; // Need to provide a valid value pointer
+    }
+    if (read(DEVICE_ADDRESS, REGISTER_REGISTERD, val, 0) != 0) {
+        return -2;
+    }
+    return 0;
+}
+
+int example_writeRegisterD(
+    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
+) {
+    if (write(DEVICE_ADDRESS, REGISTER_REGISTERD, data, 0) != 0) {
         return -1;
     }
     return 0;

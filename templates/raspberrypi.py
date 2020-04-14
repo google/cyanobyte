@@ -136,7 +136,7 @@ class {{ info.title }}:
     {% endif %}
 
     {% if (not 'readWrite' in register) or ('readWrite' in register and 'W' is in(register.readWrite)) %}
-    def set_{{key.lower()}}(self, data):
+    def set_{{key.lower()}}(self{% if register.length > 0 %}, data{% endif %}):
         """
 {{utils.pad_string("        ", register.description)}}
         """

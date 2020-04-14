@@ -48,6 +48,7 @@ class Example:
     REGISTER_REGISTERA = 0
     REGISTER_REGISTERB = 1
     REGISTER_REGISTERC = 2
+    REGISTER_REGISTERD = 3
 
     def __init__(self, address):
         # Initialize connection to peripheral
@@ -127,6 +128,27 @@ class Example:
             self.device_address,
             self.REGISTER_REGISTERC,
             buffer
+        )
+    def get_registerd(self):
+        """
+        A dummy register that has no data
+
+        """
+        val = self.bus.read_byte_data(
+            self.device_address,
+            self.REGISTER_REGISTERD
+        )
+        return val
+
+    def set_registerd(self):
+        """
+        A dummy register that has no data
+
+        """
+        self.bus.write_byte_data(
+            self.device_address,
+            self.REGISTER_REGISTERD,
+            data
         )
 
 

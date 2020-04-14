@@ -42,6 +42,7 @@ class Example:
     REGISTER_REGISTERA = 0
     REGISTER_REGISTERB = 1
     REGISTER_REGISTERC = 2
+    REGISTER_REGISTERD = 3
 
     def __init__(self, i2c, address):
         # Initialize connection to peripheral
@@ -139,6 +140,32 @@ class Example:
             self.REGISTER_REGISTERC,
             buffer,
             addrsize=32
+        )
+    def get_registerd(self):
+        """
+        A dummy register that has no data
+
+        """
+        val = self.i2c.readfrom_mem(
+            self.device_address,
+            self.REGISTER_REGISTERD,
+            0,
+            addrsize=0
+        )
+        val = 0
+        return val
+
+    def set_registerd(self):
+        """
+        A dummy register that has no data
+
+        """
+        buffer = []
+        self.i2c.writeto_mem(
+            self.device_address,
+            self.REGISTER_REGISTERD,
+            buffer,
+            addrsize=0
         )
 
 

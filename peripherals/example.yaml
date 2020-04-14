@@ -52,6 +52,11 @@ registers:
     length: 32
     title: Third example
     description: A 32-bit register
+  RegisterD:
+    address: 0x03
+    length: 0
+    title: Fourth example
+    description: A dummy register that has no data
 
 fields:
   FieldA:

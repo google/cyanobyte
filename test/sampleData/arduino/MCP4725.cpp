@@ -55,7 +55,7 @@ uint16_t MCP4725::readEEPROM() {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 12) != 12) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 1) != 1) {
         return 0;
     }
 
@@ -75,7 +75,9 @@ int MCP4725::writeEEPROM(uint16_t data) {
         return 0;
     }
     return 1;
-}uint16_t MCP4725::readVOut() {
+}
+
+uint16_t MCP4725::readVOut() {
     uint8_t datum;
     uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -84,7 +86,7 @@ int MCP4725::writeEEPROM(uint16_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 12) != 12) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 1) != 1) {
         return 0;
     }
 
@@ -105,6 +107,8 @@ int MCP4725::writeVOut(uint16_t data) {
     }
     return 1;
 }
+
+
 uint16_t MCP4725::getdigitalOut() {
     // Read register data
     // '#/registers/EEPROM' > 'EEPROM'

@@ -92,8 +92,9 @@ class {{info.title}} {
         /**
 {{utils.pad_string("         * ", register.description)}}
          */
-        int write{{key}}({{cpp.numtype(length)}} data);{% endif %}
-        {%- endfor %}
+        int write{{key}}({% if length > 0 %}{{cpp.numtype(length)}} data{% endif %});{% endif %}
+
+        {% endfor %}
         {% if fields %}
         {% for key,field in fields|dictsort %}
         {% if 'R' is in(field.readWrite) %}

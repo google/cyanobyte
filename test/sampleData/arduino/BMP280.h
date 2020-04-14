@@ -42,7 +42,8 @@ class BMP280 {
          * Used for Pascals conversion
 
          */
-        int writeDigP1(uint16_t data);        /**
+        int writeDigP1(uint16_t data);
+        /**
          * Used for Pascals conversion
 
          */
@@ -52,7 +53,8 @@ class BMP280 {
          * Used for Pascals conversion
 
          */
-        int writeDigP2(uint16_t data);        /**
+        int writeDigP2(uint16_t data);
+        /**
          * Used for Pascals conversion
 
          */
@@ -62,7 +64,8 @@ class BMP280 {
          * Used for Pascals conversion
 
          */
-        int writeDigP3(uint16_t data);        /**
+        int writeDigP3(uint16_t data);
+        /**
          * Used for Pascals conversion
 
          */
@@ -72,7 +75,8 @@ class BMP280 {
          * Used for Pascals conversion
 
          */
-        int writeDigP4(uint16_t data);        /**
+        int writeDigP4(uint16_t data);
+        /**
          * Used for Pascals conversion
 
          */
@@ -82,7 +86,8 @@ class BMP280 {
          * Used for Pascals conversion
 
          */
-        int writeDigP5(uint16_t data);        /**
+        int writeDigP5(uint16_t data);
+        /**
          * Used for Pascals conversion
 
          */
@@ -92,7 +97,8 @@ class BMP280 {
          * Used for Pascals conversion
 
          */
-        int writeDigP6(uint16_t data);        /**
+        int writeDigP6(uint16_t data);
+        /**
          * Used for Pascals conversion
 
          */
@@ -102,7 +108,8 @@ class BMP280 {
          * Used for Pascals conversion
 
          */
-        int writeDigP7(uint16_t data);        /**
+        int writeDigP7(uint16_t data);
+        /**
          * Used for Pascals conversion
 
          */
@@ -112,7 +119,8 @@ class BMP280 {
          * Used for Pascals conversion
 
          */
-        int writeDigP8(uint16_t data);        /**
+        int writeDigP8(uint16_t data);
+        /**
          * Used for Pascals conversion
 
          */
@@ -122,7 +130,8 @@ class BMP280 {
          * Used for Pascals conversion
 
          */
-        int writeDigP9(uint16_t data);        /**
+        int writeDigP9(uint16_t data);
+        /**
          * Used for Celcius conversion
 
          */
@@ -132,7 +141,8 @@ class BMP280 {
          * Used for Celcius conversion
 
          */
-        int writeDigT1(uint16_t data);        /**
+        int writeDigT1(uint16_t data);
+        /**
          * Used for Celcius conversion
 
          */
@@ -142,7 +152,8 @@ class BMP280 {
          * Used for Celcius conversion
 
          */
-        int writeDigT2(uint16_t data);        /**
+        int writeDigT2(uint16_t data);
+        /**
          * Used for Celcius conversion
 
          */
@@ -152,7 +163,8 @@ class BMP280 {
          * Used for Celcius conversion
 
          */
-        int writeDigT3(uint16_t data);        /**
+        int writeDigT3(uint16_t data);
+        /**
          * Part 2 of Pressure
 
          */
@@ -162,7 +174,8 @@ class BMP280 {
          * Part 2 of Pressure
 
          */
-        int writePressureLsb(uint8_t data);        /**
+        int writePressureLsb(uint8_t data);
+        /**
          * Part 1 of Pressure
 
          */
@@ -172,7 +185,8 @@ class BMP280 {
          * Part 1 of Pressure
 
          */
-        int writePressureMsb(uint8_t data);        /**
+        int writePressureMsb(uint8_t data);
+        /**
          * Part 3 of Pressure
 
          */
@@ -182,7 +196,8 @@ class BMP280 {
          * Part 3 of Pressure
 
          */
-        int writePressureXlsb(uint8_t data);        /**
+        int writePressureXlsb(uint8_t data);
+        /**
          * Part 2 of temperature
 
          */
@@ -192,7 +207,8 @@ class BMP280 {
          * Part 2 of temperature
 
          */
-        int writeTempLsb(uint8_t data);        /**
+        int writeTempLsb(uint8_t data);
+        /**
          * Part 1 of temperature
 
          */
@@ -202,7 +218,8 @@ class BMP280 {
          * Part 1 of temperature
 
          */
-        int writeTempMsb(uint8_t data);        /**
+        int writeTempMsb(uint8_t data);
+        /**
          * Final part of temperature
 
          */
@@ -213,6 +230,7 @@ class BMP280 {
 
          */
         int writeTempXlsb(uint8_t data);
+
         /**
          * Reads the atmospheric pressure
 

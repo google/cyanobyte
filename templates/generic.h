@@ -93,7 +93,9 @@ int {{info.title.lower()}}_read{{key}}(
 {{utils.pad_string(" * ", register.description)}}
  */
 int {{info.title.lower()}}_write{{key}}(
+    {% if register.length > 0 %}
     {{cpp.numtype(register.length)}}* data,
+    {% endif %}
     int (*read)(uint8_t, uint8_t, {{cpp.numtype(register.length)}}*, uint8_t),
     int (*write)(uint8_t, uint8_t, {{cpp.numtype(register.length)}}*, uint8_t)
 );

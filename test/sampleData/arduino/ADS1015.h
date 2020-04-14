@@ -89,7 +89,8 @@ class ADS1015 {
          * Describes the specifics of the sensing implementation
 
          */
-        int writeConfig(uint16_t data);        /**
+        int writeConfig(uint16_t data);
+        /**
          * Conversion register contains the result of the last conversion
 
          */
@@ -99,7 +100,8 @@ class ADS1015 {
          * Conversion register contains the result of the last conversion
 
          */
-        int writeConversion(uint16_t data);        /**
+        int writeConversion(uint16_t data);
+        /**
          * This bit controls the operating mode
 
          */
