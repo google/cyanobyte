@@ -116,6 +116,17 @@ class Example {
         int setFieldC(uint8_t data);
 
         /**
+         * Enables features on device
+
+         */
+        char _lifecycleBegin();
+        /**
+         * Enables features on device
+
+         */
+        char _lifecycleEnd();
+
+        /**
          * Computes and returns
 
          */

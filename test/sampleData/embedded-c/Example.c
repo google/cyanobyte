@@ -202,6 +202,32 @@ int example_set_fieldc(
     return 0;
 }
 
+void example__lifecycle_begin(
+    char* val,
+
+) {
+    char output; // Variable declaration
+
+
+    output = 1
+
+
+    *val = output;
+}
+
+void example__lifecycle_end(
+    char* val,
+
+) {
+    char output; // Variable declaration
+
+
+    output = 1
+
+
+    *val = output;
+}
+
 void example_return_array(
     void* val,
     int (*write)(uint8_t, uint8_t, int*, uint8_t)

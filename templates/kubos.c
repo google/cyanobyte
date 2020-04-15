@@ -89,8 +89,8 @@ int {{info.title.lower()}}_init(deviceAddress_t address, char* bus_name) {
     if (k_i2c_init(&bus_name, &i2c_bus) != I2C_OK) {
         return -1;
     }
-    {% if 'init' in functions and 'onCreate' in functions.init.computed %}
-    {{info.title.lower()}}_init_oncreate();
+    {% if '_lifecycle' in functions and 'Begin' in functions._lifecycle.computed %}
+    {{info.title.lower()}}__lifecycle_begin();
     {% endif %}
 }
 {% else %}
@@ -99,8 +99,8 @@ int {{info.title.lower()}}_init(char* bus_name) {
     if (k_i2c_init(&bus_name, &i2c_bus) != I2C_OK) {
         return -1;
     }
-    {% if 'init' in functions and 'onCreate' in functions.init.computed %}
-    {{info.title.lower()}}_init_oncreate();
+    {% if '_lifecycle' in functions and 'Begin' in functions._lifecycle.computed %}
+    {{info.title.lower()}}__lifecycle_begin();
     {% endif %}
 }
 {% endif %}

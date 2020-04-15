@@ -38,10 +38,12 @@ Example::Example(TwoWire& wire, deviceAddress_t address) :
 
 void Example::begin() {
     _wire->begin();
+    _lifecycleBegin();
 }
 
 void Example::end() {
     _wire->end();
+    _lifecycleEnd();
 }
 
 uint8_t Example::readRegisterA() {
@@ -217,6 +219,26 @@ int Example::setFieldC(uint8_t data) {
     uint8_t register_data = readRegisterA();
     register_data = register_data | data;
     return writeRegisterA(register_data);
+}
+
+char Example::_lifecycleBegin() {
+    char output; // Variable declaration
+
+
+    output = 1;
+
+
+    return output;
+}
+
+char Example::_lifecycleEnd() {
+    char output; // Variable declaration
+
+
+    output = 1;
+
+
+    return output;
 }
 
 void Example::ReturnArray(short * returnArray) {

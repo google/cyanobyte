@@ -43,7 +43,7 @@ class TCS3472:
     def __init__(self, i2c):
         # Initialize connection to peripheral
         self.i2c = i2c
-        self.init_oncreate()
+        self._lifecycle_begin()
 
     def get_blue(self):
         """
@@ -161,7 +161,7 @@ class TCS3472:
         register_data = self.get_enable()
         register_data = register_data | data
         self.set_enable(register_data)
-    def init_oncreate(self):
+    def _lifecycle_begin(self):
         """
         Enables features on device
 

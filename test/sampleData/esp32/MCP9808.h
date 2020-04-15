@@ -93,7 +93,8 @@ class MCP9808 {
          * Output mode) are user-configurable.
 
          */
-        int writeconfiguration(uint16_t data);        /**
+        int writeconfiguration(uint16_t data);
+        /**
          * This bit can not be altered when either of the Lock bits are set
          * (bit 6 and bit 7). This bit can be programmed in Shutdown mode.
 

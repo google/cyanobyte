@@ -41,7 +41,7 @@ int tcs3472_init(char* bus_name) {
     if (k_i2c_init(&bus_name, &i2c_bus) != I2C_OK) {
         return -1;
     }
-    tcs3472_init_oncreate();
+    tcs3472__lifecycle_begin();
 }
 
 void tcs3472_terminate() {
@@ -136,7 +136,7 @@ int tcs3472_set_init(uint8_t* data) {
     return 0;
 }
 
-void tcs3472_init_oncreate() {
+void tcs3472__lifecycle_begin() {
     char enables; // Variable declaration
 
 

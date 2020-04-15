@@ -93,8 +93,8 @@ class {{ info.title }}:
         # Initialize connection to peripheral
         self.bus = smbus.SMBus(1)
     {% endif %}
-        {% if 'init' in functions and 'onCreate' in functions.init.computed %}
-        self.init_oncreate()
+        {% if '_lifecycle' in functions and 'Begin' in functions._lifecycle.computed %}
+        self._lifecycle_begin()
         {% endif %}
 
     {% for key,register in registers|dictsort %}

@@ -90,14 +90,17 @@ static short _sign(short val, char length) {
 
 void {{info.title}}::begin() {
     _wire->begin();
-    {% if 'init' in functions and 'onCreate' in functions.init.computed %}
-    initonCreate();
+    {% if '_lifecycle' in functions and 'Begin' in functions._lifecycle.computed %}
+    _lifecycleBegin();
     {% endif %}
 }
 
 {% if not options or not options.esp32 or options.esp32.end != False %}
 void {{info.title}}::end() {
     _wire->end();
+    {% if '_lifecycle' in functions and 'End' in functions._lifecycle.computed %}
+    _lifecycleEnd();
+    {% endif %}
 }
 {% endif %}
 

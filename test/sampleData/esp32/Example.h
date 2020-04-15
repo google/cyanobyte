@@ -59,7 +59,8 @@ class Example {
          * An 8-bit register
 
          */
-        int writeRegisterA(uint8_t data);        /**
+        int writeRegisterA(uint8_t data);
+        /**
          * A 16-bit register
 
          */
@@ -69,7 +70,8 @@ class Example {
          * A 16-bit register
 
          */
-        int writeRegisterB(uint16_t data);        /**
+        int writeRegisterB(uint16_t data);
+        /**
          * A 32-bit register
 
          */
@@ -79,7 +81,19 @@ class Example {
          * A 32-bit register
 
          */
-        int writeRegisterC(uint32_t data);        /**
+        int writeRegisterC(uint32_t data);
+        /**
+         * A dummy register that has no data
+
+         */
+        uint8_t readRegisterD();
+
+        /**
+         * A dummy register that has no data
+
+         */
+        int writeRegisterD();
+        /**
          * This is a few bits
 
          */
@@ -99,6 +113,17 @@ class Example {
 
          */
         int setFieldC(uint8_t data);
+
+        /**
+         * Enables features on device
+
+         */
+        char _lifecycleBegin();
+        /**
+         * Enables features on device
+
+         */
+        char _lifecycleEnd();
 
         /**
          * Computes and returns

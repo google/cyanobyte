@@ -112,7 +112,7 @@ int tcs3472_set_init(
  * Enables features on device
 
 */
-void tcs3472_init_oncreate(
+void tcs3472__lifecycle_begin(
     int (*write)(uint8_t, uint8_t, int*, uint8_t)
 );
 

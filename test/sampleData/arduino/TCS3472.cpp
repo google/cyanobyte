@@ -39,7 +39,7 @@ TCS3472::TCS3472(TwoWire& wire) :
 
 void TCS3472::begin() {
     _wire->begin();
-    initonCreate();
+    _lifecycleBegin();
 }
 
 void TCS3472::end() {
@@ -183,7 +183,7 @@ int TCS3472::setinit(uint8_t data) {
     return writeenable(register_data);
 }
 
-void TCS3472::initonCreate() {
+void TCS3472::_lifecycleBegin() {
     char enables; // Variable declaration
 
 

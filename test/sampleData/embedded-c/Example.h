@@ -151,6 +151,23 @@ int example_set_fieldc(
 );
 
 /**
+ * Enables features on device
+
+*/
+void example__lifecycle_begin(
+    char* val,
+
+);
+/**
+ * Enables features on device
+
+*/
+void example__lifecycle_end(
+    char* val,
+
+);
+
+/**
  * Computes and returns
 
 */

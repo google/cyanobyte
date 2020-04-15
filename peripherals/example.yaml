@@ -142,3 +142,20 @@ functions:
               - 1024
               - 1024
           - send: summation
+  _lifecycle:
+    title: Code to run when device class is constructed
+    description: Enables features on device
+    computed:
+      Begin:
+        variables:
+          output: int8
+        logic:
+          - output: = 1
+        return: output
+      End:
+        variables:
+          output: int8
+        logic:
+          - output: = 1
+        return: output
+
