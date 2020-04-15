@@ -95,9 +95,11 @@ void {{info.title}}::begin() {
     {% endif %}
 }
 
+{% if not options or not options.esp32 or options.esp32.end != False %}
 void {{info.title}}::end() {
     _wire->end();
 }
+{% endif %}
 
 {% for key,register in registers|dictsort -%}
 {% set length = register.length %}
