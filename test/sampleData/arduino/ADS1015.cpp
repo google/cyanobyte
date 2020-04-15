@@ -55,7 +55,7 @@ uint16_t ADS1015::readConfig() {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 2) != 2) {
         return 0;
     }
 
@@ -78,7 +78,9 @@ int ADS1015::writeConfig(uint16_t data) {
         return 0;
     }
     return 1;
-}uint16_t ADS1015::readConversion() {
+}
+
+uint16_t ADS1015::readConversion() {
     uint8_t datum;
     uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -87,7 +89,7 @@ int ADS1015::writeConfig(uint16_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 2) != 2) {
         return 0;
     }
 
@@ -111,6 +113,8 @@ int ADS1015::writeConversion(uint16_t data) {
     }
     return 1;
 }
+
+
 
 int ADS1015::setDeviceOperatingMode(uint8_t data) {
     // Bitshift value

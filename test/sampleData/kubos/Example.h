@@ -78,7 +78,17 @@ int example_readRegisterC(uint32_t* val);
  * A 32-bit register
 
  */
-int example_writeRegisterC(uint32_t* data);
+int example_writeRegisterC(uint32_t* data);/**
+  * A dummy register that has no data
+
+*/
+int example_readRegisterD(uint8_t* val);
+
+/**
+ * A dummy register that has no data
+
+ */
+int example_writeRegisterD();
 /**
  * This is a few bits
 

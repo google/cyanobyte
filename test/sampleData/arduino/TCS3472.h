@@ -47,11 +47,13 @@ class TCS3472 {
          */
         uint16_t readblue();
 
+
         /**
          * This is the ambient amount of detected light.
 
          */
         uint16_t readclear();
+
 
         /**
          * Enable specific components of the peripheral
@@ -63,17 +65,20 @@ class TCS3472 {
          * Enable specific components of the peripheral
 
          */
-        int writeenable(uint8_t data);        /**
+        int writeenable(uint8_t data);
+        /**
          * Green light as an int. Divide by ambient light to get scaled number.
 
          */
         uint16_t readgreen();
+
 
         /**
          * Red light as an int. Divide by ambient light to get scaled number.
 
          */
         uint16_t readred();
+
 
         /**
          * Enable RGBC and Power

@@ -99,6 +99,23 @@ int example_writeRegisterC(
     int (*write)(uint8_t, uint8_t, uint32_t*, uint8_t)
 );
 /**
+  * A dummy register that has no data
+
+*/
+int example_readRegisterD(
+    uint8_t* val,
+    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
+);
+
+/**
+ * A dummy register that has no data
+
+ */
+int example_writeRegisterD(
+    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
+    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
+);
+/**
  * This is a few bits
 
  */

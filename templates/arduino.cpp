@@ -112,7 +112,7 @@ void {{info.title}}::end() {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, {{length}}) != {{length}}) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, {{bytes}}) != {{bytes}}) {
         return 0;
     }
 
@@ -127,7 +127,7 @@ void {{info.title}}::end() {
 {% endif %}
 
 {% if (not 'readWrite' in register) or ('readWrite' in register and 'W' is in(register.readWrite)) %}
-int {{info.title}}::write{{key}}({{cpp.numtype(length)}} data) {
+int {{info.title}}::write{{key}}({% if length > 0 %}{{cpp.numtype(length)}} data{% endif %}) {
     _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
     uint8_t buffer[{{bytes + 1}}] = { (uint8_t) REGISTER_{{key.upper()}} };
@@ -139,9 +139,10 @@ int {{info.title}}::write{{key}}({{cpp.numtype(length)}} data) {
         return 0;
     }
     return 1;
-}{% endif %}
+}
+{% endif %}
 
-{%- endfor %}
+{% endfor %}
 
 {% if fields %}
 {% for key,field in fields|dictsort %}

@@ -124,7 +124,7 @@ int {{info.title.lower()}}_read{{key}}({{cpp.numtype(register.length)}}* val) {
 {% endif %}
 
 {% if (not 'readWrite' in register) or ('readWrite' in register and 'W' is in(register.readWrite)) %}
-int {{info.title.lower()}}_write{{key}}({{cpp.numtype(register.length)}}* data) {
+int {{info.title.lower()}}_write{{key}}({% if register.length > 0 %}{{cpp.numtype(register.length)}}* data{% endif %}) {
     // Put our data into uint8_t buffer
     uint8_t buffer[{{length + 1}}] = { (uint8_t) REGISTER_{{key.upper()}} };
     {% for n in range(length) %}

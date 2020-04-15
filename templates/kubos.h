@@ -90,7 +90,7 @@ int {{info.title.lower()}}_read{{key}}({{cpp.numtype(register.length)}}* val);
 /**
 {{utils.pad_string(" * ", register.description)}}
  */
-int {{info.title.lower()}}_write{{key}}({{cpp.numtype(register.length)}}* data);{% endif %}
+int {{info.title.lower()}}_write{{key}}({% if register.length > 0 %}{{cpp.numtype(register.length)}}* data{% endif %});{% endif %}
 {%- endfor %}
 
 {% if fields %}

@@ -17,6 +17,9 @@ A 16-bit register
 ### Third example
 A 32-bit register
 
+### Fourth example
+A dummy register that has no data
+
 ## License
 Licensed under [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html#licenseText).
 
