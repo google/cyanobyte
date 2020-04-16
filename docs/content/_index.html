@@ -103,16 +103,10 @@ For announcement of latest features etc.
 	<h2 class="text-center">
 		Current Status
 	</h2>
-	At the moment Cyanobyte has support for I2C peripherals.
+	At the moment Cyanobyte has support for I2C peripherals across many
+	peripherals and embedded platforms.
 
-	<h4>Next goals</h4>
-	<p>
-		<ul>
-			<li>Support ESP32</li>
-			<li>Investigate other I2C peripherals</li>
-		</ul>
-	</p>
-	<h4>Supported peripherals</h4>
+	{{% blocks/feature icon="fab fa-memory" title="Supported Peripherals" %}}
 	<ul>
 		<li>ADS1015 A2D Converter</li>
 		<li>BMP280 Temp/Pressure Sensor</li>
@@ -121,9 +115,12 @@ For announcement of latest features etc.
 		<li>MCP9808 Temperature Sensor</li>
 		<li>TCS3472 Light Sensor</li>
 	</ul>
-	<h4>Supported platforms</h4>
+	{{% /blocks/feature %}}
+
+	{{% blocks/feature icon="fab fa-microchip" title="Embedded Platforms" %}}
 	<ul>
 		<li>Arduino</li>
+		<li>ESP32</li>
 		<li>KubOS</li>
 		<li>Micropython</li>
 		<li>Pimoroni I2C Device</li>
@@ -133,6 +130,14 @@ For announcement of latest features etc.
 		<li>LaTeX Datasheets</li>
 		<li>Markdown documentation</li>
 	</ul>
+	{{% /blocks/feature %}}
+
+	{{% blocks/feature icon="fab fa-clipboard-list" title="Next Goals" %}}
+	<ul>
+		<li>Support ESP32</li>
+		<li>Investigate other I2C peripherals</li>
+	</ul>
+	{{% /blocks/feature %}}
 
 	As Cyanobyte provides code generation support, there is
 	<a href="https://github.com/google/cyanobyte/tree/master/test/sampleData">
