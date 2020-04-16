@@ -27,6 +27,7 @@ info:
   license:
     name: Apache-2.0
   version: 0.1.0
+  'x-foo': 'x-bar'
 
 i2c:
   addressType: 7-bit
@@ -162,3 +163,5 @@ functions:
           - send: output
         return: output
 
+extensions:
+  foo: bar
