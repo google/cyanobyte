@@ -90,7 +90,7 @@ int tcs3472_set_init(uint8_t* data);
  * Enables features on device
 
 */
-void tcs3472_init_oncreate();
+void tcs3472__lifecycle_begin();
 
 
 #endif

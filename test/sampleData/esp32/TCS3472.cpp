@@ -39,7 +39,7 @@ TCS3472::TCS3472(TwoWire& wire) :
 
 void TCS3472::begin() {
     _wire->begin();
-    initonCreate();
+    _lifecycleBegin();
 }
 
 
@@ -52,7 +52,7 @@ uint16_t TCS3472::readblue() {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 2) != 2) {
         return 0;
     }
 
@@ -63,6 +63,7 @@ uint16_t TCS3472::readblue() {
 
     return value;
 }
+
 
 uint16_t TCS3472::readclear() {
     uint8_t datum;
@@ -73,7 +74,7 @@ uint16_t TCS3472::readclear() {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 2) != 2) {
         return 0;
     }
 
@@ -85,6 +86,7 @@ uint16_t TCS3472::readclear() {
     return value;
 }
 
+
 uint8_t TCS3472::readenable() {
     uint8_t datum;
     uint8_t value;
@@ -94,7 +96,7 @@ uint8_t TCS3472::readenable() {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 1) != 1) {
         return 0;
     }
 
@@ -114,7 +116,9 @@ int TCS3472::writeenable(uint8_t data) {
         return 0;
     }
     return 1;
-}uint16_t TCS3472::readgreen() {
+}
+
+uint16_t TCS3472::readgreen() {
     uint8_t datum;
     uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -123,7 +127,7 @@ int TCS3472::writeenable(uint8_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 2) != 2) {
         return 0;
     }
 
@@ -134,6 +138,7 @@ int TCS3472::writeenable(uint8_t data) {
 
     return value;
 }
+
 
 uint16_t TCS3472::readred() {
     uint8_t datum;
@@ -144,7 +149,7 @@ uint16_t TCS3472::readred() {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 2) != 2) {
         return 0;
     }
 
@@ -155,6 +160,7 @@ uint16_t TCS3472::readred() {
 
     return value;
 }
+
 
 
 uint8_t TCS3472::getinit() {
@@ -174,7 +180,7 @@ int TCS3472::setinit(uint8_t data) {
     return writeenable(register_data);
 }
 
-void TCS3472::initonCreate() {
+void TCS3472::_lifecycleBegin() {
     char enables; // Variable declaration
 
 

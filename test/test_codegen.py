@@ -18,6 +18,8 @@ import unittest
 import os
 
 class TestCodegen(unittest.TestCase):
+    maxDiff = None
+
     def generatePeripheralTemplate(self, template):
         os.system('python3 src/codegen.py \
             -c \

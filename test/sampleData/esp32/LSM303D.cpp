@@ -58,7 +58,7 @@ uint8_t LSM303D::readAccelerometerX_High() {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 1) != 1) {
         return 0;
     }
 
@@ -78,7 +78,9 @@ int LSM303D::writeAccelerometerX_High(uint8_t data) {
         return 0;
     }
     return 1;
-}uint8_t LSM303D::readAccelerometerX_Low() {
+}
+
+uint8_t LSM303D::readAccelerometerX_Low() {
     uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -87,7 +89,7 @@ int LSM303D::writeAccelerometerX_High(uint8_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 1) != 1) {
         return 0;
     }
 
@@ -107,7 +109,9 @@ int LSM303D::writeAccelerometerX_Low(uint8_t data) {
         return 0;
     }
     return 1;
-}uint8_t LSM303D::readAccelerometerY_High() {
+}
+
+uint8_t LSM303D::readAccelerometerY_High() {
     uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -116,7 +120,7 @@ int LSM303D::writeAccelerometerX_Low(uint8_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 1) != 1) {
         return 0;
     }
 
@@ -136,7 +140,9 @@ int LSM303D::writeAccelerometerY_High(uint8_t data) {
         return 0;
     }
     return 1;
-}uint8_t LSM303D::readAccelerometerY_Low() {
+}
+
+uint8_t LSM303D::readAccelerometerY_Low() {
     uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -145,7 +151,7 @@ int LSM303D::writeAccelerometerY_High(uint8_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 1) != 1) {
         return 0;
     }
 
@@ -165,7 +171,9 @@ int LSM303D::writeAccelerometerY_Low(uint8_t data) {
         return 0;
     }
     return 1;
-}uint8_t LSM303D::readAccelerometerZ_High() {
+}
+
+uint8_t LSM303D::readAccelerometerZ_High() {
     uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -174,7 +182,7 @@ int LSM303D::writeAccelerometerY_Low(uint8_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 1) != 1) {
         return 0;
     }
 
@@ -194,7 +202,9 @@ int LSM303D::writeAccelerometerZ_High(uint8_t data) {
         return 0;
     }
     return 1;
-}uint8_t LSM303D::readAccelerometerZ_Low() {
+}
+
+uint8_t LSM303D::readAccelerometerZ_Low() {
     uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -203,7 +213,7 @@ int LSM303D::writeAccelerometerZ_High(uint8_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 1) != 1) {
         return 0;
     }
 
@@ -223,7 +233,9 @@ int LSM303D::writeAccelerometerZ_Low(uint8_t data) {
         return 0;
     }
     return 1;
-}uint8_t LSM303D::readMagnetometerX_High() {
+}
+
+uint8_t LSM303D::readMagnetometerX_High() {
     uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -232,7 +244,7 @@ int LSM303D::writeAccelerometerZ_Low(uint8_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 1) != 1) {
         return 0;
     }
 
@@ -252,7 +264,9 @@ int LSM303D::writeMagnetometerX_High(uint8_t data) {
         return 0;
     }
     return 1;
-}uint8_t LSM303D::readMagnetometerX_Low() {
+}
+
+uint8_t LSM303D::readMagnetometerX_Low() {
     uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -261,7 +275,7 @@ int LSM303D::writeMagnetometerX_High(uint8_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 1) != 1) {
         return 0;
     }
 
@@ -281,7 +295,9 @@ int LSM303D::writeMagnetometerX_Low(uint8_t data) {
         return 0;
     }
     return 1;
-}uint8_t LSM303D::readMagnetometerY_High() {
+}
+
+uint8_t LSM303D::readMagnetometerY_High() {
     uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -290,7 +306,7 @@ int LSM303D::writeMagnetometerX_Low(uint8_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 1) != 1) {
         return 0;
     }
 
@@ -310,7 +326,9 @@ int LSM303D::writeMagnetometerY_High(uint8_t data) {
         return 0;
     }
     return 1;
-}uint8_t LSM303D::readMagnetometerY_Low() {
+}
+
+uint8_t LSM303D::readMagnetometerY_Low() {
     uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -319,7 +337,7 @@ int LSM303D::writeMagnetometerY_High(uint8_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 1) != 1) {
         return 0;
     }
 
@@ -339,7 +357,9 @@ int LSM303D::writeMagnetometerY_Low(uint8_t data) {
         return 0;
     }
     return 1;
-}uint8_t LSM303D::readMagnetometerZ_High() {
+}
+
+uint8_t LSM303D::readMagnetometerZ_High() {
     uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -348,7 +368,7 @@ int LSM303D::writeMagnetometerY_Low(uint8_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 1) != 1) {
         return 0;
     }
 
@@ -368,7 +388,9 @@ int LSM303D::writeMagnetometerZ_High(uint8_t data) {
         return 0;
     }
     return 1;
-}uint8_t LSM303D::readMagnetometerZ_Low() {
+}
+
+uint8_t LSM303D::readMagnetometerZ_Low() {
     uint8_t datum;
     uint8_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -377,7 +399,7 @@ int LSM303D::writeMagnetometerZ_High(uint8_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 1) != 1) {
         return 0;
     }
 
@@ -398,6 +420,8 @@ int LSM303D::writeMagnetometerZ_Low(uint8_t data) {
     }
     return 1;
 }
+
+
 
 void LSM303D::accelerationasG(short * returnArray) {
     char accelerationScale; // Variable declaration

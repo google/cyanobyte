@@ -77,12 +77,12 @@ fields:
         value: 0b10
 
 functions:
-  init:
+  _lifecycle:
     title: Code to run when device class is constructed
     description: Enables features on device
     register: '#/registers/enable'
     computed:
-      onCreate:
+      Begin:
         variables:
           enables: int8
         logic:

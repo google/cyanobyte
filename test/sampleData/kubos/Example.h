@@ -111,6 +111,17 @@ int example_get_fieldc(uint8_t* val);
 int example_set_fieldc(uint8_t* data);
 
 /**
+ * Enables features on device
+
+*/
+void example__lifecycle_begin(char* val);
+/**
+ * Enables features on device
+
+*/
+void example__lifecycle_end(char* val);
+
+/**
  * Computes and returns
 
 */

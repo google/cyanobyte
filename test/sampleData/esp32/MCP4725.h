@@ -52,7 +52,8 @@ class MCP4725 {
          * be loaded from power-on.
 
          */
-        int writeEEPROM(uint16_t data);        /**
+        int writeEEPROM(uint16_t data);
+        /**
          * VOut = (Vcc * value) / 4096
          * The output is a range between 0 and Vcc with
          * steps of Vcc/4096.
@@ -68,7 +69,8 @@ class MCP4725 {
          * In a 3.3v system, each step is 800 microvolts.
 
          */
-        int writeVOut(uint16_t data);        /**
+        int writeVOut(uint16_t data);
+        /**
          * Only allows you to send fully on or off
 
          */

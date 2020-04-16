@@ -95,7 +95,7 @@ class TCS3472 {
          * Enables features on device
 
          */
-        void initonCreate();
+        void _lifecycleBegin();
 
 
     private:

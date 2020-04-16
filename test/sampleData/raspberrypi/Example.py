@@ -54,6 +54,7 @@ class Example:
         # Initialize connection to peripheral
         self.bus = smbus.SMBus(1)
         self.device_address = address
+        self._lifecycle_begin()
 
     def get_registera(self):
         """
@@ -205,6 +206,26 @@ class Example:
         register_data = self.get_registera()
         register_data = register_data | data
         self.set_registera(register_data)
+    def _lifecycle_begin(self):
+        """
+        Enables features on device
+
+        """
+        output = None # Variable declaration
+
+        output = 1
+        self.set_registera(output)
+        return output
+    def _lifecycle_end(self):
+        """
+        Enables features on device
+
+        """
+        output = None # Variable declaration
+
+        output = 1
+        self.set_registera(output)
+        return output
     def return_array(self):
         """
         Computes and returns

@@ -47,7 +47,7 @@ uint16_t MCP9808::readconfiguration() {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 2) != 2) {
         return 0;
     }
 
@@ -71,6 +71,8 @@ int MCP9808::writeconfiguration(uint16_t data) {
     }
     return 1;
 }
+
+
 uint16_t MCP9808::getlimitHysteresis() {
     // Read register data
     // '#/registers/configuration' > 'configuration'

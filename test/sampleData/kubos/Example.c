@@ -42,6 +42,7 @@ int example_init(deviceAddress_t address, char* bus_name) {
     if (k_i2c_init(&bus_name, &i2c_bus) != I2C_OK) {
         return -1;
     }
+    example__lifecycle_begin();
 }
 
 void example_terminate() {
@@ -189,6 +190,28 @@ int example_set_fieldc(uint8_t* data) {
         return -2;
     }
     return 0;
+}
+
+void example__lifecycle_begin(char* val) {
+    char output; // Variable declaration
+
+
+    output = 1
+    example_writeRegisterA(&output);
+
+
+    val = output;
+}
+
+void example__lifecycle_end(char* val) {
+    char output; // Variable declaration
+
+
+    output = 1
+    example_writeRegisterA(&output);
+
+
+    val = output;
 }
 
 void example_return_array(void* val) {

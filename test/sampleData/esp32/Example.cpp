@@ -28,6 +28,7 @@
 #define REGISTER_REGISTERA 0
 #define REGISTER_REGISTERB 1
 #define REGISTER_REGISTERC 2
+#define REGISTER_REGISTERD 3
 
 Example::Example(TwoWire& wire, deviceAddress_t address) :
     _wire(&wire),
@@ -37,6 +38,7 @@ Example::Example(TwoWire& wire, deviceAddress_t address) :
 
 void Example::begin() {
     _wire->begin();
+    _lifecycleBegin();
 }
 
 
@@ -49,7 +51,7 @@ uint8_t Example::readRegisterA() {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 8) != 8) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 1) != 1) {
         return 0;
     }
 
@@ -69,7 +71,9 @@ int Example::writeRegisterA(uint8_t data) {
         return 0;
     }
     return 1;
-}uint16_t Example::readRegisterB() {
+}
+
+uint16_t Example::readRegisterB() {
     uint8_t datum;
     uint16_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -78,7 +82,7 @@ int Example::writeRegisterA(uint8_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 16) != 16) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 2) != 2) {
         return 0;
     }
 
@@ -101,7 +105,9 @@ int Example::writeRegisterB(uint16_t data) {
         return 0;
     }
     return 1;
-}uint32_t Example::readRegisterC() {
+}
+
+uint32_t Example::readRegisterC() {
     uint8_t datum;
     uint32_t value;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -110,7 +116,7 @@ int Example::writeRegisterB(uint16_t data) {
         return -1;
     }
 
-    if (_wire->requestFrom(DEVICE_ADDRESS, 32) != 32) {
+    if (_wire->requestFrom(DEVICE_ADDRESS, 4) != 4) {
         return 0;
     }
 
@@ -140,6 +146,36 @@ int Example::writeRegisterC(uint32_t data) {
     }
     return 1;
 }
+
+uint8_t Example::readRegisterD() {
+    uint8_t datum;
+    uint8_t value;
+    _wire->beginTransmission(DEVICE_ADDRESS);
+    _wire->write(REGISTER_REGISTERD);
+    if (_wire->endTransmission(false) != 0) {
+        return -1;
+    }
+
+    if (_wire->requestFrom(DEVICE_ADDRESS, 0) != 0) {
+        return 0;
+    }
+
+
+    return value;
+}
+
+int Example::writeRegisterD() {
+    _wire->beginTransmission(DEVICE_ADDRESS);
+    // Put our data into uint8_t buffer
+    uint8_t buffer[1] = { (uint8_t) REGISTER_REGISTERD };
+    _wire->write(buffer, 1);
+    if (_wire->endTransmission() != 0) {
+        return 0;
+    }
+    return 1;
+}
+
+
 uint8_t Example::getFieldA() {
     // Read register data
     // '#/registers/RegisterA' > 'RegisterA'
@@ -179,6 +215,28 @@ int Example::setFieldC(uint8_t data) {
     uint8_t register_data = readRegisterA();
     register_data = register_data | data;
     return writeRegisterA(register_data);
+}
+
+char Example::_lifecycleBegin() {
+    char output; // Variable declaration
+
+
+    output = 1;
+    writeRegisterA(output);
+
+
+    return output;
+}
+
+char Example::_lifecycleEnd() {
+    char output; // Variable declaration
+
+
+    output = 1;
+    writeRegisterA(output);
+
+
+    return output;
 }
 
 void Example::ReturnArray(short * returnArray) {

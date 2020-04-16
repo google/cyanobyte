@@ -89,8 +89,8 @@ class {{ info.title }}:
         # Initialize connection to peripheral
         self.i2c = i2c
     {% endif %}
-        {% if 'init' in functions and 'onCreate' in functions.init.computed %}
-        self.init_oncreate()
+        {% if '_lifecycle' in functions and 'Begin' in functions._lifecycle.computed %}
+        self._lifecycle_begin()
         {% endif %}
 
     {% for key,register in registers|dictsort %}
