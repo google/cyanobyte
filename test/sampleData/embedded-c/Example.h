@@ -156,7 +156,7 @@ int example_set_fieldc(
 */
 void example__lifecycle_begin(
     char* val,
-
+    int (*write)(uint8_t, uint8_t, int*, uint8_t)
 );
 /**
  * Enables features on device
@@ -164,7 +164,7 @@ void example__lifecycle_begin(
 */
 void example__lifecycle_end(
     char* val,
-
+    int (*write)(uint8_t, uint8_t, int*, uint8_t)
 );
 
 /**

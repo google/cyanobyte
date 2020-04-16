@@ -204,12 +204,13 @@ int example_set_fieldc(
 
 void example__lifecycle_begin(
     char* val,
-
+    int (*write)(uint8_t, uint8_t, int*, uint8_t)
 ) {
     char output; // Variable declaration
 
 
     output = 1
+    example_writeRegisterA(&output, write);
 
 
     *val = output;
@@ -217,12 +218,13 @@ void example__lifecycle_begin(
 
 void example__lifecycle_end(
     char* val,
-
+    int (*write)(uint8_t, uint8_t, int*, uint8_t)
 ) {
     char output; // Variable declaration
 
 
     output = 1
+    example_writeRegisterA(&output, write);
 
 
     *val = output;

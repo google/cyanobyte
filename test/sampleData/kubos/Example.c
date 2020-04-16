@@ -197,6 +197,7 @@ void example__lifecycle_begin(char* val) {
 
 
     output = 1
+    example_writeRegisterA(&output);
 
 
     val = output;
@@ -207,6 +208,7 @@ void example__lifecycle_end(char* val) {
 
 
     output = 1
+    example_writeRegisterA(&output);
 
 
     val = output;

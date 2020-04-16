@@ -145,17 +145,20 @@ functions:
   _lifecycle:
     title: Code to run when device class is constructed
     description: Enables features on device
+    register: '#/registers/RegisterA'
     computed:
       Begin:
         variables:
           output: int8
         logic:
           - output: = 1
+          - send: output
         return: output
       End:
         variables:
           output: int8
         logic:
           - output: = 1
+          - send: output
         return: output
 

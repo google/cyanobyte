@@ -214,6 +214,7 @@ class Example:
         output = None # Variable declaration
 
         output = 1
+        self.set_registera(output)
         return output
     def _lifecycle_end(self):
         """
@@ -223,6 +224,7 @@ class Example:
         output = None # Variable declaration
 
         output = 1
+        self.set_registera(output)
         return output
     def return_array(self):
         """

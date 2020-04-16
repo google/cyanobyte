@@ -222,6 +222,7 @@ char Example::_lifecycleBegin() {
 
 
     output = 1;
+    writeRegisterA(output);
 
 
     return output;
@@ -232,6 +233,7 @@ char Example::_lifecycleEnd() {
 
 
     output = 1;
+    writeRegisterA(output);
 
 
     return output;
