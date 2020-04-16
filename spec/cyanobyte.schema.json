@@ -355,6 +355,10 @@
           }
         }
       }
+    },
+    "extensions": {
+      "description": "Reserved for custom parameters",
+      "type": "object"
     }
   },
   "required": [

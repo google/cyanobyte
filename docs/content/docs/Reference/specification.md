@@ -233,3 +233,27 @@ functions:
                             - 0b10
                     - send: enables
 ```
+
+## Extensions
+
+Additional parameters may be added in the specification files,
+which may be relevant for a given device or provide extra metadata for
+tooling.
+
+Extensions can be provided in two ways.
+
+First, they can be placed in any field with the `x-` prefix.
+
+```
+info:
+    name: BMP280
+    x-altname: BMP2XX
+```
+
+Other more general fields can be provided in the top-level `extensions`
+section. Fields in this section do not need the prefix.
+
+```
+extensions:
+    foo: bar
+```
