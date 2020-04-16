@@ -22,7 +22,6 @@ window.onload = () => {
         return response.json();
     })
     .then((data) => {
-        console.log(data);
         const div = document.querySelector('.section-index')
         const bullets = data.map(datum =>
             `<li><a href="${datum.html_url}">${datum.title}</a></li>`
