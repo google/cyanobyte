@@ -26,6 +26,7 @@ class TestCodegen(unittest.TestCase):
             -o ./tmp/ \
             -t templates/' + template + '\
             peripherals/ADS1015.yaml \
+            peripherals/BH1750FVI.yaml \
             peripherals/BMP280.yaml \
             peripherals/LSM303D.yaml \
             peripherals/MCP4725.yaml \
@@ -40,6 +41,7 @@ class TestCodegen(unittest.TestCase):
             -o ./tmp/ \
             -t ' + tag + '\
             peripherals/ADS1015.yaml \
+            peripherals/BH1750FVI.yaml \
             peripherals/BMP280.yaml \
             peripherals/LSM303D.yaml \
             peripherals/MCP4725.yaml \
@@ -50,8 +52,8 @@ class TestCodegen(unittest.TestCase):
 
     def compareFiles(self, platformName, extension):
         peripherals = [
-            'ADS1015', 'BMP280', 'LSM303D', 'MCP4725', 'MCP9808',
-            'TCS3472', 'Example'
+            'ADS1015', 'BH1750FVI', 'BMP280', 'LSM303D', 'MCP4725',
+            'MCP9808', 'TCS3472', 'Example'
         ]
         testPath = 'test/sampleData'
         tmpPath  = 'tmp/com/cyanobyte'

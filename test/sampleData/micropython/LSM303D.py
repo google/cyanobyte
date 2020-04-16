@@ -55,7 +55,7 @@ class LSM303D:
         Raw accelerometer data on X plane
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_ACCELEROMETERX_HIGH,
             1,
@@ -83,7 +83,7 @@ class LSM303D:
         Raw accelerometer data on X plane
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_ACCELEROMETERX_LOW,
             1,
@@ -111,7 +111,7 @@ class LSM303D:
         Raw accelerometer data on Y plane
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_ACCELEROMETERY_HIGH,
             1,
@@ -139,7 +139,7 @@ class LSM303D:
         Raw accelerometer data on Y plane
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_ACCELEROMETERY_LOW,
             1,
@@ -167,7 +167,7 @@ class LSM303D:
         Raw accelerometer data on Z plane
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_ACCELEROMETERZ_HIGH,
             1,
@@ -195,7 +195,7 @@ class LSM303D:
         Raw accelerometer data on Z plane
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_ACCELEROMETERZ_LOW,
             1,
@@ -223,7 +223,7 @@ class LSM303D:
         Raw magnetometer data on X plane
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_MAGNETOMETERX_HIGH,
             1,
@@ -251,7 +251,7 @@ class LSM303D:
         Raw magnetometer data on X plane
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_MAGNETOMETERX_LOW,
             1,
@@ -279,7 +279,7 @@ class LSM303D:
         Raw magnetometer data on Y plane
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_MAGNETOMETERY_HIGH,
             1,
@@ -307,7 +307,7 @@ class LSM303D:
         Raw magnetometer data on Y plane
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_MAGNETOMETERY_LOW,
             1,
@@ -335,7 +335,7 @@ class LSM303D:
         Raw magnetometer data on Z plane
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_MAGNETOMETERZ_HIGH,
             1,
@@ -363,7 +363,7 @@ class LSM303D:
         Raw magnetometer data on Z plane
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_MAGNETOMETERZ_LOW,
             1,

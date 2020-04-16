@@ -12,9 +12,23 @@ Class for {{ info.title }}
 
 {% for step in logicalSteps %}
 {% for key in step.keys() %}
+{# // Check if a raw read-op #}
+{% if 'rawRead' in step[key] %}
+        {% set bytes = (step[key].rawRead / 8) | round(1, 'ceil') | int %}
+        _byte_list = self.i2c.readfrom(self.device_address, {{bytes}})
+        {{key}} = 0
+        {% for n in range(bytes) %}
+        {{key}} = {{key}} << 8 | _byte_list[{{n}}]
+        {% endfor %}
+        {% break %}
+{% endif %}
 {# Check if assignment is a send-op #}
 {% if key == 'cmdWrite' %}
+        {% if 'value' in step[key] %}
         self.set_{{step[key].register[12:].lower()}}({{step[key].value}})
+        {% else %}
+        self.set_{{step[key].register[12:].lower()}}()
+        {% endif %}
         {% break %}
 {%- endif %}
 {# Check if assignment op #}
@@ -100,7 +114,7 @@ class {{ info.title }}:
         """
 {{utils.pad_string("        ", register.description)}}
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_{{key.upper()}},
             {{bytes}},

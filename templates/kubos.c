@@ -16,9 +16,18 @@
 
 {% for step in logicalSteps %}
 {% for key in step.keys() %}
-{# Check if assignment is a send-op #}
+{% if 'rawRead' in step[key] %}
+    {% set length = (step[key].rawRead / 8) | round(1, 'ceil') | int %}
+    k_i2c_read(i2c_bus, DEVICE_ADDRESS, {{key}}, {{length}});
+    {% break %}
+{% endif %}
+{# // Check if assignment is a send-op #}
 {% if key == 'cmdWrite' %}
+    {% if 'value' in step[key] %}
     {{info.title.lower()}}_write{{step[key].register[12:]}}(&{{step[key].value}});
+    {% else %}
+    {{info.title.lower()}}_write{{step[key].register[12:]}}();
+    {% endif %}
     {% break %}
 {% endif %}
 {# Check if assignment op #}

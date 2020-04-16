@@ -50,7 +50,7 @@ class TCS3472:
         Blue light as an int. Divide by ambient light to get scaled number.
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_BLUE,
             2,
@@ -66,7 +66,7 @@ class TCS3472:
         This is the ambient amount of detected light.
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_CLEAR,
             2,
@@ -82,7 +82,7 @@ class TCS3472:
         Enable specific components of the peripheral
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_ENABLE,
             1,
@@ -110,7 +110,7 @@ class TCS3472:
         Green light as an int. Divide by ambient light to get scaled number.
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_GREEN,
             2,
@@ -126,7 +126,7 @@ class TCS3472:
         Red light as an int. Divide by ambient light to get scaled number.
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_RED,
             2,

@@ -61,7 +61,7 @@ class MCP4725:
         be loaded from power-on.
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_EEPROM,
             1,
@@ -95,7 +95,7 @@ class MCP4725:
         In a 3.3v system, each step is 800 microvolts.
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_VOUT,
             1,

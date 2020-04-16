@@ -12,9 +12,23 @@ Class for {{ info.title }}
 
 {% for step in logicalSteps %}
 {% for key in step.keys() %}
+{% if 'rawRead' in step[key] %}
+        {% set bytes = (step[key].rawRead / 8) | round(1, 'ceil') | int %}
+        {{key}} = 0
+        {% for n in range(bytes) %}
+        {# Read each byte one at a time from device #}
+        _datum = self.bus.read_byte(self.device_address)
+        {{key}} = {{key}} << 8 | _datum
+        {% endfor %}
+        {% break %}
+{% endif %}
 {# Check if assignment is a send-op #}
 {% if key == 'cmdWrite' %}
+        {% if 'value' in step[key] %}
         self.set_{{step[key].register[12:].lower()}}({{step[key].value}})
+        {% else %}
+        self.set_{{step[key].register[12:].lower()}}()
+        {% endif %}
         {% break %}
 {%- endif %}
 {# Check if assignment op #}

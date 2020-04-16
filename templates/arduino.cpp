@@ -14,9 +14,27 @@
 
 {% for step in logicalSteps %}
 {% for key in step.keys() %}
+{# // Check if a raw read-op #}
+{% if 'rawRead' in step[key] %}
+    {% set bytes = (step[key].rawRead / 8) | round(1, 'ceil') | int %}
+    uint8_t _datum;
+    _wire->beginTransmission(DEVICE_ADDRESS);
+    {# // Here is where I do _not_ put `write(REGISTER_ADDR) #}
+    _wire->requestFrom(DEVICE_ADDRESS, {{bytes}})
+    {# Read a byte at a time #}
+    {% for n in range(bytes) %}
+    _datum = _wire->read();
+    {{key}} = {{key}} << 8 | _datum;
+    {% endfor %}
+    {% break %}
+{% endif %}
 {# // Check if assignment is a send-op #}
 {% if key == 'cmdWrite' %}
+    {% if 'value' in step[key] %}
     write{{step[key].register[12:]}}({{step[key].value}});
+    {% else %}
+    write{{step[key].register[12:]}}();
+    {% endif %}
     {% break %}
 {% endif %}
 {# // Check if assignment op #}
