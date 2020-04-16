@@ -99,21 +99,19 @@ For announcement of latest features etc.
 {{< /blocks/section >}}
 
 {{< blocks/section >}}
-<div class="col">
 	<h2 class="text-center">
 		Current Status
 	</h2>
-	At the moment Cyanobyte has support for I2C peripherals.
+	At the moment Cyanobyte has support for I2C peripherals across many
+	peripherals and embedded platforms.
 
-	<h4>Next goals</h4>
-	<p>
-		<ul>
-			<li>Support ESP32</li>
-			<li>Investigate other I2C peripherals</li>
-		</ul>
-	</p>
-	<h4>Supported peripherals</h4>
-	<ul>
+	As Cyanobyte provides code generation support, there is
+	<a href="https://github.com/google/cyanobyte/tree/master/test/sampleData">
+	support for each peripheral on every platform</a>.
+	<br><br>
+
+	{{% blocks/feature icon="fas fa-memory" title="Supported Peripherals" %}}
+	<ul style="text-align: left">
 		<li>ADS1015 A2D Converter</li>
 		<li>BMP280 Temp/Pressure Sensor</li>
 		<li>LSM303D IMU</li>
@@ -121,9 +119,12 @@ For announcement of latest features etc.
 		<li>MCP9808 Temperature Sensor</li>
 		<li>TCS3472 Light Sensor</li>
 	</ul>
-	<h4>Supported platforms</h4>
-	<ul>
+	{{% /blocks/feature %}}
+
+	{{% blocks/feature icon="fas fa-microchip" title="Embedded Platforms" %}}
+	<ul style="text-align: left">
 		<li>Arduino</li>
+		<li>ESP32</li>
 		<li>KubOS</li>
 		<li>Micropython</li>
 		<li>Pimoroni I2C Device</li>
@@ -133,11 +134,15 @@ For announcement of latest features etc.
 		<li>LaTeX Datasheets</li>
 		<li>Markdown documentation</li>
 	</ul>
+	{{% /blocks/feature %}}
 
-	As Cyanobyte provides code generation support, there is
-	<a href="https://github.com/google/cyanobyte/tree/master/test/sampleData">
-	support for each peripheral on every platform</a>.
-</div>
+	{{% blocks/feature icon="fas fa-clipboard-list" title="Next Goals" %}}
+	<ul style="text-align: left">
+		<li>Support BH1750FVI</li>
+		<li>Support BMP180</li>
+		<li>Investigate other I2C peripherals like displays</li>
+	</ul>
+	{{% /blocks/feature %}}
 
 {{< /blocks/section >}}
 
