@@ -192,7 +192,7 @@ int {{info.title.lower()}}_set_{{key.lower()}}({{int_t}}* data) {
 {% for key,function in functions|dictsort %}
 {% for ckey,compute in function.computed|dictsort %}
 {% set int_t = cpp.returnType(compute) %}
-void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}({% if 'return' in compute %}{{int_t}}* val{% if 'input' in compute %},{% endif %}{% endif %}{% if 'input' in compute %} {{cpp.params(compute)}} {% endif %}) {
+void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}({% if 'return' in compute %}{{int_t}}* val{% if 'input' in compute %},{% endif %}{% endif %}{% if 'input' in compute %} {{cpp.params(compute)}}{% endif %}) {
     {# Declare our variables #}
 {{ cpp.variables(compute.variables) }}
 
