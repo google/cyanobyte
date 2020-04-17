@@ -18,6 +18,7 @@
 Class for BH1750FVI
 """
 
+from enum import Enum
 import smbus
 
 class DeviceAddressValues(Enum):
@@ -86,7 +87,8 @@ class BH1750FVI:
 
     def set_oncehres2mode(self):
         """
-        Start measurement at 0.5lx resolution. Typically 120ms. Power Down after measurement.
+        Start measurement at 0.5lx resolution. Typically 120ms.
+        Power Down after measurement.
 
         """
         self.bus.write_i2c_block_data(
@@ -97,7 +99,8 @@ class BH1750FVI:
 
     def set_oncehresmode(self):
         """
-        Start measurement at 1lx resolution. Typically 120ms. Power Down after measurement.
+        Start measurement at 1lx resolution. Typically 120ms.
+        Power Down after measurement.
 
         """
         self.bus.write_i2c_block_data(
@@ -108,7 +111,8 @@ class BH1750FVI:
 
     def set_oncelresmode(self):
         """
-        Start measurement at 4lx resolution. Typically 16ms. Power Down after measurement.
+        Start measurement at 4lx resolution. Typically 16ms.
+        Power Down after measurement.
 
         """
         self.bus.write_i2c_block_data(

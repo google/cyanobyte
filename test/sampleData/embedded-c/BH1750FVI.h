@@ -61,7 +61,8 @@ int bh1750fvi_writeContinuouslyLResMode(
 );
 
 /**
- * Start measurement at 0.5lx resolution. Typically 120ms. Power Down after measurement.
+ * Start measurement at 0.5lx resolution. Typically 120ms.
+ * Power Down after measurement.
 
  */
 int bh1750fvi_writeOnceHRes2Mode(
@@ -70,7 +71,8 @@ int bh1750fvi_writeOnceHRes2Mode(
 );
 
 /**
- * Start measurement at 1lx resolution. Typically 120ms. Power Down after measurement.
+ * Start measurement at 1lx resolution. Typically 120ms.
+ * Power Down after measurement.
 
  */
 int bh1750fvi_writeOnceHResMode(
@@ -79,7 +81,8 @@ int bh1750fvi_writeOnceHResMode(
 );
 
 /**
- * Start measurement at 4lx resolution. Typically 16ms. Power Down after measurement.
+ * Start measurement at 4lx resolution. Typically 16ms.
+ * Power Down after measurement.
 
  */
 int bh1750fvi_writeOnceLResMode(

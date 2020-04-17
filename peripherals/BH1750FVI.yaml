@@ -77,19 +77,25 @@ registers:
     address: 0b00100000
     length: 0
     title: One Time H-Resolution Mode
-    description: Start measurement at 1lx resolution. Typically 120ms. Power Down after measurement.
+    description: |
+      Start measurement at 1lx resolution. Typically 120ms.
+      Power Down after measurement.
     readWrite: W
   OnceHRes2Mode:
     address: 0b0010_0001
     length: 0
     title: One Time H-Resolution Mode2
-    description: Start measurement at 0.5lx resolution. Typically 120ms. Power Down after measurement.
+    description: |
+      Start measurement at 0.5lx resolution. Typically 120ms.
+      Power Down after measurement.
     readWrite: W
   OnceLResMode:
     address: 0b0010_0011
     length: 0
     title: One Time L-Resolution Mode
-    description: Start measurement at 4lx resolution. Typically 16ms. Power Down after measurement.
+    description: |
+      Start measurement at 4lx resolution. Typically 16ms.
+      Power Down after measurement.
     readWrite: W
 
 functions:

@@ -91,7 +91,8 @@ class BH1750FVI:
 
     def set_oncehres2mode(self):
         """
-        Start measurement at 0.5lx resolution. Typically 120ms. Power Down after measurement.
+        Start measurement at 0.5lx resolution. Typically 120ms.
+        Power Down after measurement.
 
         """
         buffer = []
@@ -104,7 +105,8 @@ class BH1750FVI:
 
     def set_oncehresmode(self):
         """
-        Start measurement at 1lx resolution. Typically 120ms. Power Down after measurement.
+        Start measurement at 1lx resolution. Typically 120ms.
+        Power Down after measurement.
 
         """
         buffer = []
@@ -117,7 +119,8 @@ class BH1750FVI:
 
     def set_oncelresmode(self):
         """
-        Start measurement at 4lx resolution. Typically 16ms. Power Down after measurement.
+        Start measurement at 4lx resolution. Typically 16ms.
+        Power Down after measurement.
 
         """
         buffer = []

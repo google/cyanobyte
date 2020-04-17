@@ -71,7 +71,9 @@ limitations under the License.
                 </register>
                 <register>
                     <name>OnceHRes2Mode</name>
-                    <description>Start measurement at 0.5lx resolution. Typically 120ms. Power Down after measurement.</description>
+                    <description>Start measurement at 0.5lx resolution. Typically 120ms.
+Power Down after measurement.
+</description>
                     <addressOffset>33</addressOffset>
                     <size>0</size>
                     <access>write</access>
@@ -81,7 +83,9 @@ limitations under the License.
                 </register>
                 <register>
                     <name>OnceHResMode</name>
-                    <description>Start measurement at 1lx resolution. Typically 120ms. Power Down after measurement.</description>
+                    <description>Start measurement at 1lx resolution. Typically 120ms.
+Power Down after measurement.
+</description>
                     <addressOffset>32</addressOffset>
                     <size>0</size>
                     <access>write</access>
@@ -91,7 +95,9 @@ limitations under the License.
                 </register>
                 <register>
                     <name>OnceLResMode</name>
-                    <description>Start measurement at 4lx resolution. Typically 16ms. Power Down after measurement.</description>
+                    <description>Start measurement at 4lx resolution. Typically 16ms.
+Power Down after measurement.
+</description>
                     <addressOffset>35</addressOffset>
                     <size>0</size>
                     <access>write</access>

@@ -18,13 +18,19 @@ Start measurement at 1lx resolution. Typically 120ms.
 Start measurement at 4lx resolution. Typically 16ms.
 
 ### One Time H-Resolution Mode2
-Start measurement at 0.5lx resolution. Typically 120ms. Power Down after measurement.
+Start measurement at 0.5lx resolution. Typically 120ms.
+Power Down after measurement.
+
 
 ### One Time H-Resolution Mode
-Start measurement at 1lx resolution. Typically 120ms. Power Down after measurement.
+Start measurement at 1lx resolution. Typically 120ms.
+Power Down after measurement.
+
 
 ### One Time L-Resolution Mode
-Start measurement at 4lx resolution. Typically 16ms. Power Down after measurement.
+Start measurement at 4lx resolution. Typically 16ms.
+Power Down after measurement.
+
 
 ### Power Down
 No active state
