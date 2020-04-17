@@ -17,9 +17,19 @@
 
 {% for step in logicalSteps %}
 {% for key in step.keys() %}
-{# Check if assignment is a send-op #}
+{# // Check if a raw read-op #}
+{% if 'rawRead' in step[key] %}
+    {% set length = (step[key].rawRead / 8) | round(1, 'ceil') | int %}
+    read(DEVICE_ADDRESS, NULL, {{key}}, {{length}});
+    {% break %}
+{% endif %}
+{# // Check if assignment is a send-op #}
 {% if key == 'cmdWrite' %}
+    {% if 'value' in step[key] %}
     {{info.title.lower()}}_write{{step[key].register[12:]}}(&{{step[key].value}}, write);
+    {% else %}
+    {{info.title.lower()}}_write{{step[key].register[12:]}}(write);
+    {% endif %}
     {% break %}
 {% endif %}
 {# Check if assignment op #}

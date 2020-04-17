@@ -1,0 +1,166 @@
+\documentclass[a4paper,12pt,oneside,pdflatex,italian,final,twocolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{parallel}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+
+\usepackage[export]{adjustbox}
+\usepackage[margin=0.5in]{geometry}
+\addtolength{\topmargin}{0in}
+
+\usepackage{libertine}
+\renewcommand*\familydefault{\sfdefault}  %% Only if the base font of the document is to be sans serif
+\usepackage[T1]{fontenc}
+
+\title{ BH1750FVI }
+\author{ Nick Felker }
+\date{ 2020 }
+
+\begin{document}
+
+\pagestyle{fancy}
+
+\lhead{ Nick Felker }
+\chead { 2020 }
+\rhead{ BH1750FVI v0.1.0 }
+
+
+\onecolumn
+
+
+\begin{figure}
+\begin{minipage}{0.47\textwidth}
+
+\section{Overview}
+    Rohm Light Sensor
+    \begin{itemize}
+        \item Device addresses:
+          35,
+          92
+        \item Address type 7-bit
+    \end{itemize}
+
+
+\end{minipage}
+\hfill
+
+\end{figure}
+
+
+\section{Register Description}
+\begin{itemize}
+\item Continously H-Resolution Mode2 - Start measurement at 0.5lx resolution. Typically 120ms.
+\item Continuously H-Resolution Mode - Start measurement at 1lx resolution. Typically 120ms.
+\item Continuously L-Resolution Mode - Start measurement at 4lx resolution. Typically 16ms.
+\item One Time H-Resolution Mode2 - Start measurement at 0.5lx resolution. Typically 120ms.
+Power Down after measurement.
+
+\item One Time H-Resolution Mode - Start measurement at 1lx resolution. Typically 120ms.
+Power Down after measurement.
+
+\item One Time L-Resolution Mode - Start measurement at 4lx resolution. Typically 16ms.
+Power Down after measurement.
+
+\item Power Down - No active state
+\item Power On - Waiting for measurement command
+\item Reset - Reset data register value. Not accepted in Power Down mode.
+\end{itemize}
+
+\section{Technical specification}
+\centering
+\begin{tabular}{lcrr}
+\toprule
+ & Register Name & Register Address & Register Length \\
+\midrule
+ContinuousHRes2Mode & Continously H-Resolution Mode2 & 17 & 0 \\
+ContinuousHResMode & Continuously H-Resolution Mode & 16 & 0 \\
+ContinuouslyLResMode & Continuously L-Resolution Mode & 19 & 0 \\
+OnceHRes2Mode & One Time H-Resolution Mode2 & 33 & 0 \\
+OnceHResMode & One Time H-Resolution Mode & 32 & 0 \\
+OnceLResMode & One Time L-Resolution Mode & 35 & 0 \\
+PowerDown & Power Down & 0 & 0 \\
+PowerOn & Power On & 1 & 0 \\
+Reset & Reset & 7 & 0 \\
+\bottomrule
+\end{tabular}
+
+
+\raggedright
+
+\section{Functions}
+
+\centering
+\begin{tabular}{lc}
+\toprule
+  & Description \\
+\midrule
+_lifecycle & Sends a POWER ON cmd to device \\
+command & Things you can do to device \\
+read & Read light intensity from device \\
+\bottomrule
+\end{tabular}
+
+
+\raggedright
+\subsection{Function _lifecycle }
+Sends a POWER ON cmd to device \\
+
+\centering
+\begin{tabular}{lcr}
+\toprule
+  & Inputs & Return \\
+\midrule
+Begin &
+&
+void
+\\
+\bottomrule
+\end{tabular}
+
+
+
+\raggedright
+\subsection{Function command }
+Things you can do to device \\
+
+\centering
+\begin{tabular}{lcr}
+\toprule
+  & Inputs & Return \\
+\midrule
+PowerDown &
+&
+void
+\\
+Reset &
+&
+void
+\\
+\bottomrule
+\end{tabular}
+
+
+
+\raggedright
+\subsection{Function read }
+Read light intensity from device \\
+
+\centering
+\begin{tabular}{lcr}
+\toprule
+  & Inputs & Return \\
+\midrule
+LightIntensity &
+&
+intensity
+\\
+\bottomrule
+\end{tabular}
+
+
+
+\raggedright
+
+\end{document}

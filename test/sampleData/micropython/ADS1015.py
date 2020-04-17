@@ -80,7 +80,7 @@ class ADS1015:
         Describes the specifics of the sensing implementation
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_CONFIG,
             2,
@@ -112,7 +112,7 @@ class ADS1015:
         Conversion register contains the result of the last conversion
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_CONVERSION,
             2,

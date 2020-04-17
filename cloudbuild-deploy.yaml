@@ -30,6 +30,7 @@ steps:
     - '-o'
     - './docs/content/docs/Reference/Peripheral Docs'
     - 'peripherals/ADS1015.yaml'
+    - 'peripherals/BH1750FVI.yaml'
     - 'peripherals/BMP280.yaml'
     - 'peripherals/LSM303D.yaml'
     - 'peripherals/MCP4725.yaml'

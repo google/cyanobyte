@@ -113,7 +113,14 @@
 {%- endfor %}
 {%- endmacro %}
 
-{% macro importStdLibs(fields, functions, template) %}
+{% macro importStdLibs(fields, functions, i2c, template) %}
+{% if i2c.address is iterable and i2c.address is not string %}
+{# Optionally import class #}
+{% if template.enum is sameas false %}
+from enum import Enum
+{% set template.enum = true %}
+{% endif %}
+{% endif %}
 {% if fields %}
 {% for key,field in fields|dictsort %}
 {% if field.enum %}

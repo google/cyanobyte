@@ -69,7 +69,7 @@ class MCP9808:
         Output mode) are user-configurable.
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_CONFIGURATION,
             2,

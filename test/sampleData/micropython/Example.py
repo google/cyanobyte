@@ -55,7 +55,7 @@ class Example:
         An 8-bit register
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_REGISTERA,
             1,
@@ -83,7 +83,7 @@ class Example:
         A 16-bit register
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_REGISTERB,
             2,
@@ -113,7 +113,7 @@ class Example:
         A 32-bit register
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_REGISTERC,
             4,
@@ -147,7 +147,7 @@ class Example:
         A dummy register that has no data
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_REGISTERD,
             0,

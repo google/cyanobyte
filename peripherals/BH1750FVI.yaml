@@ -1,0 +1,136 @@
+# Copyright (C) 2020 Google Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# Datasheet: https://www.mouser.com/datasheet/2/348/bh1750fvi-e-186247.pdf
+cyanobyte: 0.1.0
+info:
+  contact:
+    name: Nick Felker
+    url: https://github.com/google/cyanobyte
+    email: felker@google.com
+  package: com.cyanobyte
+  title: BH1750FVI
+  description: Rohm Light Sensor
+  copyright:
+    name: Google Inc.
+    date: '2020'
+  license:
+    name: Apache-2.0
+  version: 0.1.0
+
+i2c:
+  addressType: 7-bit
+  address:
+    - 0x23
+    - 0x5C
+  addressMask: 0xFF
+
+registers:
+  # Probably want to set R/W to none
+  PowerDown:
+    address: 0x00
+    length: 0
+    title: Power Down
+    description: No active state
+    readWrite: W
+  PowerOn:
+    address: 0x01
+    length: 0
+    title: Power On
+    description: Waiting for measurement command
+    readWrite: W
+  Reset:
+    address: 0x07
+    length: 0
+    title: Reset
+    description: Reset data register value. Not accepted in Power Down mode.
+    readWrite: W
+  ContinuousHResMode:
+    address: 0b00010000
+    length: 0
+    title: Continuously H-Resolution Mode
+    description: Start measurement at 1lx resolution. Typically 120ms.
+    readWrite: W
+  ContinuousHRes2Mode:
+    address: 0b00010001
+    length: 0
+    title: Continously H-Resolution Mode2
+    description: Start measurement at 0.5lx resolution. Typically 120ms.
+    readWrite: W
+  ContinuouslyLResMode:
+    address: 0b00010011
+    length: 0
+    title: Continuously L-Resolution Mode
+    description: Start measurement at 4lx resolution. Typically 16ms.
+    readWrite: W
+  OnceHResMode:
+    address: 0b00100000
+    length: 0
+    title: One Time H-Resolution Mode
+    description: |
+      Start measurement at 1lx resolution. Typically 120ms.
+      Power Down after measurement.
+    readWrite: W
+  OnceHRes2Mode:
+    address: 0b0010_0001
+    length: 0
+    title: One Time H-Resolution Mode2
+    description: |
+      Start measurement at 0.5lx resolution. Typically 120ms.
+      Power Down after measurement.
+    readWrite: W
+  OnceLResMode:
+    address: 0b0010_0011
+    length: 0
+    title: One Time L-Resolution Mode
+    description: |
+      Start measurement at 4lx resolution. Typically 16ms.
+      Power Down after measurement.
+    readWrite: W
+
+functions:
+  _lifecycle:
+    title: Powers on the device
+    description: Sends a POWER ON cmd to device
+    computed:
+      Begin:
+        logic:
+          - cmdWrite:
+              register: '#/registers/PowerOn'
+  command:
+    title: Commands to device
+    description: Things you can do to device
+    computed:
+      PowerDown:
+        logic:
+          - cmdWrite:
+              register: '#/registers/PowerDown'
+      Reset:
+        logic:
+          # Power on the device
+          - cmdWrite:
+              register: '#/registers/PowerOn'
+          # Send a RESET cmd
+          - cmdWrite:
+              register: '#/registers/Reset'
+  read:
+    title: Read light intensity from device
+    description: Read light intensity from device
+    computed:
+      LightIntensity:
+        variables:
+          intensity: uint16
+        logic:
+          - intensity:
+              rawRead: 16
+        return: intensity

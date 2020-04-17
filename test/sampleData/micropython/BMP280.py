@@ -66,7 +66,7 @@ class BMP280:
         Used for Pascals conversion
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_DIGP1,
             2,
@@ -96,7 +96,7 @@ class BMP280:
         Used for Pascals conversion
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_DIGP2,
             2,
@@ -128,7 +128,7 @@ class BMP280:
         Used for Pascals conversion
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_DIGP3,
             2,
@@ -160,7 +160,7 @@ class BMP280:
         Used for Pascals conversion
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_DIGP4,
             2,
@@ -192,7 +192,7 @@ class BMP280:
         Used for Pascals conversion
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_DIGP5,
             2,
@@ -224,7 +224,7 @@ class BMP280:
         Used for Pascals conversion
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_DIGP6,
             2,
@@ -256,7 +256,7 @@ class BMP280:
         Used for Pascals conversion
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_DIGP7,
             2,
@@ -288,7 +288,7 @@ class BMP280:
         Used for Pascals conversion
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_DIGP8,
             2,
@@ -320,7 +320,7 @@ class BMP280:
         Used for Pascals conversion
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_DIGP9,
             2,
@@ -352,7 +352,7 @@ class BMP280:
         Used for Celcius conversion
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_DIGT1,
             2,
@@ -382,7 +382,7 @@ class BMP280:
         Used for Celcius conversion
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_DIGT2,
             2,
@@ -412,7 +412,7 @@ class BMP280:
         Used for Celcius conversion
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_DIGT3,
             2,
@@ -444,7 +444,7 @@ class BMP280:
         Part 2 of Pressure
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_PRESSURELSB,
             1,
@@ -472,7 +472,7 @@ class BMP280:
         Part 1 of Pressure
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_PRESSUREMSB,
             1,
@@ -500,7 +500,7 @@ class BMP280:
         Part 3 of Pressure
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_PRESSUREXLSB,
             1,
@@ -528,7 +528,7 @@ class BMP280:
         Part 2 of temperature
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_TEMPLSB,
             1,
@@ -556,7 +556,7 @@ class BMP280:
         Part 1 of temperature
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_TEMPMSB,
             1,
@@ -584,7 +584,7 @@ class BMP280:
         Final part of temperature
 
         """
-        val = self.i2c.readfrom_mem(
+        byte_list = self.i2c.readfrom_mem(
             self.device_address,
             self.REGISTER_TEMPXLSB,
             1,
