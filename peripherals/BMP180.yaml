@@ -33,7 +33,6 @@ i2c:
   address: 0x77
   addressMask: 0xFF
 
-# FIXME access control on registers
 registers:
   Control:
     address: 0xF4
@@ -121,44 +120,42 @@ functions:
         variables:
           temperature: float32
           rawComp: int16
-          ac5: uint16
-          ac6: uint16
-          c5: float32
-          c6: float32
+          varAc5: uint16
+          varAc6: uint16
+          varC5: float32
           rawMc: int16
-          mc: float32
+          varMc: float32
           rawMd: int16
-          md: float32
+          varMd: float32
         logic:
           - send: 0x2E # BMP180 CMD_TEMPERATURE
           - temperature: '#/registers/Result'
           # a = c5 * (temperature - c6)
           # c5 = (pow(2, -15) / 160) * AC5
           # AC5 = Read 0xB2
-          - ac5: '#/registers/TempCal5'
-          - ac6: '#/registers/TempCal6'
-          - c5:
+          - varAc5: '#/registers/TempCal5'
+          - varAc6: '#/registers/TempCal6'
+          - varC5:
             - product:
               - division:
                 - power:
                   - 2
                   - -15
                 - 160
-              - ac5
-          - c6: = ac6
+              - varAc5
           - rawComp:
             - product:
-              - c5
+              - varC5
               - difference:
                 - temperature
-                - ac6
+                - varAc6
           # T = a + (mc / (a + md)) <- T is result
           # mc = (pow(2, 11) / pow(160, 2)) * MC
           # MC = 0xBC
           # md = MD / 160
           # MD = 0xBE
           - rawMc: '#/registers/TempCalMC'
-          - mc:
+          - varMc:
             - product:
               - division:
                 - power:
@@ -169,7 +166,7 @@ functions:
                   - 2
               - rawMc
           - rawMd: '#/registers/TempCalMD'
-          - md:
+          - varMd:
             - division:
               - rawMd
               - 160
@@ -177,192 +174,8 @@ functions:
             - sum:
               - rawComp
               - division:
-                - mc
+                - varMc
                 - sum:
                   - rawComp
-                  - md
+                  - varMd
         return: temperature
-  pressure:
-    title: Pressure as read by sensor
-    description: |
-      Reads the pressure in absolute millibars,
-      not compensated for sea level
-    register: '#/registers/Control'
-    computed:
-      asMbars:
-        variables:
-          pressure: float32
-          temperature: float32
-          rawComp: float32
-          ac1: int16
-          ac2: int16
-          x1: float32
-          vb2: int16
-          x2: float32
-          x: float32
-          ac3: int16
-          ac4: uint16
-          c3: float32
-          c4: float32
-          vb1: int16
-          b1: float32
-          y0: float32
-          y1: float32
-          y2: float32
-          y: float32
-          z: float32
-          p0: float32
-          p1: float32
-          p2: float32
-        logic:
-          # Looking at the spec, there are four potential oversampling
-          # values that could be used. 0x34, 0x74, 0xB4, 0xF4.
-          # As the oversampling increases, the resolution goes up with
-          # the tradeoff of more time delay for readings.
-          # For our purposes we will go with the fastest value.
-          - send: 0x34 # BMP180 CMD_PRESSURE0
-          - pressure: '#/registers/Result'
-          - temperature: '#/functions/temperature/asCelsius'
-          # s = T - 25.0
-          - rawComp:
-            - difference:
-              - temperature
-              - 25
-          # x = (x2 * pow(s, 2)) + (x1 * s) + x0
-          # x0 = AC1
-          - ac1: '#/registers/PressureCalAC1'
-          # x1 = 160.0 * pow(2, -13) * AC2
-          - ac2: '#/registers/PressureCalAC2'
-          - x1:
-            - product:
-              - 160
-              - power:
-                - 2
-                - -13
-              - ac2
-          # x2 = pow(160, 2) * pow(2, -25) * VB2
-          - vb2: '#/registers/PressureCalVB2'
-          - x2:
-            - product:
-              - power:
-                - 160
-                - 2
-              - power:
-                - 2
-                - -25
-              - vb2
-          - x:
-            - sum:
-              - product:
-                - x2
-                - power:
-                  - rawComp
-                  - 2
-              - product:
-                - x1
-                - rawComp
-              - ac1
-          # c3 = 160 * pow(2, -15) * AC3
-          - ac3: '#/registers/TempCal3'
-          - c3:
-            - product:
-              - 160
-              - power:
-                - 2
-                - -15
-              - ac3
-          # c4 = pow(10, -3) * pow(2, -15) * AC4
-          - ac4: '#/registers/TempCal4'
-          - c4:
-            - product:
-              - power:
-                - 10
-                - -3
-              - power:
-                - 2
-                - -15
-              - ac4
-          # b1 = pow(160, 2) * pow(2, -30) * VB1
-          - vb1: '#/registers/PressureCalVB1'
-          - b1:
-            - product:
-              - power:
-                - 160
-                - 2
-              - power:
-                - 2
-                - -30
-              - vb1
-          # y0 = c4 * pow(2, 15)
-          - y0:
-            - product:
-              - c4
-              - power:
-                - 2
-                - 15
-          # y1 = c4 * c3
-          - y1:
-            - product:
-              - c4
-              - c3
-          # y2 = c4 * b1
-          - y2:
-            - product:
-              - c4
-              - b1
-          # y = (y2 * pow(s, 2)) + (y1 * s) + y0
-          - y:
-            - sum:
-              - product:
-                - y2
-                - power:
-                  - rawComp
-                  - 2
-              - product:
-                - y1
-                - rawComp
-              - y0
-          # z = (pu - x) / y
-          - z:
-            - division:
-              - difference:
-                - pressure
-                - x
-              - y
-          # p0 = (3791 - 8) / 1600
-          - p0:
-            - division:
-              - difference:
-                - 3791
-                - 8
-              - 1600
-          # p1 = 1 - 7357 * pow(2, -30)
-          - p1:
-            - difference:
-              - 1
-              - product:
-                - 7357
-                - power:
-                  - 2
-                  - -30
-          # p2 = 3038 * 100 * pow(2,-36)
-          - p2:
-            - product:
-              - 3038
-              - 100
-              - power:
-                - 2
-                - -36
-          # P = (p2 * pow(z, 2)) + (p1 * z) + p0
-          - pressure:
-            - sum:
-              - product:
-                - p2
-                - power:
-                  - z
-                  - 2
-              - product:
-                - p1
-                - z
-              - p0
-        return: pressure

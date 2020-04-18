@@ -176,87 +176,29 @@ int bmp180_readTempCalMD(uint16_t* val) {
 
 
 
-void bmp180_pressure_asmbars(float* val) {
-    short ac1; // Variable declaration
-    short ac2; // Variable declaration
-    short ac3; // Variable declaration
-    uint16_t ac4; // Variable declaration
-    float b1; // Variable declaration
-    float c3; // Variable declaration
-    float c4; // Variable declaration
-    float p0; // Variable declaration
-    float p1; // Variable declaration
-    float p2; // Variable declaration
-    float pressure; // Variable declaration
-    float rawComp; // Variable declaration
-    float temperature; // Variable declaration
-    short vb1; // Variable declaration
-    short vb2; // Variable declaration
-    float x; // Variable declaration
-    float x1; // Variable declaration
-    float x2; // Variable declaration
-    float y; // Variable declaration
-    float y0; // Variable declaration
-    float y1; // Variable declaration
-    float y2; // Variable declaration
-    float z; // Variable declaration
-
-
-    bmp180_writeControl(&52);
-    bmp180_readResult(&pressure);
-    temperatureasCelsius(&temperature);
-    rawComp = (temperature-25);
-    bmp180_readPressureCalAC1(&ac1);
-    bmp180_readPressureCalAC2(&ac2);
-    x1 = (160*pow(2, -13)*ac2);
-    bmp180_readPressureCalVB2(&vb2);
-    x2 = (pow(160, 2)*pow(2, -25)*vb2);
-    x = ((x2*pow(rawComp, 2))+(x1*rawComp)+ac1);
-    bmp180_readTempCal3(&ac3);
-    c3 = (160*pow(2, -15)*ac3);
-    bmp180_readTempCal4(&ac4);
-    c4 = (pow(10, -3)*pow(2, -15)*ac4);
-    bmp180_readPressureCalVB1(&vb1);
-    b1 = (pow(160, 2)*pow(2, -30)*vb1);
-    y0 = (c4*pow(2, 15));
-    y1 = (c4*c3);
-    y2 = (c4*b1);
-    y = ((y2*pow(rawComp, 2))+(y1*rawComp)+y0);
-    z = ((pressure-x)/y);
-    p0 = ((3791-8)/1600);
-    p1 = (1-(7357*pow(2, -30)));
-    p2 = (3038*100*pow(2, -36));
-    pressure = ((p2*pow(z, 2))+(p1*z)+p0);
-
-
-    val = pressure;
-}
-
 void bmp180_temperature_ascelsius(float* val) {
-    uint16_t ac5; // Variable declaration
-    uint16_t ac6; // Variable declaration
-    float c5; // Variable declaration
-    float c6; // Variable declaration
-    float mc; // Variable declaration
-    float md; // Variable declaration
     short rawComp; // Variable declaration
     short rawMc; // Variable declaration
     short rawMd; // Variable declaration
     float temperature; // Variable declaration
+    uint16_t varAc5; // Variable declaration
+    uint16_t varAc6; // Variable declaration
+    float varC5; // Variable declaration
+    float varMc; // Variable declaration
+    float varMd; // Variable declaration
 
 
     bmp180_writeControl(&46);
     bmp180_readResult(&temperature);
-    bmp180_readTempCal5(&ac5);
-    bmp180_readTempCal6(&ac6);
-    c5 = ((pow(2, -15)/160)*ac5);
-    c6 = ac6
-    rawComp = (c5*(temperature-ac6));
+    bmp180_readTempCal5(&varAc5);
+    bmp180_readTempCal6(&varAc6);
+    varC5 = ((pow(2, -15)/160)*varAc5);
+    rawComp = (varC5*(temperature-varAc6));
     bmp180_readTempCalMC(&rawMc);
-    mc = ((pow(2, 11)/pow(160, 2))*rawMc);
+    varMc = ((pow(2, 11)/pow(160, 2))*rawMc);
     bmp180_readTempCalMD(&rawMd);
-    md = (rawMd/160);
-    temperature = (rawComp+(mc/(rawComp+md)));
+    varMd = (rawMd/160);
+    temperature = (rawComp+(varMc/(rawComp+varMd)));
 
 
     val = temperature;

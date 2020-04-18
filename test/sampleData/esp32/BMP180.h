@@ -117,13 +117,6 @@ class BMP180 {
 
 
         /**
-         * Reads the pressure in absolute millibars,
-         * not compensated for sea level
-
-         */
-        float pressureasMbars();
-
-        /**
          * Reads the temperature
 
          */

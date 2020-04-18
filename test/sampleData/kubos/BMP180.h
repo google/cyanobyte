@@ -106,13 +106,6 @@ int bmp180_readTempCalMD(uint16_t* val);
 
 
 /**
- * Reads the pressure in absolute millibars,
- * not compensated for sea level
-
-*/
-void bmp180_pressure_asmbars(float* val);
-
-/**
  * Reads the temperature
 
 */
