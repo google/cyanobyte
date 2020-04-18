@@ -13,7 +13,7 @@ Class for {{ info.title }}
 {% for step in logicalSteps %}
 {% for key in step.keys() %}
 {# // Check if a raw read-op #}
-{% if 'rawRead' in step[key] %}
+{% if step[key] is mapping and 'rawRead' in step[key] %}
         {% set bytes = (step[key].rawRead / 8) | round(1, 'ceil') | int %}
         _byte_list = self.i2c.readfrom(self.device_address, {{bytes}})
         {{key}} = 0
@@ -32,7 +32,7 @@ Class for {{ info.title }}
         {% break %}
 {%- endif %}
 {# Check if assignment op #}
-{% if step[key][0:1] == "=" %}
+{% if step[key] is string and step[key][0:1] == "=" %}
         {{key | camel_to_snake}} {{step[key]}}
 {%- endif %}
 {# Check if assignment is a send-op #}
@@ -40,11 +40,11 @@ Class for {{ info.title }}
         self.set_{{function.register[12:].lower()}}({{step[key]}})
 {%- endif %}
 {# Check if assignment is register read op #}
-{% if step[key][:12] == '#/registers/' %}
+{% if step[key] is string and step[key][:12] == '#/registers/' %}
         {{key | camel_to_snake}} = self.get_{{step[key][12:].lower()}}()
 {%- endif %}
 {# Check if assignment is function call op #}
-{% if step[key][:12] == '#/functions/' %}
+{% if step[key] is string and step[key][:12] == '#/functions/' %}
         {{key | camel_to_snake}} = self.{{step[key].lower() | regex_replace('#/functions/(?P<function>.+)/(?P<compute>.+)', '\\g<function>_\\g<compute>')}}()
 {%- endif %}
 {# If the value is a list, then this is a logical setter #}

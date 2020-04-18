@@ -1,0 +1,368 @@
+# Copyright (C) 2020 Google Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# Datasheet: https://cdn-shop.adafruit.com/datasheets/BST-BMP280-DS001-11.pdf
+cyanobyte: 0.1.0
+info:
+  contact:
+    name: Nick Felker
+    url: https://github.com/google/cyanobyte
+    email: felker@google.com
+  package: com.cyanobyte
+  title: BMP180
+  description: Bosch Digital Temperature / Pressure Sensor
+  copyright:
+    name: Google Inc.
+    date: '2020'
+  license:
+    name: Apache-2.0
+  version: 0.1.0
+
+i2c:
+  addressType: 7-bit
+  address: 0x77
+  addressMask: 0xFF
+
+# FIXME access control on registers
+registers:
+  Control:
+    address: 0xF4
+    length: 8
+    title: Register to write commands
+    description: Register stores what the measurement type should be
+    readWrite: 'W'
+  Result:
+    address: 0xF6
+    length: 16
+    title: Register that stores measurement results
+    description: Register stores most recent measurement result
+    readWrite: 'R'
+  TempCal3:
+    address: 0xAE
+    length: 16
+    title: Temperature calibration 3
+    description: For calibration
+    readWrite: 'R'
+  TempCal4:
+    address: 0xB0
+    length: 16
+    title: Temperature calibration 4
+    signed: false
+    description: For calibration
+    readWrite: 'R'
+  TempCal5:
+    address: 0xB2
+    length: 16
+    title: Temperature calibration 5
+    signed: false
+    description: For calibration
+    readWrite: 'R'
+  TempCal6:
+    address: 0xB4
+    length: 16
+    title: Temperature calibration 6
+    signed: false
+    description: For calibration
+    readWrite: 'R'
+  TempCalMC:
+    address: 0xBC
+    length: 16
+    title: Temperature calibration MC
+    description: For calibration
+    readWrite: 'R'
+  TempCalMD:
+    address: 0xBE
+    length: 16
+    title: Temperature calibration MD
+    description: For calibration
+    readWrite: 'R'
+  PressureCalAC1:
+    address: 0xAA
+    length: 16
+    title: Pressure calibration AC1
+    description: For calibration
+    readWrite: 'R'
+  PressureCalAC2:
+    address: 0xAC
+    length: 16
+    title: Pressure calibration AC2
+    description: For calibration
+    readWrite: 'R'
+  PressureCalVB1:
+    address: 0xB6
+    length: 16
+    title: Pressure calibration VB1
+    description: For calibration
+    readWrite: 'R'
+  PressureCalVB2:
+    address: 0xB8
+    length: 16
+    title: Pressure calibration VB2
+    description: For calibration
+    readWrite: 'R'
+
+functions:
+  temperature:
+    title: Temperature as read by sensor
+    description: Reads the temperature
+    register: '#/registers/Control'
+    computed:
+      asCelsius:
+        variables:
+          temperature: float32
+          rawComp: int16
+          ac5: uint16
+          ac6: uint16
+          c5: float32
+          c6: float32
+          rawMc: int16
+          mc: float32
+          rawMd: int16
+          md: float32
+        logic:
+          - send: 0x2E # BMP180 CMD_TEMPERATURE
+          - temperature: '#/registers/Result'
+          # a = c5 * (temperature - c6)
+          # c5 = (pow(2, -15) / 160) * AC5
+          # AC5 = Read 0xB2
+          - ac5: '#/registers/TempCal5'
+          - ac6: '#/registers/TempCal6'
+          - c5:
+            - product:
+              - division:
+                - power:
+                  - 2
+                  - -15
+                - 160
+              - ac5
+          - c6: = ac6
+          - rawComp:
+            - product:
+              - c5
+              - difference:
+                - temperature
+                - ac6
+          # T = a + (mc / (a + md)) <- T is result
+          # mc = (pow(2, 11) / pow(160, 2)) * MC
+          # MC = 0xBC
+          # md = MD / 160
+          # MD = 0xBE
+          - rawMc: '#/registers/TempCalMC'
+          - mc:
+            - product:
+              - division:
+                - power:
+                  - 2
+                  - 11
+                - power:
+                  - 160
+                  - 2
+              - rawMc
+          - rawMd: '#/registers/TempCalMD'
+          - md:
+            - division:
+              - rawMd
+              - 160
+          - temperature:
+            - sum:
+              - rawComp
+              - division:
+                - mc
+                - sum:
+                  - rawComp
+                  - md
+        return: temperature
+  pressure:
+    title: Pressure as read by sensor
+    description: |
+      Reads the pressure in absolute millibars,
+      not compensated for sea level
+    register: '#/registers/Control'
+    computed:
+      asMbars:
+        variables:
+          pressure: float32
+          temperature: float32
+          rawComp: float32
+          ac1: int16
+          ac2: int16
+          x1: float32
+          vb2: int16
+          x2: float32
+          x: float32
+          ac3: int16
+          ac4: uint16
+          c3: float32
+          c4: float32
+          vb1: int16
+          b1: float32
+          y0: float32
+          y1: float32
+          y2: float32
+          y: float32
+          z: float32
+          p0: float32
+          p1: float32
+          p2: float32
+        logic:
+          # Looking at the spec, there are four potential oversampling
+          # values that could be used. 0x34, 0x74, 0xB4, 0xF4.
+          # As the oversampling increases, the resolution goes up with
+          # the tradeoff of more time delay for readings.
+          # For our purposes we will go with the fastest value.
+          - send: 0x34 # BMP180 CMD_PRESSURE0
+          - pressure: '#/registers/Result'
+          - temperature: '#/functions/temperature/asCelsius'
+          # s = T - 25.0
+          - rawComp:
+            - difference:
+              - temperature
+              - 25
+          # x = (x2 * pow(s, 2)) + (x1 * s) + x0
+          # x0 = AC1
+          - ac1: '#/registers/PressureCalAC1'
+          # x1 = 160.0 * pow(2, -13) * AC2
+          - ac2: '#/registers/PressureCalAC2'
+          - x1:
+            - product:
+              - 160
+              - power:
+                - 2
+                - -13
+              - ac2
+          # x2 = pow(160, 2) * pow(2, -25) * VB2
+          - vb2: '#/registers/PressureCalVB2'
+          - x2:
+            - product:
+              - power:
+                - 160
+                - 2
+              - power:
+                - 2
+                - -25
+              - vb2
+          - x:
+            - sum:
+              - product:
+                - x2
+                - power:
+                  - rawComp
+                  - 2
+              - product:
+                - x1
+                - rawComp
+              - ac1
+          # c3 = 160 * pow(2, -15) * AC3
+          - ac3: '#/registers/TempCal3'
+          - c3:
+            - product:
+              - 160
+              - power:
+                - 2
+                - -15
+              - ac3
+          # c4 = pow(10, -3) * pow(2, -15) * AC4
+          - ac4: '#/registers/TempCal4'
+          - c4:
+            - product:
+              - power:
+                - 10
+                - -3
+              - power:
+                - 2
+                - -15
+              - ac4
+          # b1 = pow(160, 2) * pow(2, -30) * VB1
+          - vb1: '#/registers/PressureCalVB1'
+          - b1:
+            - product:
+              - power:
+                - 160
+                - 2
+              - power:
+                - 2
+                - -30
+              - vb1
+          # y0 = c4 * pow(2, 15)
+          - y0:
+            - product:
+              - c4
+              - power:
+                - 2
+                - 15
+          # y1 = c4 * c3
+          - y1:
+            - product:
+              - c4
+              - c3
+          # y2 = c4 * b1
+          - y2:
+            - product:
+              - c4
+              - b1
+          # y = (y2 * pow(s, 2)) + (y1 * s) + y0
+          - y:
+            - sum:
+              - product:
+                - y2
+                - power:
+                  - rawComp
+                  - 2
+              - product:
+                - y1
+                - rawComp
+              - y0
+          # z = (pu - x) / y
+          - z:
+            - division:
+              - difference:
+                - pressure
+                - x
+              - y
+          # p0 = (3791 - 8) / 1600
+          - p0:
+            - division:
+              - difference:
+                - 3791
+                - 8
+              - 1600
+          # p1 = 1 - 7357 * pow(2, -30)
+          - p1:
+            - difference:
+              - 1
+              - product:
+                - 7357
+                - power:
+                  - 2
+                  - -30
+          # p2 = 3038 * 100 * pow(2,-36)
+          - p2:
+            - product:
+              - 3038
+              - 100
+              - power:
+                - 2
+                - -36
+          # P = (p2 * pow(z, 2)) + (p1 * z) + p0
+          - pressure:
+            - sum:
+              - product:
+                - p2
+                - power:
+                  - z
+                  - 2
+              - product:
+                - p1
+                - z
+              - p0
+        return: pressure
