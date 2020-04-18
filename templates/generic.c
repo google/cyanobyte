@@ -18,7 +18,7 @@
 {% for step in logicalSteps %}
 {% for key in step.keys() %}
 {# // Check if a raw read-op #}
-{% if 'rawRead' in step[key] %}
+{% if step[key] is mapping and 'rawRead' in step[key] %}
     {% set length = (step[key].rawRead / 8) | round(1, 'ceil') | int %}
     read(DEVICE_ADDRESS, NULL, {{key}}, {{length}});
     {% break %}
@@ -33,18 +33,18 @@
     {% break %}
 {% endif %}
 {# Check if assignment op #}
-{% if step[key][0:1] == "=" %}
+{% if step[key] is string and step[key][0:1] == "=" %}
     {{key}} {{step[key]}}
 {% endif %}
 {# Check if assignment is a send-op #}
 {% if key == 'send' %}
     {{info.title.lower()}}_write{{function.register[12:]}}(&{{step[key]}}, write);
 {% endif %}
-{% if step[key][:12] == '#/registers/' %}
+{% if step[key] is string and step[key][:12] == '#/registers/' %}
     {{info.title.lower()}}_read{{step[key][12:]}}(&{{key}}, read);
 {% endif %}
 {# // Check if assignment is function call op #}
-{% if step[key][:12] == '#/functions/' %}
+{% if step[key] is string and step[key][:12] == '#/functions/' %}
     {% set doread = 'True' in embedded.recursiveReadWrite(functions, step[key][12:], 'r') %}
     {% set dowrite = 'True' in embedded.recursiveReadWrite(functions, step[key][12:], 'w') %}
     {{step[key].lower() | regex_replace('#/functions/(?P<function>.+)/(?P<compute>.+)', info.title.lower() + '_\\g<function>_\\g<compute>')}}(&{{key}}{% if doread %}, read{% if dowrite %}, {% endif %}{% endif %}{% if dowrite %}write{% endif %});

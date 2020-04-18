@@ -15,7 +15,7 @@
 {% for step in logicalSteps %}
 {% for key in step.keys() %}
 {# // Check if a raw read-op #}
-{% if 'rawRead' in step[key] %}
+{% if step[key] is mapping and 'rawRead' in step[key] %}
     {% set bytes = (step[key].rawRead / 8) | round(1, 'ceil') | int %}
     uint8_t _datum;
     _wire->beginTransmission(DEVICE_ADDRESS);
@@ -38,7 +38,7 @@
     {% break %}
 {% endif %}
 {# // Check if assignment op #}
-{% if step[key][0:1] == "=" %}
+{% if step[key] is string and step[key][0:1] == "=" %}
     {{key}} {{step[key]}};
 {% endif %}
 {# // Check if assignment is a send-op #}
@@ -46,11 +46,11 @@
     write{{function.register[12:]}}({{step[key]}});
 {% endif %}
 {# // Check if assignment is register read op #}
-{% if step[key][:12] == '#/registers/' %}
+{% if step[key] is string and step[key][:12] == '#/registers/' %}
     {{key}} = read{{step[key][12:]}}();
 {% endif %}
 {# // Check if assignment is function call op #}
-{% if step[key][:12] == '#/functions/' %}
+{% if step[key] is string and step[key][:12] == '#/functions/' %}
     {{key}} = {{step[key] | regex_replace('#/functions/(?P<function>.+)/(?P<compute>.+)', '\\g<function>\\g<compute>')}}();
 {% endif %}
 {# // If the value is a list, then this is a logical setter #}

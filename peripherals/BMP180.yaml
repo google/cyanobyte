@@ -1,0 +1,181 @@
+# Copyright (C) 2020 Google Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# Datasheet: https://cdn-shop.adafruit.com/datasheets/BST-BMP280-DS001-11.pdf
+cyanobyte: 0.1.0
+info:
+  contact:
+    name: Nick Felker
+    url: https://github.com/google/cyanobyte
+    email: felker@google.com
+  package: com.cyanobyte
+  title: BMP180
+  description: Bosch Digital Temperature / Pressure Sensor
+  copyright:
+    name: Google Inc.
+    date: '2020'
+  license:
+    name: Apache-2.0
+  version: 0.1.0
+
+i2c:
+  addressType: 7-bit
+  address: 0x77
+  addressMask: 0xFF
+
+registers:
+  Control:
+    address: 0xF4
+    length: 8
+    title: Register to write commands
+    description: Register stores what the measurement type should be
+    readWrite: 'W'
+  Result:
+    address: 0xF6
+    length: 16
+    title: Register that stores measurement results
+    description: Register stores most recent measurement result
+    readWrite: 'R'
+  TempCal3:
+    address: 0xAE
+    length: 16
+    title: Temperature calibration 3
+    description: For calibration
+    readWrite: 'R'
+  TempCal4:
+    address: 0xB0
+    length: 16
+    title: Temperature calibration 4
+    signed: false
+    description: For calibration
+    readWrite: 'R'
+  TempCal5:
+    address: 0xB2
+    length: 16
+    title: Temperature calibration 5
+    signed: false
+    description: For calibration
+    readWrite: 'R'
+  TempCal6:
+    address: 0xB4
+    length: 16
+    title: Temperature calibration 6
+    signed: false
+    description: For calibration
+    readWrite: 'R'
+  TempCalMC:
+    address: 0xBC
+    length: 16
+    title: Temperature calibration MC
+    description: For calibration
+    readWrite: 'R'
+  TempCalMD:
+    address: 0xBE
+    length: 16
+    title: Temperature calibration MD
+    description: For calibration
+    readWrite: 'R'
+  PressureCalAC1:
+    address: 0xAA
+    length: 16
+    title: Pressure calibration AC1
+    description: For calibration
+    readWrite: 'R'
+  PressureCalAC2:
+    address: 0xAC
+    length: 16
+    title: Pressure calibration AC2
+    description: For calibration
+    readWrite: 'R'
+  PressureCalVB1:
+    address: 0xB6
+    length: 16
+    title: Pressure calibration VB1
+    description: For calibration
+    readWrite: 'R'
+  PressureCalVB2:
+    address: 0xB8
+    length: 16
+    title: Pressure calibration VB2
+    description: For calibration
+    readWrite: 'R'
+
+functions:
+  temperature:
+    title: Temperature as read by sensor
+    description: Reads the temperature
+    register: '#/registers/Control'
+    computed:
+      asCelsius:
+        variables:
+          temperature: float32
+          rawComp: int16
+          varAc5: uint16
+          varAc6: uint16
+          varC5: float32
+          rawMc: int16
+          varMc: float32
+          rawMd: int16
+          varMd: float32
+        logic:
+          - send: 0x2E # BMP180 CMD_TEMPERATURE
+          - temperature: '#/registers/Result'
+          # a = c5 * (temperature - c6)
+          # c5 = (pow(2, -15) / 160) * AC5
+          # AC5 = Read 0xB2
+          - varAc5: '#/registers/TempCal5'
+          - varAc6: '#/registers/TempCal6'
+          - varC5:
+            - product:
+              - division:
+                - power:
+                  - 2
+                  - -15
+                - 160
+              - varAc5
+          - rawComp:
+            - product:
+              - varC5
+              - difference:
+                - temperature
+                - varAc6
+          # T = a + (mc / (a + md)) <- T is result
+          # mc = (pow(2, 11) / pow(160, 2)) * MC
+          # MC = 0xBC
+          # md = MD / 160
+          # MD = 0xBE
+          - rawMc: '#/registers/TempCalMC'
+          - varMc:
+            - product:
+              - division:
+                - power:
+                  - 2
+                  - 11
+                - power:
+                  - 160
+                  - 2
+              - rawMc
+          - rawMd: '#/registers/TempCalMD'
+          - varMd:
+            - division:
+              - rawMd
+              - 160
+          - temperature:
+            - sum:
+              - rawComp
+              - division:
+                - varMc
+                - sum:
+                  - rawComp
+                  - varMd
+        return: temperature

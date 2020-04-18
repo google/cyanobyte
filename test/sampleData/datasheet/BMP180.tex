@@ -1,0 +1,122 @@
+\documentclass[a4paper,12pt,oneside,pdflatex,italian,final,twocolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{parallel}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+
+\usepackage[export]{adjustbox}
+\usepackage[margin=0.5in]{geometry}
+\addtolength{\topmargin}{0in}
+
+\usepackage{libertine}
+\renewcommand*\familydefault{\sfdefault}  %% Only if the base font of the document is to be sans serif
+\usepackage[T1]{fontenc}
+
+\title{ BMP180 }
+\author{ Nick Felker }
+\date{ 2020 }
+
+\begin{document}
+
+\pagestyle{fancy}
+
+\lhead{ Nick Felker }
+\chead { 2020 }
+\rhead{ BMP180 v0.1.0 }
+
+
+\onecolumn
+
+
+\begin{figure}
+\begin{minipage}{0.47\textwidth}
+
+\section{Overview}
+    Bosch Digital Temperature / Pressure Sensor
+    \begin{itemize}
+        \item Device address 119
+        \item Address type 7-bit
+    \end{itemize}
+
+
+\end{minipage}
+\hfill
+
+\end{figure}
+
+
+\section{Register Description}
+\begin{itemize}
+\item Register to write commands - Register stores what the measurement type should be
+\item Pressure calibration AC1 - For calibration
+\item Pressure calibration AC2 - For calibration
+\item Pressure calibration VB1 - For calibration
+\item Pressure calibration VB2 - For calibration
+\item Register that stores measurement results - Register stores most recent measurement result
+\item Temperature calibration 3 - For calibration
+\item Temperature calibration 4 - For calibration
+\item Temperature calibration 5 - For calibration
+\item Temperature calibration 6 - For calibration
+\item Temperature calibration MC - For calibration
+\item Temperature calibration MD - For calibration
+\end{itemize}
+
+\section{Technical specification}
+\centering
+\begin{tabular}{lcrr}
+\toprule
+ & Register Name & Register Address & Register Length \\
+\midrule
+Control & Register to write commands & 244 & 8 \\
+PressureCalAC1 & Pressure calibration AC1 & 170 & 16 \\
+PressureCalAC2 & Pressure calibration AC2 & 172 & 16 \\
+PressureCalVB1 & Pressure calibration VB1 & 182 & 16 \\
+PressureCalVB2 & Pressure calibration VB2 & 184 & 16 \\
+Result & Register that stores measurement results & 246 & 16 \\
+TempCal3 & Temperature calibration 3 & 174 & 16 \\
+TempCal4 & Temperature calibration 4 & 176 & 16 \\
+TempCal5 & Temperature calibration 5 & 178 & 16 \\
+TempCal6 & Temperature calibration 6 & 180 & 16 \\
+TempCalMC & Temperature calibration MC & 188 & 16 \\
+TempCalMD & Temperature calibration MD & 190 & 16 \\
+\bottomrule
+\end{tabular}
+
+
+\raggedright
+
+\section{Functions}
+
+\centering
+\begin{tabular}{lc}
+\toprule
+  & Description \\
+\midrule
+temperature & Reads the temperature \\
+\bottomrule
+\end{tabular}
+
+
+\raggedright
+\subsection{Function temperature }
+Reads the temperature \\
+
+\centering
+\begin{tabular}{lcr}
+\toprule
+  & Inputs & Return \\
+\midrule
+asCelsius &
+&
+temperature
+\\
+\bottomrule
+\end{tabular}
+
+
+
+\raggedright
+
+\end{document}

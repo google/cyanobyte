@@ -16,7 +16,7 @@
 
 {% for step in logicalSteps %}
 {% for key in step.keys() %}
-{% if 'rawRead' in step[key] %}
+{% if step[key] is mapping and 'rawRead' in step[key] %}
     {% set length = (step[key].rawRead / 8) | round(1, 'ceil') | int %}
     k_i2c_read(i2c_bus, DEVICE_ADDRESS, {{key}}, {{length}});
     {% break %}
@@ -31,18 +31,18 @@
     {% break %}
 {% endif %}
 {# Check if assignment op #}
-{% if step[key][0:1] == "=" %}
+{% if step[key] is string and step[key][0:1] == "=" %}
     {{key}} {{step[key]}}
 {% endif %}
 {# Check if assignment is a send-op #}
 {% if key == 'send' %}
     {{info.title.lower()}}_write{{function.register[12:]}}(&{{step[key]}});
 {% endif %}
-{% if step[key][:12] == '#/registers/' %}
+{% if step[key] is string and step[key][:12] == '#/registers/' %}
     {{info.title.lower()}}_read{{step[key][12:]}}(&{{key}});
 {% endif %}
 {# // Check if assignment is function call op #}
-{% if step[key][:12] == '#/functions/' %}
+{% if step[key] is string and step[key][:12] == '#/functions/' %}
     {{step[key] | regex_replace('#/functions/(?P<function>.+)/(?P<compute>.+)', '\\g<function>\\g<compute>')}}(&{{key}});
 {% endif %}
 {# If the value is a list, then this is a logical setter #}
