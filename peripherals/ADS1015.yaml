@@ -43,6 +43,7 @@ registers:
     length: 16
     title: ADC Value
     description: Conversion register contains the result of the last conversion
+    readWrite: R
 fields:
   SampleRate:
     title: Setup sample rate for reading analog voltage

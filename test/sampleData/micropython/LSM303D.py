@@ -65,19 +65,6 @@ class LSM303D:
         val = val << 8 | byte_list[0]
         return val
 
-    def set_accelerometerx_high(self, data):
-        """
-        Raw accelerometer data on X plane
-
-        """
-        buffer = []
-        buffer[0] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_ACCELEROMETERX_HIGH,
-            buffer,
-            addrsize=8
-        )
     def get_accelerometerx_low(self):
         """
         Raw accelerometer data on X plane
@@ -93,19 +80,6 @@ class LSM303D:
         val = val << 8 | byte_list[0]
         return val
 
-    def set_accelerometerx_low(self, data):
-        """
-        Raw accelerometer data on X plane
-
-        """
-        buffer = []
-        buffer[0] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_ACCELEROMETERX_LOW,
-            buffer,
-            addrsize=8
-        )
     def get_accelerometery_high(self):
         """
         Raw accelerometer data on Y plane
@@ -121,19 +95,6 @@ class LSM303D:
         val = val << 8 | byte_list[0]
         return val
 
-    def set_accelerometery_high(self, data):
-        """
-        Raw accelerometer data on Y plane
-
-        """
-        buffer = []
-        buffer[0] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_ACCELEROMETERY_HIGH,
-            buffer,
-            addrsize=8
-        )
     def get_accelerometery_low(self):
         """
         Raw accelerometer data on Y plane
@@ -149,19 +110,6 @@ class LSM303D:
         val = val << 8 | byte_list[0]
         return val
 
-    def set_accelerometery_low(self, data):
-        """
-        Raw accelerometer data on Y plane
-
-        """
-        buffer = []
-        buffer[0] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_ACCELEROMETERY_LOW,
-            buffer,
-            addrsize=8
-        )
     def get_accelerometerz_high(self):
         """
         Raw accelerometer data on Z plane
@@ -177,19 +125,6 @@ class LSM303D:
         val = val << 8 | byte_list[0]
         return val
 
-    def set_accelerometerz_high(self, data):
-        """
-        Raw accelerometer data on Z plane
-
-        """
-        buffer = []
-        buffer[0] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_ACCELEROMETERZ_HIGH,
-            buffer,
-            addrsize=8
-        )
     def get_accelerometerz_low(self):
         """
         Raw accelerometer data on Z plane
@@ -205,19 +140,6 @@ class LSM303D:
         val = val << 8 | byte_list[0]
         return val
 
-    def set_accelerometerz_low(self, data):
-        """
-        Raw accelerometer data on Z plane
-
-        """
-        buffer = []
-        buffer[0] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_ACCELEROMETERZ_LOW,
-            buffer,
-            addrsize=8
-        )
     def get_magnetometerx_high(self):
         """
         Raw magnetometer data on X plane
@@ -233,19 +155,6 @@ class LSM303D:
         val = val << 8 | byte_list[0]
         return val
 
-    def set_magnetometerx_high(self, data):
-        """
-        Raw magnetometer data on X plane
-
-        """
-        buffer = []
-        buffer[0] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_MAGNETOMETERX_HIGH,
-            buffer,
-            addrsize=8
-        )
     def get_magnetometerx_low(self):
         """
         Raw magnetometer data on X plane
@@ -261,19 +170,6 @@ class LSM303D:
         val = val << 8 | byte_list[0]
         return val
 
-    def set_magnetometerx_low(self, data):
-        """
-        Raw magnetometer data on X plane
-
-        """
-        buffer = []
-        buffer[0] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_MAGNETOMETERX_LOW,
-            buffer,
-            addrsize=8
-        )
     def get_magnetometery_high(self):
         """
         Raw magnetometer data on Y plane
@@ -289,19 +185,6 @@ class LSM303D:
         val = val << 8 | byte_list[0]
         return val
 
-    def set_magnetometery_high(self, data):
-        """
-        Raw magnetometer data on Y plane
-
-        """
-        buffer = []
-        buffer[0] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_MAGNETOMETERY_HIGH,
-            buffer,
-            addrsize=8
-        )
     def get_magnetometery_low(self):
         """
         Raw magnetometer data on Y plane
@@ -317,19 +200,6 @@ class LSM303D:
         val = val << 8 | byte_list[0]
         return val
 
-    def set_magnetometery_low(self, data):
-        """
-        Raw magnetometer data on Y plane
-
-        """
-        buffer = []
-        buffer[0] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_MAGNETOMETERY_LOW,
-            buffer,
-            addrsize=8
-        )
     def get_magnetometerz_high(self):
         """
         Raw magnetometer data on Z plane
@@ -345,19 +215,6 @@ class LSM303D:
         val = val << 8 | byte_list[0]
         return val
 
-    def set_magnetometerz_high(self, data):
-        """
-        Raw magnetometer data on Z plane
-
-        """
-        buffer = []
-        buffer[0] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_MAGNETOMETERZ_HIGH,
-            buffer,
-            addrsize=8
-        )
     def get_magnetometerz_low(self):
         """
         Raw magnetometer data on Z plane
@@ -373,19 +230,6 @@ class LSM303D:
         val = val << 8 | byte_list[0]
         return val
 
-    def set_magnetometerz_low(self, data):
-        """
-        Raw magnetometer data on Z plane
-
-        """
-        buffer = []
-        buffer[0] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_MAGNETOMETERZ_LOW,
-            buffer,
-            addrsize=8
-        )
 
     def acceleration_asg(self):
         """

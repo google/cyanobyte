@@ -37,15 +37,6 @@ int bmp280_readDigP1(
 );
 
 /**
- * Used for Pascals conversion
-
- */
-int bmp280_writeDigP1(
-    uint16_t* data,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-);
-/**
   * Used for Pascals conversion
 
 */
@@ -54,15 +45,6 @@ int bmp280_readDigP2(
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 );
 
-/**
- * Used for Pascals conversion
-
- */
-int bmp280_writeDigP2(
-    uint16_t* data,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-);
 /**
   * Used for Pascals conversion
 
@@ -73,15 +55,6 @@ int bmp280_readDigP3(
 );
 
 /**
- * Used for Pascals conversion
-
- */
-int bmp280_writeDigP3(
-    uint16_t* data,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-);
-/**
   * Used for Pascals conversion
 
 */
@@ -90,15 +63,6 @@ int bmp280_readDigP4(
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 );
 
-/**
- * Used for Pascals conversion
-
- */
-int bmp280_writeDigP4(
-    uint16_t* data,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-);
 /**
   * Used for Pascals conversion
 
@@ -109,15 +73,6 @@ int bmp280_readDigP5(
 );
 
 /**
- * Used for Pascals conversion
-
- */
-int bmp280_writeDigP5(
-    uint16_t* data,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-);
-/**
   * Used for Pascals conversion
 
 */
@@ -126,15 +81,6 @@ int bmp280_readDigP6(
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 );
 
-/**
- * Used for Pascals conversion
-
- */
-int bmp280_writeDigP6(
-    uint16_t* data,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-);
 /**
   * Used for Pascals conversion
 
@@ -145,15 +91,6 @@ int bmp280_readDigP7(
 );
 
 /**
- * Used for Pascals conversion
-
- */
-int bmp280_writeDigP7(
-    uint16_t* data,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-);
-/**
   * Used for Pascals conversion
 
 */
@@ -162,15 +99,6 @@ int bmp280_readDigP8(
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 );
 
-/**
- * Used for Pascals conversion
-
- */
-int bmp280_writeDigP8(
-    uint16_t* data,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-);
 /**
   * Used for Pascals conversion
 
@@ -181,15 +109,6 @@ int bmp280_readDigP9(
 );
 
 /**
- * Used for Pascals conversion
-
- */
-int bmp280_writeDigP9(
-    uint16_t* data,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-);
-/**
   * Used for Celcius conversion
 
 */
@@ -198,15 +117,6 @@ int bmp280_readDigT1(
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 );
 
-/**
- * Used for Celcius conversion
-
- */
-int bmp280_writeDigT1(
-    uint16_t* data,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-);
 /**
   * Used for Celcius conversion
 
@@ -217,15 +127,6 @@ int bmp280_readDigT2(
 );
 
 /**
- * Used for Celcius conversion
-
- */
-int bmp280_writeDigT2(
-    uint16_t* data,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-);
-/**
   * Used for Celcius conversion
 
 */
@@ -234,15 +135,6 @@ int bmp280_readDigT3(
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 );
 
-/**
- * Used for Celcius conversion
-
- */
-int bmp280_writeDigT3(
-    uint16_t* data,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-);
 /**
   * Part 2 of Pressure
 
@@ -253,15 +145,6 @@ int bmp280_readPressureLsb(
 );
 
 /**
- * Part 2 of Pressure
-
- */
-int bmp280_writePressureLsb(
-    uint8_t* data,
-    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);
-/**
   * Part 1 of Pressure
 
 */
@@ -270,15 +153,6 @@ int bmp280_readPressureMsb(
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 );
 
-/**
- * Part 1 of Pressure
-
- */
-int bmp280_writePressureMsb(
-    uint8_t* data,
-    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);
 /**
   * Part 3 of Pressure
 
@@ -289,15 +163,6 @@ int bmp280_readPressureXlsb(
 );
 
 /**
- * Part 3 of Pressure
-
- */
-int bmp280_writePressureXlsb(
-    uint8_t* data,
-    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);
-/**
   * Part 2 of temperature
 
 */
@@ -306,15 +171,6 @@ int bmp280_readTempLsb(
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 );
 
-/**
- * Part 2 of temperature
-
- */
-int bmp280_writeTempLsb(
-    uint8_t* data,
-    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);
 /**
   * Part 1 of temperature
 
@@ -325,15 +181,6 @@ int bmp280_readTempMsb(
 );
 
 /**
- * Part 1 of temperature
-
- */
-int bmp280_writeTempMsb(
-    uint8_t* data,
-    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);
-/**
   * Final part of temperature
 
 */
@@ -342,15 +189,6 @@ int bmp280_readTempXlsb(
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 );
 
-/**
- * Final part of temperature
-
- */
-int bmp280_writeTempXlsb(
-    uint8_t* data,
-    int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-);
 
 /**
  * Reads the atmospheric pressure

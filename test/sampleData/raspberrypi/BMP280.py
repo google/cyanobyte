@@ -70,16 +70,6 @@ class BMP280:
         )
         return val
 
-    def set_digp1(self, data):
-        """
-        Used for Pascals conversion
-
-        """
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_DIGP1,
-            data
-        )
     def get_digp2(self):
         """
         Used for Pascals conversion
@@ -93,16 +83,6 @@ class BMP280:
         val = _sign(val, 16)
         return val
 
-    def set_digp2(self, data):
-        """
-        Used for Pascals conversion
-
-        """
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_DIGP2,
-            data
-        )
     def get_digp3(self):
         """
         Used for Pascals conversion
@@ -116,16 +96,6 @@ class BMP280:
         val = _sign(val, 16)
         return val
 
-    def set_digp3(self, data):
-        """
-        Used for Pascals conversion
-
-        """
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_DIGP3,
-            data
-        )
     def get_digp4(self):
         """
         Used for Pascals conversion
@@ -139,16 +109,6 @@ class BMP280:
         val = _sign(val, 16)
         return val
 
-    def set_digp4(self, data):
-        """
-        Used for Pascals conversion
-
-        """
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_DIGP4,
-            data
-        )
     def get_digp5(self):
         """
         Used for Pascals conversion
@@ -162,16 +122,6 @@ class BMP280:
         val = _sign(val, 16)
         return val
 
-    def set_digp5(self, data):
-        """
-        Used for Pascals conversion
-
-        """
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_DIGP5,
-            data
-        )
     def get_digp6(self):
         """
         Used for Pascals conversion
@@ -185,16 +135,6 @@ class BMP280:
         val = _sign(val, 16)
         return val
 
-    def set_digp6(self, data):
-        """
-        Used for Pascals conversion
-
-        """
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_DIGP6,
-            data
-        )
     def get_digp7(self):
         """
         Used for Pascals conversion
@@ -208,16 +148,6 @@ class BMP280:
         val = _sign(val, 16)
         return val
 
-    def set_digp7(self, data):
-        """
-        Used for Pascals conversion
-
-        """
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_DIGP7,
-            data
-        )
     def get_digp8(self):
         """
         Used for Pascals conversion
@@ -231,16 +161,6 @@ class BMP280:
         val = _sign(val, 16)
         return val
 
-    def set_digp8(self, data):
-        """
-        Used for Pascals conversion
-
-        """
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_DIGP8,
-            data
-        )
     def get_digp9(self):
         """
         Used for Pascals conversion
@@ -254,16 +174,6 @@ class BMP280:
         val = _sign(val, 16)
         return val
 
-    def set_digp9(self, data):
-        """
-        Used for Pascals conversion
-
-        """
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_DIGP9,
-            data
-        )
     def get_digt1(self):
         """
         Used for Celcius conversion
@@ -275,16 +185,6 @@ class BMP280:
         )
         return val
 
-    def set_digt1(self, data):
-        """
-        Used for Celcius conversion
-
-        """
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_DIGT1,
-            data
-        )
     def get_digt2(self):
         """
         Used for Celcius conversion
@@ -296,16 +196,6 @@ class BMP280:
         )
         return val
 
-    def set_digt2(self, data):
-        """
-        Used for Celcius conversion
-
-        """
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_DIGT2,
-            data
-        )
     def get_digt3(self):
         """
         Used for Celcius conversion
@@ -319,16 +209,6 @@ class BMP280:
         val = _sign(val, 16)
         return val
 
-    def set_digt3(self, data):
-        """
-        Used for Celcius conversion
-
-        """
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_DIGT3,
-            data
-        )
     def get_pressurelsb(self):
         """
         Part 2 of Pressure
@@ -340,16 +220,6 @@ class BMP280:
         )
         return val
 
-    def set_pressurelsb(self, data):
-        """
-        Part 2 of Pressure
-
-        """
-        self.bus.write_byte_data(
-            self.device_address,
-            self.REGISTER_PRESSURELSB,
-            data
-        )
     def get_pressuremsb(self):
         """
         Part 1 of Pressure
@@ -361,16 +231,6 @@ class BMP280:
         )
         return val
 
-    def set_pressuremsb(self, data):
-        """
-        Part 1 of Pressure
-
-        """
-        self.bus.write_byte_data(
-            self.device_address,
-            self.REGISTER_PRESSUREMSB,
-            data
-        )
     def get_pressurexlsb(self):
         """
         Part 3 of Pressure
@@ -382,16 +242,6 @@ class BMP280:
         )
         return val
 
-    def set_pressurexlsb(self, data):
-        """
-        Part 3 of Pressure
-
-        """
-        self.bus.write_byte_data(
-            self.device_address,
-            self.REGISTER_PRESSUREXLSB,
-            data
-        )
     def get_templsb(self):
         """
         Part 2 of temperature
@@ -403,16 +253,6 @@ class BMP280:
         )
         return val
 
-    def set_templsb(self, data):
-        """
-        Part 2 of temperature
-
-        """
-        self.bus.write_byte_data(
-            self.device_address,
-            self.REGISTER_TEMPLSB,
-            data
-        )
     def get_tempmsb(self):
         """
         Part 1 of temperature
@@ -424,16 +264,6 @@ class BMP280:
         )
         return val
 
-    def set_tempmsb(self, data):
-        """
-        Part 1 of temperature
-
-        """
-        self.bus.write_byte_data(
-            self.device_address,
-            self.REGISTER_TEMPMSB,
-            data
-        )
     def get_tempxlsb(self):
         """
         Final part of temperature
@@ -445,16 +275,6 @@ class BMP280:
         )
         return val
 
-    def set_tempxlsb(self, data):
-        """
-        Final part of temperature
-
-        """
-        self.bus.write_byte_data(
-            self.device_address,
-            self.REGISTER_TEMPXLSB,
-            data
-        )
 
     def pressure_ashpa(self):
         """

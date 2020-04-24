@@ -38,180 +38,108 @@ void bmp280_terminate();
 int bmp280_readDigP1(uint16_t* val);
 
 /**
- * Used for Pascals conversion
-
- */
-int bmp280_writeDigP1(uint16_t* data);/**
   * Used for Pascals conversion
 
 */
 int bmp280_readDigP2(uint16_t* val);
 
 /**
- * Used for Pascals conversion
-
- */
-int bmp280_writeDigP2(uint16_t* data);/**
   * Used for Pascals conversion
 
 */
 int bmp280_readDigP3(uint16_t* val);
 
 /**
- * Used for Pascals conversion
-
- */
-int bmp280_writeDigP3(uint16_t* data);/**
   * Used for Pascals conversion
 
 */
 int bmp280_readDigP4(uint16_t* val);
 
 /**
- * Used for Pascals conversion
-
- */
-int bmp280_writeDigP4(uint16_t* data);/**
   * Used for Pascals conversion
 
 */
 int bmp280_readDigP5(uint16_t* val);
 
 /**
- * Used for Pascals conversion
-
- */
-int bmp280_writeDigP5(uint16_t* data);/**
   * Used for Pascals conversion
 
 */
 int bmp280_readDigP6(uint16_t* val);
 
 /**
- * Used for Pascals conversion
-
- */
-int bmp280_writeDigP6(uint16_t* data);/**
   * Used for Pascals conversion
 
 */
 int bmp280_readDigP7(uint16_t* val);
 
 /**
- * Used for Pascals conversion
-
- */
-int bmp280_writeDigP7(uint16_t* data);/**
   * Used for Pascals conversion
 
 */
 int bmp280_readDigP8(uint16_t* val);
 
 /**
- * Used for Pascals conversion
-
- */
-int bmp280_writeDigP8(uint16_t* data);/**
   * Used for Pascals conversion
 
 */
 int bmp280_readDigP9(uint16_t* val);
 
 /**
- * Used for Pascals conversion
-
- */
-int bmp280_writeDigP9(uint16_t* data);/**
   * Used for Celcius conversion
 
 */
 int bmp280_readDigT1(uint16_t* val);
 
 /**
- * Used for Celcius conversion
-
- */
-int bmp280_writeDigT1(uint16_t* data);/**
   * Used for Celcius conversion
 
 */
 int bmp280_readDigT2(uint16_t* val);
 
 /**
- * Used for Celcius conversion
-
- */
-int bmp280_writeDigT2(uint16_t* data);/**
   * Used for Celcius conversion
 
 */
 int bmp280_readDigT3(uint16_t* val);
 
 /**
- * Used for Celcius conversion
-
- */
-int bmp280_writeDigT3(uint16_t* data);/**
   * Part 2 of Pressure
 
 */
 int bmp280_readPressureLsb(uint8_t* val);
 
 /**
- * Part 2 of Pressure
-
- */
-int bmp280_writePressureLsb(uint8_t* data);/**
   * Part 1 of Pressure
 
 */
 int bmp280_readPressureMsb(uint8_t* val);
 
 /**
- * Part 1 of Pressure
-
- */
-int bmp280_writePressureMsb(uint8_t* data);/**
   * Part 3 of Pressure
 
 */
 int bmp280_readPressureXlsb(uint8_t* val);
 
 /**
- * Part 3 of Pressure
-
- */
-int bmp280_writePressureXlsb(uint8_t* data);/**
   * Part 2 of temperature
 
 */
 int bmp280_readTempLsb(uint8_t* val);
 
 /**
- * Part 2 of temperature
-
- */
-int bmp280_writeTempLsb(uint8_t* data);/**
   * Part 1 of temperature
 
 */
 int bmp280_readTempMsb(uint8_t* val);
 
 /**
- * Part 1 of temperature
-
- */
-int bmp280_writeTempMsb(uint8_t* data);/**
   * Final part of temperature
 
 */
 int bmp280_readTempXlsb(uint8_t* val);
 
-/**
- * Final part of temperature
 
- */
-int bmp280_writeTempXlsb(uint8_t* data);
 
 /**
  * Reads the atmospheric pressure

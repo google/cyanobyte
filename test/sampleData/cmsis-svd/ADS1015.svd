@@ -188,7 +188,7 @@ limitations under the License.
                     <description>Conversion register contains the result of the last conversion</description>
                     <addressOffset>0</addressOffset>
                     <size>16</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>

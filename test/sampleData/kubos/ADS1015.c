@@ -78,17 +78,7 @@ int ads1015_writeConfig(uint16_t* data) {
     return 0;
 }
 
-int ads1015_writeConversion(uint16_t* data) {
-    // Put our data into uint8_t buffer
-    uint8_t buffer[3] = { (uint8_t) REGISTER_CONVERSION };
-    uint8_t buffer[1] = (data >> 16) & 0xFF;
-    uint8_t buffer[2] = (data >> 8) & 0xFF;
-    // First write our register address
-    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, 3) != I2C_OK) {
-        return -1;
-    }
-    return 0;
-}
+
 
 int ads1015_set_deviceoperatingmode(uint16_t* data) {
     // Bitshift value

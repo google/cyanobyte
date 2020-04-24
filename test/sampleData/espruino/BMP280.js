@@ -85,16 +85,6 @@ BMP280.prototype.getDigP1 = function() {
   return result
 }
 
-/**
- * Sets the value of register DigP1
- * Digital Pressure Compensation 1
- * Used for Pascals conversion
- *
- * @param {number} data - The value to write to the register
- */
-BMP280.prototype.setDigP1 = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.DIGP1, data)
-}
 
 /**
  * Reads the value of register DigP2
@@ -116,16 +106,6 @@ BMP280.prototype.getDigP2 = function() {
   return result
 }
 
-/**
- * Sets the value of register DigP2
- * Digital Pressure Compensation 2
- * Used for Pascals conversion
- *
- * @param {number} data - The value to write to the register
- */
-BMP280.prototype.setDigP2 = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.DIGP2, data)
-}
 
 /**
  * Reads the value of register DigP3
@@ -147,16 +127,6 @@ BMP280.prototype.getDigP3 = function() {
   return result
 }
 
-/**
- * Sets the value of register DigP3
- * Digital Pressure Compensation 3
- * Used for Pascals conversion
- *
- * @param {number} data - The value to write to the register
- */
-BMP280.prototype.setDigP3 = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.DIGP3, data)
-}
 
 /**
  * Reads the value of register DigP4
@@ -178,16 +148,6 @@ BMP280.prototype.getDigP4 = function() {
   return result
 }
 
-/**
- * Sets the value of register DigP4
- * Digital Pressure Compensation 4
- * Used for Pascals conversion
- *
- * @param {number} data - The value to write to the register
- */
-BMP280.prototype.setDigP4 = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.DIGP4, data)
-}
 
 /**
  * Reads the value of register DigP5
@@ -209,16 +169,6 @@ BMP280.prototype.getDigP5 = function() {
   return result
 }
 
-/**
- * Sets the value of register DigP5
- * Digital Pressure Compensation 5
- * Used for Pascals conversion
- *
- * @param {number} data - The value to write to the register
- */
-BMP280.prototype.setDigP5 = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.DIGP5, data)
-}
 
 /**
  * Reads the value of register DigP6
@@ -240,16 +190,6 @@ BMP280.prototype.getDigP6 = function() {
   return result
 }
 
-/**
- * Sets the value of register DigP6
- * Digital Pressure Compensation 6
- * Used for Pascals conversion
- *
- * @param {number} data - The value to write to the register
- */
-BMP280.prototype.setDigP6 = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.DIGP6, data)
-}
 
 /**
  * Reads the value of register DigP7
@@ -271,16 +211,6 @@ BMP280.prototype.getDigP7 = function() {
   return result
 }
 
-/**
- * Sets the value of register DigP7
- * Digital Pressure Compensation 7
- * Used for Pascals conversion
- *
- * @param {number} data - The value to write to the register
- */
-BMP280.prototype.setDigP7 = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.DIGP7, data)
-}
 
 /**
  * Reads the value of register DigP8
@@ -302,16 +232,6 @@ BMP280.prototype.getDigP8 = function() {
   return result
 }
 
-/**
- * Sets the value of register DigP8
- * Digital Pressure Compensation 8
- * Used for Pascals conversion
- *
- * @param {number} data - The value to write to the register
- */
-BMP280.prototype.setDigP8 = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.DIGP8, data)
-}
 
 /**
  * Reads the value of register DigP9
@@ -333,16 +253,6 @@ BMP280.prototype.getDigP9 = function() {
   return result
 }
 
-/**
- * Sets the value of register DigP9
- * Digital Pressure Compensation 9
- * Used for Pascals conversion
- *
- * @param {number} data - The value to write to the register
- */
-BMP280.prototype.setDigP9 = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.DIGP9, data)
-}
 
 /**
  * Reads the value of register DigT1
@@ -362,16 +272,6 @@ BMP280.prototype.getDigT1 = function() {
   return result
 }
 
-/**
- * Sets the value of register DigT1
- * Digital Temperature Compensation 1
- * Used for Celcius conversion
- *
- * @param {number} data - The value to write to the register
- */
-BMP280.prototype.setDigT1 = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.DIGT1, data)
-}
 
 /**
  * Reads the value of register DigT2
@@ -391,16 +291,6 @@ BMP280.prototype.getDigT2 = function() {
   return result
 }
 
-/**
- * Sets the value of register DigT2
- * Digital Temperature Compensation 2
- * Used for Celcius conversion
- *
- * @param {number} data - The value to write to the register
- */
-BMP280.prototype.setDigT2 = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.DIGT2, data)
-}
 
 /**
  * Reads the value of register DigT3
@@ -422,16 +312,6 @@ BMP280.prototype.getDigT3 = function() {
   return result
 }
 
-/**
- * Sets the value of register DigT3
- * Digital Temperature Compensation 3
- * Used for Celcius conversion
- *
- * @param {number} data - The value to write to the register
- */
-BMP280.prototype.setDigT3 = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.DIGT3, data)
-}
 
 /**
  * Reads the value of register PressureLsb
@@ -451,16 +331,6 @@ BMP280.prototype.getPressureLsb = function() {
   return result
 }
 
-/**
- * Sets the value of register PressureLsb
- * Pressure LSB
- * Part 2 of Pressure
- *
- * @param {number} data - The value to write to the register
- */
-BMP280.prototype.setPressureLsb = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.PRESSURELSB, data)
-}
 
 /**
  * Reads the value of register PressureMsb
@@ -480,16 +350,6 @@ BMP280.prototype.getPressureMsb = function() {
   return result
 }
 
-/**
- * Sets the value of register PressureMsb
- * Pressure MSB
- * Part 1 of Pressure
- *
- * @param {number} data - The value to write to the register
- */
-BMP280.prototype.setPressureMsb = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.PRESSUREMSB, data)
-}
 
 /**
  * Reads the value of register PressureXlsb
@@ -509,16 +369,6 @@ BMP280.prototype.getPressureXlsb = function() {
   return result
 }
 
-/**
- * Sets the value of register PressureXlsb
- * Pressure XLSB
- * Part 3 of Pressure
- *
- * @param {number} data - The value to write to the register
- */
-BMP280.prototype.setPressureXlsb = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.PRESSUREXLSB, data)
-}
 
 /**
  * Reads the value of register TempLsb
@@ -538,16 +388,6 @@ BMP280.prototype.getTempLsb = function() {
   return result
 }
 
-/**
- * Sets the value of register TempLsb
- * Temperature LSB
- * Part 2 of temperature
- *
- * @param {number} data - The value to write to the register
- */
-BMP280.prototype.setTempLsb = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.TEMPLSB, data)
-}
 
 /**
  * Reads the value of register TempMsb
@@ -567,16 +407,6 @@ BMP280.prototype.getTempMsb = function() {
   return result
 }
 
-/**
- * Sets the value of register TempMsb
- * Temperature MSB
- * Part 1 of temperature
- *
- * @param {number} data - The value to write to the register
- */
-BMP280.prototype.setTempMsb = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.TEMPMSB, data)
-}
 
 /**
  * Reads the value of register TempXlsb
@@ -596,16 +426,6 @@ BMP280.prototype.getTempXlsb = function() {
   return result
 }
 
-/**
- * Sets the value of register TempXlsb
- * Temperature XLSB
- * Final part of temperature
- *
- * @param {number} data - The value to write to the register
- */
-BMP280.prototype.setTempXlsb = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.TEMPXLSB, data)
-}
 
 /**
  * Pressure as read by sensor

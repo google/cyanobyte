@@ -40,61 +40,73 @@ registers:
     length: 8
     title: Accelerometer X
     description: Raw accelerometer data on X plane
+    readWrite: R
   AccelerometerX_High:
     address: 0xA9
     length: 8
     title: Accelerometer X
     description: Raw accelerometer data on X plane
+    readWrite: R
   AccelerometerY_Low:
     address: 0xAA
     length: 8
     title: Accelerometer Y
     description: Raw accelerometer data on Y plane
+    readWrite: R
   AccelerometerY_High:
     address: 0xAB
     length: 8
     title: Accelerometer Y
     description: Raw accelerometer data on Y plane
+    readWrite: R
   AccelerometerZ_Low:
     address: 0xAC
     length: 8
     title: Accelerometer Z
     description: Raw accelerometer data on Z plane
+    readWrite: R
   AccelerometerZ_High:
     address: 0xAD
     length: 8
     title: Accelerometer Z
     description: Raw accelerometer data on Z plane
+    readWrite: R
   MagnetometerX_Low:
     address: 0x88
     length: 8
     title: Magnetometer X
     description: Raw magnetometer data on X plane
+    readWrite: R
   MagnetometerX_High:
     address: 0x89
     length: 8
     title: Magnetometer X
     description: Raw magnetometer data on X plane
+    readWrite: R
   MagnetometerY_Low:
     address: 0x8A
     length: 8
     title: Magnetometer Y
     description: Raw magnetometer data on Y plane
+    readWrite: R
   MagnetometerY_High:
     address: 0x8B
     length: 8
     title: Magnetometer Y
     description: Raw magnetometer data on Y plane
+    readWrite: R
   MagnetometerZ_Low:
     address: 0x8C
     length: 8
     title: Magnetometer Z
     description: Raw magnetometer data on Z plane
+    readWrite: R
   MagnetometerZ_High:
     address: 0x8D
     length: 8
     title: Magnetometer Z
     description: Raw magnetometer data on Z plane
+    readWrite: R
 
 functions:
   acceleration:

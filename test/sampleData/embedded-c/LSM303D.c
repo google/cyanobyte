@@ -60,15 +60,7 @@ int lsm303d_readAccelerometerX_High(
     return 0;
 }
 
-int lsm303d_writeAccelerometerX_High(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_ACCELEROMETERX_HIGH, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}int lsm303d_readAccelerometerX_Low(
+int lsm303d_readAccelerometerX_Low(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -81,15 +73,7 @@ int lsm303d_writeAccelerometerX_High(
     return 0;
 }
 
-int lsm303d_writeAccelerometerX_Low(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_ACCELEROMETERX_LOW, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}int lsm303d_readAccelerometerY_High(
+int lsm303d_readAccelerometerY_High(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -102,15 +86,7 @@ int lsm303d_writeAccelerometerX_Low(
     return 0;
 }
 
-int lsm303d_writeAccelerometerY_High(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_ACCELEROMETERY_HIGH, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}int lsm303d_readAccelerometerY_Low(
+int lsm303d_readAccelerometerY_Low(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -123,15 +99,7 @@ int lsm303d_writeAccelerometerY_High(
     return 0;
 }
 
-int lsm303d_writeAccelerometerY_Low(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_ACCELEROMETERY_LOW, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}int lsm303d_readAccelerometerZ_High(
+int lsm303d_readAccelerometerZ_High(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -144,15 +112,7 @@ int lsm303d_writeAccelerometerY_Low(
     return 0;
 }
 
-int lsm303d_writeAccelerometerZ_High(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_ACCELEROMETERZ_HIGH, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}int lsm303d_readAccelerometerZ_Low(
+int lsm303d_readAccelerometerZ_Low(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -165,15 +125,7 @@ int lsm303d_writeAccelerometerZ_High(
     return 0;
 }
 
-int lsm303d_writeAccelerometerZ_Low(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_ACCELEROMETERZ_LOW, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}int lsm303d_readMagnetometerX_High(
+int lsm303d_readMagnetometerX_High(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -186,15 +138,7 @@ int lsm303d_writeAccelerometerZ_Low(
     return 0;
 }
 
-int lsm303d_writeMagnetometerX_High(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_MAGNETOMETERX_HIGH, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}int lsm303d_readMagnetometerX_Low(
+int lsm303d_readMagnetometerX_Low(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -207,15 +151,7 @@ int lsm303d_writeMagnetometerX_High(
     return 0;
 }
 
-int lsm303d_writeMagnetometerX_Low(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_MAGNETOMETERX_LOW, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}int lsm303d_readMagnetometerY_High(
+int lsm303d_readMagnetometerY_High(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -228,15 +164,7 @@ int lsm303d_writeMagnetometerX_Low(
     return 0;
 }
 
-int lsm303d_writeMagnetometerY_High(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_MAGNETOMETERY_HIGH, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}int lsm303d_readMagnetometerY_Low(
+int lsm303d_readMagnetometerY_Low(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -249,15 +177,7 @@ int lsm303d_writeMagnetometerY_High(
     return 0;
 }
 
-int lsm303d_writeMagnetometerY_Low(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_MAGNETOMETERY_LOW, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}int lsm303d_readMagnetometerZ_High(
+int lsm303d_readMagnetometerZ_High(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -270,15 +190,7 @@ int lsm303d_writeMagnetometerY_Low(
     return 0;
 }
 
-int lsm303d_writeMagnetometerZ_High(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_MAGNETOMETERZ_HIGH, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}int lsm303d_readMagnetometerZ_Low(
+int lsm303d_readMagnetometerZ_Low(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -291,15 +203,7 @@ int lsm303d_writeMagnetometerZ_High(
     return 0;
 }
 
-int lsm303d_writeMagnetometerZ_Low(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_MAGNETOMETERZ_LOW, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}
+
 
 void lsm303d_acceleration_asg(
     void* val,

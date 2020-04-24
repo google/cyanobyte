@@ -98,18 +98,6 @@ uint16_t ADS1015::readConversion() {
     return value;
 }
 
-int ADS1015::writeConversion(uint16_t data) {
-    _wire->beginTransmission(DEVICE_ADDRESS);
-    // Put our data into uint8_t buffer
-    uint8_t buffer[3] = { (uint8_t) REGISTER_CONVERSION };
-    buffer[1] = (data >> 8) & 0xFF;
-    buffer[2] = (data >> 0) & 0xFF;
-    _wire->write(buffer, 3);
-    if (_wire->endTransmission() != 0) {
-        return 0;
-    }
-    return 1;
-}
 
 
 

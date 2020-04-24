@@ -125,17 +125,6 @@ class ADS1015:
         val = _swap_endian(val, 16)
         return val
 
-    def set_conversion(self, data):
-        """
-        Conversion register contains the result of the last conversion
-
-        """
-        data = _swap_endian(data, 16)
-        self.bus.write_word_data(
-            self.device_address,
-            self.REGISTER_CONVERSION,
-            data
-        )
 
 
     def set_deviceoperatingmode(self, data):

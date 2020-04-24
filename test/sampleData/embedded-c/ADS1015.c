@@ -75,15 +75,7 @@ int ads1015_writeConfig(
     return 0;
 }
 
-int ads1015_writeConversion(
-    uint16_t* data,
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_CONVERSION, data, 2) != 0) {
-        return -1;
-    }
-    return 0;
-}
+
 
 int ads1015_set_deviceoperatingmode(
     uint16_t* data,
