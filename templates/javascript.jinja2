@@ -1,0 +1,156 @@
+{% macro params(input) -%}
+{% set args = namespace(index=0) %}
+{% for key,variable in input|dictsort %}
+{% if key != 'value' -%}
+{{- ", " if args.index > 0 -}}{{- key -}}
+{%- set args.index = args.index + 1 -%}
+{%- endif %}
+{%- endfor %}
+{%- endmacro %}
+
+{% macro variables(vars) -%}
+{% if vars %}
+{% for key,var in vars|dictsort %}
+  var {{key}} = 0 // Variable declaration
+{% endfor %}
+{% endif %}
+{%- endmacro %}
+
+{% macro recursiveAssignLogic(logicalStep, keys) -%}
+{% for key in keys -%}
+{# Perform a recursive summation from an array of logical steps #}
+{% if key == 'sum' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{step}}
+    {%- endif %}
+    {{- "+" if not loop.last -}}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a recursive difference from an array of logical steps #}
+{% if key == 'difference' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{step}}
+    {%- endif %}
+    {{- "-" if not loop.last -}}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a recursive product from an array of logical steps #}
+{% if key == 'product' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{step}}
+    {%- endif %}
+    {{- "*" if not loop.last -}}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a recursive division from an array of logical steps #}
+{% if key == 'division' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{ step }}
+    {%- endif %}
+    {{- "/" if not loop.last -}}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a recursive modulus from an array of logical steps #}
+{% if key == 'modulus' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{ step }}
+    {%- endif %}
+    {{- "%" if not loop.last -}}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a bitwise OR from an array of logical steps #}
+{% if key == 'bitwiseOr' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{step}}
+    {%- endif %}
+    {{- "|" if not loop.last -}}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a bitwise AND from an array of logical steps #}
+{% if key == 'bitwiseAnd' -%}
+    ({%- for step in logicalStep[key] -%}
+    {% if step is iterable and step is not string -%}
+    {{ recursiveAssignLogic(step, step.keys()) -}}
+    {%- else -%}
+    {{step}}
+    {%- endif %}
+    {{- "&" if not loop.last -}}
+    {%- endfor -%})
+{%- endif %}
+{# Perform a power operation #}
+{% if key == 'power' -%}
+    Math.pow({{logicalStep[key][0]}}, {{logicalStep[key][1]}})
+{%- endif %}
+{# Perform an arc tangent operation #}
+{% if key == 'arc tangent' -%}
+    Math.atan({{logicalStep[key]}})
+{%- endif %}
+{# Bitwise ops #}
+{%- if key == 'bitShiftLeft' -%}
+    ({{logicalStep.var}} << {{logicalStep.bits}})
+{%- endif %}
+{%- if key == 'bitShiftRight' -%}
+    ({{logicalStep.var}} >> {{logicalStep.bits}})
+{%- endif %}
+{%- endfor %}
+{%- endmacro %}
+
+{% macro importLittleEndian(i2c) %}
+{% if i2c.endian == 'little' %}
+/**
+ * Swap the endianness of a number
+ */
+function _swapEndian(val, length) {
+  if (length <= 8) {
+    return val
+  } else if (length <= 16) {
+    return (val & 0xFF00) >> 8 | (val & 0xFF) << 8
+  } else if (length <= 32) {
+    return ((val & 0xFF000000) >> 24 |
+           (val & 0x00FF0000) >> 8 |
+           (val & 0x0000FF00) << 8 |
+           (val & 0x000000FF) << 24)
+  }
+  throw new Error('Cannot swap endianness for length ' + length)
+}
+{% endif %}
+{%- endmacro %}
+
+{% macro importSign(registers, template) %}
+{# Add signing function if needed #}
+{% for key,register in registers|dictsort %}
+{% if register.signed %}
+{# Optionally import class #}
+{% if template.sign is sameas false %}
+/**
+ * Convert unsigned integer to signed integer
+ */
+function _sign(val, length) {
+  if (val & (1 << (length - 1))) {
+    return val - (1 << length)
+  }
+  return val
+}
+{% set template.sign = true %}
+{% endif %}
+{% endif %}
+{% endfor %}
+{%- endmacro %}
