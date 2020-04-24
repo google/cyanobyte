@@ -77,20 +77,6 @@ class BMP280:
         val = val << 8 | byte_list[1]
         return val
 
-    def set_digp1(self, data):
-        """
-        Used for Pascals conversion
-
-        """
-        buffer = []
-        buffer[0] = (data >> 8) & 0xFF
-        buffer[1] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_DIGP1,
-            buffer,
-            addrsize=16
-        )
     def get_digp2(self):
         """
         Used for Pascals conversion
@@ -109,20 +95,6 @@ class BMP280:
         val = _sign(val, 16)
         return val
 
-    def set_digp2(self, data):
-        """
-        Used for Pascals conversion
-
-        """
-        buffer = []
-        buffer[0] = (data >> 8) & 0xFF
-        buffer[1] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_DIGP2,
-            buffer,
-            addrsize=16
-        )
     def get_digp3(self):
         """
         Used for Pascals conversion
@@ -141,20 +113,6 @@ class BMP280:
         val = _sign(val, 16)
         return val
 
-    def set_digp3(self, data):
-        """
-        Used for Pascals conversion
-
-        """
-        buffer = []
-        buffer[0] = (data >> 8) & 0xFF
-        buffer[1] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_DIGP3,
-            buffer,
-            addrsize=16
-        )
     def get_digp4(self):
         """
         Used for Pascals conversion
@@ -173,20 +131,6 @@ class BMP280:
         val = _sign(val, 16)
         return val
 
-    def set_digp4(self, data):
-        """
-        Used for Pascals conversion
-
-        """
-        buffer = []
-        buffer[0] = (data >> 8) & 0xFF
-        buffer[1] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_DIGP4,
-            buffer,
-            addrsize=16
-        )
     def get_digp5(self):
         """
         Used for Pascals conversion
@@ -205,20 +149,6 @@ class BMP280:
         val = _sign(val, 16)
         return val
 
-    def set_digp5(self, data):
-        """
-        Used for Pascals conversion
-
-        """
-        buffer = []
-        buffer[0] = (data >> 8) & 0xFF
-        buffer[1] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_DIGP5,
-            buffer,
-            addrsize=16
-        )
     def get_digp6(self):
         """
         Used for Pascals conversion
@@ -237,20 +167,6 @@ class BMP280:
         val = _sign(val, 16)
         return val
 
-    def set_digp6(self, data):
-        """
-        Used for Pascals conversion
-
-        """
-        buffer = []
-        buffer[0] = (data >> 8) & 0xFF
-        buffer[1] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_DIGP6,
-            buffer,
-            addrsize=16
-        )
     def get_digp7(self):
         """
         Used for Pascals conversion
@@ -269,20 +185,6 @@ class BMP280:
         val = _sign(val, 16)
         return val
 
-    def set_digp7(self, data):
-        """
-        Used for Pascals conversion
-
-        """
-        buffer = []
-        buffer[0] = (data >> 8) & 0xFF
-        buffer[1] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_DIGP7,
-            buffer,
-            addrsize=16
-        )
     def get_digp8(self):
         """
         Used for Pascals conversion
@@ -301,20 +203,6 @@ class BMP280:
         val = _sign(val, 16)
         return val
 
-    def set_digp8(self, data):
-        """
-        Used for Pascals conversion
-
-        """
-        buffer = []
-        buffer[0] = (data >> 8) & 0xFF
-        buffer[1] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_DIGP8,
-            buffer,
-            addrsize=16
-        )
     def get_digp9(self):
         """
         Used for Pascals conversion
@@ -333,20 +221,6 @@ class BMP280:
         val = _sign(val, 16)
         return val
 
-    def set_digp9(self, data):
-        """
-        Used for Pascals conversion
-
-        """
-        buffer = []
-        buffer[0] = (data >> 8) & 0xFF
-        buffer[1] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_DIGP9,
-            buffer,
-            addrsize=16
-        )
     def get_digt1(self):
         """
         Used for Celcius conversion
@@ -363,20 +237,6 @@ class BMP280:
         val = val << 8 | byte_list[1]
         return val
 
-    def set_digt1(self, data):
-        """
-        Used for Celcius conversion
-
-        """
-        buffer = []
-        buffer[0] = (data >> 8) & 0xFF
-        buffer[1] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_DIGT1,
-            buffer,
-            addrsize=16
-        )
     def get_digt2(self):
         """
         Used for Celcius conversion
@@ -393,20 +253,6 @@ class BMP280:
         val = val << 8 | byte_list[1]
         return val
 
-    def set_digt2(self, data):
-        """
-        Used for Celcius conversion
-
-        """
-        buffer = []
-        buffer[0] = (data >> 8) & 0xFF
-        buffer[1] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_DIGT2,
-            buffer,
-            addrsize=16
-        )
     def get_digt3(self):
         """
         Used for Celcius conversion
@@ -425,20 +271,6 @@ class BMP280:
         val = _sign(val, 16)
         return val
 
-    def set_digt3(self, data):
-        """
-        Used for Celcius conversion
-
-        """
-        buffer = []
-        buffer[0] = (data >> 8) & 0xFF
-        buffer[1] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_DIGT3,
-            buffer,
-            addrsize=16
-        )
     def get_pressurelsb(self):
         """
         Part 2 of Pressure
@@ -454,19 +286,6 @@ class BMP280:
         val = val << 8 | byte_list[0]
         return val
 
-    def set_pressurelsb(self, data):
-        """
-        Part 2 of Pressure
-
-        """
-        buffer = []
-        buffer[0] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_PRESSURELSB,
-            buffer,
-            addrsize=8
-        )
     def get_pressuremsb(self):
         """
         Part 1 of Pressure
@@ -482,19 +301,6 @@ class BMP280:
         val = val << 8 | byte_list[0]
         return val
 
-    def set_pressuremsb(self, data):
-        """
-        Part 1 of Pressure
-
-        """
-        buffer = []
-        buffer[0] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_PRESSUREMSB,
-            buffer,
-            addrsize=8
-        )
     def get_pressurexlsb(self):
         """
         Part 3 of Pressure
@@ -510,19 +316,6 @@ class BMP280:
         val = val << 8 | byte_list[0]
         return val
 
-    def set_pressurexlsb(self, data):
-        """
-        Part 3 of Pressure
-
-        """
-        buffer = []
-        buffer[0] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_PRESSUREXLSB,
-            buffer,
-            addrsize=8
-        )
     def get_templsb(self):
         """
         Part 2 of temperature
@@ -538,19 +331,6 @@ class BMP280:
         val = val << 8 | byte_list[0]
         return val
 
-    def set_templsb(self, data):
-        """
-        Part 2 of temperature
-
-        """
-        buffer = []
-        buffer[0] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_TEMPLSB,
-            buffer,
-            addrsize=8
-        )
     def get_tempmsb(self):
         """
         Part 1 of temperature
@@ -566,19 +346,6 @@ class BMP280:
         val = val << 8 | byte_list[0]
         return val
 
-    def set_tempmsb(self, data):
-        """
-        Part 1 of temperature
-
-        """
-        buffer = []
-        buffer[0] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_TEMPMSB,
-            buffer,
-            addrsize=8
-        )
     def get_tempxlsb(self):
         """
         Final part of temperature
@@ -594,19 +361,6 @@ class BMP280:
         val = val << 8 | byte_list[0]
         return val
 
-    def set_tempxlsb(self, data):
-        """
-        Final part of temperature
-
-        """
-        buffer = []
-        buffer[0] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_TEMPXLSB,
-            buffer,
-            addrsize=8
-        )
 
     def pressure_ashpa(self):
         """

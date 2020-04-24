@@ -94,11 +94,7 @@ int ads1015_writeConfig(uint16_t* data);/**
 */
 int ads1015_readConversion(uint16_t* val);
 
-/**
- * Conversion register contains the result of the last conversion
 
- */
-int ads1015_writeConversion(uint16_t* data);
 /**
  * This bit controls the operating mode
 

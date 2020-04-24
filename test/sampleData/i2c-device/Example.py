@@ -34,9 +34,11 @@ REGISTERA = Register('REGISTERA', 0, fields=(
 ), read_only=False, bitwidth=8)
 REGISTERB = Register('REGISTERB', 1, read_only=False, bitwidth=16)
 REGISTERC = Register('REGISTERC', 2, read_only=False, bitwidth=32)
+REGISTERD = Register('REGISTERD', 3, read_only=False, bitwidth=0)
 
 example = Device(I2C_ADDR, registers=(
     REGISTERA,
     REGISTERB,
-    REGISTERC
+    REGISTERC,
+    REGISTERD
 ))

@@ -124,21 +124,6 @@ class ADS1015:
         val = _swap_endian(val, 16)
         return val
 
-    def set_conversion(self, data):
-        """
-        Conversion register contains the result of the last conversion
-
-        """
-        data = _swap_endian(data, 16)
-        buffer = []
-        buffer[0] = (data >> 8) & 0xFF
-        buffer[1] = (data >> 0) & 0xFF
-        self.i2c.writeto_mem(
-            self.device_address,
-            self.REGISTER_CONVERSION,
-            buffer,
-            addrsize=16
-        )
 
 
     def set_deviceoperatingmode(self, data):

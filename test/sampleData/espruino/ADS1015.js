@@ -135,17 +135,6 @@ ADS1015.prototype.getConversion = function() {
   return result
 }
 
-/**
- * Sets the value of register Conversion
- * ADC Value
- * Conversion register contains the result of the last conversion
- *
- * @param {number} data - The value to write to the register
- */
-ADS1015.prototype.setConversion = function(data) {
-  data = _swapEndian(data, 16)
-  this.i2c.writeTo(this.address, REGISTER.CONVERSION, data)
-}
 
 
 /**

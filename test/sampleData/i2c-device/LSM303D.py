@@ -18,18 +18,18 @@ from i2cdevice import Device, Register, BitField
 
 I2C_ADDR = 29
 
-ACCELEROMETERX_HIGH = Register('ACCELEROMETERX_HIGH', 169, read_only=False, bitwidth=8)
-ACCELEROMETERX_LOW = Register('ACCELEROMETERX_LOW', 168, read_only=False, bitwidth=8)
-ACCELEROMETERY_HIGH = Register('ACCELEROMETERY_HIGH', 171, read_only=False, bitwidth=8)
-ACCELEROMETERY_LOW = Register('ACCELEROMETERY_LOW', 170, read_only=False, bitwidth=8)
-ACCELEROMETERZ_HIGH = Register('ACCELEROMETERZ_HIGH', 173, read_only=False, bitwidth=8)
-ACCELEROMETERZ_LOW = Register('ACCELEROMETERZ_LOW', 172, read_only=False, bitwidth=8)
-MAGNETOMETERX_HIGH = Register('MAGNETOMETERX_HIGH', 137, read_only=False, bitwidth=8)
-MAGNETOMETERX_LOW = Register('MAGNETOMETERX_LOW', 136, read_only=False, bitwidth=8)
-MAGNETOMETERY_HIGH = Register('MAGNETOMETERY_HIGH', 139, read_only=False, bitwidth=8)
-MAGNETOMETERY_LOW = Register('MAGNETOMETERY_LOW', 138, read_only=False, bitwidth=8)
-MAGNETOMETERZ_HIGH = Register('MAGNETOMETERZ_HIGH', 141, read_only=False, bitwidth=8)
-MAGNETOMETERZ_LOW = Register('MAGNETOMETERZ_LOW', 140, read_only=False, bitwidth=8)
+ACCELEROMETERX_HIGH = Register('ACCELEROMETERX_HIGH', 169, read_only=True, bitwidth=8)
+ACCELEROMETERX_LOW = Register('ACCELEROMETERX_LOW', 168, read_only=True, bitwidth=8)
+ACCELEROMETERY_HIGH = Register('ACCELEROMETERY_HIGH', 171, read_only=True, bitwidth=8)
+ACCELEROMETERY_LOW = Register('ACCELEROMETERY_LOW', 170, read_only=True, bitwidth=8)
+ACCELEROMETERZ_HIGH = Register('ACCELEROMETERZ_HIGH', 173, read_only=True, bitwidth=8)
+ACCELEROMETERZ_LOW = Register('ACCELEROMETERZ_LOW', 172, read_only=True, bitwidth=8)
+MAGNETOMETERX_HIGH = Register('MAGNETOMETERX_HIGH', 137, read_only=True, bitwidth=8)
+MAGNETOMETERX_LOW = Register('MAGNETOMETERX_LOW', 136, read_only=True, bitwidth=8)
+MAGNETOMETERY_HIGH = Register('MAGNETOMETERY_HIGH', 139, read_only=True, bitwidth=8)
+MAGNETOMETERY_LOW = Register('MAGNETOMETERY_LOW', 138, read_only=True, bitwidth=8)
+MAGNETOMETERZ_HIGH = Register('MAGNETOMETERZ_HIGH', 141, read_only=True, bitwidth=8)
+MAGNETOMETERZ_LOW = Register('MAGNETOMETERZ_LOW', 140, read_only=True, bitwidth=8)
 
 lsm303d = Device(I2C_ADDR, registers=(
     ACCELEROMETERX_HIGH,

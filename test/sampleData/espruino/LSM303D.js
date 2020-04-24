@@ -70,16 +70,6 @@ LSM303D.prototype.getAccelerometerX_High = function() {
   return result
 }
 
-/**
- * Sets the value of register AccelerometerX_High
- * Accelerometer X
- * Raw accelerometer data on X plane
- *
- * @param {number} data - The value to write to the register
- */
-LSM303D.prototype.setAccelerometerX_High = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.ACCELEROMETERX_HIGH, data)
-}
 
 /**
  * Reads the value of register AccelerometerX_Low
@@ -99,16 +89,6 @@ LSM303D.prototype.getAccelerometerX_Low = function() {
   return result
 }
 
-/**
- * Sets the value of register AccelerometerX_Low
- * Accelerometer X
- * Raw accelerometer data on X plane
- *
- * @param {number} data - The value to write to the register
- */
-LSM303D.prototype.setAccelerometerX_Low = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.ACCELEROMETERX_LOW, data)
-}
 
 /**
  * Reads the value of register AccelerometerY_High
@@ -128,16 +108,6 @@ LSM303D.prototype.getAccelerometerY_High = function() {
   return result
 }
 
-/**
- * Sets the value of register AccelerometerY_High
- * Accelerometer Y
- * Raw accelerometer data on Y plane
- *
- * @param {number} data - The value to write to the register
- */
-LSM303D.prototype.setAccelerometerY_High = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.ACCELEROMETERY_HIGH, data)
-}
 
 /**
  * Reads the value of register AccelerometerY_Low
@@ -157,16 +127,6 @@ LSM303D.prototype.getAccelerometerY_Low = function() {
   return result
 }
 
-/**
- * Sets the value of register AccelerometerY_Low
- * Accelerometer Y
- * Raw accelerometer data on Y plane
- *
- * @param {number} data - The value to write to the register
- */
-LSM303D.prototype.setAccelerometerY_Low = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.ACCELEROMETERY_LOW, data)
-}
 
 /**
  * Reads the value of register AccelerometerZ_High
@@ -186,16 +146,6 @@ LSM303D.prototype.getAccelerometerZ_High = function() {
   return result
 }
 
-/**
- * Sets the value of register AccelerometerZ_High
- * Accelerometer Z
- * Raw accelerometer data on Z plane
- *
- * @param {number} data - The value to write to the register
- */
-LSM303D.prototype.setAccelerometerZ_High = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.ACCELEROMETERZ_HIGH, data)
-}
 
 /**
  * Reads the value of register AccelerometerZ_Low
@@ -215,16 +165,6 @@ LSM303D.prototype.getAccelerometerZ_Low = function() {
   return result
 }
 
-/**
- * Sets the value of register AccelerometerZ_Low
- * Accelerometer Z
- * Raw accelerometer data on Z plane
- *
- * @param {number} data - The value to write to the register
- */
-LSM303D.prototype.setAccelerometerZ_Low = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.ACCELEROMETERZ_LOW, data)
-}
 
 /**
  * Reads the value of register MagnetometerX_High
@@ -244,16 +184,6 @@ LSM303D.prototype.getMagnetometerX_High = function() {
   return result
 }
 
-/**
- * Sets the value of register MagnetometerX_High
- * Magnetometer X
- * Raw magnetometer data on X plane
- *
- * @param {number} data - The value to write to the register
- */
-LSM303D.prototype.setMagnetometerX_High = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.MAGNETOMETERX_HIGH, data)
-}
 
 /**
  * Reads the value of register MagnetometerX_Low
@@ -273,16 +203,6 @@ LSM303D.prototype.getMagnetometerX_Low = function() {
   return result
 }
 
-/**
- * Sets the value of register MagnetometerX_Low
- * Magnetometer X
- * Raw magnetometer data on X plane
- *
- * @param {number} data - The value to write to the register
- */
-LSM303D.prototype.setMagnetometerX_Low = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.MAGNETOMETERX_LOW, data)
-}
 
 /**
  * Reads the value of register MagnetometerY_High
@@ -302,16 +222,6 @@ LSM303D.prototype.getMagnetometerY_High = function() {
   return result
 }
 
-/**
- * Sets the value of register MagnetometerY_High
- * Magnetometer Y
- * Raw magnetometer data on Y plane
- *
- * @param {number} data - The value to write to the register
- */
-LSM303D.prototype.setMagnetometerY_High = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.MAGNETOMETERY_HIGH, data)
-}
 
 /**
  * Reads the value of register MagnetometerY_Low
@@ -331,16 +241,6 @@ LSM303D.prototype.getMagnetometerY_Low = function() {
   return result
 }
 
-/**
- * Sets the value of register MagnetometerY_Low
- * Magnetometer Y
- * Raw magnetometer data on Y plane
- *
- * @param {number} data - The value to write to the register
- */
-LSM303D.prototype.setMagnetometerY_Low = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.MAGNETOMETERY_LOW, data)
-}
 
 /**
  * Reads the value of register MagnetometerZ_High
@@ -360,16 +260,6 @@ LSM303D.prototype.getMagnetometerZ_High = function() {
   return result
 }
 
-/**
- * Sets the value of register MagnetometerZ_High
- * Magnetometer Z
- * Raw magnetometer data on Z plane
- *
- * @param {number} data - The value to write to the register
- */
-LSM303D.prototype.setMagnetometerZ_High = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.MAGNETOMETERZ_HIGH, data)
-}
 
 /**
  * Reads the value of register MagnetometerZ_Low
@@ -389,16 +279,6 @@ LSM303D.prototype.getMagnetometerZ_Low = function() {
   return result
 }
 
-/**
- * Sets the value of register MagnetometerZ_Low
- * Magnetometer Z
- * Raw magnetometer data on Z plane
- *
- * @param {number} data - The value to write to the register
- */
-LSM303D.prototype.setMagnetometerZ_Low = function(data) {
-  this.i2c.writeTo(this.address, REGISTER.MAGNETOMETERZ_LOW, data)
-}
 
 /**
  * Acceleration as read by sensor

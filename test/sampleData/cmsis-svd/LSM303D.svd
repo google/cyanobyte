@@ -44,7 +44,7 @@ limitations under the License.
                     <description>Raw accelerometer data on X plane</description>
                     <addressOffset>169</addressOffset>
                     <size>8</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
@@ -54,7 +54,7 @@ limitations under the License.
                     <description>Raw accelerometer data on X plane</description>
                     <addressOffset>168</addressOffset>
                     <size>8</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
@@ -64,7 +64,7 @@ limitations under the License.
                     <description>Raw accelerometer data on Y plane</description>
                     <addressOffset>171</addressOffset>
                     <size>8</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
@@ -74,7 +74,7 @@ limitations under the License.
                     <description>Raw accelerometer data on Y plane</description>
                     <addressOffset>170</addressOffset>
                     <size>8</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
@@ -84,7 +84,7 @@ limitations under the License.
                     <description>Raw accelerometer data on Z plane</description>
                     <addressOffset>173</addressOffset>
                     <size>8</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
@@ -94,7 +94,7 @@ limitations under the License.
                     <description>Raw accelerometer data on Z plane</description>
                     <addressOffset>172</addressOffset>
                     <size>8</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
@@ -104,7 +104,7 @@ limitations under the License.
                     <description>Raw magnetometer data on X plane</description>
                     <addressOffset>137</addressOffset>
                     <size>8</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
@@ -114,7 +114,7 @@ limitations under the License.
                     <description>Raw magnetometer data on X plane</description>
                     <addressOffset>136</addressOffset>
                     <size>8</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
@@ -124,7 +124,7 @@ limitations under the License.
                     <description>Raw magnetometer data on Y plane</description>
                     <addressOffset>139</addressOffset>
                     <size>8</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
@@ -134,7 +134,7 @@ limitations under the License.
                     <description>Raw magnetometer data on Y plane</description>
                     <addressOffset>138</addressOffset>
                     <size>8</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
@@ -144,7 +144,7 @@ limitations under the License.
                     <description>Raw magnetometer data on Z plane</description>
                     <addressOffset>141</addressOffset>
                     <size>8</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
@@ -154,7 +154,7 @@ limitations under the License.
                     <description>Raw magnetometer data on Z plane</description>
                     <addressOffset>140</addressOffset>
                     <size>8</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>

@@ -102,15 +102,6 @@ int ads1015_readConversion(
 );
 
 /**
- * Conversion register contains the result of the last conversion
-
- */
-int ads1015_writeConversion(
-    uint16_t* data,
-    int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t),
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-);
-/**
  * This bit controls the operating mode
 
  */

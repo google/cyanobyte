@@ -95,11 +95,7 @@ class ADS1015 {
          */
         uint16_t readConversion();
 
-        /**
-         * Conversion register contains the result of the last conversion
 
-         */
-        int writeConversion(uint16_t data);
         /**
          * This bit controls the operating mode
 

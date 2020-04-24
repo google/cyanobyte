@@ -73,15 +73,7 @@ int bmp280_readDigP1(
     return 0;
 }
 
-int bmp280_writeDigP1(
-    uint16_t* data,
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_DIGP1, data, 2) != 0) {
-        return -1;
-    }
-    return 0;
-}int bmp280_readDigP2(
+int bmp280_readDigP2(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
@@ -94,15 +86,7 @@ int bmp280_writeDigP1(
     return 0;
 }
 
-int bmp280_writeDigP2(
-    uint16_t* data,
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_DIGP2, data, 2) != 0) {
-        return -1;
-    }
-    return 0;
-}int bmp280_readDigP3(
+int bmp280_readDigP3(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
@@ -115,15 +99,7 @@ int bmp280_writeDigP2(
     return 0;
 }
 
-int bmp280_writeDigP3(
-    uint16_t* data,
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_DIGP3, data, 2) != 0) {
-        return -1;
-    }
-    return 0;
-}int bmp280_readDigP4(
+int bmp280_readDigP4(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
@@ -136,15 +112,7 @@ int bmp280_writeDigP3(
     return 0;
 }
 
-int bmp280_writeDigP4(
-    uint16_t* data,
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_DIGP4, data, 2) != 0) {
-        return -1;
-    }
-    return 0;
-}int bmp280_readDigP5(
+int bmp280_readDigP5(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
@@ -157,15 +125,7 @@ int bmp280_writeDigP4(
     return 0;
 }
 
-int bmp280_writeDigP5(
-    uint16_t* data,
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_DIGP5, data, 2) != 0) {
-        return -1;
-    }
-    return 0;
-}int bmp280_readDigP6(
+int bmp280_readDigP6(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
@@ -178,15 +138,7 @@ int bmp280_writeDigP5(
     return 0;
 }
 
-int bmp280_writeDigP6(
-    uint16_t* data,
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_DIGP6, data, 2) != 0) {
-        return -1;
-    }
-    return 0;
-}int bmp280_readDigP7(
+int bmp280_readDigP7(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
@@ -199,15 +151,7 @@ int bmp280_writeDigP6(
     return 0;
 }
 
-int bmp280_writeDigP7(
-    uint16_t* data,
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_DIGP7, data, 2) != 0) {
-        return -1;
-    }
-    return 0;
-}int bmp280_readDigP8(
+int bmp280_readDigP8(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
@@ -220,15 +164,7 @@ int bmp280_writeDigP7(
     return 0;
 }
 
-int bmp280_writeDigP8(
-    uint16_t* data,
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_DIGP8, data, 2) != 0) {
-        return -1;
-    }
-    return 0;
-}int bmp280_readDigP9(
+int bmp280_readDigP9(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
@@ -241,15 +177,7 @@ int bmp280_writeDigP8(
     return 0;
 }
 
-int bmp280_writeDigP9(
-    uint16_t* data,
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_DIGP9, data, 2) != 0) {
-        return -1;
-    }
-    return 0;
-}int bmp280_readDigT1(
+int bmp280_readDigT1(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
@@ -262,15 +190,7 @@ int bmp280_writeDigP9(
     return 0;
 }
 
-int bmp280_writeDigT1(
-    uint16_t* data,
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_DIGT1, data, 2) != 0) {
-        return -1;
-    }
-    return 0;
-}int bmp280_readDigT2(
+int bmp280_readDigT2(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
@@ -283,15 +203,7 @@ int bmp280_writeDigT1(
     return 0;
 }
 
-int bmp280_writeDigT2(
-    uint16_t* data,
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_DIGT2, data, 2) != 0) {
-        return -1;
-    }
-    return 0;
-}int bmp280_readDigT3(
+int bmp280_readDigT3(
     uint16_t* val,
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 ) {
@@ -304,15 +216,7 @@ int bmp280_writeDigT2(
     return 0;
 }
 
-int bmp280_writeDigT3(
-    uint16_t* data,
-    int (*write)(uint8_t, uint8_t, uint16_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_DIGT3, data, 2) != 0) {
-        return -1;
-    }
-    return 0;
-}int bmp280_readPressureLsb(
+int bmp280_readPressureLsb(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -325,15 +229,7 @@ int bmp280_writeDigT3(
     return 0;
 }
 
-int bmp280_writePressureLsb(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_PRESSURELSB, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}int bmp280_readPressureMsb(
+int bmp280_readPressureMsb(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -346,15 +242,7 @@ int bmp280_writePressureLsb(
     return 0;
 }
 
-int bmp280_writePressureMsb(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_PRESSUREMSB, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}int bmp280_readPressureXlsb(
+int bmp280_readPressureXlsb(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -367,15 +255,7 @@ int bmp280_writePressureMsb(
     return 0;
 }
 
-int bmp280_writePressureXlsb(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_PRESSUREXLSB, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}int bmp280_readTempLsb(
+int bmp280_readTempLsb(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -388,15 +268,7 @@ int bmp280_writePressureXlsb(
     return 0;
 }
 
-int bmp280_writeTempLsb(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_TEMPLSB, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}int bmp280_readTempMsb(
+int bmp280_readTempMsb(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -409,15 +281,7 @@ int bmp280_writeTempLsb(
     return 0;
 }
 
-int bmp280_writeTempMsb(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_TEMPMSB, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}int bmp280_readTempXlsb(
+int bmp280_readTempXlsb(
     uint8_t* val,
     int (*read)(uint8_t, uint8_t, uint8_t*, uint8_t)
 ) {
@@ -430,15 +294,7 @@ int bmp280_writeTempMsb(
     return 0;
 }
 
-int bmp280_writeTempXlsb(
-    uint8_t* data,
-    int (*write)(uint8_t, uint8_t, uint8_t*, uint8_t)
-) {
-    if (write(DEVICE_ADDRESS, REGISTER_TEMPXLSB, data, 1) != 0) {
-        return -1;
-    }
-    return 0;
-}
+
 
 void bmp280_pressure_ashpa(
     float* val,

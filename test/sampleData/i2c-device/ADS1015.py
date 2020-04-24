@@ -47,7 +47,7 @@ CONFIG = Register('CONFIG', 1, fields=(
         HZ920: 3
     })
 ), read_only=False, bitwidth=16)
-CONVERSION = Register('CONVERSION', 0, read_only=False, bitwidth=16)
+CONVERSION = Register('CONVERSION', 0, read_only=True, bitwidth=16)
 
 ads1015 = Device(I2C_ADDR, registers=(
     CONFIG,

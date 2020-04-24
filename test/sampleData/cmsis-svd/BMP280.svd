@@ -44,7 +44,7 @@ limitations under the License.
                     <description>Used for Pascals conversion</description>
                     <addressOffset>142</addressOffset>
                     <size>16</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
@@ -54,7 +54,7 @@ limitations under the License.
                     <description>Used for Pascals conversion</description>
                     <addressOffset>144</addressOffset>
                     <size>16</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
@@ -64,7 +64,7 @@ limitations under the License.
                     <description>Used for Pascals conversion</description>
                     <addressOffset>146</addressOffset>
                     <size>16</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
@@ -74,7 +74,7 @@ limitations under the License.
                     <description>Used for Pascals conversion</description>
                     <addressOffset>148</addressOffset>
                     <size>16</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
@@ -84,7 +84,7 @@ limitations under the License.
                     <description>Used for Pascals conversion</description>
                     <addressOffset>150</addressOffset>
                     <size>16</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
@@ -94,7 +94,7 @@ limitations under the License.
                     <description>Used for Pascals conversion</description>
                     <addressOffset>152</addressOffset>
                     <size>16</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
@@ -104,7 +104,7 @@ limitations under the License.
                     <description>Used for Pascals conversion</description>
                     <addressOffset>154</addressOffset>
                     <size>16</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
@@ -114,7 +114,7 @@ limitations under the License.
                     <description>Used for Pascals conversion</description>
                     <addressOffset>156</addressOffset>
                     <size>16</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
@@ -124,7 +124,7 @@ limitations under the License.
                     <description>Used for Pascals conversion</description>
                     <addressOffset>158</addressOffset>
                     <size>16</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
@@ -134,7 +134,7 @@ limitations under the License.
                     <description>Used for Celcius conversion</description>
                     <addressOffset>136</addressOffset>
                     <size>16</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
@@ -144,7 +144,7 @@ limitations under the License.
                     <description>Used for Celcius conversion</description>
                     <addressOffset>138</addressOffset>
                     <size>16</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
@@ -154,7 +154,7 @@ limitations under the License.
                     <description>Used for Celcius conversion</description>
                     <addressOffset>140</addressOffset>
                     <size>16</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint16_t</dataType>
@@ -164,7 +164,7 @@ limitations under the License.
                     <description>Part 2 of Pressure</description>
                     <addressOffset>248</addressOffset>
                     <size>8</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
@@ -174,7 +174,7 @@ limitations under the License.
                     <description>Part 1 of Pressure</description>
                     <addressOffset>247</addressOffset>
                     <size>8</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
@@ -184,7 +184,7 @@ limitations under the License.
                     <description>Part 3 of Pressure</description>
                     <addressOffset>249</addressOffset>
                     <size>8</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
@@ -194,7 +194,7 @@ limitations under the License.
                     <description>Part 2 of temperature</description>
                     <addressOffset>251</addressOffset>
                     <size>8</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
@@ -204,7 +204,7 @@ limitations under the License.
                     <description>Part 1 of temperature</description>
                     <addressOffset>250</addressOffset>
                     <size>8</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
@@ -214,7 +214,7 @@ limitations under the License.
                     <description>Final part of temperature</description>
                     <addressOffset>252</addressOffset>
                     <size>8</size>
-                    <access>read-write</access>
+                    <access>read</access>
                     <resetValue>0x00</resetValue>
                     <resetMask>0xFF</resetMask>
                     <dataType>uint8_t</dataType>
