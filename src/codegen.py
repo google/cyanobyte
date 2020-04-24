@@ -37,6 +37,7 @@ _TEMPLATES = dict(
     doc=["./templates/doc.md"],
     embedded=["./templates/generic.c", "./templates/generic.h"],
     esp32=["./templates/arduino.cpp", "./templates/arduino.h"],
+    espruino=["./templates/espruino.js"],
     i2cdevice=["./templates/i2c-device.py"],
     kubos=["./templates/kubos.c", "./templates/kubos.h"],
     micropython=["./templates/micropython.py"],

@@ -99,10 +99,14 @@ class TestCodegen(unittest.TestCase):
         self.compareFiles('embedded-c', 'c')
         self.compareFiles('embedded-c', 'h')
 
-    def test_Arduino(self):
+    def test_Esp32(self):
         self.generatePeripheralTag('esp32')
         self.compareFiles('esp32', 'cpp')
         self.compareFiles('esp32', 'h')
+
+    def test_Espruino(self):
+        self.generatePeripheralTag('espruino')
+        self.compareFiles('espruino', 'js')
 
     def test_Micropython(self):
         self.generatePeripheralTag('i2cdevice')
