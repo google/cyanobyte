@@ -188,7 +188,7 @@ uint16_t BH1750FVI::readLightIntensity() {
 
     uint8_t _datum;
     _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->requestFrom(DEVICE_ADDRESS, 2)
+    _wire->requestFrom(DEVICE_ADDRESS, 2);
     _datum = _wire->read();
     intensity = intensity << 8 | _datum;
     _datum = _wire->read();

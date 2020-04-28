@@ -20,7 +20,7 @@
     uint8_t _datum;
     _wire->beginTransmission(DEVICE_ADDRESS);
     {# // Here is where I do _not_ put `write(REGISTER_ADDR) #}
-    _wire->requestFrom(DEVICE_ADDRESS, {{bytes}})
+    _wire->requestFrom(DEVICE_ADDRESS, {{bytes}});
     {# Read a byte at a time #}
     {% for n in range(bytes) %}
     _datum = _wire->read();
