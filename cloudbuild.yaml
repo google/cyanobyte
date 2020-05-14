@@ -7,7 +7,7 @@ steps:
   id: Install dev dependencies
 - name: docker.io/library/python:3.7
   entrypoint: bash
-  args: ['-c', 'python3 -m pylint --rcfile=test/pylintrc ./src/*.py']
+  args: ['-c', 'python3 -m pylint --rcfile=test/pylintrc ./cyanobyte/*.py']
   id: Lint source code
   waitFor: ['Install dependencies']
 - name: docker.io/library/python:3.7
@@ -23,7 +23,7 @@ steps:
 - name: docker.io/library/python:3.7
   entrypoint: python3
   args:
-    - 'src/codegen.py'
+    - 'cyanobyte/codegen.py'
     - '-t'
     - 'raspberrypi'
     - '-t'

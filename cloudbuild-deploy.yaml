@@ -24,7 +24,7 @@ steps:
   entrypoint: python3
   id: Generate Hugo-compatible Markdown for our peripherals
   args:
-    - 'src/codegen.py'
+    - 'cyanobyte/codegen.py'
     - '-t'
     - 'doc'
     - '-o'
