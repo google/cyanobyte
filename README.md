@@ -6,15 +6,13 @@ It can also generate reference documentation for a periphreal, useful for embedd
 This is not an official Google product.
 
 ## Setup
-Note: This project requires Python3.
+Note: This project requires Python3. You can install using pip
 
-`pip install -r requirements.txt --user`
+`pip install cyanobyte`
 
-For more advanced development, also install the dev list.
-`pip install -r requirements-dev.txt --user`
 
 ## Run Codegen
-`python3 src/codegen.py -t templates/doc.md -o ./build peripherals/MCP4725.yaml`
+`cyanobyte-codegen -t templates/doc.md -o ./build peripherals/MCP4725.yaml`
 
 ### Options
 * `-t` - A template file. You can provide multiple template files.
@@ -28,7 +26,7 @@ One or multiple files can be passed as an argument.
 `rm -rf ./build`
 
 ## Run Validator
-`python3 src/validator.py peripherals/MCP9808.yaml`
+`cyanobyte-validator peripherals/MCP9808.yaml`
 
 One or multiple files can be passed as an argument.
 
@@ -37,7 +35,7 @@ The current spec is described in `docs/cyanobyte.md`. You can find all examples 
 
 ## Test
 ### Lint
-`python3 -m pylint --rcfile=test/pylintrc src/*.py`
+`python3 -m pylint --rcfile=test/pylintrc cyanobyte/*.py`  
 `python3 -m pylint --rcfile=test/pylintrc test/sampleData/*.py`
 
 ### Unit test
@@ -48,6 +46,13 @@ The [templates](templates) directory includes a set of canonical templates which
 
 The [peripherals](peripherals) directory includes a set of peripheral description files that have been created along with
 the project. It is not an exhaustive list.
+
+## Development setup
+`pip install -r requirements.txt --user`
+
+
+For more advanced development, also install the dev list.
+`pip install -r requirements-dev.txt --user`
 
 ## Contributors
 Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information.

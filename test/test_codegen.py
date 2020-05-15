@@ -21,7 +21,7 @@ class TestCodegen(unittest.TestCase):
     maxDiff = None
 
     def generatePeripheralTemplate(self, template):
-        os.system('python3 src/codegen.py \
+        os.system('python3 cyanobyte/codegen.py \
             -c \
             -o ./tmp/ \
             -t templates/' + template + '\
@@ -37,7 +37,7 @@ class TestCodegen(unittest.TestCase):
             > /dev/null')
 
     def generatePeripheralTag(self, tag):
-        os.system('python3 src/codegen.py \
+        os.system('python3 cyanobyte/codegen.py \
             -c \
             -o ./tmp/ \
             -t ' + tag + '\

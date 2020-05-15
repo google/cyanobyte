@@ -1,5 +1,5 @@
 import unittest
-from src.validator import cyanobyte_valdiate
+from cyanobyte.validator import cyanobyte_valdiate
 from jsonschema.exceptions import ValidationError
 
 
