@@ -3,7 +3,7 @@ This project is an example of how to describe peripherals with an intermediary l
 
 It can also generate reference documentation for a periphreal, useful for embedding into datasheets.
 
-This is not an official Google product.
+ddThis is not an official Google product.
 
 ## Setup
 Note: This project requires Python3.
