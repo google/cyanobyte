@@ -1,0 +1,27 @@
+structs:
+  Doubles:
+    fields:
+      double_big_endian:
+        byteorder: BigEndian
+        offset_in_byte: 8
+        size_in_bit: 64
+        size_in_byte: 8
+      double_little_endian:
+        byteorder: LittleEndian
+        offset_in_byte: 0
+        size_in_bit: 64
+        size_in_byte: 8
+    total_size_in_byte: 16
+  Floats:
+    fields:
+      float_big_endian:
+        byteorder: BigEndian
+        offset_in_byte: 4
+        size_in_bit: 32
+        size_in_byte: 4
+      float_little_endian:
+        byteorder: LittleEndian
+        offset_in_byte: 0
+        size_in_bit: 32
+        size_in_byte: 4
+    total_size_in_byte: 8

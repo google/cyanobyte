@@ -29,6 +29,9 @@ info:
   version: 0.1.0
   'x-foo': 'x-bar'
 
+imports:
+  float: float.emb # We'd need to have a `float.emb` file in the same directory
+
 i2c:
   addressType: 7-bit
   address:

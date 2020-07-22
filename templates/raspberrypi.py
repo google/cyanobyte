@@ -111,6 +111,16 @@ class {{ info.title }}:
         self._lifecycle_begin()
         {% endif %}
 
+    {% if imports %}
+    {% for key,data in imports|dictsort %}
+    {% for structKey,struct in data.structs|dictsort %}
+    def msg_{{key.lower()}}_{{structKey.lower()}}(): # Put params here
+        return 0 # Return the message data structure here
+   
+    {% endfor %}
+    {% endfor %}
+    {% endif %}
+
     {% for key,register in registers|dictsort %}
     {% set bytes = (register.length / 8) | round(1, 'ceil') | int %}
     {% if (not 'readWrite' in register) or ('readWrite' in register and 'R' is in(register.readWrite)) %}
