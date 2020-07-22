@@ -56,6 +56,13 @@ class Example:
         self.device_address = address
         self._lifecycle_begin()
 
+    def msg_float_doubles(): # Put params here
+        return 0 # Return the message data structure here
+   
+    def msg_float_floats(): # Put params here
+        return 0 # Return the message data structure here
+   
+
     def get_registera(self):
         """
         An 8-bit register
