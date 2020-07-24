@@ -1,0 +1,45 @@
+cyanobyte: 0.1.0
+info:
+  contact:
+    name: Nick Felker
+    url: https://github.com/google/cyanobyte
+    email: felker@google.com
+  package: com.cyanobyte
+  title: float.emb
+  description: Bosch Digital Pressure Sensor
+  copyright:
+    name: Google Inc.
+    date: '2019'
+  license:
+    name: Apache-2.0
+  version: 0.1.0
+
+filename: float.emb
+header_guard: TESTDATA_FLOAT_EMB_H_
+structs:
+  Floats:
+    fields:
+      float_little_endian:
+        offset_in_byte: 0
+        size_in_bit: 32 
+        size_in_byte: 4 
+        byteorder: LittleEndian
+      float_big_endian:
+        offset_in_byte: 4
+        size_in_bit: 32
+        size_in_byte: 4
+        byteorder: BigEndian
+    total_size_in_byte: 8
+  Doubles:
+    fields:
+      double_little_endian:
+        offset_in_byte: 0
+        size_in_bit: 64
+        size_in_byte: 8 
+        byteorder: LittleEndian
+      double_big_endian:
+        offset_in_byte: 8
+        size_in_bit: 64
+        size_in_byte: 8 
+        byteorder: BigEndian
+    total_size_in_byte: 16

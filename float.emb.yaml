@@ -1,0 +1,44 @@
+cyanobyte: 0.1.0
+filename: float.emb
+header_guard: TESTDATA_FLOAT_EMB_H
+info:
+  contact:
+    email: felker@google.com
+    name: Nick Felker
+    url: https://github.com/google/cyanobyte
+  copyright:
+    date: '2019'
+    name: Google Inc.
+  description: Generated from Emboss file
+  license:
+    name: Apache-2.0
+  package: com.cyanobyte
+  title: float.emb
+  version: 0.1.0
+structs:
+  Doubles:
+    fields:
+      double_big_endian:
+        byteorder: BigEndian
+        offset_in_byte: 8
+        size_in_bit: 64
+        size_in_byte: 8
+      double_little_endian:
+        byteorder: LittleEndian
+        offset_in_byte: 0
+        size_in_bit: 64
+        size_in_byte: 8
+    total_size_in_byte: 16
+  Floats:
+    fields:
+      float_big_endian:
+        byteorder: BigEndian
+        offset_in_byte: 4
+        size_in_bit: 32
+        size_in_byte: 4
+      float_little_endian:
+        byteorder: LittleEndian
+        offset_in_byte: 0
+        size_in_bit: 32
+        size_in_byte: 4
+    total_size_in_byte: 8
