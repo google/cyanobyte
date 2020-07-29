@@ -115,6 +115,9 @@ class {{ info.title }}:
         {% endif %}
         {% if spi is defined %}
         self.spi = spidev.SpiDev()
+        {% if spi.address is defined %}
+        self.device_address = {{spi.address}}
+        {% endif %}
         bus = 0 # Only SPI bus 0 is available
         device = 1 # Chip select, 0 / 1 depending on connection
         self.spi.open(bus, device)
