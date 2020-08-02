@@ -28,11 +28,9 @@ def convert_json_to_yaml(content):
         # e.g., Floats for floats, Doubles for doubles
         struct_name = struct_info["name"]["name"]["text"]
         yaml_dict["structs"][struct_name] = yaml_struct_dict
-        
-        struct_fixed_size_in_bits = struct_info["attribute"][0]["value"]["expression"]["constant"]["value"]
-        yaml_struct_dict["total_size_in_byte"] = int(struct_fixed_size_in_bits)//8
 
         fields_list = struct_info["structure"]["field"]
+        unit_in_bit = int(struct_info["addressable_unit"])
 
         yaml_struct_dict["fields"] = {}
         for field_info in fields_list:
@@ -40,23 +38,21 @@ def convert_json_to_yaml(content):
             if "$" in field_name:
                 continue
 
-            offset_in_byte = field_info["location"]["start"]["constant"]["value"]
-            size_in_byte = field_info["location"]["size"]["constant"]["value"]
+            try:
+                offset_in_unit = int(field_info["location"]["start"]["constant"]["value"])
+                size_in_unit = int(field_info["location"]["size"]["constant"]["value"])
+            except: 
+                continue
 
             yaml_field_dict = { }
             yaml_struct_dict["fields"][field_name] = yaml_field_dict
 
-            yaml_field_dict["offset_in_byte"] = int(offset_in_byte)
-            yaml_field_dict["size_in_bit"] = int(size_in_byte) * 8
-            yaml_field_dict["size_in_byte"] = int(size_in_byte)
-            
-            for attr_info in field_info["attribute"]:
-                if attr_info["name"]["text"] == "byte_order":
-                    byte_order = attr_info["value"]["string_constant"]["text"]
-                    yaml_field_dict["byteorder"] = byte_order
+            yaml_field_dict["offset_in_bit"] = int(offset_in_unit * unit_in_bit)
+            yaml_field_dict["offset_in_byte"] = int(offset_in_unit * unit_in_bit / 8)
+            yaml_field_dict["size_in_bit"] = int(size_in_unit * unit_in_bit)
+            yaml_field_dict["size_in_byte"] = int(size_in_unit * unit_in_bit / 8)
 
     return yaml_dict
-    
 
 
 if __name__ == "__main__":
