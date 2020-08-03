@@ -35,7 +35,7 @@ except ImportError:
 from jinja2 import Environment, FileSystemLoader
 
 _VERSION = "0.1.0"
-_DEBUG = True
+_DEBUG = False
 _CLEAN = False
 _TEMPLATES = dict(
     arduino=["./templates/arduino.cpp", "./templates/arduino.h"],
@@ -125,17 +125,6 @@ def generate_source_file(template, peripheral, opts, template_ext, out_dir):
                 peripheral_data['imports'][emboss_key] = convert_emb_to_yaml(emboss_filepath)
                 if _DEBUG:
                     print('Imported ' + emboss_filename)
-                """
-                with open(os.path.join(dir_path, emboss_filename)) as emboss_file:
-                    # TODO Convert this into proper YAML
-                    # For now we'll just hardcode this data
-                    #
-                    # Do an inline replacement of this to change what is in memory
-                    # before we pass off to the template.
-                    peripheral_data['imports'][emboss_key] = load(emboss_file, Loader=Loader)
-                    if _DEBUG:
-                        print('Imported ' + emboss_filename)
-                """
 
         if _DEBUG:
             print(peripheral_data)
