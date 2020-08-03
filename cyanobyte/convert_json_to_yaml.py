@@ -1,6 +1,7 @@
 import sys
 import json
 import yaml
+import copy
 from yaml import load, dump
 try:
     from yaml import CLoader as Loader, CDumper as Dumper
@@ -29,6 +30,10 @@ def convert_json_to_yaml(content):
         struct_name = struct_info["name"]["name"]["text"]
         yaml_dict["structs"][struct_name] = yaml_struct_dict
 
+        if "structure" not in struct_info:
+            del yaml_dict["structs"][struct_name]
+            continue
+
         fields_list = struct_info["structure"]["field"]
         unit_in_bit = int(struct_info["addressable_unit"])
 
@@ -37,11 +42,17 @@ def convert_json_to_yaml(content):
             field_name = field_info["name"]["name"]["text"]
             if "$" in field_name:
                 continue
-
+            
             try:
                 offset_in_unit = int(field_info["location"]["start"]["constant"]["value"])
                 size_in_unit = int(field_info["location"]["size"]["constant"]["value"])
             except: 
+                
+                if "read_transform" in field_info and "field_reference" in field_info["read_transform"]:
+                    source_name = field_info["read_transform"]["field_reference"]["path"][0]["source_name"][0]["text"]
+                    if source_name in yaml_struct_dict["fields"]:
+                        yaml_struct_dict["fields"][field_name] = copy.deepcopy(yaml_struct_dict["fields"][source_name])
+                        del yaml_struct_dict["fields"][source_name]
                 continue
 
             yaml_field_dict = { }
@@ -51,6 +62,9 @@ def convert_json_to_yaml(content):
             yaml_field_dict["offset_in_byte"] = int(offset_in_unit * unit_in_bit / 8)
             yaml_field_dict["size_in_bit"] = int(size_in_unit * unit_in_bit)
             yaml_field_dict["size_in_byte"] = int(size_in_unit * unit_in_bit / 8)
+
+        if len(yaml_struct_dict["fields"]) == 0:
+            del yaml_dict["structs"][struct_name]
 
     return yaml_dict
 
