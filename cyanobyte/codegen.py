@@ -73,11 +73,10 @@ def convert_emb_to_yaml(emboss_filepath):
     ]
     front_end_args.append(emboss_filepath)
     front_end_status = subprocess.run(
-	front_end_args,
-    stdout=subprocess.PIPE,
-    env=subprocess_environment,
-    check=True,
-    )
+        front_end_args,
+        stdout=subprocess.PIPE,
+        env=subprocess_environment,
+        check=True)
     content = json.loads(front_end_status.stdout)
     yaml_dict = convert_json_to_yaml(content)
     return yaml_dict
@@ -127,7 +126,7 @@ def generate_source_file(template, peripheral, opts, template_ext, out_dir):
                 dir_path = os.path.dirname(os.path.realpath(peripheral))
                 emboss_filepath = os.path.join(dir_path, emboss_filename)
                 peripheral_data['imports'][emboss_key] = convert_emb_to_yaml(
-            emboss_filepath)
+                    emboss_filepath)
                 if _DEBUG:
                     print('Imported ' + emboss_filename)
 
@@ -264,4 +263,3 @@ def gen(input_files, template_files=None, output_dir='./build', debug=False,
 
 if __name__ == "__main__":
     gen(sys.argv[1:])
-    
