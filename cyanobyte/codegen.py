@@ -18,21 +18,20 @@ import os
 import re
 import sys
 import shutil
-import click
-from yaml import load
-
-import argparse
 from os import path
 import subprocess
 import json
+import click
 
-from convert_json_to_yaml import convert_json_to_yaml
-
+from yaml import load
 try:
     from yaml import CLoader as Loader
 except ImportError:
     from yaml import Loader
 from jinja2 import Environment, FileSystemLoader
+
+from convert_json_to_yaml import convert_json_to_yaml
+
 
 _VERSION = "0.1.0"
 _DEBUG = False
@@ -55,6 +54,9 @@ _OPTIONS = dict(
 )
 
 def convert_emb_to_yaml(emboss_filepath):
+    """
+    Converts a emb into a yaml
+    """
     base_path = "../emboss"
     subprocess_environment = os.environ.copy()
     if subprocess_environment.get("PYTHONPATH"):
@@ -70,9 +72,8 @@ def convert_emb_to_yaml(emboss_filepath):
         "--output-ir-to-stdout",
     ]
     front_end_args.append(emboss_filepath)
-    front_end_status = subprocess.run(front_end_args,
-                                    stdout=subprocess.PIPE,
-                                    env=subprocess_environment)    
+    front_end_status = subprocess.run(front_end_args, stdout=subprocess.PIPE, 
+    		env=subprocess_environment,check=True)    
 
     content = json.loads(front_end_status.stdout)
     yaml_dict = convert_json_to_yaml(content)
