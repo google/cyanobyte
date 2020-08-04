@@ -1,0 +1,167 @@
+# Copyright (C) 2020 Google Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# Datasheet: http://www.ti.com/lit/ds/symlink/ads1015.pdf
+cyanobyte: 0.1.0
+info:
+  contact:
+    name: Nick Felker
+    url: https://github.com/google/cyanobyte
+    email: felker@google.com
+  package: com.cyanobyte
+  title: Example
+  description: Example of a package
+  copyright:
+    name: Google Inc.
+    date: '2019'
+  license:
+    name: Apache-2.0
+  version: 0.1.0
+  'x-foo': 'x-bar'
+
+i2c:
+  addressType: 7-bit
+  address:
+    - 0x10
+    - 0x20
+    - 0x30
+  addressMask: 0xFF
+
+registers:
+  RegisterA:
+    address: 0x00
+    length: 8
+    title: First example
+    description: An 8-bit register
+  RegisterB:
+    address: 0x01
+    length: 16
+    title: Second example
+    description: A 16-bit register
+  RegisterC:
+    address: 0x02
+    length: 32
+    title: Third example
+    description: A 32-bit register
+  RegisterD:
+    address: 0x03
+    length: 0
+    title: Fourth example
+    description: A dummy register that has no data
+
+fields:
+  FieldA:
+    title: Read-only fields for RegisterA
+    description: This is a few bits
+    register: '#/registers/RegisterA'
+    readWrite: 'R'
+    bitStart: 7
+    bitEnd: 4
+    type: number
+  FieldB:
+    title: Write-only fields for RegisterA
+    description: This is fewer bits
+    register: '#/registers/RegisterA'
+    readWrite: 'W'
+    bitStart: 3
+    bitEnd: 2
+    type: enum
+    enum:
+      VAL_1:
+        title: Value 1
+        value: 0b0001
+      VAL_2:
+        title: Value 2
+        value: 0b0010
+      VAL_3:
+        title: Value 3
+        value: 0b0100
+      VAL_4:
+        title: Value 4
+        value: 0b1000
+  FieldC:
+    title: Read/write field for RegisterA
+    description: A single-bit
+    register: '#/registers/RegisterA'
+    readWrite: 'R/W'
+    bitStart: 1
+    bitEnd: 1
+    type: number
+  FieldD:
+    title: This field should never appear
+    description: A bit that is neither readable nor writeable
+    register: '#/registers/RegisterA'
+    readWrite: 'n'
+    bitStart: 0
+    bitEnd: 0
+    type: number
+
+functions:
+  Return:
+    title: Return a value
+    description: Computes and returns
+    register: '#/registers/RegisterA'
+    computed:
+      Number:
+        variables:
+          summation: int16
+        logic:
+          - summation:
+            - sum:
+              - 1024
+              - 1024
+          - send: summation
+        return: summation
+      Array:
+        variables:
+          summation: int16
+        logic:
+          - summation:
+            - sum:
+              - 1024
+              - 1024
+          - send: summation
+        return:
+          - summation
+          - summation
+      Void:
+        variables:
+          summation: int16
+        logic:
+          - summation:
+            - sum:
+              - 1024
+              - 1024
+          - send: summation
+  _lifecycle:
+    title: Code to run when device class is constructed
+    description: Enables features on device
+    register: '#/registers/RegisterA'
+    computed:
+      Begin:
+        variables:
+          output: int8
+        logic:
+          - output: = 1
+          - send: output
+        return: output
+      End:
+        variables:
+          output: int8
+        logic:
+          - output: = 1
+          - send: output
+        return: output
+
+extensions:
+  foo: bar
