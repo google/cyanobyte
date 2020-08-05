@@ -8,10 +8,6 @@ import sys
 import json
 import click
 import yaml
-try:
-    from yaml import CLoader as Loader
-except ImportError:
-    from yaml import Loader
 from jsonschema import validate
 
 
@@ -29,7 +25,7 @@ def cyanobyte_valdiate(input_files):
     # Validate each document against the schema
     for input_file in input_files:
         with open(input_file, "r") as document_yaml:
-            document_dict = yaml.load(document_yaml, Loader=Loader)
+            document_dict = yaml.load(document_yaml)
             validate(instance=document_dict, schema=schema)
 
 
