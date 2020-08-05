@@ -18,14 +18,20 @@ import os
 import re
 import sys
 import shutil
+from os import path
+import subprocess
+import json
 import click
-from yaml import load
 
+from yaml import load
 try:
     from yaml import CLoader as Loader
 except ImportError:
     from yaml import Loader
 from jinja2 import Environment, FileSystemLoader
+
+from convert_json_to_yaml import convert_json_to_yaml
+
 
 _VERSION = "0.1.0"
 _DEBUG = False
@@ -46,6 +52,34 @@ _TEMPLATES = dict(
 _OPTIONS = dict(
     esp32="./templates/esp32.options.yaml"
 )
+
+def convert_emb_to_yaml(emboss_filepath):
+    """
+    Converts a emb into a yaml
+    """
+    base_path = "../emboss"
+    subprocess_environment = os.environ.copy()
+    if subprocess_environment.get("PYTHONPATH"):
+        subprocess_environment["PYTHONPATH"] = (
+            base_path + ":" + subprocess_environment.get("PYTHONPATH"))
+    else:
+        subprocess_environment["PYTHONPATH"] = base_path
+
+    # from emb to json
+    front_end_args = [
+        sys.executable,
+        path.join(base_path, "compiler", "front_end", "emboss_front_end.py"),
+        "--output-ir-to-stdout",
+    ]
+    front_end_args.append(emboss_filepath)
+    front_end_status = subprocess.run(
+        front_end_args,
+        stdout=subprocess.PIPE,
+        env=subprocess_environment,
+        check=True)
+    content = json.loads(front_end_status.stdout)
+    yaml_dict = convert_json_to_yaml(content)
+    return yaml_dict
 
 def camel_to_snake(camel_str):
     """
@@ -85,20 +119,17 @@ def generate_source_file(template, peripheral, opts, template_ext, out_dir):
             options_data = load(options_file, Loader=Loader)
             peripheral_data["options"] = options_data
 
-          # Load imports
+        # Load imports
         if 'imports' in peripheral_data:
             for emboss_key in peripheral_data['imports']:
                 emboss_filename = peripheral_data['imports'][emboss_key]
                 dir_path = os.path.dirname(os.path.realpath(peripheral))
-                with open(os.path.join(dir_path, emboss_filename)) as emboss_file:
-                    # TODO Convert this into proper YAML
-                    # For now we'll just hardcode this data
-                    #
-                    # Do an inline replacement of this to change what is in memory
-                    # before we pass off to the template.
-                    peripheral_data['imports'][emboss_key] = load(emboss_file, Loader=Loader)
-                    if _DEBUG:
-                        print('Imported ' + emboss_filename)
+                emboss_filepath = os.path.join(dir_path, emboss_filename)
+                peripheral_data['imports'][emboss_key] = convert_emb_to_yaml(
+                    emboss_filepath)
+                if _DEBUG:
+                    print('Imported ' + emboss_filename)
+
         if _DEBUG:
             print(peripheral_data)
 
