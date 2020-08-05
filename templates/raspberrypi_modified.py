@@ -111,6 +111,35 @@ class {{ info.title }}:
         self._lifecycle_begin()
         {% endif %}
 
+    {% if imports %}
+    {% for key,data in imports|dictsort %}
+    {% for structKey,struct in data.structs|dictsort|reverse %}
+    def msg_{{key.lower()}}_{{structKey.lower()}}(
+        self,
+    {% for param_name, param_info in struct.fields|dictsort|reverse %}
+        {{param_name}},
+    {% endfor %}
+    ): # Put params here
+        msg = 0
+        {% for param_name, param_info in struct.fields|dictsort|reverse %}
+        msg |= {{param_name}} {{"<< {}".format(param_info.offset_in_bit) if param_info.offset_in_bit != 0}} 
+        {% endfor %}
+        return msg # Return the message data structure here
+   
+    def decode_{{key.lower()}}_{{structKey.lower()}}(self, msg): # Put params here
+        res = []
+        {% for param_name, param_info in struct.fields|dictsort|reverse %}
+        {{param_name}} = msg {{">> {}".format(param_info.offset_in_bit) if param_info.offset_in_bit != 0}} 
+        {{param_name}} &= 1 << {{param_info.size_in_byte}} - 1
+        res.append({{param_name}})
+
+        {% endfor %}
+        return  res # Return the decoded msg
+   
+    {% endfor %}
+    {% endfor %}
+    {% endif %}
+
     {% for key,register in registers|dictsort %}
     {% set bytes = (register.length / 8) | round(1, 'ceil') | int %}
     {% if (not 'readWrite' in register) or ('readWrite' in register and 'R' is in(register.readWrite)) %}
