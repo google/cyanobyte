@@ -181,7 +181,7 @@ Example.prototype.getFieldA = function() {
   // '#/registers/RegisterA' > 'RegisterA'
   var register = this.getRegisterA()
   // Mask register value
-  register = register & 0b0000000001111000
+  register = register & 0b0000000011110000
   // Bitshift value
   register = register >> 4
   return register
@@ -216,7 +216,7 @@ Example.prototype.getFieldC = function() {
   // '#/registers/RegisterA' > 'RegisterA'
   var register = this.getRegisterA()
   // Mask register value
-  register = register & 0b0000000000000001
+  register = register & 0b0000000000000010
   // Bitshift value
   register = register >> 1
   return register

@@ -167,7 +167,7 @@ TCS3472.prototype.getinit = function() {
   // '#/registers/enable' > 'enable'
   var register = this.getenable()
   // Mask register value
-  register = register & 0b0000000001111111
+  register = register & 0b0000000011111111
   return register
 }
 /**

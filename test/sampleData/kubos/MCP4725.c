@@ -95,7 +95,7 @@ int mcp4725_get_digitalout(uint16_t* val) {
         return result;
     }
     // Mask register value
-    val = val & 0b0000111111111111;
+    val = val & 0b0001111111111111;
     return 0;
 }
 

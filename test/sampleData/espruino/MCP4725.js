@@ -149,7 +149,7 @@ MCP4725.prototype.getdigitalOut = function() {
   // '#/registers/EEPROM' > 'EEPROM'
   var register = this.getEEPROM()
   // Mask register value
-  register = register & 0b0000111111111111
+  register = register & 0b0001111111111111
   return register
 }
 /**

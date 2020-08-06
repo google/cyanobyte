@@ -181,7 +181,7 @@ uint8_t Example::getFieldA() {
     // '#/registers/RegisterA' > 'RegisterA'
     uint8_t val = readRegisterA();
     // Mask register value
-    val = val & 0b0000000001111000;
+    val = val & 0b0000000011110000;
     // Bitshift value
     val = val >> 4;
     return val;
@@ -201,7 +201,7 @@ uint8_t Example::getFieldC() {
     // '#/registers/RegisterA' > 'RegisterA'
     uint8_t val = readRegisterA();
     // Mask register value
-    val = val & 0b0000000000000001;
+    val = val & 0b0000000000000010;
     // Bitshift value
     val = val >> 1;
     return val;
