@@ -123,7 +123,7 @@ MCP9808.prototype.getlimitHysteresis = function() {
   // '#/registers/configuration' > 'configuration'
   var register = this.getconfiguration()
   // Mask register value
-  register = register & 0b0000001100000000
+  register = register & 0b0000011000000000
   // Bitshift value
   register = register >> 9
   return register
@@ -146,7 +146,7 @@ MCP9808.prototype.getshutdownMode = function() {
   // '#/registers/configuration' > 'configuration'
   var register = this.getconfiguration()
   // Mask register value
-  register = register & 0b0000000010000000
+  register = register & 0b0000000100000000
   // Bitshift value
   register = register >> 8
   return register

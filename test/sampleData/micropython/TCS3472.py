@@ -148,7 +148,7 @@ class TCS3472:
         # '#/registers/enable' > 'enable'
         val = self.get_enable()
         # Mask register value
-        val = val & 0b0000000001111111
+        val = val & 0b0000000011111111
         return val
 
     def set_init(self, data):

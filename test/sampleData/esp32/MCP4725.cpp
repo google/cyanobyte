@@ -111,7 +111,7 @@ uint16_t MCP4725::getdigitalOut() {
     // '#/registers/EEPROM' > 'EEPROM'
     uint8_t val = readEEPROM();
     // Mask register value
-    val = val & 0b0000111111111111;
+    val = val & 0b0001111111111111;
     return val;
 }
 
