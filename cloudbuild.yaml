@@ -5,14 +5,10 @@ steps:
 - name: docker.io/library/python:3.7
   args: ['pip3', 'install', '-r', 'requirements-dev.txt', '--user']
   id: Install dev dependencies
-- name: docker.io/library/python:3.7
+- name: gcr.io/cloud-builders/git
   entrypoint: bash
-  args: ['apt', 'install', '-y', 'git']
-  id: Install dev dependencies
-- name: docker.io/library/python:3.7
-  entrypoint: bash
-  args: ['git', 'clone', 'https://github.com/google/emboss.git']
-  id: Install dev dependencies
+  id: Clone Emboss
+  args: ['-c', 'git clone --recurse-submodules --depth 1 https://github.com/google/emboss.git']
 - name: docker.io/library/python:3.7
   entrypoint: bash
   args: ['-c', 'python3 -m pylint --rcfile=test/pylintrc ./cyanobyte/*.py']
