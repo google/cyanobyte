@@ -7,6 +7,10 @@ steps:
   id: Install dev dependencies
 - name: docker.io/library/python:3.7
   entrypoint: bash
+  args: ['apt', 'install', '-y', 'git']
+  id: Install dev dependencies
+- name: docker.io/library/python:3.7
+  entrypoint: bash
   args: ['git', 'clone', 'https://github.com/google/emboss.git']
   id: Install dev dependencies
 - name: docker.io/library/python:3.7
