@@ -8,7 +8,7 @@ steps:
 - name: gcr.io/cloud-builders/git
   entrypoint: bash
   id: Clone Emboss
-  args: ['-c', 'git clone --recurse-submodules --depth 1 https://github.com/google/emboss.git']
+  args: ['-c', 'git clone https://github.com/google/emboss.git']
 - name: docker.io/library/python:3.7
   entrypoint: bash
   args: ['-c', 'python3 -m pylint --rcfile=test/pylintrc ./cyanobyte/*.py']
