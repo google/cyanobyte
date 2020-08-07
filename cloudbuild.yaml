@@ -7,6 +7,10 @@ steps:
   id: Install dev dependencies
 - name: docker.io/library/python:3.7
   entrypoint: bash
+  args: ['git', 'clone', 'https://github.com/google/emboss.git']
+  id: Install dev dependencies
+- name: docker.io/library/python:3.7
+  entrypoint: bash
   args: ['-c', 'python3 -m pylint --rcfile=test/pylintrc ./cyanobyte/*.py']
   id: Lint source code
   waitFor: ['Install dependencies']
@@ -25,7 +29,7 @@ steps:
   args:
     - 'cyanobyte/codegen.py'
     - '-t'
-    - 'raspberrypi_modified'
+    - 'raspberrypi'
     - '-t'
     - 'arduino'
     - '-t'
