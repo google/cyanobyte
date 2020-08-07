@@ -138,7 +138,7 @@ class {{ info.title }}:
    
     {% endfor %}
     {% endfor %}
-    {% endif %}
+    {% endif -%}
 
     {% for key,register in registers|dictsort %}
     {% set bytes = (register.length / 8) | round(1, 'ceil') | int %}
