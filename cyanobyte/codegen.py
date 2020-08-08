@@ -57,7 +57,7 @@ def convert_emb_to_yaml(emboss_filepath):
     """
     Converts a emb into a yaml
     """
-    base_path = "/workspace/emboss"
+    base_path = "/worksapce/emboss"
     subprocess_environment = os.environ.copy()
     if subprocess_environment.get("PYTHONPATH"):
         subprocess_environment["PYTHONPATH"] = (
