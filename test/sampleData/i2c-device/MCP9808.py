@@ -32,7 +32,7 @@ CONFIGURATION = Register('CONFIGURATION', 1, fields=(
         Temp_1C5: 1,
         Temp_3C: 2,
         Temp_6C: 3
-    })
+    }),
     BitField('shutdownMode', 0b0000000100000000, bitwidth=1, values_map={
         continousConversion: 0,
         shutdown: 1
