@@ -21,7 +21,7 @@ I2C_ADDR = 41
 BLUE = Register('BLUE', 186, read_only=True, bitwidth=16)
 CLEAR = Register('CLEAR', 180, read_only=True, bitwidth=16)
 ENABLE = Register('ENABLE', 128, fields=(
-    BitField('init', 0b0000000001111111, bitwidth=8, values_map={
+    BitField('init', 0b0000000011111111, bitwidth=8, values_map={
         Power: 1,
         RGBC: 2
     })
