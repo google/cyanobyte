@@ -123,7 +123,7 @@ class MCP4725:
         # '#/registers/EEPROM' > 'EEPROM'
         val = self.get_eeprom()
         # Mask register value
-        val = val & 0b0000111111111111
+        val = val & 0b0001111111111111
         return val
 
     def set_digitalout(self, data):

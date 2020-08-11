@@ -71,7 +71,7 @@ int mcp9808_get_limithysteresis(
         return result;
     }
     // Mask register value
-    val = val & 0b0000001100000000;
+    val = val & 0b0000011000000000;
     // Bitshift value
     val = val >> 9;
     return 0;
@@ -87,7 +87,7 @@ int mcp9808_get_shutdownmode(
         return result;
     }
     // Mask register value
-    val = val & 0b0000000010000000;
+    val = val & 0b0000000100000000;
     // Bitshift value
     val = val >> 8;
     return 0;

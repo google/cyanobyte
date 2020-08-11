@@ -84,7 +84,7 @@ limitations under the License.
 
 {% macro mask(startBit, endBit) -%}
 0b
-{%- for bit in range(16, 0, -1) -%}
+{%- for bit in range(15, -1, -1) -%}
 {% if bit > startBit or bit < endBit -%}
 0
 {%- else -%}

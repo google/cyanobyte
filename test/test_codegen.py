@@ -108,9 +108,9 @@ class TestCodegen(unittest.TestCase):
         self.generatePeripheralTag('espruino')
         self.compareFiles('espruino', 'js')
 
-    def test_Micropython(self):
+    def test_I2CDevice(self):
         self.generatePeripheralTag('i2cdevice')
-        self.compareFiles('i2cdevice', 'py')
+        self.compareFiles('i2c-device', 'py')
 
     def test_Kubos(self):
         self.generatePeripheralTag('kubos')

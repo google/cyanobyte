@@ -136,7 +136,7 @@ int example_get_fielda(
         return result;
     }
     // Mask register value
-    val = val & 0b0000000001111000;
+    val = val & 0b0000000011110000;
     // Bitshift value
     val = val >> 4;
     return 0;
@@ -174,7 +174,7 @@ int example_get_fieldc(
         return result;
     }
     // Mask register value
-    val = val & 0b0000000000000001;
+    val = val & 0b0000000000000010;
     // Bitshift value
     val = val >> 1;
     return 0;

@@ -116,7 +116,7 @@ int tcs3472_get_init(uint8_t* val) {
         return result;
     }
     // Mask register value
-    val = val & 0b0000000001111111;
+    val = val & 0b0000000011111111;
     return 0;
 }
 
