@@ -19,7 +19,7 @@ from i2cdevice import Device, Register, BitField
 I2C_ADDR = 98
 
 EEPROM = Register('EEPROM', 96, fields=(
-    BitField('digitalOut', 0b0000111111111111, bitwidth=13, values_in=_byte_swap, values_out=_byte_swap, values_map={
+    BitField('digitalOut', 0b0001111111111111, bitwidth=13, values_in=_byte_swap, values_out=_byte_swap, values_map={
         GND: 0,
         VCC: 4095
     })

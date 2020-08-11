@@ -27,13 +27,13 @@ I2C_ADDR_31 = 31
 I2C_ADDR = [I2C_ADDR_24, I2C_ADDR_25, I2C_ADDR_26, I2C_ADDR_27, I2C_ADDR_28, I2C_ADDR_29, I2C_ADDR_30, I2C_ADDR_31]
 
 CONFIGURATION = Register('CONFIGURATION', 1, fields=(
-    BitField('limitHysteresis', 0b0000001100000000, bitwidth=2, values_map={
+    BitField('limitHysteresis', 0b0000011000000000, bitwidth=2, values_map={
         Temp_0C: 0,
         Temp_1C5: 1,
         Temp_3C: 2,
         Temp_6C: 3
-    })
-    BitField('shutdownMode', 0b0000000010000000, bitwidth=1, values_map={
+    }),
+    BitField('shutdownMode', 0b0000000100000000, bitwidth=1, values_map={
         continousConversion: 0,
         shutdown: 1
     })

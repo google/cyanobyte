@@ -22,15 +22,15 @@ I2C_ADDR_48 = 48
 I2C_ADDR = [I2C_ADDR_16, I2C_ADDR_32, I2C_ADDR_48]
 
 REGISTERA = Register('REGISTERA', 0, fields=(
-    BitField('FieldA', 0b0000000001111000, bitwidth=4)
-    BitField('FieldB', 0b0000000000000110, bitwidth=2, values_map={
+    BitField('FieldA', 0b0000000011110000, bitwidth=4),
+    BitField('FieldB', 0b0000000000001100, bitwidth=2, values_map={
         VAL_1: 1,
         VAL_2: 2,
         VAL_3: 4,
         VAL_4: 8
-    })
-    BitField('FieldC', 0b0000000000000001, bitwidth=1)
-    BitField('FieldD', 0b0000000000000000, bitwidth=1)
+    }),
+    BitField('FieldC', 0b0000000000000010, bitwidth=1),
+    BitField('FieldD', 0b0000000000000001, bitwidth=1)
 ), read_only=False, bitwidth=8)
 REGISTERB = Register('REGISTERB', 1, read_only=False, bitwidth=16)
 REGISTERC = Register('REGISTERC', 2, read_only=False, bitwidth=32)

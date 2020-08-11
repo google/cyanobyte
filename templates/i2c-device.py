@@ -43,7 +43,7 @@ I2C_ADDR = {{i2c.address}}
 {% if key in template.registersToFields %}
 {{key.upper()}} = Register('{{key.upper()}}', {{register.address}}, fields=(
     {% for field in template.registersToFields[key] %}
-    BitField('{{field.key}}', {{utils.mask(field.bitStart, field.bitEnd)}}, bitwidth={{field.bitStart - field.bitEnd + 1}} {% if i2c.endian == 'little' %}, values_in=_byte_swap, values_out=_byte_swap{% endif %} {% if field.type == 'enum' %}, values_map={{values_map(field)}}{% endif %})
+    BitField('{{field.key}}', {{utils.mask(field.bitStart, field.bitEnd)}}, bitwidth={{field.bitStart - field.bitEnd + 1}}{% if i2c.endian == 'little' %}, values_in=_byte_swap, values_out=_byte_swap{% endif %}{% if field.type == 'enum' %}, values_map={{values_map(field)}}{% endif %}){{',' if not loop.last }}
     {% endfor %}
 ), read_only={{register.readWrite == 'R'}}, bitwidth={{register.length}})
 {% else %}
