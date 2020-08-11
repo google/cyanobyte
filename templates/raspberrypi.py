@@ -74,22 +74,6 @@ class {{key[0].upper()}}{{key[1:]}}Values(Enum):
 {% endif %}
 {% endfor %}
 {% endif %}
-{% if imports %}
-{% for key,data in imports|dictsort %}
-{% for structKey,struct in data.structs|dictsort|reverse %}
-{% if struct.is_enum %}
-{# Create enum class from emb #}
-class {{structKey[0].upper()}}{{structKey[1:]}}Values(Enum):
-    """
-{{utils.pad_string("    ", "Valid values for " + structKey)}}
-    """
-    {% for ekey,enum in struct.fields|dictsort %}
-    {{ekey.upper()}} = {{enum.value}} 
-    {% endfor %}
-{% endif %}
-{% endfor %}
-{% endfor %}
-{% endif %}
 {% if i2c.address is iterable and i2c.address is not string %}
 class DeviceAddressValues(Enum):
     """
@@ -130,7 +114,6 @@ class {{ info.title }}:
     {% if imports %}
     {% for key,data in imports|dictsort %}
     {% for structKey,struct in data.structs|dictsort|reverse %}
-    {% if not struct.is_enum %}
     def msg_{{key.lower()}}_{{structKey.lower()}}(
         self,
     {% for param_name, param_info in struct.fields|dictsort|reverse %}
@@ -153,7 +136,6 @@ class {{ info.title }}:
         {% endfor %}
         return  res # Return the decoded msg
 
-    {% endif %}
     {% endfor %}
     {% endfor %}
     {% endif -%}
