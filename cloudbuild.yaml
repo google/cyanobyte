@@ -5,6 +5,10 @@ steps:
 - name: docker.io/library/python:3.7
   args: ['pip3', 'install', '-r', 'requirements-dev.txt', '--user']
   id: Install dev dependencies
+- name: gcr.io/cloud-builders/git
+  entrypoint: bash
+  id: Clone Emboss
+  args: ['-c', 'git clone https://github.com/google/emboss.git']
 - name: docker.io/library/python:3.7
   entrypoint: bash
   args: ['-c', 'python3 -m pylint --rcfile=test/pylintrc ./cyanobyte/*.py']
@@ -34,6 +38,8 @@ steps:
     - 'cmsis'
     - '-t'
     - 'datasheet'
+    - '-e'
+    - '/workspace/emboss'
     - '-o'
     - './build'
     - 'peripherals/ADS1015.yaml'
@@ -44,6 +50,7 @@ steps:
     - 'peripherals/MCP4725.yaml'
     - 'peripherals/MCP9808.yaml'
     - 'peripherals/TCS3472.yaml'
+    - 'peripherals-yaml/example.yaml'
   id: Sample codegen
 - name: wokwi/arduino-cli
   args: ['arduino-cli', 'compile', '-o', '/home/wokwi/ci.hex', '-b', 'arduino:avr:uno', 'test/sampleData/arduino']
