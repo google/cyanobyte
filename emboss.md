@@ -1,6 +1,9 @@
 # Support Importing Emboss Files for Serialization/Deserialization Functions
 This project is an example of how to import emboss files(emb file), convert the file into essential yaml file and generate cpp code with modified template.
 
+##Emboss
+[Emboss](https://github.com/google/emboss) is a tool for generating code that reads and writes binary data structures. It is designed to help write code that communicates with hardware devices such as GPS receivers, LIDAR scanners, or actuators. 
+
 ## Setup
 Note: This project requires Python3 and a modified input yaml file
 1. Put the emboss file under the same directory of input yaml file

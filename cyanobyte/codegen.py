@@ -53,22 +53,22 @@ _OPTIONS = dict(
     esp32="./templates/esp32.options.yaml"
 )
 
-def convert_emb_to_yaml(emboss_filepath):
+def convert_emb_to_yaml(emboss_filepath, emboss_basepath):
     """
     Converts a emb into a yaml
     """
-    base_path = "/workspace/emboss"
     subprocess_environment = os.environ.copy()
     if subprocess_environment.get("PYTHONPATH"):
         subprocess_environment["PYTHONPATH"] = (
-            base_path + ":" + subprocess_environment.get("PYTHONPATH"))
+            emboss_basepath + ":" + subprocess_environment.get("PYTHONPATH"))
     else:
-        subprocess_environment["PYTHONPATH"] = base_path
+        subprocess_environment["PYTHONPATH"] = emboss_basepath
 
     # from emb to json
     front_end_args = [
         sys.executable,
-        path.join(base_path, "compiler", "front_end", "emboss_front_end.py"),
+        path.join(emboss_basepath, "compiler", "front_end",
+                  "emboss_front_end.py"),
         "--output-ir-to-stdout",
     ]
     front_end_args.append(emboss_filepath)
@@ -96,7 +96,8 @@ def regex_replace(in_str, regex_pattern, regex_replacement):
     regex = re.compile(regex_pattern)
     return regex.sub(regex_replacement, in_str)
 
-def generate_source_file(template, peripheral, opts, template_ext, out_dir):
+def generate_source_file(template, peripheral, opts, template_ext,
+                         out_dir, emboss_path):
     """
     Generates a source file for a provided Jinja2 template.
 
@@ -126,7 +127,7 @@ def generate_source_file(template, peripheral, opts, template_ext, out_dir):
                 dir_path = os.path.dirname(os.path.realpath(peripheral))
                 emboss_filepath = os.path.join(dir_path, emboss_filename)
                 peripheral_data['imports'][emboss_key] = convert_emb_to_yaml(
-                    emboss_filepath)
+                    emboss_filepath, emboss_path)
                 if _DEBUG:
                     print('Imported ' + emboss_filename)
 
@@ -162,7 +163,8 @@ def generate_source_file(template, peripheral, opts, template_ext, out_dir):
             peripheral_output_file.write(peripheral_gen)
 
 
-def generate_files_for_template(env, template_file, in_files, opts, out_dir):
+def generate_files_for_template(env, template_file, in_files, opts,
+                                out_dir, emboss_path):
     """
     Generates a series of source files for a provided template file.
 
@@ -192,7 +194,8 @@ def generate_files_for_template(env, template_file, in_files, opts, out_dir):
                 peripheral,
                 opts,
                 template_extension,
-                out_dir
+                out_dir,
+                emboss_path
             )
 
 
@@ -200,12 +203,14 @@ def generate_files_for_template(env, template_file, in_files, opts, out_dir):
 @click.option("-t", "--template", "template_files", multiple=True)
 @click.option("-o", "--output", "output_dir", default="./build",
               show_default=True)
+@click.option("-e", "--emboss", "emboss_path", default="../emboss",
+              show_default=True)
 @click.option("-d", "--debug", "debug", default=False)
 @click.option("-p", "--options", "options", default=None)
 @click.option("-c", "--clean", "clean", is_flag=True)
 @click.argument("input_files", type=click.Path(exists=True), nargs=-1)
-def gen(input_files, template_files=None, output_dir='./build', debug=False,
-        options=None, clean=False):
+def gen(input_files, template_files=None, output_dir='./build',
+        emboss_path="../emboss", debug=False, options=None, clean=False):
     """
     Takes command line arguments and generates source files for every
     peripheral to each template file.
@@ -249,7 +254,8 @@ def gen(input_files, template_files=None, output_dir='./build', debug=False,
                     filepath,
                     input_files,
                     options,
-                    output_dir
+                    output_dir,
+                    emboss_path
                 )
         else:
             generate_files_for_template(
@@ -257,7 +263,8 @@ def gen(input_files, template_files=None, output_dir='./build', debug=False,
                 template_file,
                 input_files,
                 options,
-                output_dir
+                output_dir,
+                emboss_path
             )
 
 

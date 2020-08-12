@@ -38,6 +38,8 @@ steps:
     - 'cmsis'
     - '-t'
     - 'datasheet'
+    - '-e'
+    - '/workspace/emboss'
     - '-o'
     - './build'
     - 'peripherals/ADS1015.yaml'
