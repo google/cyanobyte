@@ -59,6 +59,9 @@ Class for {{ info.title }}
 
 {{ py.importStdLibs(fields, functions, i2c, template) -}}
 import smbus
+{% if spi is defined %}
+import spidev
+{% endif %}
 
 {# Create enums for fields #}
 {% if fields %}
