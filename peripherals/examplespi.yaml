@@ -44,22 +44,22 @@ i2c:
   addressMask: 0xFF
 
 registers:
-  RegisterA:
+  RegisterW:
     address: 0x00
     length: 8
     title: First example
     description: An 8-bit register
-  RegisterB:
+  RegisterX:
     address: 0x01
     length: 16
     title: Second example
     description: A 16-bit register
-  RegisterC:
+  RegisterY:
     address: 0x02
     length: 32
     title: Third example
     description: A 32-bit register
-  RegisterD:
+  RegisterZ:
     address: 0x03
     length: 0
     title: Fourth example

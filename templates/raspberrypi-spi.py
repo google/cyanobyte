@@ -124,7 +124,7 @@ class {{ info.title }}:
         self.spi.max_speed_hz = {{ spi.frequency }}
         self.spi.bits_per_word = {{ spi.word }}
         self.spi.mode = 0b{% if spi.clockPolarity == 'high' %}1{% else %}0{% endif %}{%if spi.clockPhase == 'trailing' %}1{% else %}0{% endif %}
-        
+
         {% endif %}
 
     {% for key,register in registers|dictsort %}
@@ -250,6 +250,9 @@ class {{ info.title }}:
     {% for key,register in registers|dictsort %}
     {% if (not 'readWrite' in register) or ('readWrite' in register and 'R' is in(register.readWrite)) %}
     def spi_read_{{key.lower()}}(self):
+        """
+{{utils.pad_string("        ", register.description)}}
+        """
         # Simple read request msg
         msg = [self.device_address, self.REGISTER_{{key.upper()}}]
         result = self.spi.xfer2(msg)
@@ -261,10 +264,12 @@ class {{ info.title }}:
         result = _sign(result, {{register.length}})
         {% endif %}
         return result
-
     {% endif %}
     {% if (not 'readWrite' in register) or ('readWrite' in register and 'W' is in(register.readWrite)) %}
     def spi_write_{{key.lower()}}(self{% if register.length > 0 %}, data{% endif %}):
+        """
+{{utils.pad_string("        ", register.description)}}
+        """
         # Build request msg
         msg = [self.device_address, self.REGISTER_{{key.upper()}}]
         {% if register.length > 0 %}
@@ -274,7 +279,8 @@ class {{ info.title }}:
         msg = msg + data
         {% endif %}
         result = self.spi.xfer2(msg)
-
+        {# May be useful to return status #}
+        return result
     {% endif %}
     {% endfor %}
     {% endif %}

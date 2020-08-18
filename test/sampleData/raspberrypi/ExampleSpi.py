@@ -28,76 +28,75 @@ class ExampleSpi:
     """
     Example of a package using SPI
 
-
     """
     device_address = 0
-    REGISTER_REGISTERA = 0
-    REGISTER_REGISTERB = 1
-    REGISTER_REGISTERC = 2
-    REGISTER_REGISTERD = 3
+    REGISTER_REGISTERW = 0
+    REGISTER_REGISTERX = 1
+    REGISTER_REGISTERY = 2
+    REGISTER_REGISTERZ = 3
 
     def __init__(self):
         # Initialize connection to peripheral
         self.bus = smbus.SMBus(1)
         self.spi = spidev.SpiDev()
+        self.device_address = 0
         bus = 0 # Only SPI bus 0 is available
         device = 1 # Chip select, 0 / 1 depending on connection
         self.spi.open(bus, device)
         self.spi.max_speed_hz = 16000
         self.spi.bits_per_word = 8
-        self.spi.mode = 0b10        
+        self.spi.mode = 0b10
 
-    def get_registera(self):
+    def get_registerw(self):
         """
         An 8-bit register
 
         """
         val = self.bus.read_byte_data(
             self.device_address,
-            self.REGISTER_REGISTERA
+            self.REGISTER_REGISTERW
         )
         return val
 
-    def set_registera(self, data):
+    def set_registerw(self, data):
         """
         An 8-bit register
 
         """
         self.bus.write_byte_data(
             self.device_address,
-            self.REGISTER_REGISTERA,
+            self.REGISTER_REGISTERW,
             data
         )
-    def get_registerb(self):
+    def get_registerx(self):
         """
         A 16-bit register
 
         """
         val = self.bus.read_word_data(
             self.device_address,
-            self.REGISTER_REGISTERB
+            self.REGISTER_REGISTERX
         )
         return val
 
-    def set_registerb(self, data):
+    def set_registerx(self, data):
         """
         A 16-bit register
 
         """
         self.bus.write_word_data(
             self.device_address,
-            self.REGISTER_REGISTERB,
+            self.REGISTER_REGISTERX,
             data
         )
-    def get_registerc(self):
+    def get_registery(self):
         """
         A 32-bit register
-
 
         """
         byte_list = self.bus.read_i2c_block_data(
             self.device_address,
-            self.REGISTER_REGISTERC,
+            self.REGISTER_REGISTERY,
             4
         )
         val = 0
@@ -107,7 +106,7 @@ class ExampleSpi:
         val = val << 8 | byte_list[3]
         return val
 
-    def set_registerc(self, data):
+    def set_registery(self, data):
         """
         A 32-bit register
 
@@ -119,76 +118,103 @@ class ExampleSpi:
         buffer[3] = (data >> 0) & 0xFF
         self.bus.write_i2c_block_data(
             self.device_address,
-            self.REGISTER_REGISTERC,
+            self.REGISTER_REGISTERY,
             buffer
         )
-    def get_registerd(self):
+    def get_registerz(self):
         """
         A dummy register that has no data
-
 
         """
         val = self.bus.read_byte_data(
             self.device_address,
-            self.REGISTER_REGISTERD
+            self.REGISTER_REGISTERZ
         )
         return val
 
-    def set_registerd(self):
+    def set_registerz(self):
         """
         A dummy register that has no data
-
 
         """
         self.bus.write_i2c_block_data(
             self.device_address,
-            self.REGISTER_REGISTERD,
+            self.REGISTER_REGISTERZ,
             []
         )
 
-    def spi_read_registera(self):
+    def spi_read_registerw(self):
+        """
+        An 8-bit register
+
+        """
         # Simple read request msg
-        msg = [self.device_address, self.REGISTER_REGISTERA]
+        msg = [self.device_address, self.REGISTER_REGISTERW]
         result = self.spi.xfer2(msg)
         return result
+    def spi_write_registerw(self, data):
+        """
+        An 8-bit register
 
-    def spi_write_registera(self, data):
+        """
         # Build request msg
-        msg = [self.device_address, self.REGISTER_REGISTERA]
+        msg = [self.device_address, self.REGISTER_REGISTERW]
         msg = msg + data
         result = self.spi.xfer2(msg)
+        return result
+    def spi_read_registerx(self):
+        """
+        A 16-bit register
 
-    def spi_read_registerb(self):
+        """
         # Simple read request msg
-        msg = [self.device_address, self.REGISTER_REGISTERB]
+        msg = [self.device_address, self.REGISTER_REGISTERX]
         result = self.spi.xfer2(msg)
         return result
+    def spi_write_registerx(self, data):
+        """
+        A 16-bit register
 
-    def spi_write_registerb(self, data):
+        """
         # Build request msg
-        msg = [self.device_address, self.REGISTER_REGISTERB]
+        msg = [self.device_address, self.REGISTER_REGISTERX]
         msg = msg + data
         result = self.spi.xfer2(msg)
+        return result
+    def spi_read_registery(self):
+        """
+        A 32-bit register
 
-    def spi_read_registerc(self):
+        """
         # Simple read request msg
-        msg = [self.device_address, self.REGISTER_REGISTERC]
+        msg = [self.device_address, self.REGISTER_REGISTERY]
         result = self.spi.xfer2(msg)
         return result
+    def spi_write_registery(self, data):
+        """
+        A 32-bit register
 
-    def spi_write_registerc(self, data):
+        """
         # Build request msg
-        msg = [self.device_address, self.REGISTER_REGISTERC]
+        msg = [self.device_address, self.REGISTER_REGISTERY]
         msg = msg + data
         result = self.spi.xfer2(msg)
+        return result
+    def spi_read_registerz(self):
+        """
+        A dummy register that has no data
 
-    def spi_read_registerd(self):
+        """
         # Simple read request msg
-        msg = [self.device_address, self.REGISTER_REGISTERD]
+        msg = [self.device_address, self.REGISTER_REGISTERZ]
         result = self.spi.xfer2(msg)
         return result
+    def spi_write_registerz(self):
+        """
+        A dummy register that has no data
 
-    def spi_write_registerd(self):
+        """
         # Build request msg
-        msg = [self.device_address, self.REGISTER_REGISTERD]
+        msg = [self.device_address, self.REGISTER_REGISTERZ]
         result = self.spi.xfer2(msg)
+        return result
