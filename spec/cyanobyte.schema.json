@@ -148,6 +148,54 @@
         "addressMask"
       ]
     },
+    "spi": {
+      "description": "SPI settings",
+      "type": "object",
+      "properties": {
+        "clockPolarity": {
+          "description": "The value of the clock signal in an IDLE state",
+          "type": "string",
+          "enum": ["low", "high"],
+          "default": "low"
+        },
+        "clockPhase": {
+          "description": "On which clock edge is data transferred",
+          "type": "string",
+          "enum": ["leading", "trailing"],
+          "default": "leading"
+        },
+        "frequency": {
+          "description": "Maximum supported shared clock frequency in Hertz",
+          "type": "number"
+        },
+        "endian": {
+          "description": "Endianness of the component",
+          "type": "string",
+          "enum": [
+            "little",
+            "big"
+          ],
+          "default": "big"
+        },
+        "word": {
+          "description": "The size of a word in bits",
+          "type": "number",
+          "default": 8
+        },
+        "address": {
+          "description": "Device address. Required when spi.format is 'register'",
+          "type": "number"
+        },
+        "format": {
+          "description": "The data format for SPI payloads",
+          "type": "string",
+          "enum": ["register"]
+        }
+      },
+      "required": [
+        "frequency", "format"
+      ]
+    },
     "registers": {
       "description": "Chip registers",
       "type": "object",

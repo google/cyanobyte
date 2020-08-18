@@ -3,13 +3,14 @@ This project is an example of how to describe peripherals with an intermediary l
 
 It can also generate reference documentation for a peripheral, useful for embedding into datasheets.
 
+The tool works well for I2C devices, while SPI support is in alpha.
+
 This is not an official Google product.
 
 ## Setup
 Note: This project requires Python3. You can install using pip
 
 `pip install cyanobyte`
-
 
 ## Run Codegen
 `cyanobyte-codegen -t templates/doc.md -o ./build peripherals/MCP4725.yaml`
