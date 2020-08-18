@@ -20,6 +20,7 @@ Class for ExampleSpiEmboss
 """
 
 import smbus
+import spidev
 
 
 
