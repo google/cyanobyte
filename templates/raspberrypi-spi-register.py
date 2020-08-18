@@ -58,6 +58,9 @@ Class for {{ info.title }}
 
 {{ py.importStdLibs(fields, functions, i2c, template) -}}
 import smbus
+{% if spi is defined %}
+import spidev
+{% endif %}
 
 {# Create enums for fields #}
 {% if fields %}
@@ -110,35 +113,19 @@ class {{ info.title }}:
         {% if '_lifecycle' in functions and 'Begin' in functions._lifecycle.computed %}
         self._lifecycle_begin()
         {% endif %}
+        {% if spi is defined %}
+        self.spi = spidev.SpiDev()
+        {% if spi.address is defined %}
+        self.device_address = {{spi.address}}
+        {% endif %}
+        bus = 0 # Only SPI bus 0 is available
+        device = 1 # Chip select, 0 / 1 depending on connection
+        self.spi.open(bus, device)
+        self.spi.max_speed_hz = {{ spi.frequency }}
+        self.spi.bits_per_word = {{ spi.word }}
+        self.spi.mode = 0b{% if spi.clockPolarity == 'high' %}1{% else %}0{% endif %}{%if spi.clockPhase == 'trailing' %}1{% else %}0{% endif %}
 
-    {% if imports %}
-    {% for key,data in imports|dictsort %}
-    {% for structKey,struct in data.structs|dictsort|reverse %}
-    def msg_{{key.lower()}}_{{structKey.lower()}}(
-        self,
-    {% for param_name, param_info in struct.fields|dictsort|reverse %}
-        {{param_name}},
-    {% endfor %}
-    ): # Put params here
-        msg = 0
-        {% for param_name, param_info in struct.fields|dictsort|reverse %}
-        msg |= {{param_name}} {{"<< {}".format(param_info.offset_in_bit) if param_info.offset_in_bit != 0}} 
-        {% endfor %}
-        return msg # Return the message data structure here
-   
-    def decode_{{key.lower()}}_{{structKey.lower()}}(self, msg): # Put params here
-        res = []
-        {% for param_name, param_info in struct.fields|dictsort|reverse %}
-        {{param_name}} = msg {{">> {}".format(param_info.offset_in_bit) if param_info.offset_in_bit != 0}} 
-        {{param_name}} &= 1 << {{param_info.size_in_byte}} - 1
-        res.append({{param_name}})
-
-        {% endfor %}
-        return  res # Return the decoded msg
-   
-    {% endfor %}
-    {% endfor %}
-    {% endif %}
+        {% endif %}
 
     {% for key,register in registers|dictsort %}
     {% set bytes = (register.length / 8) | round(1, 'ceil') | int %}
@@ -255,6 +242,45 @@ class {{ info.title }}:
         register_data = self.get_{{field.register[12:].lower()}}()
         register_data = register_data | data
         self.set_{{field.register[12:].lower()}}(register_data)
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% if spi and spi.format == 'register' %}
+    {# Here will be SPI register operations #}
+    {% for key,register in registers|dictsort %}
+    {% if (not 'readWrite' in register) or ('readWrite' in register and 'R' is in(register.readWrite)) %}
+    def spi_read_{{key.lower()}}(self):
+        """
+{{utils.pad_string("        ", register.description)}}
+        """
+        # Simple read request msg
+        msg = [self.device_address, self.REGISTER_{{key.upper()}}]
+        result = self.spi.xfer2(msg)
+        {% if spi.endian == 'little' %}
+        result = _swap_endian(result, {{register.length}})
+        {% endif %}
+        {% if register.signed %}
+        # Unsigned > Signed integer
+        result = _sign(result, {{register.length}})
+        {% endif %}
+        return result
+    {% endif %}
+    {% if (not 'readWrite' in register) or ('readWrite' in register and 'W' is in(register.readWrite)) %}
+    def spi_write_{{key.lower()}}(self{% if register.length > 0 %}, data{% endif %}):
+        """
+{{utils.pad_string("        ", register.description)}}
+        """
+        # Build request msg
+        msg = [self.device_address, self.REGISTER_{{key.upper()}}]
+        {% if register.length > 0 %}
+        {% if spi.endian == 'little' %}
+        data = _swap_endian(data, {{register.length}})
+        {% endif %}
+        msg = msg + data
+        {% endif %}
+        result = self.spi.xfer2(msg)
+        {# May be useful to return status #}
+        return result
     {% endif %}
     {% endfor %}
     {% endif %}

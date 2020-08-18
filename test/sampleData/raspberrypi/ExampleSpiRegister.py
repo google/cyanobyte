@@ -24,7 +24,7 @@ import spidev
 
 
 
-class ExampleSpi:
+class ExampleSpiRegister:
     """
     Example of a package using SPI
 

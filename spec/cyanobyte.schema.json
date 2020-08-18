@@ -189,7 +189,10 @@
         "format": {
           "description": "The data format for SPI payloads",
           "type": "string",
-          "enum": ["register"]
+          "enum": [
+            "register",
+            "emboss"
+          ]
         }
       },
       "required": [
