@@ -1,7 +1,7 @@
 # Peripheral Codegen
 This project is an example of how to describe peripherals with an intermediary layer (YAML files) which can be used to generate library files for a peripheral.
 
-It can also generate reference documentation for a periphreal, useful for embedding into datasheets.
+It can also generate reference documentation for a peripheral, useful for embedding into datasheets.
 
 This is not an official Google product.
 
