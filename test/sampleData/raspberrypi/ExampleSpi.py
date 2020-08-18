@@ -27,6 +27,8 @@ import spidev
 class ExampleSpi:
     """
     Example of a package using SPI
+
+
     """
     device_address = 0
     REGISTER_REGISTERA = 0
@@ -48,6 +50,7 @@ class ExampleSpi:
     def get_registera(self):
         """
         An 8-bit register
+
         """
         val = self.bus.read_byte_data(
             self.device_address,
@@ -58,6 +61,7 @@ class ExampleSpi:
     def set_registera(self, data):
         """
         An 8-bit register
+
         """
         self.bus.write_byte_data(
             self.device_address,
@@ -67,6 +71,7 @@ class ExampleSpi:
     def get_registerb(self):
         """
         A 16-bit register
+
         """
         val = self.bus.read_word_data(
             self.device_address,
@@ -77,6 +82,7 @@ class ExampleSpi:
     def set_registerb(self, data):
         """
         A 16-bit register
+
         """
         self.bus.write_word_data(
             self.device_address,
@@ -86,6 +92,8 @@ class ExampleSpi:
     def get_registerc(self):
         """
         A 32-bit register
+
+
         """
         byte_list = self.bus.read_i2c_block_data(
             self.device_address,
@@ -102,6 +110,7 @@ class ExampleSpi:
     def set_registerc(self, data):
         """
         A 32-bit register
+
         """
         buffer = []
         buffer[0] = (data >> 24) & 0xFF
@@ -116,6 +125,8 @@ class ExampleSpi:
     def get_registerd(self):
         """
         A dummy register that has no data
+
+
         """
         val = self.bus.read_byte_data(
             self.device_address,
@@ -126,6 +137,8 @@ class ExampleSpi:
     def set_registerd(self):
         """
         A dummy register that has no data
+
+
         """
         self.bus.write_i2c_block_data(
             self.device_address,

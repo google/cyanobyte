@@ -12,7 +12,6 @@ Note: This project requires Python3. You can install using pip
 
 `pip install cyanobyte`
 
-
 ## Run Codegen
 `cyanobyte-codegen -t templates/doc.md -o ./build peripherals/MCP4725.yaml`
 

@@ -124,7 +124,7 @@ class {{ info.title }}:
         self.spi.max_speed_hz = {{ spi.frequency }}
         self.spi.bits_per_word = {{ spi.word }}
         self.spi.mode = 0b{% if spi.clockPolarity == 'high' %}1{% else %}0{% endif %}{%if spi.clockPhase == 'trailing' %}1{% else %}0{% endif %}
-
+        
         {% endif %}
 
     {% for key,register in registers|dictsort %}
@@ -317,4 +317,4 @@ class {{ info.title }}:
         {% endif %}
     {% endfor %}
     {% endfor %}
-    {% endif %} 
+    {% endif %}
