@@ -19,8 +19,8 @@ info:
     url: https://github.com/google/cyanobyte
     email: felker@google.com
   package: com.cyanobyte
-  title: ExampleSpi
-  description: Example of a package using SPI
+  title: ExampleSpiEmboss
+  description: Example of a package using SPI with Emboss messages
   copyright:
     name: Google Inc.
     date: '2019'
@@ -34,7 +34,10 @@ spi:
   frequency: 16000 # 16KHz
   word: 8 # bits
   address: 0x00
-  format: register
+  format: emboss
+
+imports:
+  float: ../peripherals-yaml/float.emb # We'd need to have a `float.emb` file in the same directory
 
 # We currently need an I2C block for rendering support
 # See #212
@@ -43,24 +46,11 @@ i2c:
   address: 0x00
   addressMask: 0xFF
 
+# We currently need a registers block for rendering support
+# See #212
 registers:
-  RegisterW:
+  placeholder:
     address: 0x00
     length: 8
     title: First example
     description: An 8-bit register
-  RegisterX:
-    address: 0x01
-    length: 16
-    title: Second example
-    description: A 16-bit register
-  RegisterY:
-    address: 0x02
-    length: 32
-    title: Third example
-    description: A 32-bit register
-  RegisterZ:
-    address: 0x03
-    length: 0
-    title: Fourth example
-    description: A dummy register that has no data

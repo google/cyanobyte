@@ -4,7 +4,8 @@
 {{ utils.pad_string('# ', utils.license(info.copyright.name, info.copyright.date, info.license.name)) -}}
 #
 # Auto-generated file for {{ info.title }} v{{ info.version }}.
-# Generated from {{ fileName }} using Cyanobyte Codegen v{{ version }}
+# Generated from {{ fileName }}
+# using Cyanobyte Codegen v{{ version }}
 """
 Class for {{ info.title }}
 """
@@ -110,32 +111,70 @@ class {{ info.title }}:
         {% if '_lifecycle' in functions and 'Begin' in functions._lifecycle.computed %}
         self._lifecycle_begin()
         {% endif %}
+        {% if spi is defined %}
+        self.spi = spidev.SpiDev()
+        {% if spi.address is defined %}
+        self.device_address = {{spi.address}}
+        {% endif %}
+        bus = 0 # Only SPI bus 0 is available
+        device = 1 # Chip select, 0 / 1 depending on connection
+        self.spi.open(bus, device)
+        self.spi.max_speed_hz = {{ spi.frequency }}
+        self.spi.bits_per_word = {{ spi.word }}
+        self.spi.mode = 0b{% if spi.clockPolarity == 'high' %}1{% else %}0{% endif %}{%if spi.clockPhase == 'trailing' %}1{% else %}0{% endif %}
+
+        {% endif %}
 
     {% if imports %}
     {% for key,data in imports|dictsort %}
     {% for structKey,struct in data.structs|dictsort|reverse %}
+    @classmethod
     def msg_{{key.lower()}}_{{structKey.lower()}}(
-        self,
+            cls,
     {% for param_name, param_info in struct.fields|dictsort|reverse %}
-        {{param_name}},
+            {{param_name}},
     {% endfor %}
     ): # Put params here
+        """
+        Encodes {{key.lower()}} {{structKey.lower()}} data into a buffer
+        """
         msg = 0
         {% for param_name, param_info in struct.fields|dictsort|reverse %}
-        msg |= {{param_name}} {{"<< {}".format(param_info.offset_in_bit) if param_info.offset_in_bit != 0}} 
+        msg |= {{param_name}}{{" << {}".format(param_info.offset_in_bit) if param_info.offset_in_bit != 0}}
         {% endfor %}
         return msg # Return the message data structure here
-   
-    def decode_{{key.lower()}}_{{structKey.lower()}}(self, msg): # Put params here
+
+    @classmethod
+    def decode_{{key.lower()}}_{{structKey.lower()}}(cls, msg): # Put params here
+        """
+        Decodes {{key.lower()}} {{structKey.lower()}} data from a buffer
+        """
         res = []
         {% for param_name, param_info in struct.fields|dictsort|reverse %}
-        {{param_name}} = msg {{">> {}".format(param_info.offset_in_bit) if param_info.offset_in_bit != 0}} 
+        {{param_name}} = msg{{" >> {}".format(param_info.offset_in_bit) if param_info.offset_in_bit != 0}}
         {{param_name}} &= 1 << {{param_info.size_in_byte}} - 1
         res.append({{param_name}})
 
         {% endfor %}
-        return  res # Return the decoded msg
-   
+        return res # Return the decoded msg
+
+    {% if spi and spi.format == 'emboss' %}
+    def spi_write_{{key.lower()}}_{{structKey.lower()}}(
+            self,
+    {% for param_name, param_info in struct.fields|dictsort|reverse %}
+            {{param_name}},
+    {% endfor %}
+    ): # Put params here
+        """
+        Writes message {{key.lower()}} {{structKey.lower()}} on SPI bus
+        """
+        # Build request msg
+        msg = self.msg_{{key.lower()}}_{{structKey.lower()}}({% for param_name, param_info in struct.fields|dictsort|reverse %}{{param_name}}{% if not loop.last %}, {% endif %}{% endfor %})
+        result = self.spi.xfer2(msg)
+        {# Result is raw data which needs to be decoded using method above #}
+        {# One will need to consult documentation to know which to use #}
+        return result
+    {% endif %}
     {% endfor %}
     {% endfor %}
     {% endif %}
@@ -217,7 +256,6 @@ class {{ info.title }}:
         {% endif %}
     {% endif %}
     {% endfor %}
-
     {% if fields %}
     {% for key,field in fields|dictsort %}
     {% if 'R' is in(field.readWrite) %}

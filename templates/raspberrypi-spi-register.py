@@ -256,7 +256,7 @@ class {{ info.title }}:
         # Simple read request msg
         msg = [self.device_address, self.REGISTER_{{key.upper()}}]
         result = self.spi.xfer2(msg)
-        {% if i2c.endian == 'little' %}
+        {% if spi.endian == 'little' %}
         result = _swap_endian(result, {{register.length}})
         {% endif %}
         {% if register.signed %}
@@ -273,7 +273,7 @@ class {{ info.title }}:
         # Build request msg
         msg = [self.device_address, self.REGISTER_{{key.upper()}}]
         {% if register.length > 0 %}
-        {% if i2c.endian == 'little' %}
+        {% if spi.endian == 'little' %}
         data = _swap_endian(data, {{register.length}})
         {% endif %}
         msg = msg + data
