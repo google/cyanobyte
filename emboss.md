@@ -12,7 +12,7 @@ Note: This project requires Python3 and a modified input yaml file
    If float.emb is imported for serialization/deserialization functions, we need to edit line 33 in the [example.py](peripherals-yaml/example.yaml) file:  
    ```yaml
    imports:
-   float: float.emb
+       float: float.emb
    ```
 3. Set up emboss environment `git clone https://github.com/google/emboss.git`
 4. Run `python3 cyanobyte/codegen.py`.
