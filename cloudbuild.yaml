@@ -50,7 +50,7 @@ steps:
     - 'peripherals/MCP4725.yaml'
     - 'peripherals/MCP9808.yaml'
     - 'peripherals/TCS3472.yaml'
-    - 'peripherals/example.yaml'
+    - 'peripherals-yaml/example.yaml'
   id: Sample codegen
 - name: wokwi/arduino-cli
   args: ['arduino-cli', 'compile', '-o', '/home/wokwi/ci.hex', '-b', 'arduino:avr:uno', 'test/sampleData/arduino']
