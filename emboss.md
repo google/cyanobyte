@@ -10,14 +10,14 @@ Note: This project requires Python3 and a modified input yaml file
 2. Edit import line in the yaml file to the name of emboss file
    **Example:**
    If float.emb is imported for serialization/deserialization functions, we need to edit line 33 in the [example.py](peripherals-yaml/example.yaml) file:  
-   ```Yaml
+   ```yaml
    imports:
-   	float: float.emb
+       float: float.emb
    ```
 3. Set up emboss environment `git clone https://github.com/google/emboss.git`
 4. Run `python3 cyanobyte/codegen.py`.
 
-##Options
+## Options
 * `-t` - A template file. You can provide multiple template files.
 * `-o` - The output directory where files will be generated.
 * `-e` - The directory that emboss folder is stored.
