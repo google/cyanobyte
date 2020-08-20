@@ -4,7 +4,49 @@ convert json file into yaml file
 import sys
 import json
 import copy
+from collections import OrderedDict
 import yaml
+
+def extract_value(val_info):
+    """
+    extract field value
+    """
+    res = None
+    if "constant" in val_info:
+        res = val_info["constant"]["value"]
+
+    elif "constant_reference" in val_info:
+        val_list = []
+        for source_info in val_info["constant_reference"]["source_name"]:
+            val_list.append(source_info["text"])
+        res = ".".join(val_list)
+    return res
+
+def process_enum(enum_info, yaml_struct_dict):
+    """
+    process enum
+    """
+    yaml_struct_dict["fields"] = OrderedDict()
+    for field_info in enum_info["enumeration"]["value"]:
+        field_name = field_info["name"]["name"]["text"]
+        if "constant" in field_info["value"]:
+            field_val = extract_value(field_info["value"])
+
+        elif "constant_reference" in field_info["value"]:
+            field_val = extract_value(field_info["value"])
+
+        elif "function" in field_info["value"]:
+            arg_list = []
+            for arg_info in field_info["value"]["function"]["args"]:
+                arg_val = extract_value(arg_info)
+                arg_list.append(arg_val)
+            function_temp = field_info["value"]["function"]
+            function_symbol = function_temp["function_name"]["text"]
+            field_val = {"symbol": function_symbol, "arg": arg_list}
+        if isinstance(field_val, str) and\
+                field_val in yaml_struct_dict["fields"]:
+            field_val = yaml_struct_dict["fields"][field_val]["value"]
+        yaml_struct_dict["fields"][field_name] = {"value": field_val}
 
 def convert_json_to_yaml(content):
     """
@@ -29,6 +71,11 @@ def convert_json_to_yaml(content):
         # e.g., Floats for floats, Doubles for doubles
         struct_name = struct_info["name"]["name"]["text"]
         yaml_dict["structs"][struct_name] = yaml_struct_dict
+
+        if "enumeration" in struct_info:
+            yaml_struct_dict["is_enum"] = True
+            process_enum(struct_info, yaml_struct_dict)
+            continue
 
         if "structure" not in struct_info:
             del yaml_dict["structs"][struct_name]
@@ -57,6 +104,11 @@ def convert_json_to_yaml(content):
                         yaml_struct_dict["fields"][field_name] = copy.deepcopy(
                             yaml_struct_dict["fields"][source_name])
                         del yaml_struct_dict["fields"][source_name]
+                elif "read_transform" in field_info and \
+                        "constant" in field_info["read_transform"]:
+                    yaml_struct_dict["is_enum"] = True
+                    temp = field_info["read_transform"]["constant"]["value"]
+                    yaml_struct_dict["fields"][field_name] = {"value": temp}
                 continue
 
             yaml_field_dict = {}

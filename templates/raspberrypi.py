@@ -74,6 +74,32 @@ class {{key[0].upper()}}{{key[1:]}}Values(Enum):
 {% endif %}
 {% endfor %}
 {% endif %}
+{% if imports %}
+{% for key,data in imports|dictsort %}
+{% for structKey,struct in data.structs.items() %}
+{% if struct.is_enum %}
+{# Create enum class from emb #}
+class {{structKey[0].upper()}}{{structKey[1:]}}Values(Enum):
+    """
+{{utils.pad_string("    ", "Valid values for " + structKey)}}
+    """
+    {% for ekey,enum in struct.fields.items() %}
+    {% if enum.value is not mapping %}
+    {% set val = enum.value.split(".")[0]+"Values."+enum.value.split(".")[1].upper() if "." in enum.value else enum.value %}
+    {{ekey.upper()}} = {{val}} 
+    {% else %}
+    {% set symbol = enum.value.symbol %}
+    {% set arg0 = enum.value.arg[0] %}
+    {% set arg1 = enum.value.arg[1] %}
+    {% set val0 = arg0.split(".")[0]+"Values."+arg0.split(".")[1].upper() if "." in arg0 else arg0 %}
+    {% set val1 = arg1.split(".")[0]+"Values."+arg1.split(".")[1].upper() if "." in arg1 else arg1 %}
+    {{ekey.upper()}} = {{"{} {} {}".format(val0, symbol, val1)}} 
+    {% endif %}
+    {% endfor %}
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endif %}
 {% if i2c.address is iterable and i2c.address is not string %}
 class DeviceAddressValues(Enum):
     """
@@ -114,6 +140,7 @@ class {{ info.title }}:
     {% if imports %}
     {% for key,data in imports|dictsort %}
     {% for structKey,struct in data.structs|dictsort|reverse %}
+    {% if not struct.is_enum %}
     def msg_{{key.lower()}}_{{structKey.lower()}}(
         self,
     {% for param_name, param_info in struct.fields|dictsort|reverse %}
@@ -136,6 +163,7 @@ class {{ info.title }}:
         {% endfor %}
         return  res # Return the decoded msg
 
+    {% endif %}
     {% endfor %}
     {% endfor %}
     {% endif -%}
