@@ -1,0 +1,56 @@
+# Copyright (C) 2020 Google Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# Datasheet: http://www.ti.com/lit/ds/symlink/ads1015.pdf
+cyanobyte: 0.1.0
+info:
+  contact:
+    name: Nick Felker
+    url: https://github.com/google/cyanobyte
+    email: felker@google.com
+  package: com.cyanobyte
+  title: ExampleSpiEmboss
+  description: Example of a package using SPI with Emboss messages
+  copyright:
+    name: Google Inc.
+    date: '2019'
+  license:
+    name: Apache-2.0
+  version: 0.1.0
+
+spi:
+  clockPolarity: high
+  clockPhase: leading
+  frequency: 16000 # 16KHz
+  word: 8 # bits
+  address: 0x00
+  format: emboss
+
+imports:
+  float: ../peripherals-yaml/float.emb # We'd need to have a `float.emb` file in the same directory
+
+# We currently need an I2C block for rendering support
+# See #212
+i2c:
+  addressType: 7-bit
+  address: 0x00
+  addressMask: 0xFF
+
+# We currently need a registers block for rendering support
+# See #212
+registers:
+  placeholder:
+    address: 0x00
+    length: 8
+    title: First example
+    description: An 8-bit register
