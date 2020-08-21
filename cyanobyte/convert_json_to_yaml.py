@@ -7,7 +7,7 @@ import copy
 from collections import OrderedDict
 import yaml
 
-def extract_value(val_info):
+def extract_value(val_info, yaml_dict=None):
     """
     extract field value
     """
@@ -20,9 +20,14 @@ def extract_value(val_info):
         for source_info in val_info["constant_reference"]["source_name"]:
             val_list.append(source_info["text"])
         res = ".".join(val_list)
+        if yaml_dict is not None:
+            if val_list[0] in yaml_dict["structs"] and\
+                    val_list[1] in yaml_dict["structs"][val_list[0]]["fields"]:
+                res_temp = yaml_dict["structs"][val_list[0]]
+                res = res_temp["fields"][val_list[1]]["value"]
     return res
 
-def process_enum(enum_info, yaml_struct_dict):
+def process_enum(enum_info, yaml_struct_dict, yaml_dict):
     """
     process enum
     """
@@ -38,7 +43,7 @@ def process_enum(enum_info, yaml_struct_dict):
         elif "function" in field_info["value"]:
             arg_list = []
             for arg_info in field_info["value"]["function"]["args"]:
-                arg_val = extract_value(arg_info)
+                arg_val = extract_value(arg_info, yaml_dict)
                 arg_list.append(arg_val)
             function_temp = field_info["value"]["function"]
             function_symbol = function_temp["function_name"]["text"]
@@ -74,7 +79,7 @@ def convert_json_to_yaml(content):
 
         if "enumeration" in struct_info:
             yaml_struct_dict["is_enum"] = True
-            process_enum(struct_info, yaml_struct_dict)
+            process_enum(struct_info, yaml_struct_dict, yaml_dict)
             continue
 
         if "structure" not in struct_info:
@@ -124,7 +129,6 @@ def convert_json_to_yaml(content):
             del yaml_dict["structs"][struct_name]
 
     return yaml_dict
-
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
