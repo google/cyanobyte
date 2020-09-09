@@ -90,6 +90,10 @@ class TestCodegen(unittest.TestCase):
         self.compareFiles('arduino', 'cpp')
         self.compareFiles('arduino', 'h')
 
+    def test_Circuitpython(self):
+        self.generatePeripheralTemplate('circuitpython.py')
+        self.compareFiles('circuitpython', 'py')
+
     def test_CMSIS_SVD(self):
         self.generatePeripheralTemplate('cmsis.svd')
         self.compareFiles('cmsis-svd', 'svd')
