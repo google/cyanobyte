@@ -109,8 +109,8 @@ class TestCodegen(unittest.TestCase):
         """
         Verify output of CircuitPython template.
         """
-        self.generatePeripheralTemplate('circuitpython.py')
-        self.compareFiles('circuitpython', 'py')
+        self.gen_peripheral_template('circuitpython.py')
+        self.compare_files('circuitpython', 'py')
 
     def test_cmsis_svd(self):
         """
