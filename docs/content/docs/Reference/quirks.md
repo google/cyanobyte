@@ -1,6 +1,6 @@
 ---
 title: "Strange chip quirks"
-linkTitle: "Strange chip quriks"
+linkTitle: "Strange chip quirks"
 weight: 4
 description: >
   This is a directory of strange peripheral chip quarks that were unexpected or unintuative.
