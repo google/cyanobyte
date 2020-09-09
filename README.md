@@ -18,8 +18,9 @@ Note: This project requires Python3. You can install using pip
 ### Options
 * `-t` - A template file. You can provide multiple template files.
 * `-o` - The output directory where files will be generated.
-* `-d` - Debug flag to print out additional information
-* `-c` - Clean the output directory before generating files
+* `-e` - The directory that emboss folder is stored.
+* `-d` - Debug flag to print out additional information.
+* `-c` - Clean the output directory before generating files.
 
 One or multiple files can be passed as an argument.
 
