@@ -60,12 +60,14 @@ registers:
     title: Digital Temperature Compensation 1
     description: Used for Celcius conversion
     readWrite: R
+    signed: false
   DigT2:
     address: 0x8A
     length: 16
     title: Digital Temperature Compensation 2
     description: Used for Celcius conversion
     readWrite: R
+    signed: true
   DigT3:
     address: 0x8C
     length: 16
@@ -164,7 +166,7 @@ functions:
           valueMsb: int8
           valueLsb: int8
           valueXlsb: int8
-          output: int16
+          output: int32
         logic:
           - valueMsb: '#/registers/TempMsb'
           - valueLsb: '#/registers/TempLsb'
@@ -186,13 +188,13 @@ functions:
           valueMsb: int8
           valueLsb: int8
           valueXlsb: int8
-          valueDT1: int8
-          valueDT2: int8
-          valueDT3: int8
-          rawTemp: int16
-          rawComp1: int16
-          rawComp2: int16
-          rawComp3: int16
+          valueDT1: int16
+          valueDT2: int16
+          valueDT3: int16
+          rawTemp: int32
+          rawComp1: int32
+          rawComp2: int32
+          rawComp3: int32
           celsius: float32
         logic:
           - valueMsb: '#/registers/TempMsb'
@@ -251,7 +253,7 @@ functions:
           valueMsb: int8
           valueLsb: int8
           valueXlsb: int8
-          output: int16
+          output: int32
         logic:
           - valueMsb: '#/registers/PressureMsb'
           - valueLsb: '#/registers/PressureLsb'
@@ -273,20 +275,20 @@ functions:
           valueMsb: int8
           valueLsb: int8
           valueXlsb: int8
-          valueDP1: int8
-          valueDP2: int8
-          valueDP3: int8
-          valueDP4: int8
-          valueDP5: int8
-          valueDP6: int8
-          valueDP7: int8
-          valueDP8: int8
-          valueDP9: int8
-          rawPressure: int16
-          rawTemperature: int16
-          rawComp1: int16
-          rawComp2: int16
-          rawComp3: int16
+          valueDP1: int16
+          valueDP2: int16
+          valueDP3: int16
+          valueDP4: int16
+          valueDP5: int16
+          valueDP6: int16
+          valueDP7: int16
+          valueDP8: int16
+          valueDP9: int16
+          rawPressure: int32
+          rawTemperature: int32
+          rawComp1: int32
+          rawComp2: int32
+          rawComp3: int32
           hpa: float32
         logic:
           - valueMsb: '#/registers/PressureMsb'
