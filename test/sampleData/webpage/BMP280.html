@@ -1,0 +1,361 @@
+
+<html>
+    <head>
+        <title>BMP280</title>
+    </head>
+    <body>
+        <style>
+            body {
+                font-family: sans-serif;
+                background-color: #efefef;
+            }
+            section.registers {
+                background-color: white;
+                box-shadow: 1px 1px 1px black;
+                border-radius: 4px;
+            }
+            section.registers table {
+                width: 100%;
+                border-style: solid;
+            }
+            section.registers td {
+                text-align: center;
+                vertical-align: middle;
+                border-style: solid;
+            }
+            section.registers td h1 {
+                font-size: 11pt;
+                margin-block: unset;
+                margin-bottom: 8px;
+            }
+            section.registers td h2 {
+                font-size: 10pt;
+                color: #333;
+                margin-block: unset;
+                font-weight: normal;
+                margin-bottom: 8px;
+            }
+            section.registers td h3 {
+                font-size: 9pt;
+                color: #555;
+                margin-block: unset;
+                font-weight: normal;
+            }
+            footer {
+                opacity: 0.75;
+                font-size: 9pt;
+            }
+        </style>
+        <h1>BMP280</h1>
+        <section class="description">
+            <p>
+                Bosch Digital Pressure Sensor
+            </p>
+            <ul>
+            <li>Device address 119</li>
+            <li>Address type 7-bit</li>
+            </ul>
+        </section>
+        <section class="registers">
+            <table>
+                <tbody>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="6.25%">
+                            <h3>
+                                Addr 136 <br><br>
+                                16-bytes <br>
+                                    <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="16" width="93.75%">
+                            <h1>Digital Temperature Compensation 1</h1>
+                            <h2>Used for Celcius conversion</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="6.25%">
+                            <h3>
+                                Addr 138 <br><br>
+                                16-bytes <br>
+                                    <br><em>Read-only</em>
+                                    <br><em>Signed value</em>
+                            </h3>
+                        </td>
+                        <td colspan="16" width="93.75%">
+                            <h1>Digital Temperature Compensation 2</h1>
+                            <h2>Used for Celcius conversion</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="6.25%">
+                            <h3>
+                                Addr 140 <br><br>
+                                16-bytes <br>
+                                    <br><em>Read-only</em>
+                                    <br><em>Signed value</em>
+                            </h3>
+                        </td>
+                        <td colspan="16" width="93.75%">
+                            <h1>Digital Temperature Compensation 3</h1>
+                            <h2>Used for Celcius conversion</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="6.25%">
+                            <h3>
+                                Addr 142 <br><br>
+                                16-bytes <br>
+                                    <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="16" width="93.75%">
+                            <h1>Digital Pressure Compensation 1</h1>
+                            <h2>Used for Pascals conversion</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="6.25%">
+                            <h3>
+                                Addr 144 <br><br>
+                                16-bytes <br>
+                                    <br><em>Read-only</em>
+                                    <br><em>Signed value</em>
+                            </h3>
+                        </td>
+                        <td colspan="16" width="93.75%">
+                            <h1>Digital Pressure Compensation 2</h1>
+                            <h2>Used for Pascals conversion</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="6.25%">
+                            <h3>
+                                Addr 146 <br><br>
+                                16-bytes <br>
+                                    <br><em>Read-only</em>
+                                    <br><em>Signed value</em>
+                            </h3>
+                        </td>
+                        <td colspan="16" width="93.75%">
+                            <h1>Digital Pressure Compensation 3</h1>
+                            <h2>Used for Pascals conversion</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="6.25%">
+                            <h3>
+                                Addr 148 <br><br>
+                                16-bytes <br>
+                                    <br><em>Read-only</em>
+                                    <br><em>Signed value</em>
+                            </h3>
+                        </td>
+                        <td colspan="16" width="93.75%">
+                            <h1>Digital Pressure Compensation 4</h1>
+                            <h2>Used for Pascals conversion</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="6.25%">
+                            <h3>
+                                Addr 150 <br><br>
+                                16-bytes <br>
+                                    <br><em>Read-only</em>
+                                    <br><em>Signed value</em>
+                            </h3>
+                        </td>
+                        <td colspan="16" width="93.75%">
+                            <h1>Digital Pressure Compensation 5</h1>
+                            <h2>Used for Pascals conversion</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="6.25%">
+                            <h3>
+                                Addr 152 <br><br>
+                                16-bytes <br>
+                                    <br><em>Read-only</em>
+                                    <br><em>Signed value</em>
+                            </h3>
+                        </td>
+                        <td colspan="16" width="93.75%">
+                            <h1>Digital Pressure Compensation 6</h1>
+                            <h2>Used for Pascals conversion</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="6.25%">
+                            <h3>
+                                Addr 154 <br><br>
+                                16-bytes <br>
+                                    <br><em>Read-only</em>
+                                    <br><em>Signed value</em>
+                            </h3>
+                        </td>
+                        <td colspan="16" width="93.75%">
+                            <h1>Digital Pressure Compensation 7</h1>
+                            <h2>Used for Pascals conversion</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="6.25%">
+                            <h3>
+                                Addr 156 <br><br>
+                                16-bytes <br>
+                                    <br><em>Read-only</em>
+                                    <br><em>Signed value</em>
+                            </h3>
+                        </td>
+                        <td colspan="16" width="93.75%">
+                            <h1>Digital Pressure Compensation 8</h1>
+                            <h2>Used for Pascals conversion</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="6.25%">
+                            <h3>
+                                Addr 158 <br><br>
+                                16-bytes <br>
+                                    <br><em>Read-only</em>
+                                    <br><em>Signed value</em>
+                            </h3>
+                        </td>
+                        <td colspan="16" width="93.75%">
+                            <h1>Digital Pressure Compensation 9</h1>
+                            <h2>Used for Pascals conversion</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="6.25%">
+                            <h3>
+                                Addr 247 <br><br>
+                                8-bytes <br>
+                                    <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="8" width="43.75%">
+                            <h1>Pressure MSB</h1>
+                            <h2>Part 1 of Pressure</h2>
+                        </td>
+                        <td colspan="23" width="43.75%">
+                            <!-- intentionally leave empty -->
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="6.25%">
+                            <h3>
+                                Addr 248 <br><br>
+                                8-bytes <br>
+                                    <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="8" width="43.75%">
+                            <h1>Pressure LSB</h1>
+                            <h2>Part 2 of Pressure</h2>
+                        </td>
+                        <td colspan="23" width="43.75%">
+                            <!-- intentionally leave empty -->
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="6.25%">
+                            <h3>
+                                Addr 249 <br><br>
+                                8-bytes <br>
+                                    <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="8" width="43.75%">
+                            <h1>Pressure XLSB</h1>
+                            <h2>Part 3 of Pressure</h2>
+                        </td>
+                        <td colspan="23" width="43.75%">
+                            <!-- intentionally leave empty -->
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="6.25%">
+                            <h3>
+                                Addr 250 <br><br>
+                                8-bytes <br>
+                                    <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="8" width="43.75%">
+                            <h1>Temperature MSB</h1>
+                            <h2>Part 1 of temperature</h2>
+                        </td>
+                        <td colspan="23" width="43.75%">
+                            <!-- intentionally leave empty -->
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="6.25%">
+                            <h3>
+                                Addr 251 <br><br>
+                                8-bytes <br>
+                                    <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="8" width="43.75%">
+                            <h1>Temperature LSB</h1>
+                            <h2>Part 2 of temperature</h2>
+                        </td>
+                        <td colspan="23" width="43.75%">
+                            <!-- intentionally leave empty -->
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="6.25%">
+                            <h3>
+                                Addr 252 <br><br>
+                                8-bytes <br>
+                                    <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="8" width="43.75%">
+                            <h1>Temperature XLSB</h1>
+                            <h2>Final part of temperature</h2>
+                        </td>
+                        <td colspan="23" width="43.75%">
+                            <!-- intentionally leave empty -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section class="functions">
+            <h2>Functions</h2>
+            <ul>
+                <li>
+                    <b>pressure.asHpa</b> -
+                    Reads the atmospheric pressure
+                </li>
+                <li>
+                    <b>pressure.asRaw</b> -
+                    Reads the atmospheric pressure
+                </li>
+                <li>
+                    <b>temperature.asCelsius</b> -
+                    Reads the temperature
+                </li>
+                <li>
+                    <b>temperature.asRaw</b> -
+                    Reads the temperature
+                </li>
+            </ul>
+        </section>
+        <hr>
+        <footer>
+            <p>
+                Contact <a href="mailto:felker@google.com">Nick Felker</a>.
+            </p>
+            <p>
+                Copyright Google Inc. 2019. Published under Apache-2.0 license.
+            </p>
+            <p>
+                Peripheral version 0.1.0 using Cyanobyte v0.1.0.
+            </p>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,185 @@
+
+
+<html>
+    <head>
+        <title>Example</title>
+    </head>
+    <body>
+        <style>
+            body {
+                font-family: sans-serif;
+                background-color: #efefef;
+            }
+            section.registers {
+                background-color: white;
+                box-shadow: 1px 1px 1px black;
+                border-radius: 4px;
+            }
+            section.registers table {
+                width: 100%;
+                border-style: solid;
+            }
+            section.registers td {
+                text-align: center;
+                vertical-align: middle;
+                border-style: solid;
+            }
+            section.registers td h1 {
+                font-size: 11pt;
+                margin-block: unset;
+                margin-bottom: 8px;
+            }
+            section.registers td h2 {
+                font-size: 10pt;
+                color: #333;
+                margin-block: unset;
+                font-weight: normal;
+                margin-bottom: 8px;
+            }
+            section.registers td h3 {
+                font-size: 9pt;
+                color: #555;
+                margin-block: unset;
+                font-weight: normal;
+            }
+            footer {
+                opacity: 0.75;
+                font-size: 9pt;
+            }
+        </style>
+        <h1>Example</h1>
+        <section class="description">
+            <p>
+                Example of a package
+            </p>
+            <ul>
+            <li>Device addresses:
+            16,
+            32,
+            48
+            </li>
+            <li>Address type 7-bit</li>
+            </ul>
+        </section>
+        <section class="registers">
+            <table>
+                <tbody>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="3.125%">
+                            <h3>
+                                Addr 0 <br><br>
+                                8-bytes <br>
+                            </h3>
+                        </td>
+                        <td colspan="4" width="12.5%">
+                            <h1>Read-only fields for RegisterA</h1>
+                            <h2>This is a few bits</h2>
+                            <h3>
+                                [7:4] | 4-bytes                                <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="2" width="6.25%">
+                            <h1>Write-only fields for RegisterA</h1>
+                            <h2>This is fewer bits</h2>
+                            <h3>
+                                [3:2] | 2-bytes                                <br><em>Write-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="1" width="3.125%">
+                            <h1>Read/write field for RegisterA</h1>
+                            <h2>A single-bit</h2>
+                            <h3>
+                                [1:1] | 1-byte                            </h3>
+                        </td>
+                        <td colspan="1" width="3.125%">
+                            <h1>This field should never appear</h1>
+                            <h2>A bit that is neither readable nor writeable</h2>
+                            <h3>
+                                [0:0] | 1-byte                                <br><em>Inaccessible</em>
+                            </h3>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="3.125%">
+                            <h3>
+                                Addr 1 <br><br>
+                                16-bytes <br>
+                            </h3>
+                        </td>
+                        <td colspan="16" width="46.875%">
+                            <h1>Second example</h1>
+                            <h2>A 16-bit register</h2>
+                        </td>
+                        <td colspan="15" width="46.875%">
+                            <!-- intentionally leave empty -->
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="3.125%">
+                            <h3>
+                                Addr 2 <br><br>
+                                32-bytes <br>
+                            </h3>
+                        </td>
+                        <td colspan="32" width="96.875%">
+                            <h1>Third example</h1>
+                            <h2>A 32-bit register</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="3.125%">
+                            <h3>
+                                Addr 3 <br><br>
+                                0-bytes <br>
+                            </h3>
+                        </td>
+                        <td colspan="0" width="-3.125%">
+                            <h1>Fourth example</h1>
+                            <h2>A dummy register that has no data</h2>
+                        </td>
+                        <td colspan="31" width="96.875%">
+                            <!-- intentionally leave empty -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section class="functions">
+            <h2>Functions</h2>
+            <ul>
+                <li>
+                    <b>_lifecycle.Begin</b> -
+                    Enables features on device
+                </li>
+                <li>
+                    <b>_lifecycle.End</b> -
+                    Enables features on device
+                </li>
+                <li>
+                    <b>Return.Array</b> -
+                    Computes and returns
+                </li>
+                <li>
+                    <b>Return.Number</b> -
+                    Computes and returns
+                </li>
+                <li>
+                    <b>Return.Void</b> -
+                    Computes and returns
+                </li>
+            </ul>
+        </section>
+        <hr>
+        <footer>
+            <p>
+                Contact <a href="mailto:felker@google.com">Nick Felker</a>.
+            </p>
+            <p>
+                Copyright Google Inc. 2019. Published under Apache-2.0 license.
+            </p>
+            <p>
+                Peripheral version 0.1.0 using Cyanobyte v0.1.0.
+            </p>
+        </footer>
+    </body>
+</html>

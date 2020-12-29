@@ -288,6 +288,8 @@ BMP280.prototype.getDigT2 = function() {
   for (var byte of read) {
     result = result << 8 | byte
   }
+  // Unsigned > Signed integer
+  result = _sign(result, 16)
   return result
 }
 

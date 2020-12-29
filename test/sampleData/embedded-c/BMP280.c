@@ -301,20 +301,20 @@ void bmp280_pressure_ashpa(
     int (*read)(uint8_t, uint8_t, int*, uint8_t)
 ) {
     float hpa; // Variable declaration
-    short rawComp1; // Variable declaration
-    short rawComp2; // Variable declaration
-    short rawComp3; // Variable declaration
-    short rawPressure; // Variable declaration
-    short rawTemperature; // Variable declaration
-    char valueDP1; // Variable declaration
-    char valueDP2; // Variable declaration
-    char valueDP3; // Variable declaration
-    char valueDP4; // Variable declaration
-    char valueDP5; // Variable declaration
-    char valueDP6; // Variable declaration
-    char valueDP7; // Variable declaration
-    char valueDP8; // Variable declaration
-    char valueDP9; // Variable declaration
+    long rawComp1; // Variable declaration
+    long rawComp2; // Variable declaration
+    long rawComp3; // Variable declaration
+    long rawPressure; // Variable declaration
+    long rawTemperature; // Variable declaration
+    short valueDP1; // Variable declaration
+    short valueDP2; // Variable declaration
+    short valueDP3; // Variable declaration
+    short valueDP4; // Variable declaration
+    short valueDP5; // Variable declaration
+    short valueDP6; // Variable declaration
+    short valueDP7; // Variable declaration
+    short valueDP8; // Variable declaration
+    short valueDP9; // Variable declaration
     char valueLsb; // Variable declaration
     char valueMsb; // Variable declaration
     char valueXlsb; // Variable declaration
@@ -354,10 +354,10 @@ void bmp280_pressure_ashpa(
 }
 
 void bmp280_pressure_asraw(
-    short* val,
+    long* val,
     int (*read)(uint8_t, uint8_t, int*, uint8_t)
 ) {
-    short output; // Variable declaration
+    long output; // Variable declaration
     char valueLsb; // Variable declaration
     char valueMsb; // Variable declaration
     char valueXlsb; // Variable declaration
@@ -377,13 +377,13 @@ void bmp280_temperature_ascelsius(
     int (*read)(uint8_t, uint8_t, int*, uint8_t)
 ) {
     float celsius; // Variable declaration
-    short rawComp1; // Variable declaration
-    short rawComp2; // Variable declaration
-    short rawComp3; // Variable declaration
-    short rawTemp; // Variable declaration
-    char valueDT1; // Variable declaration
-    char valueDT2; // Variable declaration
-    char valueDT3; // Variable declaration
+    long rawComp1; // Variable declaration
+    long rawComp2; // Variable declaration
+    long rawComp3; // Variable declaration
+    long rawTemp; // Variable declaration
+    short valueDT1; // Variable declaration
+    short valueDT2; // Variable declaration
+    short valueDT3; // Variable declaration
     char valueLsb; // Variable declaration
     char valueMsb; // Variable declaration
     char valueXlsb; // Variable declaration
@@ -406,10 +406,10 @@ void bmp280_temperature_ascelsius(
 }
 
 void bmp280_temperature_asraw(
-    short* val,
+    long* val,
     int (*read)(uint8_t, uint8_t, int*, uint8_t)
 ) {
-    short output; // Variable declaration
+    long output; // Variable declaration
     char valueLsb; // Variable declaration
     char valueMsb; // Variable declaration
     char valueXlsb; // Variable declaration

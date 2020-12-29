@@ -150,7 +150,7 @@ void bmp280_pressure_ashpa(float* val);
  * Reads the atmospheric pressure
 
 */
-void bmp280_pressure_asraw(short* val);
+void bmp280_pressure_asraw(long* val);
 
 /**
  * Reads the temperature
@@ -161,7 +161,7 @@ void bmp280_temperature_ascelsius(float* val);
  * Reads the temperature
 
 */
-void bmp280_temperature_asraw(short* val);
+void bmp280_temperature_asraw(long* val);
 
 
 #endif

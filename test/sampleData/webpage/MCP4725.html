@@ -1,0 +1,124 @@
+
+
+<html>
+    <head>
+        <title>MCP4725</title>
+    </head>
+    <body>
+        <style>
+            body {
+                font-family: sans-serif;
+                background-color: #efefef;
+            }
+            section.registers {
+                background-color: white;
+                box-shadow: 1px 1px 1px black;
+                border-radius: 4px;
+            }
+            section.registers table {
+                width: 100%;
+                border-style: solid;
+            }
+            section.registers td {
+                text-align: center;
+                vertical-align: middle;
+                border-style: solid;
+            }
+            section.registers td h1 {
+                font-size: 11pt;
+                margin-block: unset;
+                margin-bottom: 8px;
+            }
+            section.registers td h2 {
+                font-size: 10pt;
+                color: #333;
+                margin-block: unset;
+                font-weight: normal;
+                margin-bottom: 8px;
+            }
+            section.registers td h3 {
+                font-size: 9pt;
+                color: #555;
+                margin-block: unset;
+                font-weight: normal;
+            }
+            footer {
+                opacity: 0.75;
+                font-size: 9pt;
+            }
+        </style>
+        <h1>MCP4725</h1>
+        <section class="description">
+            <p>
+                Microchip 4725 Digital-to-Analog Converter
+            </p>
+            <ul>
+            <li>Device address 98</li>
+            <li>Address type 7-bit</li>
+            <li>Little Endian</li>
+            </ul>
+        </section>
+        <section class="registers">
+            <table>
+                <tbody>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="8.333333333333332%">
+                            <h3>
+                                Addr 64 <br><br>
+                                12-bytes <br>
+                            </h3>
+                        </td>
+                        <td colspan="12" width="91.66666666666666%">
+                            <h1>Output voltage</h1>
+                            <h2>VOut = (Vcc * value) / 4096
+The output is a range between 0 and Vcc with
+steps of Vcc/4096.
+In a 3.3v system, each step is 800 microvolts.
+</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="8.333333333333332%">
+                            <h3>
+                                Addr 96 <br><br>
+                                12-bytes <br>
+                            </h3>
+                        </td>
+                        <td colspan="13" width="108.33333333333333%">
+                            <h1>Digital (binary) output</h1>
+                            <h2>Only allows you to send fully on or off
+</h2>
+                            <h3>
+                                [12:0] | 13-bytes                            </h3>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section class="functions">
+            <h2>Functions</h2>
+            <ul>
+                <li>
+                    <b>getVOut.asVoltage</b> -
+                    get vout
+                </li>
+                <li>
+                    <b>setVOut.asVoltage</b> -
+                    set vout
+                </li>
+            </ul>
+        </section>
+        <hr>
+        <footer>
+            <p>
+                Contact <a href="mailto:felker@google.com">Nick Felker, Chris Frederickson</a>.
+            </p>
+            <p>
+                Copyright Google Inc. 2019. Published under Apache-2.0 license.
+            </p>
+            <p>
+                Peripheral version 0.1.0 using Cyanobyte v0.1.0.
+            </p>
+        </footer>
+    </body>
+</html>

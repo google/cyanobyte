@@ -194,6 +194,8 @@ class BMP280:
             self.device_address,
             self.REGISTER_DIGT2
         )
+        # Unsigned > Signed integer
+        val = _sign(val, 16)
         return val
 
     def get_digt3(self):

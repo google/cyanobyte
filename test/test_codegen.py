@@ -211,6 +211,12 @@ class TestCodegen(unittest.TestCase):
                     msg="{0} and {1} are not the same".format(test_path, tmp_path)
                 )
 
+    def test_webpage(self):
+        """
+        Verify output of webpage template.
+        """
+        self.gen_peripheral_tag('webpage')
+        self.compare_files('webpage', 'html')
 
 if __name__ == '__main__':
     unittest.main()
