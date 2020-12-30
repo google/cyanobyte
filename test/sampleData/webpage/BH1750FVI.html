@@ -1,0 +1,252 @@
+
+<html>
+    <head>
+        <title>BH1750FVI</title>
+    </head>
+    <body>
+        <style>
+            body {
+                font-family: sans-serif;
+                background-color: #efefef;
+            }
+            section.registers {
+                background-color: white;
+                box-shadow: 1px 1px 1px black;
+                border-radius: 4px;
+            }
+            section.registers table {
+                width: 100%;
+                border-style: solid;
+            }
+            section.registers td {
+                text-align: center;
+                vertical-align: middle;
+                border-style: solid;
+            }
+            section.registers td h1 {
+                font-size: 11pt;
+                margin-block: unset;
+                margin-bottom: 8px;
+            }
+            section.registers td h2 {
+                font-size: 10pt;
+                color: #333;
+                margin-block: unset;
+                font-weight: normal;
+                margin-bottom: 8px;
+            }
+            section.registers td h3 {
+                font-size: 9pt;
+                color: #555;
+                margin-block: unset;
+                font-weight: normal;
+            }
+            footer {
+                opacity: 0.75;
+                font-size: 9pt;
+            }
+        </style>
+        <h1>BH1750FVI</h1>
+        <section class="description">
+            <p>
+                Rohm Light Sensor
+            </p>
+            <ul>
+            <li>Device addresses:
+            35,
+            92
+            </li>
+            <li>Address type 7-bit</li>
+            </ul>
+        </section>
+        <section class="registers">
+            <table>
+                <tbody>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="50.0%">
+                            <h3>
+                                Addr 0 <br><br>
+                                0-bytes <br>
+                                    <br><em>Write-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="0" width="-50.0%">
+                            <h1>Power Down</h1>
+                            <h2>No active state</h2>
+                        </td>
+                        <td colspan="31" width="50.0%">
+                            <!-- intentionally leave empty -->
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="50.0%">
+                            <h3>
+                                Addr 1 <br><br>
+                                0-bytes <br>
+                                    <br><em>Write-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="0" width="-50.0%">
+                            <h1>Power On</h1>
+                            <h2>Waiting for measurement command</h2>
+                        </td>
+                        <td colspan="31" width="50.0%">
+                            <!-- intentionally leave empty -->
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="50.0%">
+                            <h3>
+                                Addr 7 <br><br>
+                                0-bytes <br>
+                                    <br><em>Write-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="0" width="-50.0%">
+                            <h1>Reset</h1>
+                            <h2>Reset data register value. Not accepted in Power Down mode.</h2>
+                        </td>
+                        <td colspan="31" width="50.0%">
+                            <!-- intentionally leave empty -->
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="50.0%">
+                            <h3>
+                                Addr 16 <br><br>
+                                0-bytes <br>
+                                    <br><em>Write-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="0" width="-50.0%">
+                            <h1>Continuously H-Resolution Mode</h1>
+                            <h2>Start measurement at 1lx resolution. Typically 120ms.</h2>
+                        </td>
+                        <td colspan="31" width="50.0%">
+                            <!-- intentionally leave empty -->
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="50.0%">
+                            <h3>
+                                Addr 17 <br><br>
+                                0-bytes <br>
+                                    <br><em>Write-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="0" width="-50.0%">
+                            <h1>Continously H-Resolution Mode2</h1>
+                            <h2>Start measurement at 0.5lx resolution. Typically 120ms.</h2>
+                        </td>
+                        <td colspan="31" width="50.0%">
+                            <!-- intentionally leave empty -->
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="50.0%">
+                            <h3>
+                                Addr 19 <br><br>
+                                0-bytes <br>
+                                    <br><em>Write-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="0" width="-50.0%">
+                            <h1>Continuously L-Resolution Mode</h1>
+                            <h2>Start measurement at 4lx resolution. Typically 16ms.</h2>
+                        </td>
+                        <td colspan="31" width="50.0%">
+                            <!-- intentionally leave empty -->
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="50.0%">
+                            <h3>
+                                Addr 32 <br><br>
+                                0-bytes <br>
+                                    <br><em>Write-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="0" width="-50.0%">
+                            <h1>One Time H-Resolution Mode</h1>
+                            <h2>Start measurement at 1lx resolution. Typically 120ms.
+Power Down after measurement.
+</h2>
+                        </td>
+                        <td colspan="31" width="50.0%">
+                            <!-- intentionally leave empty -->
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="50.0%">
+                            <h3>
+                                Addr 33 <br><br>
+                                0-bytes <br>
+                                    <br><em>Write-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="0" width="-50.0%">
+                            <h1>One Time H-Resolution Mode2</h1>
+                            <h2>Start measurement at 0.5lx resolution. Typically 120ms.
+Power Down after measurement.
+</h2>
+                        </td>
+                        <td colspan="31" width="50.0%">
+                            <!-- intentionally leave empty -->
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="50.0%">
+                            <h3>
+                                Addr 35 <br><br>
+                                0-bytes <br>
+                                    <br><em>Write-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="0" width="-50.0%">
+                            <h1>One Time L-Resolution Mode</h1>
+                            <h2>Start measurement at 4lx resolution. Typically 16ms.
+Power Down after measurement.
+</h2>
+                        </td>
+                        <td colspan="31" width="50.0%">
+                            <!-- intentionally leave empty -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section class="functions">
+            <h2>Functions</h2>
+            <ul>
+                <li>
+                    <b>_lifecycle.Begin</b> -
+                    Sends a POWER ON cmd to device
+                </li>
+                <li>
+                    <b>command.PowerDown</b> -
+                    Things you can do to device
+                </li>
+                <li>
+                    <b>command.Reset</b> -
+                    Things you can do to device
+                </li>
+                <li>
+                    <b>read.LightIntensity</b> -
+                    Read light intensity from device
+                </li>
+            </ul>
+        </section>
+        <hr>
+        <footer>
+            <p>
+                Contact <a href="mailto:felker@google.com">Nick Felker</a>.
+            </p>
+            <p>
+                Copyright Google Inc. 2020. Published under Apache-2.0 license.
+            </p>
+            <p>
+                Peripheral version 0.1.0 using Cyanobyte v0.1.0.
+            </p>
+        </footer>
+    </body>
+</html>

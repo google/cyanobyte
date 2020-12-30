@@ -1,0 +1,271 @@
+
+<html>
+    <head>
+        <title>LSM303D</title>
+    </head>
+    <body>
+        <style>
+            body {
+                font-family: sans-serif;
+                background-color: #efefef;
+            }
+            section.registers {
+                background-color: white;
+                box-shadow: 1px 1px 1px black;
+                border-radius: 4px;
+            }
+            section.registers table {
+                width: 100%;
+                border-style: solid;
+            }
+            section.registers td {
+                text-align: center;
+                vertical-align: middle;
+                border-style: solid;
+            }
+            section.registers td h1 {
+                font-size: 11pt;
+                margin-block: unset;
+                margin-bottom: 8px;
+            }
+            section.registers td h2 {
+                font-size: 10pt;
+                color: #333;
+                margin-block: unset;
+                font-weight: normal;
+                margin-bottom: 8px;
+            }
+            section.registers td h3 {
+                font-size: 9pt;
+                color: #555;
+                margin-block: unset;
+                font-weight: normal;
+            }
+            footer {
+                opacity: 0.75;
+                font-size: 9pt;
+            }
+        </style>
+        <h1>LSM303D</h1>
+        <section class="description">
+            <p>
+                STMicroelectronics accelerometer and magnetometer
+            </p>
+            <ul>
+            <li>Device address 29</li>
+            <li>Address type 7-bit</li>
+            </ul>
+        </section>
+        <section class="registers">
+            <table>
+                <tbody>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="12.5%">
+                            <h3>
+                                Addr 136 <br><br>
+                                8-bytes <br>
+                                    <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="8" width="87.5%">
+                            <h1>Magnetometer X</h1>
+                            <h2>Raw magnetometer data on X plane</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="12.5%">
+                            <h3>
+                                Addr 137 <br><br>
+                                8-bytes <br>
+                                    <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="8" width="87.5%">
+                            <h1>Magnetometer X</h1>
+                            <h2>Raw magnetometer data on X plane</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="12.5%">
+                            <h3>
+                                Addr 138 <br><br>
+                                8-bytes <br>
+                                    <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="8" width="87.5%">
+                            <h1>Magnetometer Y</h1>
+                            <h2>Raw magnetometer data on Y plane</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="12.5%">
+                            <h3>
+                                Addr 139 <br><br>
+                                8-bytes <br>
+                                    <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="8" width="87.5%">
+                            <h1>Magnetometer Y</h1>
+                            <h2>Raw magnetometer data on Y plane</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="12.5%">
+                            <h3>
+                                Addr 140 <br><br>
+                                8-bytes <br>
+                                    <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="8" width="87.5%">
+                            <h1>Magnetometer Z</h1>
+                            <h2>Raw magnetometer data on Z plane</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="12.5%">
+                            <h3>
+                                Addr 141 <br><br>
+                                8-bytes <br>
+                                    <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="8" width="87.5%">
+                            <h1>Magnetometer Z</h1>
+                            <h2>Raw magnetometer data on Z plane</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="12.5%">
+                            <h3>
+                                Addr 168 <br><br>
+                                8-bytes <br>
+                                    <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="8" width="87.5%">
+                            <h1>Accelerometer X</h1>
+                            <h2>Raw accelerometer data on X plane</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="12.5%">
+                            <h3>
+                                Addr 169 <br><br>
+                                8-bytes <br>
+                                    <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="8" width="87.5%">
+                            <h1>Accelerometer X</h1>
+                            <h2>Raw accelerometer data on X plane</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="12.5%">
+                            <h3>
+                                Addr 170 <br><br>
+                                8-bytes <br>
+                                    <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="8" width="87.5%">
+                            <h1>Accelerometer Y</h1>
+                            <h2>Raw accelerometer data on Y plane</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="12.5%">
+                            <h3>
+                                Addr 171 <br><br>
+                                8-bytes <br>
+                                    <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="8" width="87.5%">
+                            <h1>Accelerometer Y</h1>
+                            <h2>Raw accelerometer data on Y plane</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="12.5%">
+                            <h3>
+                                Addr 172 <br><br>
+                                8-bytes <br>
+                                    <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="8" width="87.5%">
+                            <h1>Accelerometer Z</h1>
+                            <h2>Raw accelerometer data on Z plane</h2>
+                        </td>
+                    </tr>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="12.5%">
+                            <h3>
+                                Addr 173 <br><br>
+                                8-bytes <br>
+                                    <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="8" width="87.5%">
+                            <h1>Accelerometer Z</h1>
+                            <h2>Raw accelerometer data on Z plane</h2>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section class="functions">
+            <h2>Functions</h2>
+            <ul>
+                <li>
+                    <b>acceleration.asG</b> -
+                    Measures the current acceleration
+                </li>
+                <li>
+                    <b>acceleration.xPlane</b> -
+                    Measures the current acceleration
+                </li>
+                <li>
+                    <b>acceleration.yPlane</b> -
+                    Measures the current acceleration
+                </li>
+                <li>
+                    <b>acceleration.zPlane</b> -
+                    Measures the current acceleration
+                </li>
+                <li>
+                    <b>orientation.heading</b> -
+                    Reads the magnetic orientation
+                </li>
+                <li>
+                    <b>orientation.xPlane</b> -
+                    Reads the magnetic orientation
+                </li>
+                <li>
+                    <b>orientation.yPlane</b> -
+                    Reads the magnetic orientation
+                </li>
+                <li>
+                    <b>orientation.zPlane</b> -
+                    Reads the magnetic orientation
+                </li>
+            </ul>
+        </section>
+        <hr>
+        <footer>
+            <p>
+                Contact <a href="mailto:felker@google.com">Nick Felker</a>.
+            </p>
+            <p>
+                Copyright Google Inc. 2019. Published under Apache-2.0 license.
+            </p>
+            <p>
+                Peripheral version 0.1.0 using Cyanobyte v0.1.0.
+            </p>
+        </footer>
+    </body>
+</html>

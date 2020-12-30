@@ -1,0 +1,181 @@
+{% set template = namespace(registersToFields=dict()) %}
+{% if fields %}
+{# Create a dictionary linking a register to its associated fields #}
+{# for hierarchical display #}
+{% for key,field in fields|dictsort %}
+{% set rkey = field.register[12:] %}
+{% if rkey in template.registersToFields %}
+{% set _dummy = field.update({ 'key': key }) %}
+{{- template.registersToFields[rkey].append(field) or "" -}}
+{% else %}
+{% set _dummy = field.update({ 'key': key }) %}
+{% set _dummy = template.registersToFields.update({ rkey: [] }) %}
+{{- template.registersToFields[rkey].append(field) or "" -}}
+{% endif %}
+{% endfor %}
+
+{% endif %}
+
+<html>
+    <head>
+        <title>{{ info.title }}</title>
+    </head>
+    <body>
+        <style>
+            body {
+                font-family: sans-serif;
+                background-color: #efefef;
+            }
+            section.registers {
+                background-color: white;
+                box-shadow: 1px 1px 1px black;
+                border-radius: 4px;
+            }
+            section.registers table {
+                width: 100%;
+                border-style: solid;
+            }
+            section.registers td {
+                text-align: center;
+                vertical-align: middle;
+                border-style: solid;
+            }
+            section.registers td h1 {
+                font-size: 11pt;
+                margin-block: unset;
+                margin-bottom: 8px;
+            }
+            section.registers td h2 {
+                font-size: 10pt;
+                color: #333;
+                margin-block: unset;
+                font-weight: normal;
+                margin-bottom: 8px;
+            }
+            section.registers td h3 {
+                font-size: 9pt;
+                color: #555;
+                margin-block: unset;
+                font-weight: normal;
+            }
+            footer {
+                opacity: 0.75;
+                font-size: 9pt;
+            }
+        </style>
+        <h1>{{ info.title }}</h1>
+        <section class="description">
+            <p>
+                {{ info.description }}
+            </p>
+            <ul>
+            {% if i2c.address is iterable and i2c.address is not string %}
+            <li>Device addresses:
+            {% for address in i2c.address %}
+            {{address}}{{ "," if not loop.last }}
+            {% endfor %}
+            </li>
+            {% else %}
+            <li>Device address {{ i2c.address }}</li>
+            {% endif %}
+            <li>Address type {{ i2c.addressType }}</li>
+            {% if i2c.endian == 'little' %}
+            <li>Little Endian</li>
+            {% endif %}
+            </ul>
+        </section>
+        <section class="registers">
+            <table>
+                <tbody>
+                    {% set registersArray = registers.items()|sort(attribute="1.address") %}
+                    {% set maxlengthReg = registers.items()|sort(attribute="1.length")|last %}
+                    {% set maxlength = maxlengthReg[1].length %}
+                    {% if maxlength == 0 %}
+                    {% set maxlength = 2 %}
+                    {% endif %}
+                    {% for key,register in registersArray %}
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="{{ 1 / maxlength * 100 }}%">
+                            <h3>
+                                Addr {{register.address}} <br><br>
+                                {{register.length}}-bytes <br>
+                                {% if register.readWrite == "R" %}
+                                    <br><em>Read-only</em>
+                                {% endif %}
+                                {% if register.readWrite == "W" %}
+                                    <br><em>Write-only</em>
+                                {% endif %}
+                                {% if register.readWrite == "n" %}
+                                    <br><em>Inaccessible</em>
+                                {% endif %}
+                                {% if register.signed %}
+                                    <br><em>Signed value</em>
+                                {% endif %}
+                            </h3>
+                        </td>
+                        {% if key in template.registersToFields %}
+                        {% set fields = template.registersToFields[key] %}
+                        {% for field in fields|sort(attribute="bitStart", reverse=True) %}
+                        {% set length = (field.bitStart - field.bitEnd) + 1 %}
+                        <td colspan="{{length}}" width="{{ (length) / maxlength * 100}}%">
+                            <h1>{{ field.title }}</h1>
+                            <h2>{{ field.description }}</h2>
+                            <h3>
+                                [{{field.bitStart}}:{{field.bitEnd}}] | {{length}}-byte{% if length > 1 %}s{% endif %}
+                            {% if field.readWrite == "R" %}
+                                <br><em>Read-only</em>
+                            {% endif %}
+                            {% if field.readWrite == "W" %}
+                                <br><em>Write-only</em>
+                            {% endif %}
+                            {% if field.readWrite == "n" %}
+                                <br><em>Inaccessible</em>
+                            {% endif %}
+                            </h3>
+                        </td>
+                        {% endfor %}
+                        {% else %}
+                        <td colspan="{{register.length}}" width="{{ (register.length - 1) / maxlength * 100}}%">
+                            <h1>{{register.title}}</h1>
+                            <h2>{{register.description}}</h2>
+                        </td>
+                        {% if register.length < maxlength %}
+                        <td colspan="{{32 - 1 - register.length}}" width="{{ (maxlength - 1 - register.length) / maxlength * 100}}%">
+                            <!-- intentionally leave empty -->
+                        </td>
+                        {% endif %}
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+        {% if functions %}
+        <section class="functions">
+            <h2>Functions</h2>
+            <ul>
+                {% for key,function in functions|dictsort %}
+                {% for ckey,computation in function.computed|dictsort %}
+                <li>
+                    <b>{{key}}.{{ckey}}</b> -
+                    {{function.description}}
+                </li>
+                {% endfor %}
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+        <hr>
+        <footer>
+            <p>
+                Contact <a href="mailto:{{ info.contact.email }}">{{ info.contact.name }}</a>.
+            </p>
+            <p>
+                Copyright {{info.copyright.name}} {{info.copyright.date}}. Published under {{info.license.name}} license.
+            </p>
+            <p>
+                Peripheral version {{info.version}} using Cyanobyte v{{cyanobyte}}.
+            </p>
+        </footer>
+    </body>
+</html>

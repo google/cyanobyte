@@ -58,10 +58,17 @@ uint8_t
 short
 {%- elif cyan == 'uint16' -%}
 uint16_t
+{%- elif cyan == 'int32' -%}
+long
+{%- elif cyan == 'uint32' -%}
+uint32_t
 {%- elif cyan == 'float32' -%}
 float
+{%- elif cyan == 'float64' -%}
+double
 {%- else -%}
-/* ERROR UNDEFINED TYPE */
+{# Raise an error and take a guess #}
+/* ERROR UNDEFINED TYPE */ long double
 {%- endif -%}
 {%- endmacro %}
 

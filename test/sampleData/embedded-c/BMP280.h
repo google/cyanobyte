@@ -203,7 +203,7 @@ void bmp280_pressure_ashpa(
 
 */
 void bmp280_pressure_asraw(
-    short* val,
+    long* val,
     int (*read)(uint8_t, uint8_t, int*, uint8_t)
 );
 
@@ -220,7 +220,7 @@ void bmp280_temperature_ascelsius(
 
 */
 void bmp280_temperature_asraw(
-    short* val,
+    long* val,
     int (*read)(uint8_t, uint8_t, int*, uint8_t)
 );
 

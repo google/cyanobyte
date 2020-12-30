@@ -168,7 +168,7 @@ class BMP280 {
          * Reads the atmospheric pressure
 
          */
-        short pressureasRaw();
+        long pressureasRaw();
 
         /**
          * Reads the temperature
@@ -179,7 +179,7 @@ class BMP280 {
          * Reads the temperature
 
          */
-        short temperatureasRaw();
+        long temperatureasRaw();
 
 
     private:

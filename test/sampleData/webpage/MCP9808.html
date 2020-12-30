@@ -1,0 +1,117 @@
+
+
+<html>
+    <head>
+        <title>MCP9808</title>
+    </head>
+    <body>
+        <style>
+            body {
+                font-family: sans-serif;
+                background-color: #efefef;
+            }
+            section.registers {
+                background-color: white;
+                box-shadow: 1px 1px 1px black;
+                border-radius: 4px;
+            }
+            section.registers table {
+                width: 100%;
+                border-style: solid;
+            }
+            section.registers td {
+                text-align: center;
+                vertical-align: middle;
+                border-style: solid;
+            }
+            section.registers td h1 {
+                font-size: 11pt;
+                margin-block: unset;
+                margin-bottom: 8px;
+            }
+            section.registers td h2 {
+                font-size: 10pt;
+                color: #333;
+                margin-block: unset;
+                font-weight: normal;
+                margin-bottom: 8px;
+            }
+            section.registers td h3 {
+                font-size: 9pt;
+                color: #555;
+                margin-block: unset;
+                font-weight: normal;
+            }
+            footer {
+                opacity: 0.75;
+                font-size: 9pt;
+            }
+        </style>
+        <h1>MCP9808</h1>
+        <section class="description">
+            <p>
+                This is a test description
+            </p>
+            <ul>
+            <li>Device addresses:
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+            </li>
+            <li>Address type 7-bit</li>
+            </ul>
+        </section>
+        <section class="registers">
+            <table>
+                <tbody>
+                    <tr aria-colspan="32">
+                        <td colspan="1" width="6.25%">
+                            <h3>
+                                Addr 1 <br><br>
+                                16-bytes <br>
+                            </h3>
+                        </td>
+                        <td colspan="2" width="12.5%">
+                            <h1>TUPPER and TLOWER Limit Hysteresis bits</h1>
+                            <h2>This bit can not be altered when either of the Lock bits are set
+(bit 6 and bit 7). This bit can be programmed in Shutdown mode.
+</h2>
+                            <h3>
+                                [10:9] | 2-bytes                                <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                        <td colspan="1" width="6.25%">
+                            <h1>Shutdown Mode bit</h1>
+                            <h2>In shutdown, all power-consuming activities are disabled, though
+all registers can be written to or read. This bit cannot be set
+to ‘1’ when either of the Lock bits is set (bit 6 and bit 7).
+However, it can be cleared to ‘0’ for continuous conversion while
+locked.
+</h2>
+                            <h3>
+                                [8:8] | 1-byte                                <br><em>Read-only</em>
+                            </h3>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <hr>
+        <footer>
+            <p>
+                Contact <a href="mailto:joe@example.com">Joe Smith</a>.
+            </p>
+            <p>
+                Copyright Google Inc. 2019. Published under Apache-2.0 license.
+            </p>
+            <p>
+                Peripheral version 0.1.0 using Cyanobyte v0.1.0.
+            </p>
+        </footer>
+    </body>
+</html>

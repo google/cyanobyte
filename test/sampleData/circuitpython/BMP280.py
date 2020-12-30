@@ -241,6 +241,8 @@ class BMP280:
             val = 0
             val = val << 8 | read_list[0]
             val = val << 8 | read_list[1]
+            # Unsigned > Signed integer
+            val = _sign(val, 16)
             return val
 
     def get_digt3(self):

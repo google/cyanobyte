@@ -38,6 +38,7 @@ _DEBUG = False
 _CLEAN = False
 _TEMPLATES = dict(
     arduino=["./templates/arduino.cpp", "./templates/arduino.h"],
+    circuitpython=["./templates/circuitpython.py"],
     cmsis=["./templates/cmsis.svd"],
     datasheet=["./templates/datasheet.tex"],
     doc=["./templates/doc.md"],
@@ -48,6 +49,7 @@ _TEMPLATES = dict(
     kubos=["./templates/kubos.c", "./templates/kubos.h"],
     micropython=["./templates/micropython.py"],
     raspberrypi=["./templates/raspberrypi.py"],
+    webpage=["./templates/webpage.html"],
 )
 _OPTIONS = dict(
     esp32="./templates/esp32.options.yaml"
