@@ -36,7 +36,6 @@ from cyanobyte.convert_json_to_yaml import convert_json_to_yaml
 # via Python 3.7+, use this in Pip bundle to access correct resource filepath
 import importlib.resources as pkg_resources
 
-
 _VERSION = "0.1.0"
 _DEBUG = False
 _CLEAN = False
