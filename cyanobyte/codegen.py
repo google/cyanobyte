@@ -51,21 +51,21 @@ _DEBUG = False
 _CLEAN = False
 _TEMPLATES = dict(
     arduino=["arduino.cpp", "arduino.h"],
-    circuitpython=["./templates/circuitpython.py"],
-    cmsis=["./templates/cmsis.svd"],
-    datasheet=["./templates/datasheet.tex"],
-    doc=["./templates/doc.md"],
-    embedded=["./templates/generic.c", "./templates/generic.h"],
-    esp32=["./templates/arduino.cpp", "./templates/arduino.h"],
-    espruino=["./templates/espruino.js"],
-    i2cdevice=["./templates/i2c-device.py"],
-    kubos=["./templates/kubos.c", "./templates/kubos.h"],
-    micropython=["./templates/micropython.py"],
-    raspberrypi=["./templates/raspberrypi.py"],
-    webpage=["./templates/webpage.html"],
+    circuitpython=["circuitpython.py"],
+    cmsis=["cmsis.svd"],
+    datasheet=["datasheet.tex"],
+    doc=["doc.md"],
+    embedded=["generic.c", "generic.h"],
+    esp32=["arduino.cpp", "arduino.h"],
+    espruino=["espruino.js"],
+    i2cdevice=["i2c-device.py"],
+    kubos=["kubos.c", "kubos.h"],
+    micropython=["micropython.py"],
+    raspberrypi=["raspberrypi.py"],
+    webpage=["webpage.html"],
 )
 _OPTIONS = dict(
-    esp32="./templates/esp32.options.yaml"
+    esp32="esp32.options.yaml"
 )
 
 def convert_emb_to_yaml(emboss_filepath, emboss_basepath):
@@ -131,7 +131,10 @@ def generate_source_file(template, peripheral, opts, template_ext,
         peripheral_data["fileName"] = peripheral
 
         if opts is not None:
-            options_file = open(opts, "r")
+            try:
+                options_file = open(opts, "r")
+            except:
+                options_file = pkg_resources.open_text('templates', opts)
             options_data = load(options_file, Loader=Loader)
             peripheral_data["options"] = options_data
 
@@ -287,7 +290,7 @@ def gen(input_files, template_files=None, output_dir='./build',
     # Setup Jinja2 environment
     env = Environment(
         loader=FileSystemLoader([
-            "./templates",
+            "",
             # Do this in order to load the templates installed by Pip
             os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'templates')
         ]),
