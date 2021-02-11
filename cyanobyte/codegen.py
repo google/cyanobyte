@@ -30,14 +30,23 @@ except ImportError:
     from yaml import Loader
 from jinja2 import Environment, FileSystemLoader
 
+from cyanobyte import __version__
 # Use the module title to import correctly in a Pip bundle
-from cyanobyte.convert_json_to_yaml import convert_json_to_yaml
+try:
+    from cyanobyte.convert_json_to_yaml import convert_json_to_yaml
+except ImportError:
+    from convert_json_to_yaml import convert_json_to_yaml
 
 # via Python 3.7+, use this in Pip bundle to access correct resource filepath
-import importlib.resources as pkg_resources
+try:
+    import importlib.resources as pkg_resources
+except ImportError:
+    # Try backported to PY<37 `importlib_resources`.
+    print('Info: Python v3.7+ is recommended with this package')
+    import importlib_resources as pkg_resources
 
 
-_VERSION = "0.1.0"
+_VERSION = __version__
 _DEBUG = False
 _CLEAN = False
 _TEMPLATES = dict(
@@ -276,7 +285,6 @@ def gen(input_files, template_files=None, output_dir='./build',
         shutil.rmtree(output_dir)
 
     # Setup Jinja2 environment
-    print(os.path.dirname(os.path.realpath(__file__)))
     env = Environment(
         loader=FileSystemLoader([
             "./templates",

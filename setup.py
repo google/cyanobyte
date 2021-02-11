@@ -1,4 +1,5 @@
 import setuptools
+from cyanobyte import __version__
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -8,7 +9,7 @@ with open("requirements.txt", "r") as fh:
 
 setuptools.setup(
     name="cyanobyte",
-    version="0.0.2",
+    version=__version__,
     author="Google Inc.",
     author_email="fleker+cyanobyte@google.com",
     description="A package that generates library files for a peripheral given an intermediary layer (YAML files)",
