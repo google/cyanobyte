@@ -276,8 +276,13 @@ def gen(input_files, template_files=None, output_dir='./build',
         shutil.rmtree(output_dir)
 
     # Setup Jinja2 environment
+    print(os.path.dirname(os.path.realpath(__file__)))
     env = Environment(
-        loader=FileSystemLoader("./templates"),
+        loader=FileSystemLoader([
+            "./templates",
+            # Do this in order to load the templates installed by Pip
+            os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'templates')
+        ]),
         trim_blocks=True,
         lstrip_blocks=True,
         extensions=['jinja2.ext.loopcontrols']
@@ -291,7 +296,6 @@ def gen(input_files, template_files=None, output_dir='./build',
                 options = _OPTIONS[template_file]
             # This will be an array of filepaths
             for filepath in _TEMPLATES[template_file]:
-                print(pkg_resources.path('templates', filepath))
                 generate_files_for_raw_text(
                     env,
                     filepath,
