@@ -30,14 +30,18 @@ except ImportError:
     from yaml import Loader
 from jinja2 import Environment, FileSystemLoader
 
-from convert_json_to_yaml import convert_json_to_yaml
+# Use the module title to import correctly in a Pip bundle
+from cyanobyte.convert_json_to_yaml import convert_json_to_yaml
+
+# via Python 3.7+, use this in Pip bundle to access correct resource filepath
+import importlib.resources as pkg_resources
 
 
 _VERSION = "0.1.0"
 _DEBUG = False
 _CLEAN = False
 _TEMPLATES = dict(
-    arduino=["./templates/arduino.cpp", "./templates/arduino.h"],
+    arduino=["arduino.cpp", "arduino.h"],
     circuitpython=["./templates/circuitpython.py"],
     cmsis=["./templates/cmsis.svd"],
     datasheet=["./templates/datasheet.tex"],
@@ -104,7 +108,7 @@ def generate_source_file(template, peripheral, opts, template_ext,
     Generates a source file for a provided Jinja2 template.
 
     Args:
-        template: A single file that is part of the template.
+        template: A Jinja file that is part of the template.
         peripheral: A single Cyanobyte document to generate.
         options: A single options yaml file with additional optinos for merge
         template_ext: The file extension of the output.
@@ -200,6 +204,42 @@ def generate_files_for_template(env, template_file, in_files, opts,
                 emboss_path
             )
 
+def generate_files_for_raw_text(env, template_file, template_text, in_files, opts,
+                                out_dir, emboss_path):
+    """
+    Generates a series of source files for provided template text.
+    This text may be loaded ahead of time from a static file resource.
+
+    Args:
+        env: Jinja2 environment used during generation.
+        template_file: Original template file; needed for file extension.
+        template_text: Direct text content of template.
+        in_files: A list of Cyanobyte documents to generate.
+        opts: A single YAML file with additional options to apply
+        out_dir: The directory to output the generated files.
+    """
+    # Open template
+    template_object = env.from_string(template_text)
+    _, template_extension = os.path.splitext(template_file)
+
+    # Create output dir
+    if not os.path.exists(out_dir):
+        try:
+            os.makedirs(out_dir)
+        except OSError:
+            print("Could not make output directory", out_dir)
+            sys.exit(1)
+
+    for peripheral in in_files:
+        generate_source_file(
+            template_object,
+            peripheral,
+            opts,
+            template_extension,
+            out_dir,
+            emboss_path
+        )
+
 
 @click.command()
 @click.option("-t", "--template", "template_files", multiple=True)
@@ -251,9 +291,11 @@ def gen(input_files, template_files=None, output_dir='./build',
                 options = _OPTIONS[template_file]
             # This will be an array of filepaths
             for filepath in _TEMPLATES[template_file]:
-                generate_files_for_template(
+                print(pkg_resources.path('templates', filepath))
+                generate_files_for_raw_text(
                     env,
                     filepath,
+                    pkg_resources.read_text('templates', filepath),
                     input_files,
                     options,
                     output_dir,
