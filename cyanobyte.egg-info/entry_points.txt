@@ -1,0 +1,4 @@
+[console_scripts]
+cyanobyte-codegen = cyanobyte.codegen:gen
+cyanobyte-validator = cyanobyte.validator:click_valdiate
+

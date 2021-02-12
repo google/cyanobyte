@@ -30,29 +30,42 @@ except ImportError:
     from yaml import Loader
 from jinja2 import Environment, FileSystemLoader
 
+from cyanobyte import __version__
 # Use the module title to import correctly in a Pip bundle
-from cyanobyte.convert_json_to_yaml import convert_json_to_yaml
+try:
+    from cyanobyte.convert_json_to_yaml import convert_json_to_yaml
+except ImportError:
+    from convert_json_to_yaml import convert_json_to_yaml
 
-_VERSION = "0.1.0"
+# via Python 3.7+, use this in Pip bundle to access correct resource filepath
+try:
+    import importlib.resources as pkg_resources
+except ImportError:
+    # Try backported to PY<37 `importlib_resources`.
+    print('Info: Python v3.7+ is recommended with this package')
+    import importlib_resources as pkg_resources
+
+
+_VERSION = __version__
 _DEBUG = False
 _CLEAN = False
 _TEMPLATES = dict(
-    arduino=["./templates/arduino.cpp", "./templates/arduino.h"],
-    circuitpython=["./templates/circuitpython.py"],
-    cmsis=["./templates/cmsis.svd"],
-    datasheet=["./templates/datasheet.tex"],
-    doc=["./templates/doc.md"],
-    embedded=["./templates/generic.c", "./templates/generic.h"],
-    esp32=["./templates/arduino.cpp", "./templates/arduino.h"],
-    espruino=["./templates/espruino.js"],
-    i2cdevice=["./templates/i2c-device.py"],
-    kubos=["./templates/kubos.c", "./templates/kubos.h"],
-    micropython=["./templates/micropython.py"],
-    raspberrypi=["./templates/raspberrypi.py"],
-    webpage=["./templates/webpage.html"],
+    arduino=["arduino.cpp", "arduino.h"],
+    circuitpython=["circuitpython.py"],
+    cmsis=["cmsis.svd"],
+    datasheet=["datasheet.tex"],
+    doc=["doc.md"],
+    embedded=["generic.c", "generic.h"],
+    esp32=["arduino.cpp", "arduino.h"],
+    espruino=["espruino.js"],
+    i2cdevice=["i2c-device.py"],
+    kubos=["kubos.c", "kubos.h"],
+    micropython=["micropython.py"],
+    raspberrypi=["raspberrypi.py"],
+    webpage=["webpage.html"],
 )
 _OPTIONS = dict(
-    esp32="./templates/esp32.options.yaml"
+    esp32="esp32.options.yaml"
 )
 
 def convert_emb_to_yaml(emboss_filepath, emboss_basepath):
@@ -104,7 +117,7 @@ def generate_source_file(template, peripheral, opts, template_ext,
     Generates a source file for a provided Jinja2 template.
 
     Args:
-        template: A single file that is part of the template.
+        template: A Jinja file that is part of the template.
         peripheral: A single Cyanobyte document to generate.
         options: A single options yaml file with additional optinos for merge
         template_ext: The file extension of the output.
@@ -118,7 +131,10 @@ def generate_source_file(template, peripheral, opts, template_ext,
         peripheral_data["fileName"] = peripheral
 
         if opts is not None:
-            options_file = open(opts, "r")
+            try:
+                options_file = open(opts, "r")
+            except:
+                options_file = pkg_resources.open_text('templates', opts)
             options_data = load(options_file, Loader=Loader)
             peripheral_data["options"] = options_data
 
@@ -200,6 +216,42 @@ def generate_files_for_template(env, template_file, in_files, opts,
                 emboss_path
             )
 
+def generate_files_for_raw_text(env, template_file, template_text, in_files, opts,
+                                out_dir, emboss_path):
+    """
+    Generates a series of source files for provided template text.
+    This text may be loaded ahead of time from a static file resource.
+
+    Args:
+        env: Jinja2 environment used during generation.
+        template_file: Original template file; needed for file extension.
+        template_text: Direct text content of template.
+        in_files: A list of Cyanobyte documents to generate.
+        opts: A single YAML file with additional options to apply
+        out_dir: The directory to output the generated files.
+    """
+    # Open template
+    template_object = env.from_string(template_text)
+    _, template_extension = os.path.splitext(template_file)
+
+    # Create output dir
+    if not os.path.exists(out_dir):
+        try:
+            os.makedirs(out_dir)
+        except OSError:
+            print("Could not make output directory", out_dir)
+            sys.exit(1)
+
+    for peripheral in in_files:
+        generate_source_file(
+            template_object,
+            peripheral,
+            opts,
+            template_extension,
+            out_dir,
+            emboss_path
+        )
+
 
 @click.command()
 @click.option("-t", "--template", "template_files", multiple=True)
@@ -237,7 +289,11 @@ def gen(input_files, template_files=None, output_dir='./build',
 
     # Setup Jinja2 environment
     env = Environment(
-        loader=FileSystemLoader("./templates"),
+        loader=FileSystemLoader([
+            "",
+            # Do this in order to load the templates installed by Pip
+            os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'templates')
+        ]),
         trim_blocks=True,
         lstrip_blocks=True,
         extensions=['jinja2.ext.loopcontrols']
@@ -251,9 +307,10 @@ def gen(input_files, template_files=None, output_dir='./build',
                 options = _OPTIONS[template_file]
             # This will be an array of filepaths
             for filepath in _TEMPLATES[template_file]:
-                generate_files_for_template(
+                generate_files_for_raw_text(
                     env,
                     filepath,
+                    pkg_resources.read_text('templates', filepath),
                     input_files,
                     options,
                     output_dir,
