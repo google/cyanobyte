@@ -1,7 +1,7 @@
 ---
 title: "Example Spec"
 linkTitle: "Example Spec"
-weight: 1
+weight: 2
 description: >
   What does this project look like?
 ---

@@ -6,6 +6,9 @@ description: >
   How to generate code from an IR and template
 ---
 
+See [releases](https://github.com/google/cyanobyte/releases) for a detailed list
+of package releases and changelogs.
+
 Here's an example from the project source code:
 
 `python3 src/codegen.py -t templates/doc.md -o ./build peripherals/Mcp4725.yaml`

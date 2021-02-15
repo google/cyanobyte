@@ -1,7 +1,7 @@
 ---
 title: "PseudoYAML Spec"
 linkTitle: "PseudoYAML Spec"
-weight: 2
+weight: 3
 description: >
   What is this project?
 ---

@@ -1,7 +1,7 @@
 ---
 title: "User Journeys"
 linkTitle: "User Journeys"
-weight: 4
+weight: 5
 description: >
   What are some expected development flows?
 ---
