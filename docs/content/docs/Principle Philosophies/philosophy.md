@@ -1,7 +1,7 @@
 ---
 title: "Philosophy and Goals"
 linkTitle: "Philosophy and Goals"
-weight: 4
+weight: 5
 description: >
   Philosophy and goals?
 ---

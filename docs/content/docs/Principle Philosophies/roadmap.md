@@ -1,10 +1,14 @@
 ---
 title: "Roadmap"
 linkTitle: "Roadmap"
-weight: 3
+weight: 4
 description: >
   And other items to consider?
 ---
+
+See [releases](https://github.com/google/cyanobyte/releases) for a detailed list
+of package releases and changelogs.
+
 ## Current roadmap
 - Support Envirophat drivers to identify areas to improve specification
 - Add support for a second hardware platform (MSP430? Particle?) to identify areas to improve templates

@@ -56,6 +56,10 @@ the project. It is not an exhaustive list.
 For more advanced development, also install the dev list.
 `pip install -r requirements-dev.txt --user`
 
+## Projects using Cyanobyte
+
+[File an issue or pull request](https://github.com/google/cyanobyte/issues) to add your project to the list.
+
 ## Contributors
 Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for more information.
 
