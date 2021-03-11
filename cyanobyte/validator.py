@@ -15,9 +15,9 @@ except ImportError:
 from jsonschema import validate
 
 
-def cyanobyte_valdiate(input_files):
+def cyanobyte_validate(input_files):
     """
-    Valdiate a list of CyanoByte documents.
+    Validate a list of CyanoByte documents.
 
     Args:
         input_files: A list of CyanoByte documents to validate.
@@ -35,15 +35,15 @@ def cyanobyte_valdiate(input_files):
 
 @click.command()
 @click.argument("input_files", type=click.Path(exists=True), nargs=-1)
-def click_valdiate(input_files):
+def click_validate(input_files):
     """
     Main command line entrypoint
 
     Args:
         input_files: A list of CyanoByte documents to validate.
     """
-    cyanobyte_valdiate(input_files)
+    cyanobyte_validate(input_files)
 
 
 if __name__ == "__main__":
-    click_valdiate(sys.argv[1:])
+    click_validate(sys.argv[1:])
