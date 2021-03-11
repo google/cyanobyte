@@ -105,10 +105,10 @@
 {%- endif %}
 {# Bitwise ops #}
 {%- if key == 'bitShiftLeft' -%}
-    ({{logicalStep.var}} << {{logicalStep.bits}})
+    ({{logicalStep[key].var}} << {{logicalStep[key].bits}})
 {%- endif %}
 {%- if key == 'bitShiftRight' -%}
-    ({{logicalStep.var}} >> {{logicalStep.bits}})
+    ({{logicalStep[key].var}} >> {{logicalStep[key].bits}})
 {%- endif %}
 {%- endfor %}
 {%- endmacro %}

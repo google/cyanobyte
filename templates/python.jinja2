@@ -105,10 +105,10 @@
 {%- endif %}
 {# Bitwise ops #}
 {%- if key == 'bitShiftLeft' -%}
-    ({{logicalStep.var | camel_to_snake}} << {{logicalStep.bits}})
+    ({{logicalStep[key].var | camel_to_snake}} << {{logicalStep[key].bits}})
 {%- endif %}
 {%- if key == 'bitShiftRight' -%}
-    ({{logicalStep.var | camel_to_snake}} >> {{logicalStep.bits}})
+    ({{logicalStep[key].var | camel_to_snake}} >> {{logicalStep[key].bits}})
 {%- endif %}
 {%- endfor %}
 {%- endmacro %}

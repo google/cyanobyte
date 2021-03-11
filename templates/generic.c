@@ -24,7 +24,7 @@
     {% break %}
 {% endif %}
 {# // Check if assignment is a send-op #}
-{% if key == 'cmdWrite' %}
+{% if key == '$cmdWrite' %}
     {% if 'value' in step[key] %}
     {{info.title.lower()}}_write{{step[key].register[12:]}}(&{{step[key].value}}, write);
     {% else %}

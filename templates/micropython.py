@@ -23,7 +23,7 @@ Class for {{ info.title }}
         {% break %}
 {% endif %}
 {# Check if assignment is a send-op #}
-{% if key == 'cmdWrite' %}
+{% if key == '$cmdWrite' %}
         {% if 'value' in step[key] %}
         self.set_{{step[key].register[12:].lower()}}({{step[key].value}})
         {% else %}
