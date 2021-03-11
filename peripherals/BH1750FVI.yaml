@@ -105,7 +105,7 @@ functions:
     computed:
       Begin:
         logic:
-          - cmdWrite:
+          - $cmdWrite:
               register: '#/registers/PowerOn'
   command:
     title: Commands to device
@@ -113,15 +113,15 @@ functions:
     computed:
       PowerDown:
         logic:
-          - cmdWrite:
+          - $cmdWrite:
               register: '#/registers/PowerDown'
       Reset:
         logic:
           # Power on the device
-          - cmdWrite:
+          - $cmdWrite:
               register: '#/registers/PowerOn'
           # Send a RESET cmd
-          - cmdWrite:
+          - $cmdWrite:
               register: '#/registers/Reset'
   read:
     title: Read light intensity from device

@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://github.com/google/cyanobyte/spec/cyanobyte.schema.json",
-  "title": "CyanoByte Specification Validator",
+  "title": "Cyanobyte Specification Validator",
   "description": "This file is used to validate whether a given document meets the CyanoByte specification.",
   "type": "object",
   "properties": {
@@ -332,78 +332,80 @@
     "functions": {
       "description": "Chip functions",
       "type": "object",
-      "items": {
-        "description": "Outer object",
-        "type": "object",
-        "patternProperties": {
-          "^.*$": {
-            "description": "Chip function",
-            "type": "object",
-            "properties": {
-              "title": {
-                "description": "Title of the function",
-                "type": "string"
-              },
-              "description": {
-                "description": "Description of the function",
-                "type": "string"
-              },
-              "register": {
-                "description": "Register of the function",
-                "type": "string"
-              },
-              "computed": {
-                "description": "Properties for a computed element",
-                "type": "object",
-                "items": {
-                  "description": "A computation",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^.+$": {
+          "description": "Chip function",
+          "type": "object",
+          "properties": {
+            "title": {
+              "description": "Title of the function",
+              "type": "string"
+            },
+            "description": {
+              "description": "Description of the function",
+              "type": "string"
+            },
+            "register": {
+              "description": "Register of the function",
+              "type": "string"
+            },
+            "computed": {
+              "description": "Properties for a computed element",
+              "type": "object",
+              "additionalProperties": false,
+              "patternProperties": {
+                "^.+$": {
+                  "description": "Title of the computation",
                   "type": "object",
-                  "patternProperties": {
-                    "^.*$": {
-                      "description": "Title of the computation",
+                  "additionalProperties": false,
+                  "properties": {
+                    "input": {
+                      "description": "Variables that are required before running computation.",
                       "type": "object",
-                      "properties": {
-                        "variables": {
-                          "description": "All variables used in the computation",
-                          "type": "object",
-                          "items": {
-                            "description": "Variable name",
-                            "type": "object",
-                            "patternProperties": {
-                              "^.$": {
-                                "description": "Variable name",
-                                "type": "string",
-                                "enum": [
-                                  "int8",
-                                  "int16",
-                                  "int32",
-                                  "uint8",
-                                  "uint16",
-                                  "uint32"
-                                ]
-                              }
-                            }
-                          }
-                        },
-                        "logic": {
-                          "description": "Set of logical operations",
-                          "type": "array"
-                        },
-                        "return": {
-                          "description": "The variable or variable array to return",
-                          "type": ["string", "array"]
+                      "additionalProperties": false,
+                      "patternProperties": {
+                        "^.+$": {
+                          "description": "Variable name",
+                          "$ref": "#/definitions/NumberPrimitive"
                         }
                       }
+                    },
+                    "variables": {
+                      "description": "All variables used in the computation",
+                      "type": "object",
+                      "additionalProperties": false,
+                      "patternProperties": {
+                        "^.+$": {
+                          "description": "Variable name",
+                          "$ref": "#/definitions/NumberPrimitive"
+                        }
+                      }
+                    },
+                    "output": {
+                      "description": "Specifies the type of value being returned by the function",
+                      "$ref": "#/definitions/NumberPrimitive"
+                    },
+                    "logic": {
+                      "description": "Set of logical operations",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/Command"
+                      }
+                    },
+                    "return": {
+                      "description": "The variable or variable array to return",
+                      "type": ["string", "array"]
                     }
                   }
                 }
               }
-            },
-            "required": [
-              "title",
-              "description"
-            ]
-          }
+            }
+          },
+          "required": [
+            "title",
+            "description"
+          ]
         }
       }
     },
@@ -415,5 +417,174 @@
   "required": [
     "cyanobyte",
     "info"
-  ]
+  ],
+  "definitions": {
+    "NumberPrimitive": {
+      "description": "Valid types of numbers that can be represented in Pseudo-YAML.",
+      "type": "string",
+      "enum": [
+        "int8",
+        "int16",
+        "int32",
+        "uint8",
+        "uint16",
+        "uint32",
+        "float32"
+      ]
+    },
+    "Command": {
+      "type": "object",
+      "description": "A command to be used in Pseduo-YAML operations.",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[^$].*$": {
+          "description": "Often a variable name. (^.+$) = (result of operations)",
+          "$ref": "#/definitions/SingleOperation"
+        },
+        "^\\$cmdWrite$": {
+          "description": "Writes a value to a register",
+          "type": "object",
+          "properties": {
+            "register": {
+              "description": "#/registers/(register name)",
+              "type": "string"
+            },
+            "value": {
+              "description": "The value or variable to send",
+              "type": ["string", "number"]
+            }
+          },
+          "required": [
+            "register"
+          ]
+        }
+      }
+    },
+    "SingleOperation": {
+      "description": "A representation of one logical operation, which may included nested operations.",
+      "type": ["string", "number", "array", "object"],
+      "additionalProperties": false,
+      "items": {
+        "$ref": "#/definitions/SingleOperation"
+      },
+      "properties": {
+        "sum": {
+          "description": "Summation of multiple numbers.",
+          "type": "array",
+          "items": {
+            "description": "Numbers to be added together.",
+            "$ref": "#/definitions/SingleOperation"
+          },
+          "minItems": 2
+        },
+        "difference": {
+          "description": "Subtraction of multiple numbers.",
+          "type": "array",
+          "items": {
+            "description": "Numbers to be subtracted from one another from first to last.",
+            "$ref": "#/definitions/SingleOperation"
+          },
+          "minItems": 2
+        },
+        "product": {
+          "description": "Product of multiple numbers.",
+          "type": "array",
+          "items": {
+            "description": "Numbers to be multiplied together.",
+            "$ref": "#/definitions/SingleOperation"
+          },
+          "minItems": 2
+        },
+        "division": {
+          "description": "Division of multiple numbers.",
+          "type": "array",
+          "items": {
+            "description": "Numbers to be divided from one another from first to last.",
+            "$ref": "#/definitions/SingleOperation"
+          },
+          "minItems": 2
+        },
+        "power": {
+          "description": "Performs a power operation.",
+          "type": "array",
+          "items": {
+            "description": "First element is the base and the second element is the power.",
+            "$ref": "#/definitions/SingleOperation"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "modulus": {
+          "description": "Performs a modulus operation.",
+          "type": "array",
+          "items": {
+            "description": "First element is the base and the second element is the modulator.",
+            "$ref": "#/definitions/SingleOperation"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "bitwiseOr": {
+          "description": "Bitwise OR operation.",
+          "type": "array",
+          "items": {
+            "description": "Numbers to be ORed together.",
+            "$ref": "#/definitions/SingleOperation"
+          },
+          "minItems": 2
+        },
+        "bitwiseAnd": {
+          "description": "Bitwise AND operation.",
+          "type": "array",
+          "items": {
+            "description": "Numbers to be ANDed together.",
+            "$ref": "#/definitions/SingleOperation"
+          },
+          "minItems": 2
+        },
+        "bitShiftLeft": {
+          "description": "A bit-shift left operation.",
+          "type": "object",
+          "properties": {
+            "var": {
+              "description": "The variable being bit-shifted.",
+              "type": "string"
+            },
+            "bits": {
+              "description": "Number of bits to shift left.",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "var", "bits"
+          ]
+        },
+        "bitShiftRight": {
+          "description": "A bit-shift right operation.",
+          "type": "object",
+          "properties": {
+            "var": {
+              "description": "The variable being bit-shifted.",
+              "type": "string"
+            },
+            "bits": {
+              "description": "Number of bits to shift right.",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "var", "bits"
+          ]
+        },
+        "arc tangent": {
+          "description": "Computes the arc tangent on a given input",
+          "type": ["string", "number"]
+        },
+        "rawRead": {
+          "description": "Directly read a specified number of bytes from device",
+          "type": "integer"
+        }
+      }
+    }
+  }
 }

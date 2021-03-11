@@ -163,13 +163,13 @@ functions:
             - bitwiseOr:
               - config
               - bitShiftLeft:
-                var: channel
-                bits: 12
+                  var: channel
+                  bits: 12
           - config:
               - bitwiseOr:
                 - config
                 - 0x8000 # Set single-shot mode
-          - cmdWrite:
+          - $cmdWrite:
               register: '#/registers/Config'
               value: config
           - raw: '#/registers/Conversion'
@@ -179,8 +179,8 @@ functions:
               - 0xFF00
           - datumA:
             - bitShiftRight:
-              var: datumA
-              bits: 8
+                var: datumA
+                bits: 8
           - datumB:
             - bitwiseAnd:
               - raw
@@ -188,11 +188,11 @@ functions:
           - processed:
             - bitwiseOr:
               - bitShiftLeft:
-                var: datumA
-                bits: 4
+                  var: datumA
+                  bits: 4
               - bitShiftRight:
-                var: datumB
-                bits: 4
+                  var: datumB
+                  bits: 4
           # Get gain from config
           - programmableGain: = 6144 # FIXME need an enum lookup
           - processed:

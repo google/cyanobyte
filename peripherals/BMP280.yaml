@@ -174,14 +174,14 @@ functions:
           - output:
             - sum:
               - bitShiftLeft:
-                var: valueMsb
-                bits: 12
+                  var: valueMsb
+                  bits: 12
               - bitShiftLeft:
-                var: valueLsb
-                bits: 4
+                  var: valueLsb
+                  bits: 4
               - bitShiftRight:
-                var: valueXlsb
-                bits: 4
+                  var: valueXlsb
+                  bits: 4
         return: output
       asCelsius:
         variables:
@@ -206,14 +206,14 @@ functions:
           - rawTemp:
             - sum:
               - bitShiftLeft:
-                var: valueMsb
-                bits: 12
+                  var: valueMsb
+                  bits: 12
               - bitShiftLeft:
-                var: valueLsb
-                bits: 4
+                  var: valueLsb
+                  bits: 4
               - bitShiftRight:
-                var: valueXlsb
-                bits: 4
+                  var: valueXlsb
+                  bits: 4
           - rawComp1:
             - product:
               - difference:
@@ -261,14 +261,14 @@ functions:
           - output:
             - sum:
               - bitShiftLeft:
-                var: valueMsb
-                bits: 12
+                  var: valueMsb
+                  bits: 12
               - bitShiftLeft:
-                var: valueLsb
-                bits: 4
+                  var: valueLsb
+                  bits: 4
               - bitShiftRight:
-                var: valueXlsb
-                bits: 4
+                  var: valueXlsb
+                  bits: 4
         return: output
       asHpa:
         variables:
@@ -311,14 +311,14 @@ functions:
           - rawPressure:
             - sum:
               - bitShiftLeft:
-                var: valueMsb
-                bits: 12
+                  var: valueMsb
+                  bits: 12
               - bitShiftLeft:
-                var: valueLsb
-                bits: 4
+                  var: valueLsb
+                  bits: 4
               - bitShiftRight:
-                var: valueXlsb
-                bits: 4
+                  var: valueXlsb
+                  bits: 4
           - rawComp1:
             - difference:
               - division:

@@ -126,8 +126,8 @@ functions:
           - datum:
             - sum:
               - bitShiftLeft:
-                var: upper
-                bits: 8
+                  var: upper
+                  bits: 8
               - lower
         return: datum
       yPlane:
@@ -142,8 +142,8 @@ functions:
           - datum:
             - sum:
               - bitShiftLeft:
-                var: upper
-                bits: 8
+                  var: upper
+                  bits: 8
               - lower
         return: datum
       zPlane:
@@ -158,8 +158,8 @@ functions:
           - datum:
             - sum:
               - bitShiftLeft:
-                var: upper
-                bits: 8
+                  var: upper
+                  bits: 8
               - lower
         return: datum
       asG:
@@ -218,8 +218,8 @@ functions:
           - datum:
             - sum:
               - bitShiftLeft:
-                var: upper
-                bits: 8
+                  var: upper
+                  bits: 8
               - lower
         return: datum
       yPlane:
@@ -234,8 +234,8 @@ functions:
           - datum:
             - sum:
               - bitShiftLeft:
-                var: upper
-                bits: 8
+                  var: upper
+                  bits: 8
               - lower
         return: datum
       zPlane:
@@ -250,8 +250,8 @@ functions:
           - datum:
             - sum:
               - bitShiftLeft:
-                var: upper
-                bits: 8
+                  var: upper
+                  bits: 8
               - lower
         return: datum
       heading:

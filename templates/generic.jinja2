@@ -7,7 +7,7 @@
 {% if step[key] is string and step[key][:12] == '#/registers/' and rw == 'r' %}
 True
 {% endif %}
-{% if key == 'cmdWrite' and rw == 'w' %}
+{% if key == '$cmdWrite' and rw == 'w' %}
 True
 {% endif %}
 {% if key == 'send' and rw == 'w' %}
