@@ -184,6 +184,11 @@ import ustruct
 import math
 {% set template.math = true %}
 {% endif %}
+{% elif logicKey == '$delay' %}
+{% if template.time is sameas false %}
+import time
+{% set template.time = true %}
+{% endif %}
 {% elif logic[logicKey] is iterable and logic[logicKey] is not string -%}
 {{- scanForMathLib(logic[logicKey]) -}}
 {% endif %}

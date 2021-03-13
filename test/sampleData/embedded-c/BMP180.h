@@ -14,7 +14,7 @@
 * limitations under the License.
 *
 * Auto-generated file for BMP180 v0.1.0.
-* Generated from peripherals/BMP180.yaml using Cyanobyte Codegen v0.1.0
+* Generated from peripherals/BMP180.yaml using Cyanobyte Codegen v0.0.2
 * Class for BMP180
 * Bosch Digital Temperature / Pressure Sensor
 
@@ -137,6 +137,17 @@ int bmp180_readTempCalMD(
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 );
 
+
+/**
+ * Reads the pressure in absolute millibars,
+ * not compensated for sea level
+
+*/
+void bmp180_pressure_asmbars(
+    float* val,
+    int (*read)(uint8_t, uint8_t, int*, uint8_t),
+    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+);
 
 /**
  * Reads the temperature

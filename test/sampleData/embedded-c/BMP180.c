@@ -14,7 +14,7 @@
 * limitations under the License.
 *
 * Auto-generated file for BMP180 v0.1.0.
-* Generated from peripherals/BMP180.yaml using Cyanobyte Codegen v0.1.0
+* Generated from peripherals/BMP180.yaml using Cyanobyte Codegen v0.0.2
 * Class for BMP180
 * Bosch Digital Temperature / Pressure Sensor
 
@@ -200,6 +200,45 @@ int bmp180_readTempCalMD(
 }
 
 
+
+void bmp180_pressure_asmbars(
+    float* val,
+    int (*read)(uint8_t, uint8_t, int*, uint8_t),
+    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+) {
+    short ac1; // Variable declaration
+    short ac2; // Variable declaration
+    short ac3; // Variable declaration
+    uint16_t ac4; // Variable declaration
+    float b1; // Variable declaration
+    float c3; // Variable declaration
+    float c4; // Variable declaration
+    float p0; // Variable declaration
+    float p1; // Variable declaration
+    float p2; // Variable declaration
+    float pressure; // Variable declaration
+    float rawComp; // Variable declaration
+    float temperature; // Variable declaration
+    short vb1; // Variable declaration
+    short vb2; // Variable declaration
+    float x; // Variable declaration
+    float x1; // Variable declaration
+    float x2; // Variable declaration
+    float y; // Variable declaration
+    float y0; // Variable declaration
+    float y1; // Variable declaration
+    float y2; // Variable declaration
+    float z; // Variable declaration
+
+
+    bmp180_writeControl(&52, write);
+    bmp180_readResult(&pressure, read);
+    bmp180_temperature_ascelsius(&temperature, read, write);
+    // ERROR - Cannot use DELAY in this template
+
+
+    *val = pressure;
+}
 
 void bmp180_temperature_ascelsius(
     float* val,

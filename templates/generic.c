@@ -32,6 +32,10 @@
     {% endif %}
     {% break %}
 {% endif %}
+{% if key == '$delay' %}
+    // ERROR - Cannot use DELAY in this template
+    {% break %}
+{% endif %}
 {# Check if assignment op #}
 {% if step[key] is string and step[key][0:1] == "=" %}
     {{key}} {{step[key]}}
