@@ -581,7 +581,7 @@
           "type": ["string", "number"]
         },
         "rawRead": {
-          "description": "Directly read a specified number of bytes from device",
+          "description": "Directly read a specified number of bits from device",
           "type": "integer"
         }
       }
