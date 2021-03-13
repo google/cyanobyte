@@ -30,8 +30,10 @@ except ImportError:
     from yaml import Loader
 from jinja2 import Environment, FileSystemLoader
 
-# Use the module title to import correctly in a Pip bundle
-from cyanobyte.convert_json_to_yaml import convert_json_to_yaml
+try:
+    from cyanobyte.convert_json_to_yaml import convert_json_to_yaml
+except ImportError:
+    import convert_json_to_yaml
 
 _VERSION = "0.1.0"
 _DEBUG = False
