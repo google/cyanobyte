@@ -201,12 +201,11 @@ int bmp180_readTempCalMD(
 
 
 
-float (*callback(float, *int, *int)) bmp180_pressure_asmbars(
-    float* val,
+
+celsiusCallback bmp180_pressure_asmbars(
     int (*read)(uint8_t, uint8_t, int*, uint8_t),
     int (*write)(uint8_t, uint8_t, int*, uint8_t)
 ) {
-    // FIXME: This `*val` is currently meaningless
     short ac1; // Variable declaration
     short ac2; // Variable declaration
     short ac3; // Variable declaration
@@ -232,20 +231,72 @@ float (*callback(float, *int, *int)) bmp180_pressure_asmbars(
     float z; // Variable declaration
 
 
-    bmp180_writeControl(&52, write);
+    bmp180_writeControl(52, write);
     bmp180_readResult(&pressure, read);
     bmp180_temperature_ascelsius(&temperature, read, write);
-    // Delay 10 ms.
-    return _callback_celsius;
+    struct celsiusCallback callbackState;
+    // Point to the callback state
+    callbackState.callback = _callback_celsius;
+    // Save all of our variables
+    callbackState.ac1 = key
+    callbackState.ac2 = key
+    callbackState.ac3 = key
+    callbackState.ac4 = key
+    callbackState.b1 = key
+    callbackState.c3 = key
+    callbackState.c4 = key
+    callbackState.p0 = key
+    callbackState.p1 = key
+    callbackState.p2 = key
+    callbackState.pressure = key
+    callbackState.rawComp = key
+    callbackState.temperature = key
+    callbackState.vb1 = key
+    callbackState.vb2 = key
+    callbackState.x = key
+    callbackState.x1 = key
+    callbackState.x2 = key
+    callbackState.y = key
+    callbackState.y0 = key
+    callbackState.y1 = key
+    callbackState.y2 = key
+    callbackState.z = key
+    // Delay `callbackState.callback` execution for 10 ms.
+    return callbackState;
 
 
 }
 // Occurs after 10 ms
 void _callback_celsius(
+    celsiusCallback callbackState,
     float* val,
     int (*read)(uint8_t, uint8_t, int*, uint8_t),
-    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+    int (*write)(uint8_t, uint8_t, int*, uint8_t),
 ) {
+    // Re-import all of our variables
+    short ac1 = celsiusCallback.ac1;
+    short ac2 = celsiusCallback.ac2;
+    short ac3 = celsiusCallback.ac3;
+    uint16_t ac4 = celsiusCallback.ac4;
+    float b1 = celsiusCallback.b1;
+    float c3 = celsiusCallback.c3;
+    float c4 = celsiusCallback.c4;
+    float p0 = celsiusCallback.p0;
+    float p1 = celsiusCallback.p1;
+    float p2 = celsiusCallback.p2;
+    float pressure = celsiusCallback.pressure;
+    float rawComp = celsiusCallback.rawComp;
+    float temperature = celsiusCallback.temperature;
+    short vb1 = celsiusCallback.vb1;
+    short vb2 = celsiusCallback.vb2;
+    float x = celsiusCallback.x;
+    float x1 = celsiusCallback.x1;
+    float x2 = celsiusCallback.x2;
+    float y = celsiusCallback.y;
+    float y0 = celsiusCallback.y0;
+    float y1 = celsiusCallback.y1;
+    float y2 = celsiusCallback.y2;
+    float z = celsiusCallback.z;
     rawComp = (temperature-25);
     bmp180_readPressureCalAC1(&ac1, read);
     bmp180_readPressureCalAC2(&ac2, read);
@@ -288,7 +339,7 @@ void bmp180_temperature_ascelsius(
     float varMd; // Variable declaration
 
 
-    bmp180_writeControl(&46, write);
+    bmp180_writeControl(46, write);
     bmp180_readResult(&temperature, read);
     bmp180_readTempCal5(&varAc5, read);
     bmp180_readTempCal6(&varAc6, read);

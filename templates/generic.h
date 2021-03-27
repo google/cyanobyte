@@ -146,12 +146,20 @@ int {{info.title.lower()}}_set_{{key.lower()}}(
 {%- endfor %}
 {%- endif %}
 {% if useCallback.delay %}
-{# FIXME Do not keep type as a float. Also, add params in callback #}
-float (*callback(float, *int, *int)) {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
+{# We need to define a struct for the callback #}
+{% set int_t = cpp.returnType(compute) %}
+struct {{useCallback.delay.name}}Callback {
+    {{int_t}}* (*callback({{useCallback.delay.name}}Callback, float, *int, *int)) callback;
+    // Include all functions -- A snapshot of function state
+{{ cpp.variables(compute.variables) }}
+}
+
+{{useCallback.delay.name}}Callback {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
+{{ embedded.functionParams(cpp, functions, compute, true) }}
 {% else %}
 void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
+{{ embedded.functionParams(cpp, functions, compute, false) }}
 {% endif %}
-{{ embedded.functionParams(cpp, functions, compute) }}
 );
 {% endfor %}
 

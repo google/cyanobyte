@@ -13,7 +13,7 @@
 {{utils.pad_string("* ", info.description)}}
 */
 
-{% macro logic(logicalSteps, function, read, write) -%}
+{% macro logic(logicalSteps, function, read, write, compute) -%}
 
 {% for step in logicalSteps %}
 {% for key in step.keys() %}
@@ -35,10 +35,18 @@
 {% if key == '$delay' %}
     {# We cannot define our own timer here, so we need to pass it back to #}
     {# the platform to fit into your own scheduler #}
-    // Delay {{ step[key].for }} ms.
+    {# Save all of our variables in our struct state #}
+    struct {{step[key].name}}Callback callbackState;
+    // Point to the callback state
+    callbackState.callback = _callback_{{step[key].name}};
+    // Save all of our variables
+    {% for key,var in compute.variables|dictsort %}
+    callbackState.{{key}} = key
+    {% endfor %}
+    // Delay `callbackState.callback` execution for {{ step[key].for }} ms.
     {# We cannot define a function within a function, so we must create a #}
     {# hidden function inside our source file. #}
-    return _callback_{{step[key].name}};
+    return callbackState;
     {% break %}
 {% endif %}
 {# Check if assignment op #}
@@ -47,7 +55,13 @@
 {% endif %}
 {# Check if assignment is a send-op #}
 {% if key == 'send' %}
+{% if step[key] is string %}
+    {# Sending a variable #}
     {{info.title.lower()}}_write{{function.register[12:]}}(&{{step[key]}}, write);
+{% else %}
+    {# Sending a number literal #}
+    {{info.title.lower()}}_write{{function.register[12:]}}({{step[key]}}, write);
+{% endif %}
 {% endif %}
 {% if step[key] is string and step[key][:12] == '#/registers/' %}
     {{info.title.lower()}}_read{{step[key][12:]}}(&{{key}}, read);
@@ -223,14 +237,14 @@ int {{info.title.lower()}}_set_{{key.lower()}}(
 {%- endfor %}
 {%- endif %}
 {% if useCallback.delay %}
-{# FIXME Do not keep type as a float. Also, add params in callback #}
-float (*callback(float, *int, *int)) {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
+
+{{useCallback.delay.name}}Callback {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
+{{ embedded.functionParams(cpp, functions, compute, true) }}
 {% else %}
 void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
+{{ embedded.functionParams(cpp, functions, compute, false) }}
 {% endif %}
-{{ embedded.functionParams(cpp, functions, compute) }}
 ) {
-    // FIXME: This `*val` is currently meaningless
     {# Declare our variables #}
 {{ cpp.variables(compute.variables) }}
 
@@ -244,7 +258,7 @@ void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
     {% endfor -%}
     {% endif %}
     {# Handle the logic #}
-{{ logic(compute.logic, function, read, write) }}
+{{ logic(compute.logic, function, read, write, compute) }}
 
     {% if useCallback.delay == false %}
     {# Return if applicable #}
@@ -260,10 +274,15 @@ void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
 {% if useCallback.delay %}
 // Occurs after {{useCallback.delay.for}} ms
 void _callback_{{useCallback.delay.name}}(
-{{ embedded.functionParams(cpp, functions, compute) }}
+    {{useCallback.delay.name}}Callback callbackState,
+{{ embedded.functionParams(cpp, functions, compute, false) }},
 ) {
+    // Re-import all of our variables
+    {% for key,var in compute.variables|dictsort %}
+    {{ cpp.numconv(var) }} {{key}} = {{useCallback.delay.name}}Callback.{{key}};
+    {% endfor %}
     {# Handle the callback logic #}
-{{ logic(useCallback.delay.after, function, read, write) }}
+{{ logic(useCallback.delay.after, function, read, write, compute) }}
 {# Now we can do that return #}
     {# Return a tuple #}
     {% if 'return' in compute and compute.return is not string %}

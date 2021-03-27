@@ -25,10 +25,10 @@ True
 {{ doRecursion(functions, compute, rw) }}
 {% endmacro %}
 
-{% macro functionParams(cpp, functions, compute) %}
+{% macro functionParams(cpp, functions, compute, isCallback) %}
 {% set doread = doRecursion(functions, compute, 'r') %}
 {% set dowrite = doRecursion(functions, compute, 'w') %}
-{% if 'return' in compute %}
+{% if 'return' in compute and isCallback == false %}
 {% set int_t = cpp.returnType(compute) %}
     {{int_t}}* val,
 {% endif %}
