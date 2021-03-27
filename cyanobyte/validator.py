@@ -13,7 +13,12 @@ try:
     from yaml import CLoader as Loader
 except ImportError:
     from yaml import Loader
-from jsonschema import validate
+from jsonschema import validate, ValidationError
+
+class CyanobyteValidationError:
+    def __init__(self, input_file, err):
+        self.input_file = input_file
+        self.err = err
 
 # See https://gist.github.com/pypt/94d747fe5180851196eb
 def no_duplicates_constructor(loader, node, deep=False):
@@ -44,11 +49,22 @@ def cyanobyte_validate(input_files):
         schema = json.load(schema_json)
 
     # Validate each document against the schema
+    errors = []
     for input_file in input_files:
         with open(input_file, "r") as document_yaml:
-            document_dict = yaml.load(document_yaml, Loader=Loader)
-            validate(instance=document_dict, schema=schema)
-            print(input_file + ' is valid')
+            try:
+                document_dict = yaml.load(document_yaml, Loader=Loader)
+                validate(instance=document_dict, schema=schema)
+                print('✓ ' + input_file)
+            except (ConstructorError, ValidationError) as err:
+                print('✘ ' + input_file)
+                errors.append(CyanobyteValidationError(input_file, err))
+
+    # Dump all errors here
+    print('')
+    for e in errors:
+        print(e.input_file + ':')
+        print(e.err)
 
 
 @click.command()

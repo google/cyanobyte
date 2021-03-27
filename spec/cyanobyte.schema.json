@@ -202,54 +202,50 @@
     "registers": {
       "description": "Chip registers",
       "type": "object",
-      "items": {
-        "description": "Outer object",
-        "type": "object",
-        "patternProperties": {
-          "^.*$": {
-            "description": "Chip register",
-            "type": "object",
-            "properties": {
-              "title": {
-                "description": "Title of the register",
-                "type": "string"
-              },
-              "description": {
-                "description": "Description of the register",
-                "type": "string"
-              },
-              "address": {
-                "description": "Address of the register",
-                "type": "integer"
-              },
-              "length": {
-                "description": "Length of the register in bits",
-                "type": "integer"
-              },
-              "signed": {
-                "description": "Whether the integer response should be signed when read",
-                "type": "boolean"
-              },
-              "readWrite": {
-                "description": "Can you read and/or write to this register",
-                "type": "string",
-                "enum": [
-                  "R",
-                  "R/W",
-                  "W",
-                  "n"
-                ]
-              }
+      "additionalProperties": false,
+      "patternProperties": {
+        "^.*$": {
+          "description": "Chip register",
+          "type": "object",
+          "properties": {
+            "title": {
+              "description": "Title of the register",
+              "type": "string"
             },
-            "required": [
-              "title",
-              "description",
-              "address",
-              "length"
-            ]
-          }
-        },
-        "additionalProperties": false
+            "description": {
+              "description": "Description of the register",
+              "type": "string"
+            },
+            "address": {
+              "description": "Address of the register",
+              "type": "integer"
+            },
+            "length": {
+              "description": "Length of the register in bits",
+              "type": "integer"
+            },
+            "signed": {
+              "description": "Whether the integer response should be signed when read",
+              "type": "boolean"
+            },
+            "readWrite": {
+              "description": "Can you read and/or write to this register",
+              "type": "string",
+              "enum": [
+                "R",
+                "R/W",
+                "W",
+                "n"
+              ]
+            }
+          },
+          "required": [
+            "title",
+            "description",
+            "address",
+            "length"
+          ]
+        }
       }
     },
     "fields": {
