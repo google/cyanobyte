@@ -1,6 +1,6 @@
 ---
 date: 2019-09-06
-title: "cyanobyte-dev"
+title: "Cyanobyte.dev published"
 linkTitle: "Cyanobyte.dev published"
 description: "The Cyanobyte website provides resources and documentation"
 author: Nick Felker

@@ -1,6 +1,6 @@
 ---
 date: 2021-02-16
-title: "web-documentation"
+title: "Cyanobyte turns machine-readable datasheets into web documentation"
 linkTitle: "Cyanobyte turns machine-readable datasheets into web documentation"
 description: "One benefit of Cyanobyte is around documentation. By defining it in this way, not only can code be generated, but any type of file. In the past, LaTeX was used as the basis for generating documentation as PDFs. Now, there is a new type of output: HTML."
 author: Nick Felker
