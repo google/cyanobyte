@@ -33,7 +33,12 @@
     {% break %}
 {% endif %}
 {% if key == '$delay' %}
-    // ERROR - Cannot use DELAY in this template
+    {# We cannot define our own timer here, so we need to pass it back to #}
+    {# the platform to fit into your own scheduler #}
+    // Delay {{ step[key].for }} ms.
+    {# We cannot define a function within a function, so we must create a #}
+    {# hidden function inside our source file. #}
+    return _callback_{{step[key].name}};
     {% break %}
 {% endif %}
 {# Check if assignment op #}
@@ -205,9 +210,27 @@ int {{info.title.lower()}}_set_{{key.lower()}}(
 {% for key,function in functions|dictsort %}
 {% if function.computed %}
 {% for ckey,compute in function.computed|dictsort %}
+{# Look for any callbacks #}
+{% set useCallback = namespace(delay=false) %}
+{% if compute.logic %}
+{% for stepk in compute.logic %}
+{% for key,value in stepk|dictsort %}
+{% if key == '$delay' %}
+{# This won't work for nested delays #}
+{% set useCallback.delay = value %}
+{%- endif %}
+{%- endfor %}
+{%- endfor %}
+{%- endif %}
+{% if useCallback.delay %}
+{# FIXME Do not keep type as a float. Also, add params in callback #}
+float (*callback(float, *int, *int)) {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
+{% else %}
 void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
+{% endif %}
 {{ embedded.functionParams(cpp, functions, compute) }}
 ) {
+    // FIXME: This `*val` is currently meaningless
     {# Declare our variables #}
 {{ cpp.variables(compute.variables) }}
 
@@ -223,6 +246,7 @@ void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
     {# Handle the logic #}
 {{ logic(compute.logic, function, read, write) }}
 
+    {% if useCallback.delay == false %}
     {# Return if applicable #}
     {# Return a tuple #}
     {% if 'return' in compute and compute.return is not string %}
@@ -231,7 +255,25 @@ void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
     {% elif compute.return is string %}
     *val = {{compute.return}};
     {% endif %}
+    {% endif %}
 }
+{% if useCallback.delay %}
+// Occurs after {{useCallback.delay.for}} ms
+void _callback_{{useCallback.delay.name}}(
+{{ embedded.functionParams(cpp, functions, compute) }}
+) {
+    {# Handle the callback logic #}
+{{ logic(useCallback.delay.after, function, read, write) }}
+{# Now we can do that return #}
+    {# Return a tuple #}
+    {% if 'return' in compute and compute.return is not string %}
+    *val = [{% for returnValue in compute.return %}{{ returnValue | camel_to_snake }}{{ ", " if not loop.last }}{% endfor %}];
+    {# Return a plain value #}
+    {% elif compute.return is string %}
+    *val = {{compute.return}};
+    {% endif %}
+}
+{% endif %}
 
 {% endfor %}
 {% endif %}

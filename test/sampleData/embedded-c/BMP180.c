@@ -201,11 +201,12 @@ int bmp180_readTempCalMD(
 
 
 
-void bmp180_pressure_asmbars(
+float (*callback(float, *int, *int)) bmp180_pressure_asmbars(
     float* val,
     int (*read)(uint8_t, uint8_t, int*, uint8_t),
     int (*write)(uint8_t, uint8_t, int*, uint8_t)
 ) {
+    // FIXME: This `*val` is currently meaningless
     short ac1; // Variable declaration
     short ac2; // Variable declaration
     short ac3; // Variable declaration
@@ -234,8 +235,39 @@ void bmp180_pressure_asmbars(
     bmp180_writeControl(&52, write);
     bmp180_readResult(&pressure, read);
     bmp180_temperature_ascelsius(&temperature, read, write);
-    // ERROR - Cannot use DELAY in this template
+    // Delay 10 ms.
+    return _callback_celsius;
 
+
+}
+// Occurs after 10 ms
+void _callback_celsius(
+    float* val,
+    int (*read)(uint8_t, uint8_t, int*, uint8_t),
+    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+) {
+    rawComp = (temperature-25);
+    bmp180_readPressureCalAC1(&ac1, read);
+    bmp180_readPressureCalAC2(&ac2, read);
+    x1 = (160*pow(2, -13)*ac2);
+    bmp180_readPressureCalVB2(&vb2, read);
+    x2 = (pow(160, 2)*pow(2, -25)*vb2);
+    x = ((x2*pow(rawComp, 2))+(x1*rawComp)+ac1);
+    bmp180_readTempCal3(&ac3, read);
+    c3 = (160*pow(2, -15)*ac3);
+    bmp180_readTempCal4(&ac4, read);
+    c4 = (pow(10, -3)*pow(2, -15)*ac4);
+    bmp180_readPressureCalVB1(&vb1, read);
+    b1 = (pow(160, 2)*pow(2, -30)*vb1);
+    y0 = (c4*pow(2, 15));
+    y1 = (c4*c3);
+    y2 = (c4*b1);
+    y = ((y2*pow(rawComp, 2))+(y1*rawComp)+y0);
+    z = ((pressure-x)/y);
+    p0 = ((3791-8)/1600);
+    p1 = (1-(7357*pow(2, -30)));
+    p2 = (3038*100*pow(2, -36));
+    pressure = ((p2*pow(z, 2))+(p1*z)+p0);
 
     *val = pressure;
 }

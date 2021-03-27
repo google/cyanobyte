@@ -133,7 +133,24 @@ int {{info.title.lower()}}_set_{{key.lower()}}(
 /**
 {{utils.pad_string(" * ", function.description)}}
 */
+{# Look for any callbacks #}
+{% set useCallback = namespace(delay=false) %}
+{% if compute.logic %}
+{% for stepk in compute.logic %}
+{% for key,value in stepk|dictsort %}
+{% if key == '$delay' %}
+{# This won't work for nested delays #}
+{% set useCallback.delay = value %}
+{%- endif %}
+{%- endfor %}
+{%- endfor %}
+{%- endif %}
+{% if useCallback.delay %}
+{# FIXME Do not keep type as a float. Also, add params in callback #}
+float (*callback(float, *int, *int)) {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
+{% else %}
 void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
+{% endif %}
 {{ embedded.functionParams(cpp, functions, compute) }}
 );
 {% endfor %}
