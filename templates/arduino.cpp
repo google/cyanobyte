@@ -38,7 +38,7 @@
     {% break %}
 {% endif %}
 {% if key == "$delay" %}
-    delay({{step[key].for}})
+    delay({{step[key].for}});
 {{ logic(step[key].after, function) }}
     {% break %}
 {% endif %}

@@ -338,7 +338,7 @@ float BMP180::pressureasMbars() {
     writeControl(52);
     pressure = readResult();
     temperature = temperatureasCelsius();
-    delay(10)
+    delay(10);
     rawComp = (temperature-25);
     ac1 = readPressureCalAC1();
     ac2 = readPressureCalAC2();
