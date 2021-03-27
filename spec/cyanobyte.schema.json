@@ -467,6 +467,10 @@
               "description": "Number of milliseconds to delay",
               "type": ["number", "string"]
             },
+            "name": {
+              "description": "Name of the delay, or why there is a delay. This is used for some language templates to name the callback if the platform is non-blocking.",
+              "type": "string"
+            },
             "after": {
               "description": "Logic to run after the delay",
               "type": "array",
@@ -476,7 +480,7 @@
             }
           },
           "required": [
-            "for", "after"
+            "for", "name", "after"
           ]
         }
       }

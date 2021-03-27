@@ -36,8 +36,7 @@
 {%- endif %}
 {% if key == '$delay' %}
   setTimeout(() => {
-    {{ logic(step[key].after) }}
-  }, {{step[key].for}})
+  {{ logic(step[key].after) }}
   {% break %}
 {%- endif %}
 {# Check if assignment op #}
@@ -211,11 +210,24 @@ function {{info.title}}(i2c) {
  * {{function.title}}
  * {{function.description}}
  */
-{% if compute.input %}
-{{info.title}}.prototype.{{key}}{{ckey}} = function({{js.params(compute.input)}}) {
-{% else %}
-{{info.title}}.prototype.{{key}}{{ckey}} = function() {
-{% endif %}
+{{info.title}}.prototype.{{key}}{{ckey}} = function({{js.params(compute)}}) {
+{# This will only work for a single delay/callback #}
+{% set useCallback = namespace(name=false, time=0) %}
+{# Determine whether we should return normally or use callback #}
+{% for stepk in compute.logic %}
+{% for key,value in stepk|dictsort %}
+{# This won't work for nested delays #}
+{% if key == "$delay" -%}
+{# Set callback name #}
+  // Callback defined as `{{value.name}}Callback`
+{% set useCallback.name = value.name %}
+{# We need to set the callback time length later, so we can embed the callback #}
+{# in the right place. This code is very flakey, and will not work for the next #}
+{# callback impl. So this will need to be refactored in the future. #}
+{% set useCallback.time = value.for %}
+{%- endif %}
+{%- endfor %}
+{%- endfor %}
 {# Declare our variables #}
 {{ js.variables(compute.variables) }}
 {# Read `value` if applicable #}
@@ -229,13 +241,20 @@ function {{info.title}}(i2c) {
 {% endif %}
 {# Handle the logic #}
 {{ logic(compute.logic, function) -}}
- {# Return if applicable #}
+{# Return if applicable #}
+{% if useCallback.name == false %}
 {# Return a tuple #}
 {% if 'return' in compute and compute.return is not string %}
   return [{% for returnValue in compute.return %}{{ returnValue }}{{ ", " if not loop.last }}{% endfor %}]
 {# Return a plain value #}
 {% elif compute.return is string %}
   return {{compute.return}}
+{% endif %}
+{% else -%}
+{# Return via callback #}
+{# This will only work for a single value #}
+    {{useCallback.name}}Callback({{compute.return}})
+  }, {{useCallback.time}})
 {% endif %}
 }
 

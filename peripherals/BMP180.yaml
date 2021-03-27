@@ -222,6 +222,7 @@ functions:
           - temperature: '#/functions/temperature/asCelsius'
           - $delay:
               for: 10 # ms
+              name: celsius
               after:
                 # s = T - 25.0
                 - rawComp:

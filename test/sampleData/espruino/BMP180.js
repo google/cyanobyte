@@ -25,7 +25,7 @@
 
 
 
-var DEVICE = {
+ var DEVICE = {
   ADDR: 119,
 }
 
@@ -279,7 +279,8 @@ BMP180.prototype.getTempCalMD = function() {
 not compensated for sea level
 
  */
-BMP180.prototype.pressureasMbars = function() {
+BMP180.prototype.pressureasMbars = function(celsiusCallback) {
+  // Callback defined as `celsiusCallback`
   var ac1 = 0 // Variable declaration
   var ac2 = 0 // Variable declaration
   var ac3 = 0 // Variable declaration
@@ -308,7 +309,7 @@ BMP180.prototype.pressureasMbars = function() {
   pressure = this.getResult()
   temperature = this.temperatureasCelsius()
   setTimeout(() => {
-      rawComp = (temperature-25)
+    rawComp = (temperature-25)
   ac1 = this.getPressureCalAC1()
   ac2 = this.getPressureCalAC2()
   x1 = (160*Math.pow(2, -13)*ac2)
@@ -331,8 +332,8 @@ BMP180.prototype.pressureasMbars = function() {
   p2 = (3038*100*Math.pow(2, -36))
   pressure = ((p2*Math.pow(z, 2))+(p1*z)+p0)
 
+    celsiusCallback(pressure)
   }, 10)
-  return pressure
 }
 
 /**
