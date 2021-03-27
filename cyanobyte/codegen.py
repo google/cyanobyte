@@ -50,22 +50,22 @@ _VERSION = __version__
 _DEBUG = False
 _CLEAN = False
 _TEMPLATES = dict(
-    arduino=["arduino.cpp", "arduino.h"],
-    circuitpython=["circuitpython.py"],
-    cmsis=["cmsis.svd"],
-    datasheet=["datasheet.tex"],
-    doc=["doc.md"],
-    embedded=["generic.c", "generic.h"],
-    esp32=["arduino.cpp", "arduino.h"],
-    espruino=["espruino.js"],
-    i2cdevice=["i2c-device.py"],
-    kubos=["kubos.c", "kubos.h"],
-    micropython=["micropython.py"],
-    raspberrypi=["raspberrypi.py"],
-    webpage=["webpage.html"],
+    arduino=[path.join("c", "arduino.cpp"), path.join("c", "arduino.h")],
+    circuitpython=[path.join("python", "circuitpython.py")],
+    cmsis=[path.join("documents", "cmsis.svd")],
+    datasheet=[path.join("documents", "datasheet.tex")],
+    doc=[path.join("documents", "doc.md")],
+    embedded=[path.join("c", "generic.c"), path.join("c", "generic.h")],
+    esp32=[path.join("c", "arduino.cpp"), path.join("c", "arduino.h")],
+    espruino=[path.join("javascript", "espruino.js")],
+    i2cdevice=[path.join("python", "i2c-device.py")],
+    kubos=[path.join("c", "kubos.c"), path.join("c", "kubos.h")],
+    micropython=[path.join("python", "micropython.py")],
+    raspberrypi=[path.join("python", "raspberrypi.py")],
+    webpage=[path.join("documents", "webpage.html")],
 )
 _OPTIONS = dict(
-    esp32="esp32.options.yaml"
+    esp32="c/esp32.options.yaml"
 )
 
 def convert_emb_to_yaml(emboss_filepath, emboss_basepath):
@@ -307,6 +307,9 @@ def gen(input_files, template_files=None, output_dir='./build',
                 options = _OPTIONS[template_file]
             # This will be an array of filepaths
             for filepath in _TEMPLATES[template_file]:
+                if _DEBUG:
+                    print('Using built-in template ' + filepath)
+                    print(list(pkg_resources.contents('templates')))
                 generate_files_for_raw_text(
                     env,
                     filepath,

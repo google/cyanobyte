@@ -1,6 +1,6 @@
-{% import 'macros.jinja2' as utils %}
-{% import 'python.jinja2' as py %}
-{% set template = namespace(sign=false, math=false, struct=false) %}
+{% import './macros.jinja2' as utils %}
+{% import './python/base.jinja2' as py %}
+{% set template = namespace(enum=false, sign=false, math=false, struct=false) %}
 {{ utils.pad_string('# ', utils.license(info.copyright.name, info.copyright.date, info.license.name)) -}}
 #
 # Auto-generated file for {{ info.title }} v{{ info.version }}.
@@ -12,13 +12,13 @@ Class for {{ info.title }}
 
 {% for step in logicalSteps %}
 {% for key in step.keys() %}
-{# // Check if a raw read-op #}
 {% if step[key] is mapping and 'rawRead' in step[key] %}
         {% set bytes = (step[key].rawRead / 8) | round(1, 'ceil') | int %}
-        _byte_list = self.i2c.readfrom(self.device_address, {{bytes}})
         {{key}} = 0
         {% for n in range(bytes) %}
-        {{key}} = {{key}} << 8 | _byte_list[{{n}}]
+        {# Read each byte one at a time from device #}
+        _datum = self.bus.read_byte(self.device_address)
+        {{key}} = {{key}} << 8 | _datum
         {% endfor %}
         {% break %}
 {% endif %}
@@ -56,32 +56,39 @@ Class for {{ info.title }}
 {%- endfor %}
 {%- endmacro %}
 
-{{ py.importUstdLibs(fields, functions, template) -}}
-from machine import I2C
+{{ py.importStdLibs(fields, functions, i2c, template) -}}
+import smbus
+{% if spi is defined %}
+import spidev
+{% endif %}
 
 {# Create enums for fields #}
 {% if fields %}
 {% for key,field in fields|dictsort %}
 {% if field.enum %}
-{# Create enum-like constants #}
-{% for ekey,enum in field.enum|dictsort %}
-{{key.upper()}}_{{ekey.upper()}} = {{enum.value}} # {{enum.title}}
-{% endfor %}
-
+{# Create enum class #}
+class {{key[0].upper()}}{{key[1:]}}Values(Enum):
+    """
+{{utils.pad_string("    ", "Valid values for " + field.title)}}
+    """
+    {% for ekey,enum in field.enum|dictsort %}
+    {{ekey.upper()}} = {{enum.value}} # {{enum.title}}
+    {% endfor %}
 {% endif %}
 {% endfor %}
 {% endif %}
 {% if i2c.address is iterable and i2c.address is not string %}
-{% for address in i2c.address %}
-I2C_ADDRESS_{{address}} = {{address}}
-{% endfor %}
-
+class DeviceAddressValues(Enum):
+    """
+    Valid device addresses
+    """
+    {% for address in i2c.address %}
+    I2C_ADDRESS_{{address}} = {{address}}
+    {% endfor %}
 {% endif %}
 
 {{ py.importLittleEndian(i2c) }}
-
 {{ py.importSign(registers, template) }}
-
 class {{ info.title }}:
     """
 {{utils.pad_string("    ", info.description)}}
@@ -94,17 +101,30 @@ class {{ info.title }}:
     {% endfor %}
 
     {% if i2c.address is iterable and i2c.address is not string %}
-    def __init__(self, i2c, address):
+    def __init__(self, address):
         # Initialize connection to peripheral
-        self.i2c = i2c
+        self.bus = smbus.SMBus(1)
         self.device_address = address
     {% else %}
-    def __init__(self, i2c):
+    def __init__(self):
         # Initialize connection to peripheral
-        self.i2c = i2c
+        self.bus = smbus.SMBus(1)
     {% endif %}
         {% if '_lifecycle' in functions and 'Begin' in functions._lifecycle.computed %}
         self._lifecycle_begin()
+        {% endif %}
+        {% if spi is defined %}
+        self.spi = spidev.SpiDev()
+        {% if spi.address is defined %}
+        self.device_address = {{spi.address}}
+        {% endif %}
+        bus = 0 # Only SPI bus 0 is available
+        device = 1 # Chip select, 0 / 1 depending on connection
+        self.spi.open(bus, device)
+        self.spi.max_speed_hz = {{ spi.frequency }}
+        self.spi.bits_per_word = {{ spi.word }}
+        self.spi.mode = 0b{% if spi.clockPolarity == 'high' %}1{% else %}0{% endif %}{%if spi.clockPhase == 'trailing' %}1{% else %}0{% endif %}
+
         {% endif %}
 
     {% for key,register in registers|dictsort %}
@@ -114,16 +134,27 @@ class {{ info.title }}:
         """
 {{utils.pad_string("        ", register.description)}}
         """
-        byte_list = self.i2c.readfrom_mem(
+        {% if register.length <= 8 %}
+        val = self.bus.read_byte_data(
+            self.device_address,
+            self.REGISTER_{{key.upper()}}
+        )
+        {% elif register.length <= 16 %}
+        val = self.bus.read_word_data(
+            self.device_address,
+            self.REGISTER_{{key.upper()}}
+        )
+        {% elif register.length <= 32 %}
+        byte_list = self.bus.read_i2c_block_data(
             self.device_address,
             self.REGISTER_{{key.upper()}},
-            {{bytes}},
-            addrsize={{register.length}}
+            {{bytes}}
         )
         val = 0
         {% for n in range(bytes) %}
         val = val << 8 | byte_list[{{n}}]
         {% endfor %}
+        {% endif %}
         {% if i2c.endian == 'little' %}
         val = _swap_endian(val, {{register.length}})
         {% endif %}
@@ -142,16 +173,35 @@ class {{ info.title }}:
         {% if i2c.endian == 'little' %}
         data = _swap_endian(data, {{register.length}})
         {% endif %}
+        {% if register.length == 0 %}
+        self.bus.write_i2c_block_data(
+            self.device_address,
+            self.REGISTER_{{key.upper()}},
+            []
+        )
+        {% elif register.length <= 8 %}
+        self.bus.write_byte_data(
+            self.device_address,
+            self.REGISTER_{{key.upper()}},
+            data
+        )
+        {% elif register.length <= 16 %}
+        self.bus.write_word_data(
+            self.device_address,
+            self.REGISTER_{{key.upper()}},
+            data
+        )
+        {% elif register.length <= 32 %}
         buffer = []
         {% for n in range(bytes) %}
         buffer[{{n}}] = (data >> {{8 * (bytes - n - 1)}}) & 0xFF
         {% endfor %}
-        self.i2c.writeto_mem(
+        self.bus.write_i2c_block_data(
             self.device_address,
             self.REGISTER_{{key.upper()}},
-            buffer,
-            addrsize={{register.length}}
+            buffer
         )
+        {% endif %}
     {% endif %}
     {% endfor %}
 
@@ -195,6 +245,45 @@ class {{ info.title }}:
     {% endif %}
     {% endfor %}
     {% endif %}
+    {% if spi and spi.format == 'register' %}
+    {# Here will be SPI register operations #}
+    {% for key,register in registers|dictsort %}
+    {% if (not 'readWrite' in register) or ('readWrite' in register and 'R' is in(register.readWrite)) %}
+    def spi_read_{{key.lower()}}(self):
+        """
+{{utils.pad_string("        ", register.description)}}
+        """
+        # Simple read request msg
+        msg = [self.device_address, self.REGISTER_{{key.upper()}}]
+        result = self.spi.xfer2(msg)
+        {% if spi.endian == 'little' %}
+        result = _swap_endian(result, {{register.length}})
+        {% endif %}
+        {% if register.signed %}
+        # Unsigned > Signed integer
+        result = _sign(result, {{register.length}})
+        {% endif %}
+        return result
+    {% endif %}
+    {% if (not 'readWrite' in register) or ('readWrite' in register and 'W' is in(register.readWrite)) %}
+    def spi_write_{{key.lower()}}(self{% if register.length > 0 %}, data{% endif %}):
+        """
+{{utils.pad_string("        ", register.description)}}
+        """
+        # Build request msg
+        msg = [self.device_address, self.REGISTER_{{key.upper()}}]
+        {% if register.length > 0 %}
+        {% if spi.endian == 'little' %}
+        data = _swap_endian(data, {{register.length}})
+        {% endif %}
+        msg = msg + data
+        {% endif %}
+        result = self.spi.xfer2(msg)
+        {# May be useful to return status #}
+        return result
+    {% endif %}
+    {% endfor %}
+    {% endif %}
     {% if functions %}
     {% for key,function in functions|dictsort %}
     {% for ckey,compute in function.computed|dictsort %}
@@ -228,7 +317,7 @@ class {{ info.title }}:
             {# See if we need to massage the data type #}
             {% if compute.output == 'int16' %}
         # Convert from a unsigned short to a signed short
-        {{compute.return}} = ustruct.unpack("h", ustruct.pack("H", {{compute.return}}))[0]
+        {{compute.return}} = struct.unpack("h", struct.pack("H", {{compute.return}}))[0]
             {% endif %}
         return {{compute.return}}
         {% endif %}

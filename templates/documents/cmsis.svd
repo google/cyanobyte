@@ -1,4 +1,5 @@
-{% import 'macros.jinja2' as utils %}
+{% import './macros.jinja2' as utils %}
+
 {% macro numtype(len, sign) -%}
 {%- if sign -%}
 {%- if len <= 8 %}

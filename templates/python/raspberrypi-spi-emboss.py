@@ -1,10 +1,11 @@
-{% import 'macros.jinja2' as utils %}
-{% import 'python.jinja2' as py %}
+{% import './macros.jinja2' as utils %}
+{% import './python/base.jinja2' as py %}
 {% set template = namespace(enum=false, sign=false, math=false, struct=false) %}
 {{ utils.pad_string('# ', utils.license(info.copyright.name, info.copyright.date, info.license.name)) -}}
 #
 # Auto-generated file for {{ info.title }} v{{ info.version }}.
-# Generated from {{ fileName }} using Cyanobyte Codegen v{{ version }}
+# Generated from {{ fileName }}
+# using Cyanobyte Codegen v{{ version }}
 """
 Class for {{ info.title }}
 """
@@ -127,6 +128,60 @@ class {{ info.title }}:
 
         {% endif %}
 
+    {% if imports %}
+    {% for key,data in imports|dictsort %}
+    {% for structKey,struct in data.structs|dictsort|reverse %}
+    @classmethod
+    def msg_{{key.lower()}}_{{structKey.lower()}}(
+            cls,
+    {% for param_name, param_info in struct.fields|dictsort|reverse %}
+            {{param_name}},
+    {% endfor %}
+    ): # Put params here
+        """
+        Encodes {{key.lower()}} {{structKey.lower()}} data into a buffer
+        """
+        msg = 0
+        {% for param_name, param_info in struct.fields|dictsort|reverse %}
+        msg |= {{param_name}}{{" << {}".format(param_info.offset_in_bit) if param_info.offset_in_bit != 0}}
+        {% endfor %}
+        return msg # Return the message data structure here
+
+    @classmethod
+    def decode_{{key.lower()}}_{{structKey.lower()}}(cls, msg): # Put params here
+        """
+        Decodes {{key.lower()}} {{structKey.lower()}} data from a buffer
+        """
+        res = []
+        {% for param_name, param_info in struct.fields|dictsort|reverse %}
+        {{param_name}} = msg{{" >> {}".format(param_info.offset_in_bit) if param_info.offset_in_bit != 0}}
+        {{param_name}} &= 1 << {{param_info.size_in_byte}} - 1
+        res.append({{param_name}})
+
+        {% endfor %}
+        return res # Return the decoded msg
+
+    {% if spi and spi.format == 'emboss' %}
+    def spi_write_{{key.lower()}}_{{structKey.lower()}}(
+            self,
+    {% for param_name, param_info in struct.fields|dictsort|reverse %}
+            {{param_name}},
+    {% endfor %}
+    ): # Put params here
+        """
+        Writes message {{key.lower()}} {{structKey.lower()}} on SPI bus
+        """
+        # Build request msg
+        msg = self.msg_{{key.lower()}}_{{structKey.lower()}}({% for param_name, param_info in struct.fields|dictsort|reverse %}{{param_name}}{% if not loop.last %}, {% endif %}{% endfor %})
+        result = self.spi.xfer2(msg)
+        {# Result is raw data which needs to be decoded using method above #}
+        {# One will need to consult documentation to know which to use #}
+        return result
+    {% endif %}
+    {% endfor %}
+    {% endfor %}
+    {% endif %}
+
     {% for key,register in registers|dictsort %}
     {% set bytes = (register.length / 8) | round(1, 'ceil') | int %}
     {% if (not 'readWrite' in register) or ('readWrite' in register and 'R' is in(register.readWrite)) %}
@@ -204,7 +259,6 @@ class {{ info.title }}:
         {% endif %}
     {% endif %}
     {% endfor %}
-
     {% if fields %}
     {% for key,field in fields|dictsort %}
     {% if 'R' is in(field.readWrite) %}
@@ -242,45 +296,6 @@ class {{ info.title }}:
         register_data = self.get_{{field.register[12:].lower()}}()
         register_data = register_data | data
         self.set_{{field.register[12:].lower()}}(register_data)
-    {% endif %}
-    {% endfor %}
-    {% endif %}
-    {% if spi and spi.format == 'register' %}
-    {# Here will be SPI register operations #}
-    {% for key,register in registers|dictsort %}
-    {% if (not 'readWrite' in register) or ('readWrite' in register and 'R' is in(register.readWrite)) %}
-    def spi_read_{{key.lower()}}(self):
-        """
-{{utils.pad_string("        ", register.description)}}
-        """
-        # Simple read request msg
-        msg = [self.device_address, self.REGISTER_{{key.upper()}}]
-        result = self.spi.xfer2(msg)
-        {% if spi.endian == 'little' %}
-        result = _swap_endian(result, {{register.length}})
-        {% endif %}
-        {% if register.signed %}
-        # Unsigned > Signed integer
-        result = _sign(result, {{register.length}})
-        {% endif %}
-        return result
-    {% endif %}
-    {% if (not 'readWrite' in register) or ('readWrite' in register and 'W' is in(register.readWrite)) %}
-    def spi_write_{{key.lower()}}(self{% if register.length > 0 %}, data{% endif %}):
-        """
-{{utils.pad_string("        ", register.description)}}
-        """
-        # Build request msg
-        msg = [self.device_address, self.REGISTER_{{key.upper()}}]
-        {% if register.length > 0 %}
-        {% if spi.endian == 'little' %}
-        data = _swap_endian(data, {{register.length}})
-        {% endif %}
-        msg = msg + data
-        {% endif %}
-        result = self.spi.xfer2(msg)
-        {# May be useful to return status #}
-        return result
     {% endif %}
     {% endfor %}
     {% endif %}

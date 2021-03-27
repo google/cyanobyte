@@ -1,5 +1,5 @@
-{% import 'macros.jinja2' as utils %}
-{% import 'clang.jinja2' as cpp %}
+{% import './macros.jinja2' as utils %}
+{% import './c/base.jinja2' as cpp %}
 {% set template = namespace(enum=false, sign=false, math=false, struct=false) %}
 /*
 {{ utils.pad_string('* ', utils.license(info.copyright.name, info.copyright.date, info.license.name)) -}}

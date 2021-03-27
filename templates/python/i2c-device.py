@@ -1,5 +1,5 @@
 {% set template = namespace(registersToFields=dict()) %}
-{% import 'macros.jinja2' as utils %}
+{% import './macros.jinja2' as utils %}
 {{ utils.pad_string('# ', utils.license(info.copyright.name, info.copyright.date, info.license.name)) -}}
 #
 # Auto-generated file for {{ info.title }} v{{ info.version }}.

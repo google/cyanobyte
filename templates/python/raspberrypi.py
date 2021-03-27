@@ -1,6 +1,6 @@
-{% import 'macros.jinja2' as utils %}
-{% import 'python.jinja2' as py %}
-{% set template = namespace(sign=false, math=false, struct=false) %}
+{% import './macros.jinja2' as utils %}
+{% import './python/base.jinja2' as py %}
+{% set template = namespace(enum=false, sign=false, math=false, struct=false) %}
 {{ utils.pad_string('# ', utils.license(info.copyright.name, info.copyright.date, info.license.name)) -}}
 #
 # Auto-generated file for {{ info.title }} v{{ info.version }}.
@@ -12,16 +12,14 @@ Class for {{ info.title }}
 
 {% for step in logicalSteps %}
 {% for key in step.keys() %}
-{# // Check if a raw read-op #}
 {% if step[key] is mapping and 'rawRead' in step[key] %}
         {% set bytes = (step[key].rawRead / 8) | round(1, 'ceil') | int %}
-        with self.i2c_device as i2c:
-            _byte_list = bytearray({{ bytes }})
-            i2c.readinto(_byte_list)
-            {{key}} = 0
-            {% for n in range(bytes) %}
-            {{key}} = {{key}} << 8 | _byte_list[{{n}}]
-            {% endfor %}
+        {{key}} = 0
+        {% for n in range(bytes) %}
+        {# Read each byte one at a time from device #}
+        _datum = self.bus.read_byte(self.device_address)
+        {{key}} = {{key}} << 8 | _datum
+        {% endfor %}
         {% break %}
 {% endif %}
 {# Check if assignment is a send-op #}
@@ -58,32 +56,62 @@ Class for {{ info.title }}
 {%- endfor %}
 {%- endmacro %}
 
-{{ py.importUstdLibs(fields, functions, template) -}}
-from adafruit_bus_device.i2c_device import I2CDevice
+{{ py.importStdLibs(fields, functions, i2c, template) -}}
+import smbus
 
 {# Create enums for fields #}
 {% if fields %}
 {% for key,field in fields|dictsort %}
 {% if field.enum %}
-{# Create enum-like constants #}
-{% for ekey,enum in field.enum|dictsort %}
-{{key.upper()}}_{{ekey.upper()}} = {{enum.value}} # {{enum.title}}
-{% endfor %}
-
+{# Create enum class #}
+class {{key[0].upper()}}{{key[1:]}}Values(Enum):
+    """
+{{utils.pad_string("    ", "Valid values for " + field.title)}}
+    """
+    {% for ekey,enum in field.enum|dictsort %}
+    {{ekey.upper()}} = {{enum.value}} # {{enum.title}}
+    {% endfor %}
 {% endif %}
+{% endfor %}
+{% endif %}
+{% if imports %}
+{% for key,data in imports|dictsort %}
+{% for structKey,struct in data.structs.items() %}
+{% if struct.is_enum %}
+{# Create enum class from emb #}
+class {{structKey[0].upper()}}{{structKey[1:]}}Values(Enum):
+    """
+{{utils.pad_string("    ", "Valid values for " + structKey)}}
+    """
+    {% for ekey,enum in struct.fields.items() %}
+    {% if enum.value is not mapping %}
+    {% set val = enum.value.split(".")[0]+"Values."+enum.value.split(".")[1].upper() if "." in enum.value else enum.value %}
+    {{ekey.upper()}} = {{val}} 
+    {% else %}
+    {% set symbol = enum.value.symbol %}
+    {% set arg0 = enum.value.arg[0] %}
+    {% set arg1 = enum.value.arg[1] %}
+    {% set val0 = arg0.split(".")[0]+"Values."+arg0.split(".")[1].upper() if "." in arg0 else arg0 %}
+    {% set val1 = arg1.split(".")[0]+"Values."+arg1.split(".")[1].upper() if "." in arg1 else arg1 %}
+    {{ekey.upper()}} = {{"{} {} {}".format(val0, symbol, val1)}} 
+    {% endif %}
+    {% endfor %}
+{% endif %}
+{% endfor %}
 {% endfor %}
 {% endif %}
 {% if i2c.address is iterable and i2c.address is not string %}
-{% for address in i2c.address %}
-I2C_ADDRESS_{{address}} = {{address}}
-{% endfor %}
-
+class DeviceAddressValues(Enum):
+    """
+    Valid device addresses
+    """
+    {% for address in i2c.address %}
+    I2C_ADDRESS_{{address}} = {{address}}
+    {% endfor %}
 {% endif %}
 
 {{ py.importLittleEndian(i2c) }}
-
 {{ py.importSign(registers, template) }}
-
 class {{ info.title }}:
     """
 {{utils.pad_string("    ", info.description)}}
@@ -96,19 +124,49 @@ class {{ info.title }}:
     {% endfor %}
 
     {% if i2c.address is iterable and i2c.address is not string %}
-    def __init__(self, i2c, address):
+    def __init__(self, address):
         # Initialize connection to peripheral
-        self.i2c_device = I2CDevice(i2c, address)
+        self.bus = smbus.SMBus(1)
         self.device_address = address
     {% else %}
-    def __init__(self, i2c):
+    def __init__(self):
         # Initialize connection to peripheral
-        self.i2c_device = I2CDevice(i2c, {{ i2c.address }})
-        self.i2c = i2c
+        self.bus = smbus.SMBus(1)
     {% endif %}
         {% if '_lifecycle' in functions and 'Begin' in functions._lifecycle.computed %}
         self._lifecycle_begin()
         {% endif %}
+
+    {% if imports %}
+    {% for key,data in imports|dictsort %}
+    {% for structKey,struct in data.structs|dictsort|reverse %}
+    {% if not struct.is_enum %}
+    def msg_{{key.lower()}}_{{structKey.lower()}}(
+        self,
+    {% for param_name, param_info in struct.fields|dictsort|reverse %}
+        {{param_name}},
+    {% endfor %}
+    ): # Put params here
+        msg = 0
+        {% for param_name, param_info in struct.fields|dictsort|reverse %}
+        msg |= {{param_name}} {{"<< {}".format(param_info.offset_in_bit) if param_info.offset_in_bit != 0}} 
+        {% endfor %}
+        return msg # Return the message data structure here
+   
+    def decode_{{key.lower()}}_{{structKey.lower()}}(self, msg): # Put params here
+        res = []
+        {% for param_name, param_info in struct.fields|dictsort|reverse %}
+        {{param_name}} = msg {{">> {}".format(param_info.offset_in_bit) if param_info.offset_in_bit != 0}} 
+        {{param_name}} &= 1 << {{param_info.size_in_byte}} - 1
+        res.append({{param_name}})
+
+        {% endfor %}
+        return  res # Return the decoded msg
+
+    {% endif %}
+    {% endfor %}
+    {% endfor %}
+    {% endif -%}
 
     {% for key,register in registers|dictsort %}
     {% set bytes = (register.length / 8) | round(1, 'ceil') | int %}
@@ -117,23 +175,35 @@ class {{ info.title }}:
         """
 {{utils.pad_string("        ", register.description)}}
         """
-        write_list = bytearray(1)
-        write_list[0] = self.REGISTER_{{key.upper()}}
-        read_list = bytearray({{ bytes }})
-        with self.i2c_device as i2c:
-            i2c.write_then_readinto(write_list, read_list)
-            val = 0
-            {% for n in range(bytes) %}
-            val = val << 8 | read_list[{{n}}]
-            {% endfor %}
-            {% if i2c.endian == 'little' %}
-            val = _swap_endian(val, {{register.length}})
-            {% endif %}
-            {% if register.signed %}
-            # Unsigned > Signed integer
-            val = _sign(val, {{register.length}})
-            {% endif %}
-            return val
+        {% if register.length <= 8 %}
+        val = self.bus.read_byte_data(
+            self.device_address,
+            self.REGISTER_{{key.upper()}}
+        )
+        {% elif register.length <= 16 %}
+        val = self.bus.read_word_data(
+            self.device_address,
+            self.REGISTER_{{key.upper()}}
+        )
+        {% elif register.length <= 32 %}
+        byte_list = self.bus.read_i2c_block_data(
+            self.device_address,
+            self.REGISTER_{{key.upper()}},
+            {{bytes}}
+        )
+        val = 0
+        {% for n in range(bytes) %}
+        val = val << 8 | byte_list[{{n}}]
+        {% endfor %}
+        {% endif %}
+        {% if i2c.endian == 'little' %}
+        val = _swap_endian(val, {{register.length}})
+        {% endif %}
+        {% if register.signed %}
+        # Unsigned > Signed integer
+        val = _sign(val, {{register.length}})
+        {% endif %}
+        return val
     {% endif %}
 
     {% if (not 'readWrite' in register) or ('readWrite' in register and 'W' is in(register.readWrite)) %}
@@ -144,12 +214,35 @@ class {{ info.title }}:
         {% if i2c.endian == 'little' %}
         data = _swap_endian(data, {{register.length}})
         {% endif %}
-        buffer = bytearray({{ bytes }})
+        {% if register.length == 0 %}
+        self.bus.write_i2c_block_data(
+            self.device_address,
+            self.REGISTER_{{key.upper()}},
+            []
+        )
+        {% elif register.length <= 8 %}
+        self.bus.write_byte_data(
+            self.device_address,
+            self.REGISTER_{{key.upper()}},
+            data
+        )
+        {% elif register.length <= 16 %}
+        self.bus.write_word_data(
+            self.device_address,
+            self.REGISTER_{{key.upper()}},
+            data
+        )
+        {% elif register.length <= 32 %}
+        buffer = []
         {% for n in range(bytes) %}
         buffer[{{n}}] = (data >> {{8 * (bytes - n - 1)}}) & 0xFF
         {% endfor %}
-        with self.i2c_device as i2c:
-            i2c.write(buffer)
+        self.bus.write_i2c_block_data(
+            self.device_address,
+            self.REGISTER_{{key.upper()}},
+            buffer
+        )
+        {% endif %}
     {% endif %}
     {% endfor %}
 
@@ -226,7 +319,7 @@ class {{ info.title }}:
             {# See if we need to massage the data type #}
             {% if compute.output == 'int16' %}
         # Convert from a unsigned short to a signed short
-        {{compute.return}} = ustruct.unpack("h", ustruct.pack("H", {{compute.return}}))[0]
+        {{compute.return}} = struct.unpack("h", struct.pack("H", {{compute.return}}))[0]
             {% endif %}
         return {{compute.return}}
         {% endif %}
