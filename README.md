@@ -1,9 +1,12 @@
-# Peripheral Codegen
+# Cyanobyte - Machine readable datasheets for documentation & codegen
+
+![logo](https://github.com/google/cyanobyte/raw/master/cyanobyte_logo.png)
+
 This project is an example of how to describe peripherals with an intermediary layer (YAML files) which can be used to generate library files for a peripheral.
 
 It can also generate reference documentation for a peripheral, useful for embedding into datasheets.
 
-The tool works well for I2C devices, while SPI support is in alpha.
+The tool works well for I2C devices, while SPI support is in progress.
 
 This is not an official Google product.
 
