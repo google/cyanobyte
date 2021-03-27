@@ -12,8 +12,6 @@
 {{utils.pad_string("* ", info.description)}}
 */
 
-#include <time.h>
-
 {% macro logic(logicalSteps, function) -%}
 
 {% for step in logicalSteps %}

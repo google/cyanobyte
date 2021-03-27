@@ -14,6 +14,7 @@
 #define _{{info.title}}_H_
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <unistd.h>
 #include "i2c.h"
 

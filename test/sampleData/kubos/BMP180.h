@@ -24,6 +24,7 @@
 #define _BMP180_H_
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <unistd.h>
 #include "i2c.h"
 
