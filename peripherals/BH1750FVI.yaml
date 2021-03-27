@@ -41,13 +41,13 @@ registers:
     address: 0x00
     length: 0
     title: Power Down
-    description: No active state
+    description: State when the device is not active.
     readWrite: W
   PowerOn:
     address: 0x01
     length: 0
     title: Power On
-    description: Waiting for measurement command
+    description: State when device is on and waiting measurement command.
     readWrite: W
   Reset:
     address: 0x07
@@ -58,25 +58,25 @@ registers:
   ContinuousHResMode:
     address: 0b00010000
     length: 0
-    title: Continuously H-Resolution Mode
+    title: Continuously High-Resolution Mode
     description: Start measurement at 1lx resolution. Typically 120ms.
     readWrite: W
   ContinuousHRes2Mode:
     address: 0b00010001
     length: 0
-    title: Continously H-Resolution Mode2
+    title: Continously High-Resolution Mode 2
     description: Start measurement at 0.5lx resolution. Typically 120ms.
     readWrite: W
   ContinuouslyLResMode:
     address: 0b00010011
     length: 0
-    title: Continuously L-Resolution Mode
+    title: Continuously Low-Resolution Mode
     description: Start measurement at 4lx resolution. Typically 16ms.
     readWrite: W
   OnceHResMode:
     address: 0b00100000
     length: 0
-    title: One Time H-Resolution Mode
+    title: One Time High-Resolution Mode
     description: |
       Start measurement at 1lx resolution. Typically 120ms.
       Power Down after measurement.
@@ -84,7 +84,7 @@ registers:
   OnceHRes2Mode:
     address: 0b0010_0001
     length: 0
-    title: One Time H-Resolution Mode2
+    title: One Time High-Resolution Mode2
     description: |
       Start measurement at 0.5lx resolution. Typically 120ms.
       Power Down after measurement.
@@ -92,7 +92,7 @@ registers:
   OnceLResMode:
     address: 0b0010_0011
     length: 0
-    title: One Time L-Resolution Mode
+    title: One Time Low-Resolution Mode
     description: |
       Start measurement at 4lx resolution. Typically 16ms.
       Power Down after measurement.
@@ -101,7 +101,7 @@ registers:
 functions:
   _lifecycle:
     title: Powers on the device
-    description: Sends a POWER ON cmd to device
+    description: Sends a POWER ON cmd to device.
     computed:
       Begin:
         logic:
@@ -109,7 +109,7 @@ functions:
               register: '#/registers/PowerOn'
   command:
     title: Commands to device
-    description: Things you can do to device
+    description: Commands that can be sent to the device.
     computed:
       PowerDown:
         logic:
@@ -125,7 +125,7 @@ functions:
               register: '#/registers/Reset'
   read:
     title: Read light intensity from device
-    description: Read light intensity from device
+    description: Read light intensity from device.
     computed:
       LightIntensity:
         variables:

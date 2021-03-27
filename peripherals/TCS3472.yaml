@@ -28,31 +28,31 @@ registers:
   # Hence, the Clear register actually needs to be addressed as:
   #
   # 0b1000,0000 OR 0b0010,0000 OR 0x14 = 180 = 0xB0
-  enable:
+  Enable:
     address: 0x80
     length: 8
     title: Enable
     description: Enable specific components of the peripheral
-  clear:
+  Clear:
     address: 0xB4
     length: 16
     readWrite: 'R'
     title: Clear channel
     description: This is the ambient amount of detected light.
-  red:
+  Red:
     address: 0xB6
     length: 16
     readWrite: 'R'
     title: Red channel
     description: Red light as an int. Divide by ambient light to get scaled number.
     # Implementation note: float(light.get_red()) / light.get_clear() * 255 -> Red color value
-  green:
+  Green:
     address: 0xB8
     length: 16
     readWrite: 'R'
     title: Green channel
     description: Green light as an int. Divide by ambient light to get scaled number.
-  blue:
+  Blue:
     address: 0xBA
     length: 16
     readWrite: 'R'
@@ -62,8 +62,8 @@ registers:
 fields:
   init:
     title: Setup the device configuration
-    description: Enable RGBC and Power
-    register: '#/registers/enable'
+    description: Enable RGBC and Power.
+    register: '#/registers/Enable'
     readWrite: 'R/W'
     bitStart: 7 # The whole register
     bitEnd: 0
@@ -79,8 +79,8 @@ fields:
 functions:
   _lifecycle:
     title: Code to run when device class is constructed
-    description: Enables features on device
-    register: '#/registers/enable'
+    description: Enables features on device.
+    register: '#/registers/Enable'
     computed:
       Begin:
         variables:

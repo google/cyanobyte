@@ -37,83 +37,83 @@ registers:
   Control:
     address: 0xF4
     length: 8
-    title: Register to write commands
-    description: Register stores what the measurement type should be
+    title: Command register.
+    description: Stores the current measurement type.
     readWrite: 'W'
   Result:
     address: 0xF6
     length: 16
-    title: Register that stores measurement results
-    description: Register stores most recent measurement result
+    title: Measurement results
+    description: Stores the most recent measurement result.
     readWrite: 'R'
   TempCal3:
     address: 0xAE
     length: 16
     title: Temperature calibration 3
-    description: For calibration
+    description: Third constant register for temperature measurement calibration.
     readWrite: 'R'
   TempCal4:
     address: 0xB0
     length: 16
     title: Temperature calibration 4
     signed: false
-    description: For calibration
+    description: Fourth constant register for temperature measurement calibration.
     readWrite: 'R'
   TempCal5:
     address: 0xB2
     length: 16
     title: Temperature calibration 5
     signed: false
-    description: For calibration
+    description: Fifth constant register for temperature measurement calibration.
     readWrite: 'R'
   TempCal6:
     address: 0xB4
     length: 16
     title: Temperature calibration 6
     signed: false
-    description: For calibration
+    description: Sixth constant register for temperature measurement calibration.
     readWrite: 'R'
   TempCalMC:
     address: 0xBC
     length: 16
     title: Temperature calibration MC
-    description: For calibration
+    description: Constant register for temperature measurement calibration.
     readWrite: 'R'
   TempCalMD:
     address: 0xBE
     length: 16
     title: Temperature calibration MD
-    description: For calibration
+    description: Constant register for temperature measurement calibration.
     readWrite: 'R'
   PressureCalAC1:
     address: 0xAA
     length: 16
     title: Pressure calibration AC1
-    description: For calibration
+    description: Constant register for pressure measurement calibration.
     readWrite: 'R'
   PressureCalAC2:
     address: 0xAC
     length: 16
     title: Pressure calibration AC2
-    description: For calibration
+    description: Constant register for pressure measurement calibration.
     readWrite: 'R'
   PressureCalVB1:
     address: 0xB6
     length: 16
     title: Pressure calibration VB1
-    description: For calibration
+    description: Constant register for pressure measurement calibration.
     readWrite: 'R'
   PressureCalVB2:
     address: 0xB8
     length: 16
     title: Pressure calibration VB2
-    description: For calibration
+    description: Constant register for pressure measurement calibration.
     readWrite: 'R'
 
 functions:
   temperature:
     title: Temperature as read by sensor
-    description: Reads the temperature
+    description: Reads the temperature as a raw value or in Celsius.
     register: '#/registers/Control'
     computed:
       asCelsius:

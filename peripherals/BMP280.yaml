@@ -40,126 +40,126 @@ registers:
     address: 0xFA
     length: 8
     title: Temperature MSB
-    description: Part 1 of temperature
+    description: Most-significant bit of temperature measurement result.
     readWrite: R
   TempLsb:
     address: 0xFB
     length: 8
     title: Temperature LSB
-    description: Part 2 of temperature
+    description: Middle-significant bit of temperature measurement result.
     readWrite: R
   TempXlsb:
     address: 0xFC
     length: 8
     title: Temperature XLSB
-    description: Final part of temperature
+    description: Least-significant bit of temperature measurement result.
     readWrite: R
   DigT1:
     address: 0x88
     length: 16
     title: Digital Temperature Compensation 1
-    description: Used for Celcius conversion
+    description: Compensation register used for temperature measurement result.
     readWrite: R
     signed: false
   DigT2:
     address: 0x8A
     length: 16
     title: Digital Temperature Compensation 2
-    description: Used for Celcius conversion
+    description: Compensation register used for temperature measurement result.
     readWrite: R
     signed: true
   DigT3:
     address: 0x8C
     length: 16
     title: Digital Temperature Compensation 3
-    description: Used for Celcius conversion
+    description: Compensation register used for temperature measurement result.
     readWrite: R
     signed: true
   PressureMsb:
     address: 0xF7
     length: 8
     title: Pressure MSB
-    description: Part 1 of Pressure
+    description: Most-significant bit of pressure measurement result.
     readWrite: R
   PressureLsb:
     address: 0xF8
     length: 8
     title: Pressure LSB
-    description: Part 2 of Pressure
+    description: Middle-significant bit of pressure measurement result.
     readWrite: R
   PressureXlsb:
     address: 0xF9
     length: 8
     title: Pressure XLSB
-    description: Part 3 of Pressure
+    description: Least-significant bit of pressure measurement result.
     readWrite: R
   DigP1:
     address: 0x8E
     length: 16
     signed: false
     title: Digital Pressure Compensation 1
-    description: Used for Pascals conversion
+    description: Compensation register used for Pascals conversion.
     readWrite: R
   DigP2:
     address: 0x90
     length: 16
     signed: true
     title: Digital Pressure Compensation 2
-    description: Used for Pascals conversion
+    description: Compensation register used for Pascals conversion.
     readWrite: R
   DigP3:
     address: 0x92
     length: 16
     signed: true
     title: Digital Pressure Compensation 3
-    description: Used for Pascals conversion
+    description: Compensation register used for Pascals conversion.
     readWrite: R
   DigP4:
     address: 0x94
     length: 16
     signed: true
     title: Digital Pressure Compensation 4
-    description: Used for Pascals conversion
+    description: Compensation register used for Pascals conversion.
     readWrite: R
   DigP5:
     address: 0x96
     length: 16
     signed: true
     title: Digital Pressure Compensation 5
-    description: Used for Pascals conversion
+    description: Compensation register used for Pascals conversion.
     readWrite: R
   DigP6:
     address: 0x98
     length: 16
     signed: true
     title: Digital Pressure Compensation 6
-    description: Used for Pascals conversion
+    description: Compensation register used for Pascals conversion.
     readWrite: R
   DigP7:
     address: 0x9A
     length: 16
     signed: true
     title: Digital Pressure Compensation 7
-    description: Used for Pascals conversion
+    description: Compensation register used for Pascals conversion.
     readWrite: R
   DigP8:
     address: 0x9C
     length: 16
     signed: true
     title: Digital Pressure Compensation 8
-    description: Used for Pascals conversion
+    description: Compensation register used for Pascals conversion.
     readWrite: R
   DigP9:
     address: 0x9E
     length: 16
     signed: true
     title: Digital Pressure Compensation 9
-    description: Used for Pascals conversion
+    description: Compensation register used for Pascals conversion.
     readWrite: R
 functions:
   temperature:
     title: Temperature as read by sensor
-    description: Reads the temperature
+    description: Reads the temperature as a raw value or in Celsius.
     computed:
       asRaw:
         variables:
@@ -246,7 +246,7 @@ functions:
         return: celsius
   pressure:
     title: Pressure as read by sensor
-    description: Reads the atmospheric pressure
+    description: Reads the atmospheric pressure as a raw value or in hPa.
     computed:
       asRaw:
         variables:
