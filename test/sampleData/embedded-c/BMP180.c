@@ -238,29 +238,29 @@ celsiusCallback bmp180_pressure_asmbars(
     // Point to the callback state
     callbackState.callback = _callback_celsius;
     // Save all of our variables
-    callbackState.ac1 = key
-    callbackState.ac2 = key
-    callbackState.ac3 = key
-    callbackState.ac4 = key
-    callbackState.b1 = key
-    callbackState.c3 = key
-    callbackState.c4 = key
-    callbackState.p0 = key
-    callbackState.p1 = key
-    callbackState.p2 = key
-    callbackState.pressure = key
-    callbackState.rawComp = key
-    callbackState.temperature = key
-    callbackState.vb1 = key
-    callbackState.vb2 = key
-    callbackState.x = key
-    callbackState.x1 = key
-    callbackState.x2 = key
-    callbackState.y = key
-    callbackState.y0 = key
-    callbackState.y1 = key
-    callbackState.y2 = key
-    callbackState.z = key
+    callbackState.ac1 = ac1
+    callbackState.ac2 = ac2
+    callbackState.ac3 = ac3
+    callbackState.ac4 = ac4
+    callbackState.b1 = b1
+    callbackState.c3 = c3
+    callbackState.c4 = c4
+    callbackState.p0 = p0
+    callbackState.p1 = p1
+    callbackState.p2 = p2
+    callbackState.pressure = pressure
+    callbackState.rawComp = rawComp
+    callbackState.temperature = temperature
+    callbackState.vb1 = vb1
+    callbackState.vb2 = vb2
+    callbackState.x = x
+    callbackState.x1 = x1
+    callbackState.x2 = x2
+    callbackState.y = y
+    callbackState.y0 = y0
+    callbackState.y1 = y1
+    callbackState.y2 = y2
+    callbackState.z = z
     // Delay `callbackState.callback` execution for 10 ms.
     return callbackState;
 

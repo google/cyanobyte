@@ -41,7 +41,7 @@
     callbackState.callback = _callback_{{step[key].name}};
     // Save all of our variables
     {% for key,var in compute.variables|dictsort %}
-    callbackState.{{key}} = key
+    callbackState.{{key}} = {{ key }}
     {% endfor %}
     // Delay `callbackState.callback` execution for {{ step[key].for }} ms.
     {# We cannot define a function within a function, so we must create a #}
