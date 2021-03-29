@@ -13,7 +13,6 @@
 {% for key,value in stepk|dictsort %}
 {# This won't work for nested delays #}
 {% if key == "$delay" -%}
-{# FIXME Use label for delay #}
 {{- ", " if args.index > 0 -}}{{- value.name -}}Callback
 {%- set args.index = args.index + 1 -%}
 {%- endif %}

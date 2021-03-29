@@ -183,7 +183,7 @@ functions:
     title: Pressure as read by sensor
     description: |
       Reads the pressure in absolute millibars,
-      not compensated for sea level
+      not compensated for sea level.
     register: '#/registers/Control'
     computed:
       asMbars:

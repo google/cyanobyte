@@ -460,11 +460,11 @@
           ]
         },
         "^\\$delay$": {
-          "description": "Defines logic to run after a specified delay",
+          "description": "Defines logic to run after a specified delay.",
           "type": "object",
           "properties": {
             "for": {
-              "description": "Number of milliseconds to delay",
+              "description": "Number of milliseconds to delay.",
               "type": ["number", "string"]
             },
             "name": {
@@ -472,7 +472,7 @@
               "type": "string"
             },
             "after": {
-              "description": "Logic to run after the delay",
+              "description": "Logic to run after the delay.",
               "type": "array",
               "items": {
                 "$ref": "#/definitions/Command"
