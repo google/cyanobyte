@@ -14,7 +14,7 @@
 * limitations under the License.
 *
 * Auto-generated file for BMP180 v0.1.0.
-* Generated from peripherals/BMP180.yaml using Cyanobyte Codegen v0.1.0
+* Generated from peripherals/BMP180.yaml using Cyanobyte Codegen v0.0.2
 * Class for BMP180
 * Bosch Digital Temperature / Pressure Sensor
 
@@ -201,6 +201,128 @@ int bmp180_readTempCalMD(
 
 
 
+
+celsiusCallback bmp180_pressure_asmbars(
+    int (*read)(uint8_t, uint8_t, int*, uint8_t),
+    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+) {
+    short ac1; // Variable declaration
+    short ac2; // Variable declaration
+    short ac3; // Variable declaration
+    uint16_t ac4; // Variable declaration
+    float b1; // Variable declaration
+    float c3; // Variable declaration
+    float c4; // Variable declaration
+    float p0; // Variable declaration
+    float p1; // Variable declaration
+    float p2; // Variable declaration
+    float pressure; // Variable declaration
+    float rawComp; // Variable declaration
+    float temperature; // Variable declaration
+    short vb1; // Variable declaration
+    short vb2; // Variable declaration
+    float x; // Variable declaration
+    float x1; // Variable declaration
+    float x2; // Variable declaration
+    float y; // Variable declaration
+    float y0; // Variable declaration
+    float y1; // Variable declaration
+    float y2; // Variable declaration
+    float z; // Variable declaration
+
+
+    bmp180_writeControl(52, write);
+    bmp180_readResult(&pressure, read);
+    bmp180_temperature_ascelsius(&temperature, read, write);
+    struct celsiusCallback callbackState;
+    // Point to the callback state
+    callbackState.callback = _callback_celsius;
+    // Save all of our variables
+    callbackState.ac1 = ac1
+    callbackState.ac2 = ac2
+    callbackState.ac3 = ac3
+    callbackState.ac4 = ac4
+    callbackState.b1 = b1
+    callbackState.c3 = c3
+    callbackState.c4 = c4
+    callbackState.p0 = p0
+    callbackState.p1 = p1
+    callbackState.p2 = p2
+    callbackState.pressure = pressure
+    callbackState.rawComp = rawComp
+    callbackState.temperature = temperature
+    callbackState.vb1 = vb1
+    callbackState.vb2 = vb2
+    callbackState.x = x
+    callbackState.x1 = x1
+    callbackState.x2 = x2
+    callbackState.y = y
+    callbackState.y0 = y0
+    callbackState.y1 = y1
+    callbackState.y2 = y2
+    callbackState.z = z
+    // Delay `callbackState.callback` execution for 10 ms.
+    return callbackState;
+
+
+}
+// Occurs after 10 ms
+void _callback_celsius(
+    celsiusCallback callbackState,
+    float* val,
+    int (*read)(uint8_t, uint8_t, int*, uint8_t),
+    int (*write)(uint8_t, uint8_t, int*, uint8_t),
+) {
+    // Re-import all of our variables
+    short ac1 = celsiusCallback.ac1;
+    short ac2 = celsiusCallback.ac2;
+    short ac3 = celsiusCallback.ac3;
+    uint16_t ac4 = celsiusCallback.ac4;
+    float b1 = celsiusCallback.b1;
+    float c3 = celsiusCallback.c3;
+    float c4 = celsiusCallback.c4;
+    float p0 = celsiusCallback.p0;
+    float p1 = celsiusCallback.p1;
+    float p2 = celsiusCallback.p2;
+    float pressure = celsiusCallback.pressure;
+    float rawComp = celsiusCallback.rawComp;
+    float temperature = celsiusCallback.temperature;
+    short vb1 = celsiusCallback.vb1;
+    short vb2 = celsiusCallback.vb2;
+    float x = celsiusCallback.x;
+    float x1 = celsiusCallback.x1;
+    float x2 = celsiusCallback.x2;
+    float y = celsiusCallback.y;
+    float y0 = celsiusCallback.y0;
+    float y1 = celsiusCallback.y1;
+    float y2 = celsiusCallback.y2;
+    float z = celsiusCallback.z;
+    rawComp = (temperature-25);
+    bmp180_readPressureCalAC1(&ac1, read);
+    bmp180_readPressureCalAC2(&ac2, read);
+    x1 = (160*pow(2, -13)*ac2);
+    bmp180_readPressureCalVB2(&vb2, read);
+    x2 = (pow(160, 2)*pow(2, -25)*vb2);
+    x = ((x2*pow(rawComp, 2))+(x1*rawComp)+ac1);
+    bmp180_readTempCal3(&ac3, read);
+    c3 = (160*pow(2, -15)*ac3);
+    bmp180_readTempCal4(&ac4, read);
+    c4 = (pow(10, -3)*pow(2, -15)*ac4);
+    bmp180_readPressureCalVB1(&vb1, read);
+    b1 = (pow(160, 2)*pow(2, -30)*vb1);
+    y0 = (c4*pow(2, 15));
+    y1 = (c4*c3);
+    y2 = (c4*b1);
+    y = ((y2*pow(rawComp, 2))+(y1*rawComp)+y0);
+    z = ((pressure-x)/y);
+    p0 = ((3791-8)/1600);
+    p1 = (1-(7357*pow(2, -30)));
+    p2 = (3038*100*pow(2, -36));
+    pressure = ((p2*pow(z, 2))+(p1*z)+p0);
+
+    *val = pressure;
+}
+
 void bmp180_temperature_ascelsius(
     float* val,
     int (*read)(uint8_t, uint8_t, int*, uint8_t),
@@ -217,7 +339,7 @@ void bmp180_temperature_ascelsius(
     float varMd; // Variable declaration
 
 
-    bmp180_writeControl(&46, write);
+    bmp180_writeControl(46, write);
     bmp180_readResult(&temperature, read);
     bmp180_readTempCal5(&varAc5, read);
     bmp180_readTempCal6(&varAc6, read);

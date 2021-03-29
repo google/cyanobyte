@@ -13,7 +13,7 @@
 # limitations under the License.
 #
 # Auto-generated file for BMP180 v0.1.0.
-# Generated from peripherals/BMP180.yaml using Cyanobyte Codegen v0.1.0
+# Generated from peripherals/BMP180.yaml using Cyanobyte Codegen v0.0.2
 from i2cdevice import Device, Register, BitField
 
 I2C_ADDR = 119

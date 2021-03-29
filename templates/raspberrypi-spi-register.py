@@ -1,6 +1,6 @@
 {% import 'macros.jinja2' as utils %}
 {% import 'python.jinja2' as py %}
-{% set template = namespace(enum=false, sign=false, math=false, struct=false) %}
+{% set template = namespace(enum=false, sign=false, math=false, struct=false, time=false) %}
 {{ utils.pad_string('# ', utils.license(info.copyright.name, info.copyright.date, info.license.name)) -}}
 #
 # Auto-generated file for {{ info.title }} v{{ info.version }}.
@@ -29,6 +29,11 @@ Class for {{ info.title }}
         {% else %}
         self.set_{{step[key].register[12:].lower()}}()
         {% endif %}
+        {% break %}
+{%- endif %}
+{% if key == '$delay' %}
+        time.sleep({{ step[key].for / 1000 }})
+{{ logic(step[key].after, function) }}
         {% break %}
 {%- endif %}
 {# Check if assignment op #}

@@ -15,7 +15,7 @@
 
  *
  * Auto-generated file for BMP180 v0.1.0.
- * Generated from peripherals/BMP180.yaml using Cyanobyte Codegen v0.1.0
+ * Generated from peripherals/BMP180.yaml using Cyanobyte Codegen v0.0.2
  */
 
  /**
@@ -25,7 +25,7 @@
 
 
 
-var DEVICE = {
+ var DEVICE = {
   ADDR: 119,
 }
 
@@ -272,6 +272,69 @@ BMP180.prototype.getTempCalMD = function() {
   return result
 }
 
+
+/**
+ * Pressure as read by sensor
+ * Reads the pressure in absolute millibars,
+not compensated for sea level
+
+ */
+BMP180.prototype.pressureasMbars = function(celsiusCallback) {
+  // Callback defined as `celsiusCallback`
+  var ac1 = 0 // Variable declaration
+  var ac2 = 0 // Variable declaration
+  var ac3 = 0 // Variable declaration
+  var ac4 = 0 // Variable declaration
+  var b1 = 0 // Variable declaration
+  var c3 = 0 // Variable declaration
+  var c4 = 0 // Variable declaration
+  var p0 = 0 // Variable declaration
+  var p1 = 0 // Variable declaration
+  var p2 = 0 // Variable declaration
+  var pressure = 0 // Variable declaration
+  var rawComp = 0 // Variable declaration
+  var temperature = 0 // Variable declaration
+  var vb1 = 0 // Variable declaration
+  var vb2 = 0 // Variable declaration
+  var x = 0 // Variable declaration
+  var x1 = 0 // Variable declaration
+  var x2 = 0 // Variable declaration
+  var y = 0 // Variable declaration
+  var y0 = 0 // Variable declaration
+  var y1 = 0 // Variable declaration
+  var y2 = 0 // Variable declaration
+  var z = 0 // Variable declaration
+
+  this.setControl(52)
+  pressure = this.getResult()
+  temperature = this.temperatureasCelsius()
+  setTimeout(() => {
+    rawComp = (temperature-25)
+  ac1 = this.getPressureCalAC1()
+  ac2 = this.getPressureCalAC2()
+  x1 = (160*Math.pow(2, -13)*ac2)
+  vb2 = this.getPressureCalVB2()
+  x2 = (Math.pow(160, 2)*Math.pow(2, -25)*vb2)
+  x = ((x2*Math.pow(rawComp, 2))+(x1*rawComp)+ac1)
+  ac3 = this.getTempCal3()
+  c3 = (160*Math.pow(2, -15)*ac3)
+  ac4 = this.getTempCal4()
+  c4 = (Math.pow(10, -3)*Math.pow(2, -15)*ac4)
+  vb1 = this.getPressureCalVB1()
+  b1 = (Math.pow(160, 2)*Math.pow(2, -30)*vb1)
+  y0 = (c4*Math.pow(2, 15))
+  y1 = (c4*c3)
+  y2 = (c4*b1)
+  y = ((y2*Math.pow(rawComp, 2))+(y1*rawComp)+y0)
+  z = ((pressure-x)/y)
+  p0 = ((3791-8)/1600)
+  p1 = (1-(7357*Math.pow(2, -30)))
+  p2 = (3038*100*Math.pow(2, -36))
+  pressure = ((p2*Math.pow(z, 2))+(p1*z)+p0)
+
+    celsiusCallback(pressure)
+  }, 10)
+}
 
 /**
  * Temperature as read by sensor

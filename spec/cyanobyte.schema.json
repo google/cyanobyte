@@ -429,7 +429,8 @@
         "uint8",
         "uint16",
         "uint32",
-        "float32"
+        "float32",
+        "float64"
       ]
     },
     "Command": {
@@ -456,6 +457,30 @@
           },
           "required": [
             "register"
+          ]
+        },
+        "^\\$delay$": {
+          "description": "Defines logic to run after a specified delay.",
+          "type": "object",
+          "properties": {
+            "for": {
+              "description": "Number of milliseconds to delay.",
+              "type": ["number", "string"]
+            },
+            "name": {
+              "description": "Name of the delay, or why there is a delay. This is used for some language templates to name the callback if the platform is non-blocking.",
+              "type": "string"
+            },
+            "after": {
+              "description": "Logic to run after the delay.",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Command"
+              }
+            }
+          },
+          "required": [
+            "for", "name", "after"
           ]
         }
       }

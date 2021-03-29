@@ -14,7 +14,7 @@
 * limitations under the License.
 *
 * Auto-generated file for BMP180 v0.1.0.
-* Generated from peripherals/BMP180.yaml using Cyanobyte Codegen v0.1.0
+* Generated from peripherals/BMP180.yaml using Cyanobyte Codegen v0.0.2
 * Class for BMP180
 * Bosch Digital Temperature / Pressure Sensor
 
@@ -137,6 +137,45 @@ int bmp180_readTempCalMD(
     int (*read)(uint8_t, uint8_t, uint16_t*, uint8_t)
 );
 
+
+/**
+ * Reads the pressure in absolute millibars,
+ * not compensated for sea level
+
+*/
+struct celsiusCallback {
+    float* (*callback(celsiusCallback, float, *int, *int)) callback;
+    // Include all functions -- A snapshot of function state
+    short ac1; // Variable declaration
+    short ac2; // Variable declaration
+    short ac3; // Variable declaration
+    uint16_t ac4; // Variable declaration
+    float b1; // Variable declaration
+    float c3; // Variable declaration
+    float c4; // Variable declaration
+    float p0; // Variable declaration
+    float p1; // Variable declaration
+    float p2; // Variable declaration
+    float pressure; // Variable declaration
+    float rawComp; // Variable declaration
+    float temperature; // Variable declaration
+    short vb1; // Variable declaration
+    short vb2; // Variable declaration
+    float x; // Variable declaration
+    float x1; // Variable declaration
+    float x2; // Variable declaration
+    float y; // Variable declaration
+    float y0; // Variable declaration
+    float y1; // Variable declaration
+    float y2; // Variable declaration
+    float z; // Variable declaration
+
+}
+
+celsiusCallback bmp180_pressure_asmbars(
+    int (*read)(uint8_t, uint8_t, int*, uint8_t),
+    int (*write)(uint8_t, uint8_t, int*, uint8_t)
+);
 
 /**
  * Reads the temperature

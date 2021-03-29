@@ -1,11 +1,24 @@
-{% macro params(input) -%}
+{% macro params(compute) -%}
 {% set args = namespace(index=0) %}
-{% for key,variable in input|dictsort %}
+{% if compute.input %}
+{% for key,variable in compute.input|dictsort %}
 {% if key != 'value' -%}
 {{- ", " if args.index > 0 -}}{{- key -}}
 {%- set args.index = args.index + 1 -%}
 {%- endif %}
 {%- endfor %}
+{%- endif %}
+{% if compute.logic %}
+{% for stepk in compute.logic %}
+{% for key,value in stepk|dictsort %}
+{# This won't work for nested delays #}
+{% if key == "$delay" -%}
+{{- ", " if args.index > 0 -}}{{- value.name -}}Callback
+{%- set args.index = args.index + 1 -%}
+{%- endif %}
+{%- endfor %}
+{%- endfor %}
+{%- endif %}
 {%- endmacro %}
 
 {% macro variables(vars) -%}

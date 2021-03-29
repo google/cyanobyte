@@ -13,7 +13,7 @@
 {{utils.pad_string("* ", info.description)}}
 */
 
-{% macro logic(logicalSteps, function, read, write) -%}
+{% macro logic(logicalSteps, function, read, write, compute) -%}
 
 {% for step in logicalSteps %}
 {% for key in step.keys() %}
@@ -32,13 +32,36 @@
     {% endif %}
     {% break %}
 {% endif %}
+{% if key == '$delay' %}
+    {# We cannot define our own timer here, so we need to pass it back to #}
+    {# the platform to fit into your own scheduler #}
+    {# Save all of our variables in our struct state #}
+    struct {{step[key].name}}Callback callbackState;
+    // Point to the callback state
+    callbackState.callback = _callback_{{step[key].name}};
+    // Save all of our variables
+    {% for key,var in compute.variables|dictsort %}
+    callbackState.{{key}} = {{ key }}
+    {% endfor %}
+    // Delay `callbackState.callback` execution for {{ step[key].for }} ms.
+    {# We cannot define a function within a function, so we must create a #}
+    {# hidden function inside our source file. #}
+    return callbackState;
+    {% break %}
+{% endif %}
 {# Check if assignment op #}
 {% if step[key] is string and step[key][0:1] == "=" %}
     {{key}} {{step[key]}}
 {% endif %}
 {# Check if assignment is a send-op #}
 {% if key == 'send' %}
+{% if step[key] is string %}
+    {# Sending a variable #}
     {{info.title.lower()}}_write{{function.register[12:]}}(&{{step[key]}}, write);
+{% else %}
+    {# Sending a number literal #}
+    {{info.title.lower()}}_write{{function.register[12:]}}({{step[key]}}, write);
+{% endif %}
 {% endif %}
 {% if step[key] is string and step[key][:12] == '#/registers/' %}
     {{info.title.lower()}}_read{{step[key][12:]}}(&{{key}}, read);
@@ -201,8 +224,26 @@ int {{info.title.lower()}}_set_{{key.lower()}}(
 {% for key,function in functions|dictsort %}
 {% if function.computed %}
 {% for ckey,compute in function.computed|dictsort %}
+{# Look for any callbacks #}
+{% set useCallback = namespace(delay=false) %}
+{% if compute.logic %}
+{% for stepk in compute.logic %}
+{% for key,value in stepk|dictsort %}
+{% if key == '$delay' %}
+{# This won't work for nested delays #}
+{% set useCallback.delay = value %}
+{%- endif %}
+{%- endfor %}
+{%- endfor %}
+{%- endif %}
+{% if useCallback.delay %}
+
+{{useCallback.delay.name}}Callback {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
+{{ embedded.functionParams(cpp, functions, compute, true) }}
+{% else %}
 void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
-{{ embedded.functionParams(cpp, functions, compute) }}
+{{ embedded.functionParams(cpp, functions, compute, false) }}
+{% endif %}
 ) {
     {# Declare our variables #}
 {{ cpp.variables(compute.variables) }}
@@ -217,8 +258,9 @@ void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
     {% endfor -%}
     {% endif %}
     {# Handle the logic #}
-{{ logic(compute.logic, function, read, write) }}
+{{ logic(compute.logic, function, read, write, compute) }}
 
+    {% if useCallback.delay == false %}
     {# Return if applicable #}
     {# Return a tuple #}
     {% if 'return' in compute and compute.return is not string %}
@@ -227,7 +269,30 @@ void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
     {% elif compute.return is string %}
     *val = {{compute.return}};
     {% endif %}
+    {% endif %}
 }
+{% if useCallback.delay %}
+// Occurs after {{useCallback.delay.for}} ms
+void _callback_{{useCallback.delay.name}}(
+    {{useCallback.delay.name}}Callback callbackState,
+{{ embedded.functionParams(cpp, functions, compute, false) }},
+) {
+    // Re-import all of our variables
+    {% for key,var in compute.variables|dictsort %}
+    {{ cpp.numconv(var) }} {{key}} = {{useCallback.delay.name}}Callback.{{key}};
+    {% endfor %}
+    {# Handle the callback logic #}
+{{ logic(useCallback.delay.after, function, read, write, compute) }}
+{# Now we can do that return #}
+    {# Return a tuple #}
+    {% if 'return' in compute and compute.return is not string %}
+    *val = [{% for returnValue in compute.return %}{{ returnValue | camel_to_snake }}{{ ", " if not loop.last }}{% endfor %}];
+    {# Return a plain value #}
+    {% elif compute.return is string %}
+    *val = {{compute.return}};
+    {% endif %}
+}
+{% endif %}
 
 {% endfor %}
 {% endif %}

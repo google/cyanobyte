@@ -37,6 +37,11 @@
     {% endif %}
     {% break %}
 {% endif %}
+{% if key == "$delay" %}
+    delay({{step[key].for}});
+{{ logic(step[key].after, function) }}
+    {% break %}
+{% endif %}
 {# // Check if assignment op #}
 {% if step[key] is string and step[key][0:1] == "=" %}
     {{key}} {{step[key]}};

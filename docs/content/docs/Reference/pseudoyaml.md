@@ -125,3 +125,17 @@ This operation will directly read a number of bits from the device bus.
 - variableName:
     rawRead: 16
 ```
+
+## Flow
+
+### Delays
+
+Delays can be defined in terms of milliseconds. A delay should accept
+a time, a name for the delay, and an array of logical operations to happen
+after the delay.
+
+The name of the delay will be used in some language templates which require
+a callback name as the platform doesn't block.
+
+Note: A delay must be the last operation in a list of logical operations. Some
+language templates do not know how to handle more than one delay.

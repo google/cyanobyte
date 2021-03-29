@@ -30,6 +30,11 @@
     {% endif %}
     {% break %}
 {% endif %}
+{% if key == "$delay" %}
+    nanosleep(0, {{ step[key].for * 1000 }})
+{{ logic(step[key].after, function) }}
+    {% break %}
+{% endif %}
 {# Check if assignment op #}
 {% if step[key] is string and step[key][0:1] == "=" %}
     {{key}} {{step[key]}}

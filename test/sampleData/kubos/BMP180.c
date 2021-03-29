@@ -14,7 +14,7 @@
 * limitations under the License.
 *
 * Auto-generated file for BMP180 v0.1.0.
-* Generated from peripherals/BMP180.yaml using Cyanobyte Codegen v0.1.0
+* Generated from peripherals/BMP180.yaml using Cyanobyte Codegen v0.0.2
 * Class for BMP180
 * Bosch Digital Temperature / Pressure Sensor
 
@@ -175,6 +175,64 @@ int bmp180_readTempCalMD(uint16_t* val) {
 }
 
 
+
+void bmp180_pressure_asmbars(float* val) {
+    short ac1; // Variable declaration
+    short ac2; // Variable declaration
+    short ac3; // Variable declaration
+    uint16_t ac4; // Variable declaration
+    float b1; // Variable declaration
+    float c3; // Variable declaration
+    float c4; // Variable declaration
+    float p0; // Variable declaration
+    float p1; // Variable declaration
+    float p2; // Variable declaration
+    float pressure; // Variable declaration
+    float rawComp; // Variable declaration
+    float temperature; // Variable declaration
+    short vb1; // Variable declaration
+    short vb2; // Variable declaration
+    float x; // Variable declaration
+    float x1; // Variable declaration
+    float x2; // Variable declaration
+    float y; // Variable declaration
+    float y0; // Variable declaration
+    float y1; // Variable declaration
+    float y2; // Variable declaration
+    float z; // Variable declaration
+
+
+    bmp180_writeControl(&52);
+    bmp180_readResult(&pressure);
+    temperatureasCelsius(&temperature);
+    nanosleep(0, 10000)
+    rawComp = (temperature-25);
+    bmp180_readPressureCalAC1(&ac1);
+    bmp180_readPressureCalAC2(&ac2);
+    x1 = (160*pow(2, -13)*ac2);
+    bmp180_readPressureCalVB2(&vb2);
+    x2 = (pow(160, 2)*pow(2, -25)*vb2);
+    x = ((x2*pow(rawComp, 2))+(x1*rawComp)+ac1);
+    bmp180_readTempCal3(&ac3);
+    c3 = (160*pow(2, -15)*ac3);
+    bmp180_readTempCal4(&ac4);
+    c4 = (pow(10, -3)*pow(2, -15)*ac4);
+    bmp180_readPressureCalVB1(&vb1);
+    b1 = (pow(160, 2)*pow(2, -30)*vb1);
+    y0 = (c4*pow(2, 15));
+    y1 = (c4*c3);
+    y2 = (c4*b1);
+    y = ((y2*pow(rawComp, 2))+(y1*rawComp)+y0);
+    z = ((pressure-x)/y);
+    p0 = ((3791-8)/1600);
+    p1 = (1-(7357*pow(2, -30)));
+    p2 = (3038*100*pow(2, -36));
+    pressure = ((p2*pow(z, 2))+(p1*z)+p0);
+
+
+
+    val = pressure;
+}
 
 void bmp180_temperature_ascelsius(float* val) {
     short rawComp; // Variable declaration

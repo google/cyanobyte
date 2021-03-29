@@ -133,8 +133,33 @@ int {{info.title.lower()}}_set_{{key.lower()}}(
 /**
 {{utils.pad_string(" * ", function.description)}}
 */
+{# Look for any callbacks #}
+{% set useCallback = namespace(delay=false) %}
+{% if compute.logic %}
+{% for stepk in compute.logic %}
+{% for key,value in stepk|dictsort %}
+{% if key == '$delay' %}
+{# This won't work for nested delays #}
+{% set useCallback.delay = value %}
+{%- endif %}
+{%- endfor %}
+{%- endfor %}
+{%- endif %}
+{% if useCallback.delay %}
+{# We need to define a struct for the callback #}
+{% set int_t = cpp.returnType(compute) %}
+struct {{useCallback.delay.name}}Callback {
+    {{int_t}}* (*callback({{useCallback.delay.name}}Callback, float, *int, *int)) callback;
+    // Include all functions -- A snapshot of function state
+{{ cpp.variables(compute.variables) }}
+}
+
+{{useCallback.delay.name}}Callback {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
+{{ embedded.functionParams(cpp, functions, compute, true) }}
+{% else %}
 void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}(
-{{ embedded.functionParams(cpp, functions, compute) }}
+{{ embedded.functionParams(cpp, functions, compute, false) }}
+{% endif %}
 );
 {% endfor %}
 
