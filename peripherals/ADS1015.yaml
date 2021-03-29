@@ -37,18 +37,18 @@ registers:
     address: 0x01
     length: 16
     title: ADC config
-    description: Describes the specifics of the sensing implementation
+    description: Defines sensing implementation and options.
   Conversion:
     address: 0x00
     length: 16
     title: ADC Value
-    description: Conversion register contains the result of the last conversion
+    description: Contains the result of the last conversion.
     readWrite: R
 fields:
   SampleRate:
-    title: Setup sample rate for reading analog voltage
+    title: Sample rate
     description: |
-      This sets the samples-per-second value
+      Sets the sample read in samples-per-second for reading analog voltage.
     register: '#/registers/Config'
     readWrite: 'W'
     bitStart: 7
@@ -77,9 +77,9 @@ fields:
         title: 3300 samples/second
         value: 0b110
   ProgrammableGain:
-    title: Setup programmable gain
+    title: Programmable gain
     description: |
-      This sets the programmable gain for reading analog voltage
+      Sets the programmable gain for reading analog voltage in voltage.
     register: '#/registers/Config'
     readWrite: 'W'
     bitStart: 11
@@ -105,9 +105,9 @@ fields:
         title: Plus/minus 0.256V
         value: 0b101
   DeviceOperatingMode:
-    title: Set the operating mode
+    title: Operating mode
     description: |
-      This bit controls the operating mode
+      Controls the operating mode for reading analog voltage.
     register: '#/registers/Config'
     readWrite: 'W'
     bitStart: 8
@@ -121,9 +121,9 @@ fields:
           title: Single-shot or power-down state
           value: 1
   Channel:
-    title: Set the channel to read
+    title: Channel to read
     description: |
-      This sets the channel for reading analog voltage
+      Sets the channel for reading analog voltage.
     register: '#/registers/Config'
     readWrite: 'n'
     bitStart: 14
@@ -144,8 +144,8 @@ fields:
         value: 0b11
 functions:
   analog:
-    title: Value read from ADC
-    description: Reads the analog voltage in Volts
+    title: Read analog voltage
+    description: Reads the analog voltage in Volts.
     computed:
       read:
         input:

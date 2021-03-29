@@ -14,12 +14,12 @@
 cyanobyte: 0.1.0
 info:
   contact:
-    name: Nick Felker, Chris Frederickson
+    name: Nick Felker
     url: https://github.com/google/cyanobyte
     email: felker@google.com
   package: com.cyanobyte
   title: MCP4725
-  description: Microchip 4725 Digital-to-Analog Converter
+  description: Microchip Digital-to-Analog Converter
   copyright:
     name: Google Inc.
     date: '2019'
@@ -39,7 +39,8 @@ registers:
     length: 12
     title: Output voltage
     description: |
-      VOut = (Vcc * value) / 4096
+      Sets the output voltage relative to Vcc.
+      VOut = (Vcc * value) / 4096.
       The output is a range between 0 and Vcc with
       steps of Vcc/4096.
       In a 3.3v system, each step is 800 microvolts.
@@ -55,7 +56,7 @@ fields:
   digitalOut:
     title: Digital (binary) output
     description: |
-      Only allows you to send fully on or off
+      Set output as either fully on or fully off.
     register: '#/registers/EEPROM'
     readWrite: 'R/W'
     bitStart: 12
@@ -71,7 +72,7 @@ fields:
 functions:
   setVOut:
     title: Set output voltage
-    description: set vout
+    description: Set VOut as a function of Vcc.
     type: number
     register: '#/registers/EEPROM'
     bitStart: 12
@@ -85,8 +86,8 @@ functions:
           - output: = output / vcc * 4096
           - send: output
   getVOut:
-    title: Get output voltage
-    description: get vout
+    title: Read output voltage
+    description: Read VOut from EEPROM as a function of Vcc.
     type: number
     register: '#/registers/EEPROM'
     bitStart: 12

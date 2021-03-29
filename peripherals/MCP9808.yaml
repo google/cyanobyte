@@ -1,12 +1,12 @@
 cyanobyte: 0.1.0
 info:
     title: MCP9808
-    description: This is a test description
+    description: Microchip Temperature Sensor
     package: com.cyanobyte
     contact:
-        name: 'Joe Smith'
-        url: 'http://example.com'
-        email: 'joe@example.com'
+        name: Nick Felker
+        url: https://github.com/google/cyanobyte
+        email: felker@google.com
     copyright:
         name: Google Inc.
         date: '2019'
