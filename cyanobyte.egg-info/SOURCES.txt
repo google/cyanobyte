@@ -6,6 +6,8 @@ LICENSE
 README.md
 cloudbuild-deploy.yaml
 cloudbuild.yaml
+cyanobyte_logo.png
+cyanobyte_logo_x32.png
 emboss.md
 get-pip.py
 requirements-dev.txt
@@ -34,6 +36,8 @@ docs/content/search.md
 docs/content/blog/_index.md
 docs/content/blog/news/2019-09/live.md
 docs/content/blog/news/2020-04/datasheet.md
+docs/content/blog/news/2021-02/webpage.md
+docs/content/blog/news/2021-03/callbacks.md
 docs/content/community/_index.md
 docs/content/docs/_index.md
 docs/content/docs/Generate These Docs/_index.md
@@ -42,12 +46,14 @@ docs/content/docs/Open Source/lint.md
 docs/content/docs/Open Source/unittest.md
 docs/content/docs/Principle Philosophies/_index.md
 docs/content/docs/Principle Philosophies/cujs.md
+docs/content/docs/Principle Philosophies/get-started.md
 docs/content/docs/Principle Philosophies/philosophy.md
 docs/content/docs/Principle Philosophies/pseudoyaml.md
 docs/content/docs/Principle Philosophies/roadmap.md
 docs/content/docs/Principle Philosophies/sample_spec.md
 docs/content/docs/Reference/_index.md
 docs/content/docs/Reference/emboss.md
+docs/content/docs/Reference/pseudoyaml.md
 docs/content/docs/Reference/quirks.md
 docs/content/docs/Reference/specification.md
 docs/content/docs/Reference/templates.md
@@ -71,6 +77,7 @@ peripherals/example.yaml
 peripherals/examplespi-emboss.yaml
 peripherals/examplespi-register.yaml
 peripherals/float.emb
+spec/__init__.py
 spec/cyanobyte.schema.json
 templates/__init__.py
 templates/arduino.cpp

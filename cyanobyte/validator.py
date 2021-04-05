@@ -45,7 +45,13 @@ def cyanobyte_validate(input_files):
         input_files: A list of CyanoByte documents to validate.
     """
     # Load the JSON Schema file
-    with open("spec/cyanobyte.schema.json", "r") as schema_json:
+    path = "spec/cyanobyte.schema.json"
+    try:
+        import pkg_resources
+        path = pkg_resources.resource_filename('spec', 'cyanobyte.schema.json')
+    except:pass
+
+    with open(path, "r") as schema_json:
         schema = json.load(schema_json)
 
     # Validate each document against the schema
