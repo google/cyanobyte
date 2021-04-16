@@ -27,7 +27,7 @@ setuptools.setup(
     entry_points={
         "console_scripts": [
             "cyanobyte-codegen=cyanobyte.codegen:gen",
-            "cyanobyte-validator=cyanobyte.validator:click_valdiate"
+            "cyanobyte-validator=cyanobyte.validator:click_validate"
         ],
     },
     setup_requires=['setuptools_scm'],
