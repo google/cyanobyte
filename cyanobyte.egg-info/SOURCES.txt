@@ -3,7 +3,6 @@
 .gitmodules
 CONTRIBUTING.md
 LICENSE
-MANIFEST.in
 README.md
 cloudbuild-deploy.yaml
 cloudbuild.yaml
