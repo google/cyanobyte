@@ -42,18 +42,27 @@ registers:
     title: Temperature MSB
     description: Most-significant bit of temperature measurement result.
     readWrite: R
+    example:
+      valid:
+        - 124
   TempLsb:
     address: 0xFB
     length: 8
     title: Temperature LSB
     description: Middle-significant bit of temperature measurement result.
     readWrite: R
+    example:
+      valid:
+        - 748
   TempXlsb:
     address: 0xFC
     length: 8
     title: Temperature XLSB
     description: Least-significant bit of temperature measurement result.
     readWrite: R
+    example:
+      valid:
+        - 144
   DigT1:
     address: 0x88
     length: 16
@@ -61,6 +70,9 @@ registers:
     description: Compensation register used for temperature measurement result.
     readWrite: R
     signed: false
+    example:
+      valid:
+        - 27504
   DigT2:
     address: 0x8A
     length: 16
@@ -68,6 +80,9 @@ registers:
     description: Compensation register used for temperature measurement result.
     readWrite: R
     signed: true
+    example:
+      valid:
+        - 26435
   DigT3:
     address: 0x8C
     length: 16
@@ -75,24 +90,36 @@ registers:
     description: Compensation register used for temperature measurement result.
     readWrite: R
     signed: true
+    example:
+      valid:
+        - -1000
   PressureMsb:
     address: 0xF7
     length: 8
     title: Pressure MSB
     description: Most-significant bit of pressure measurement result.
     readWrite: R
+    example:
+      valid:
+        - 15600
   PressureLsb:
     address: 0xF8
     length: 8
     title: Pressure LSB
     description: Middle-significant bit of pressure measurement result.
     readWrite: R
+    example:
+      valid:
+        - 33400
   PressureXlsb:
     address: 0xF9
     length: 8
     title: Pressure XLSB
     description: Least-significant bit of pressure measurement result.
     readWrite: R
+    example:
+      valid:
+        - 15920
   DigP1:
     address: 0x8E
     length: 16
@@ -100,6 +127,9 @@ registers:
     title: Digital Pressure Compensation 1
     description: Compensation register used for Pascals conversion.
     readWrite: R
+    example:
+      valid:
+        - 36477
   DigP2:
     address: 0x90
     length: 16
@@ -107,6 +137,9 @@ registers:
     title: Digital Pressure Compensation 2
     description: Compensation register used for Pascals conversion.
     readWrite: R
+    example:
+      valid:
+        - -10685
   DigP3:
     address: 0x92
     length: 16
@@ -114,6 +147,9 @@ registers:
     title: Digital Pressure Compensation 3
     description: Compensation register used for Pascals conversion.
     readWrite: R
+    example:
+      valid:
+        - 3024
   DigP4:
     address: 0x94
     length: 16
@@ -121,6 +157,9 @@ registers:
     title: Digital Pressure Compensation 4
     description: Compensation register used for Pascals conversion.
     readWrite: R
+    example:
+      valid:
+        - 2855
   DigP5:
     address: 0x96
     length: 16
@@ -128,6 +167,9 @@ registers:
     title: Digital Pressure Compensation 5
     description: Compensation register used for Pascals conversion.
     readWrite: R
+    example:
+      valid:
+        - 140
   DigP6:
     address: 0x98
     length: 16
@@ -135,6 +177,9 @@ registers:
     title: Digital Pressure Compensation 6
     description: Compensation register used for Pascals conversion.
     readWrite: R
+    example:
+      valid:
+        - -7
   DigP7:
     address: 0x9A
     length: 16
@@ -142,6 +187,9 @@ registers:
     title: Digital Pressure Compensation 7
     description: Compensation register used for Pascals conversion.
     readWrite: R
+    example:
+      valid:
+        - 15500
   DigP8:
     address: 0x9C
     length: 16
@@ -149,6 +197,9 @@ registers:
     title: Digital Pressure Compensation 8
     description: Compensation register used for Pascals conversion.
     readWrite: R
+    example:
+      valid:
+        - -14600
   DigP9:
     address: 0x9E
     length: 16
@@ -156,6 +207,9 @@ registers:
     title: Digital Pressure Compensation 9
     description: Compensation register used for Pascals conversion.
     readWrite: R
+    example:
+      valid:
+        - 6000
 functions:
   temperature:
     title: Temperature as read by sensor
@@ -184,6 +238,9 @@ functions:
                   bits: 4
         return: output
       asCelsius:
+        example:
+          valid:
+            - 25.080284726874652
         variables:
           valueMsb: int8
           valueLsb: int8
@@ -271,6 +328,9 @@ functions:
                   bits: 4
         return: output
       asHpa:
+        example:
+          valid:
+            - 100653.27026737288
         variables:
           valueMsb: int8
           valueLsb: int8

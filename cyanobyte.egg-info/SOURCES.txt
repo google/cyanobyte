@@ -40,6 +40,7 @@ cyanobyte-templates/mcu.c
 cyanobyte-templates/mcu.h
 cyanobyte-templates/mcu.jinja2
 cyanobyte-templates/micropython.py
+cyanobyte-templates/python-unittest.py
 cyanobyte-templates/raspberrypi-spi-emboss.py
 cyanobyte-templates/raspberrypi-spi-register.py
 cyanobyte-templates/raspberrypi.py

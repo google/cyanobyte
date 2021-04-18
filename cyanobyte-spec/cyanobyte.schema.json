@@ -237,6 +237,10 @@
                 "W",
                 "n"
               ]
+            },
+            "example": {
+              "description": "Example values of this register.",
+              "$ref": "#/definitions/Examples"
             }
           },
           "required": [
@@ -356,6 +360,10 @@
                   "type": "object",
                   "additionalProperties": false,
                   "properties": {
+                    "example": {
+                      "description": "Example return values of this function.",
+                      "$ref": "#/definitions/Examples"
+                    },
                     "input": {
                       "description": "Variables that are required before running computation.",
                       "type": "object",
@@ -427,6 +435,27 @@
         "uint32",
         "float32",
         "float64"
+      ]
+    },
+    "Examples": {
+      "description": "Potential values, good and bad, that may be the outcome of this.",
+      "type": "object",
+      "properties": {
+        "valid": {
+          "description": "Non-exhaustive list of valid example values.",
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "errors": {
+          "description": "Map where key is a custom error label and value is that error result.",
+          "additionalProperties": true,
+          "type": "object"
+        }
+      },
+      "required": [
+        "valid"
       ]
     },
     "Command": {
