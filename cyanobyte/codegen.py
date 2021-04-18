@@ -55,11 +55,11 @@ _TEMPLATES = dict(
     cmsis=["cmsis.svd"],
     datasheet=["datasheet.tex"],
     doc=["doc.md"],
-    embedded=["generic.c", "generic.h"],
     esp32=["arduino.cpp", "arduino.h"],
     espruino=["espruino.js"],
     i2cdevice=["i2c-device.py"],
     kubos=["kubos.c", "kubos.h"],
+    mcu=["mcu.c", "mcu.h"],
     micropython=["micropython.py"],
     raspberrypi=["raspberrypi.py"],
     webpage=["webpage.html"],
@@ -134,7 +134,7 @@ def generate_source_file(template, peripheral, opts, template_ext,
             try:
                 options_file = open(opts, "r")
             except:
-                options_file = pkg_resources.open_text('templates', opts)
+                options_file = pkg_resources.open_text('cyanobyte-templates', opts)
             options_data = load(options_file, Loader=Loader)
             peripheral_data["options"] = options_data
 
@@ -292,7 +292,7 @@ def gen(input_files, template_files=None, output_dir='./build',
         loader=FileSystemLoader([
             "",
             # Do this in order to load the templates installed by Pip
-            os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'templates')
+            os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'cyanobyte-templates')
         ]),
         trim_blocks=True,
         lstrip_blocks=True,
@@ -307,10 +307,13 @@ def gen(input_files, template_files=None, output_dir='./build',
                 options = _OPTIONS[template_file]
             # This will be an array of filepaths
             for filepath in _TEMPLATES[template_file]:
+                if _DEBUG:
+                    print('Using built-in template ' + filepath)
+                    print(list(pkg_resources.contents('cyanobyte-templates')))
                 generate_files_for_raw_text(
                     env,
                     filepath,
-                    pkg_resources.read_text('templates', filepath),
+                    pkg_resources.read_text('cyanobyte-templates', filepath),
                     input_files,
                     options,
                     output_dir,

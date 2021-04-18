@@ -1,6 +1,16 @@
 import setuptools
 from cyanobyte import __version__
 
+"""
+Run bundler:
+$ python3 setup.py sdist
+Install via Pip:
+$ pip3 install dist/cyanobyte-<version>.tar.gz
+Upload via twine:
+$ twine check dist/*
+$ twine upload dist/*
+"""
+
 with open("README.md", "r") as fh:
     long_description = fh.read()
 

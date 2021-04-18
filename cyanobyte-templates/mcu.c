@@ -1,6 +1,6 @@
 {% import 'macros.jinja2' as utils %}
-{% import 'clang.jinja2' as cpp %}
-{% import 'generic.jinja2' as embedded %}
+{% import 'base.c.jinja2' as cpp %}
+{% import 'mcu.jinja2' as embedded %}
 {# Consult https://github.com/kubos/kubos/blob/master/test/integration/linux/lsm303dlhc-i2c/source/main.c #}
 {# Also https://docs.kubos.com/1.18.0/deep-dive/apis/kubos-hal/i2c-hal/c-i2c/c-i2c.html #}
 {% set template = namespace(enum=false, sign=false, math=false, struct=false) %}

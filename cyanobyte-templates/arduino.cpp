@@ -1,7 +1,5 @@
 {% import 'macros.jinja2' as utils %}
-{% import 'clang.jinja2' as cpp %}
-{# Consult https://github.com/kubos/kubos/blob/master/test/integration/linux/lsm303dlhc-i2c/source/main.c #}
-{# Also https://docs.kubos.com/1.18.0/deep-dive/apis/kubos-hal/i2c-hal/c-i2c/c-i2c.html #}
+{% import 'base.c.jinja2' as cpp %}
 {% set template = namespace(enum=false, sign=false, math=false, struct=false) %}
 /*
 {{ utils.pad_string('* ', utils.license(info.copyright.name, info.copyright.date, info.license.name)) -}}
@@ -16,41 +14,51 @@
 
 {% for step in logicalSteps %}
 {% for key in step.keys() %}
+{# // Check if a raw read-op #}
 {% if step[key] is mapping and 'rawRead' in step[key] %}
-    {% set length = (step[key].rawRead / 8) | round(1, 'ceil') | int %}
-    k_i2c_read(i2c_bus, DEVICE_ADDRESS, {{key}}, {{length}});
+    {% set bytes = (step[key].rawRead / 8) | round(1, 'ceil') | int %}
+    uint8_t _datum;
+    _wire->beginTransmission(DEVICE_ADDRESS);
+    {# // Here is where I do _not_ put `write(REGISTER_ADDR) #}
+    _wire->requestFrom(DEVICE_ADDRESS, {{bytes}});
+    {# Read a byte at a time #}
+    {% for n in range(bytes) %}
+    _datum = _wire->read();
+    {{key}} = {{key}} << 8 | _datum;
+    {% endfor %}
     {% break %}
 {% endif %}
 {# // Check if assignment is a send-op #}
 {% if key == '$cmdWrite' %}
     {% if 'value' in step[key] %}
-    {{info.title.lower()}}_write{{step[key].register[12:]}}(&{{step[key].value}});
+    write{{step[key].register[12:]}}({{step[key].value}});
     {% else %}
-    {{info.title.lower()}}_write{{step[key].register[12:]}}();
+    write{{step[key].register[12:]}}();
     {% endif %}
     {% break %}
 {% endif %}
 {% if key == "$delay" %}
-    nanosleep(0, {{ step[key].for * 1000 }})
+    delay({{step[key].for}});
 {{ logic(step[key].after, function) }}
     {% break %}
 {% endif %}
-{# Check if assignment op #}
+{# // Check if assignment op #}
 {% if step[key] is string and step[key][0:1] == "=" %}
-    {{key}} {{step[key]}}
+    {{key}} {{step[key]}};
 {% endif %}
-{# Check if assignment is a send-op #}
+{# // Check if assignment is a send-op #}
 {% if key == 'send' %}
-    {{info.title.lower()}}_write{{function.register[12:]}}(&{{step[key]}});
+    write{{function.register[12:]}}({{step[key]}});
 {% endif %}
+{# // Check if assignment is register read op #}
 {% if step[key] is string and step[key][:12] == '#/registers/' %}
-    {{info.title.lower()}}_read{{step[key][12:]}}(&{{key}});
+    {{key}} = read{{step[key][12:]}}();
 {% endif %}
 {# // Check if assignment is function call op #}
 {% if step[key] is string and step[key][:12] == '#/functions/' %}
-    {{step[key] | regex_replace('#/functions/(?P<function>.+)/(?P<compute>.+)', '\\g<function>\\g<compute>')}}(&{{key}});
+    {{key}} = {{step[key] | regex_replace('#/functions/(?P<function>.+)/(?P<compute>.+)', '\\g<function>\\g<compute>')}}();
 {% endif %}
-{# If the value is a list, then this is a logical setter #}
+{# // If the value is a list, then this is a logical setter #}
 {% if step[key] is iterable and step[key] is not string %}
     {{key}} = {{cpp.recursiveAssignLogic(step[key][0], step[key][0].keys()) -}};
 {% endif %}
@@ -59,7 +67,7 @@
 {%- endmacro %}
 
 {% if i2c.endian == 'little' %}
-short _swap_endian(val) {
+static short _swap_endian(short val) {
     // Swap the endianness of a short only
     return (val & 0xFF00) >> 8 | (val & 0xFF) << 8;
 }
@@ -69,9 +77,9 @@ short _swap_endian(val) {
 {% for key,register in registers|dictsort %}
 {% if register.signed %}
 {% if template.sign is sameas false %}
-short _sign(val, length) {
+static short _sign(short val, char length) {
     // Convert unsigned integer to signed integer
-    if val & (1 << (length - 1)) {
+    if (val & (1 << (length - 1))) {
         return val - (1 << length);
     }
     return val;
@@ -90,113 +98,111 @@ short _sign(val, length) {
 #define REGISTER_{{key.upper()}} {{register.address}}
 {% endfor %}
 
-static int i2c_bus = 0; // Pointer to bus
-
-// Provide `bus_name` based on application specifics.
-// For example, you may pass in bus name "/dev/i2c-1"
 {% if i2c.address is iterable and i2c.address is not string %}
-static deviceAddress_t DEVICE_ADDRESS;
-
-int {{info.title.lower()}}_init(deviceAddress_t address, char* bus_name) {
-    DEVICE_ADDRESS = address;
-    // Initialize bus
-    if (k_i2c_init(&bus_name, &i2c_bus) != I2C_OK) {
-        return -1;
-    }
-    {% if '_lifecycle' in functions and 'Begin' in functions._lifecycle.computed %}
-    {{info.title.lower()}}__lifecycle_begin();
-    {% endif %}
+{{info.title}}::{{info.title}}(TwoWire& wire, deviceAddress_t address) :
+    _wire(&wire),
+    DEVICE_ADDRESS ( address )
+{
 }
 {% else %}
-int {{info.title.lower()}}_init(char* bus_name) {
-    // Initialize bus
-    if (k_i2c_init(&bus_name, &i2c_bus) != I2C_OK) {
-        return -1;
-    }
+{{info.title}}::{{info.title}}(TwoWire& wire) :
+    _wire(&wire)
+{
+}
+{% endif %}
+
+void {{info.title}}::begin() {
+    _wire->begin();
     {% if '_lifecycle' in functions and 'Begin' in functions._lifecycle.computed %}
-    {{info.title.lower()}}__lifecycle_begin();
+    _lifecycleBegin();
+    {% endif %}
+}
+
+{% if not options or not options.esp32 or options.esp32.end != False %}
+void {{info.title}}::end() {
+    _wire->end();
+    {% if '_lifecycle' in functions and 'End' in functions._lifecycle.computed %}
+    _lifecycleEnd();
     {% endif %}
 }
 {% endif %}
 
-void {{info.title.lower()}}_terminate() {
-    k_i2c_terminate(&i2c_bus);
-}
-
 {% for key,register in registers|dictsort -%}
-{% set length = (register.length / 8) | round(1, 'ceil') | int %}
+{% set length = register.length %}
+{% set bytes = (register.length / 8) | round(1, 'ceil') | int %}
 {% if (not 'readWrite' in register) or ('readWrite' in register and 'R' is in(register.readWrite)) %}
-int {{info.title.lower()}}_read{{key}}({{cpp.numtype(register.length)}}* val) {
-    if (val == NULL) {
-        return -1; // Need to provide a valid value pointer
+{{cpp.numtype(length)}} {{info.title}}::read{{key}}() {
+    uint8_t datum;
+    {{cpp.numtype(length)}} value;
+    _wire->beginTransmission(DEVICE_ADDRESS);
+    _wire->write(REGISTER_{{key.upper()}});
+    if (_wire->endTransmission(false) != 0) {
+        return -1;
     }
-    if (k_i2c_read(i2c_bus, DEVICE_ADDRESS, val, {{length}}) != I2C_OK) {
-        return -2;
+
+    if (_wire->requestFrom(DEVICE_ADDRESS, {{bytes}}) != {{bytes}}) {
+        return 0;
     }
-    return 0;
+
+    {# Read a byte at a time #}
+    {% for n in range(bytes) %}
+    datum = _wire->read();
+    value = value << 8 | datum;
+    {% endfor %}
+
+    return value;
 }
 {% endif %}
 
 {% if (not 'readWrite' in register) or ('readWrite' in register and 'W' is in(register.readWrite)) %}
-int {{info.title.lower()}}_write{{key}}({% if register.length > 0 %}{{cpp.numtype(register.length)}}* data{% endif %}) {
+int {{info.title}}::write{{key}}({% if length > 0 %}{{cpp.numtype(length)}} data{% endif %}) {
+    _wire->beginTransmission(DEVICE_ADDRESS);
     // Put our data into uint8_t buffer
-    uint8_t buffer[{{length + 1}}] = { (uint8_t) REGISTER_{{key.upper()}} };
-    {% for n in range(length) %}
-    uint8_t buffer[{{n + 1}}] = (data >> {{8 * (length - n)}}) & 0xFF;
+    uint8_t buffer[{{bytes + 1}}] = { (uint8_t) REGISTER_{{key.upper()}} };
+    {% for n in range(bytes) %}
+    buffer[{{n + 1}}] = (data >> {{8 * (bytes - n - 1)}}) & 0xFF;
     {% endfor %}
-    // First write our register address
-    if (k_i2c_write(i2c_bus, DEVICE_ADDRESS, buffer, {{length + 1}}) != I2C_OK) {
-        return -1;
+    _wire->write(buffer, {{bytes + 1}});
+    if (_wire->endTransmission() != 0) {
+        return 0;
     }
-    return 0;
-}{% endif %}
+    return 1;
+}
+{% endif %}
 
-{%- endfor %}
+{% endfor %}
 
 {% if fields %}
 {% for key,field in fields|dictsort %}
 {% if 'R' is in(field.readWrite) %}
-{% set int_t = cpp.registerSize(registers, field.register[12:]) %}
 {# Getter #}
-int {{info.title.lower()}}_get_{{key.lower()}}({{int_t}}* val) {
+{{cpp.registerSize(registers, field.register[12:])}} {{info.title}}::get{{key}}() {
     // Read register data
     // '#/registers/{{field.register[12:]}}' > '{{field.register[12:]}}'
-    int result = {{info.title.lower()}}_read{{field.register[12:]}}(val);
-    if (result != 0) {
-        return result;
-    }
+    uint8_t val = read{{field.register[12:]}}();
     // Mask register value
     val = val & {{utils.mask(field.bitStart, field.bitEnd)}};
     {% if field.bitEnd %}
     // Bitshift value
     val = val >> {{field.bitEnd}};
     {% endif %}
-    return 0;
+    return val;
 }
 {% endif -%}
 
 {%- if 'W' is in(field.readWrite) %}
-{% set int_t = cpp.registerSize(registers, field.register[12:]) %}
 {# Setter #}
 
-int {{info.title.lower()}}_set_{{key.lower()}}({{int_t}}* data) {
+int {{info.title}}::set{{key}}(uint8_t data) {
     {% if field.bitEnd %}
     // Bitshift value
     data = data << {{field.bitEnd}};
     {% endif %}
     // Read current register data
     // '#/registers/{{field.register[12:]}}' > '{{field.register[12:]}}'
-    {{int_t}} register_data;
-    int result = {{info.title.lower()}}_read{{field.register[12:]}}(&register_data);
-    if (result != 0) {
-        return -1;
-    }
+    uint8_t register_data = read{{field.register[12:]}}();
     register_data = register_data | data;
-    result = {{info.title.lower()}}_write{{field.register[12:]}}(&register_data);
-    if (result != 0) {
-        return -2;
-    }
-    return 0;
+    return write{{field.register[12:]}}(register_data);
 }
 {% endif %}
 {% endfor %}
@@ -205,8 +211,11 @@ int {{info.title.lower()}}_set_{{key.lower()}}({{int_t}}* data) {
 {% if functions %}
 {% for key,function in functions|dictsort %}
 {% for ckey,compute in function.computed|dictsort %}
-{% set int_t = cpp.returnType(compute) %}
-void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}({% if 'return' in compute %}{{int_t}}* val{% if 'input' in compute %},{% endif %}{% endif %}{% if 'input' in compute %} {{cpp.params(compute)}}{% endif %}) {
+{% if 'input' in compute %}
+{{cpp.returnType(compute)}} {{info.title}}::{{key}}{{ckey}}({{cpp.params(compute)}}) {
+{% else %}
+{{cpp.returnType(compute)}} {{info.title}}::{{key}}{{ckey}}({{cpp.params(compute)}}) {
+{% endif %}
     {# Declare our variables #}
 {{ cpp.variables(compute.variables) }}
 
@@ -215,9 +224,9 @@ void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}({% if 'return' in c
     {%- for vkey,variable in compute.input|dictsort %}
     {% if vkey == 'value' %}
     // Read value of register into a variable
-    value = {{info.title.lower()}}_get_{{function.register[12:]}}(val);
+    {{cpp.numconv(variable)}} value = read{{function.register[12:]}}();
     {% endif %}
-    {% endfor -%}
+    {% endfor %}
     {% endif %}
     {# Handle the logic #}
 {{ logic(compute.logic, function) }}
@@ -225,10 +234,14 @@ void {{info.title.lower()}}_{{key.lower()}}_{{ckey.lower()}}({% if 'return' in c
     {# Return if applicable #}
     {# Return a tuple #}
     {% if 'return' in compute and compute.return is not string %}
-    val = [{% for returnValue in compute.return %}{{ returnValue | camel_to_snake }}{{ ", " if not loop.last }}{% endfor %}];
+    {# In C languages, the array is a parameter `returnArray` you fill #}
+    {% for variable in compute.return %}
+    returnArray[{{loop.index - 1}}] = {{variable}};
+    {% endfor %}
+    {% endif %}
     {# Return a plain value #}
-    {% elif compute.return is string %}
-    val = {{compute.return}};
+    {% if compute.return is string %}
+    return {{compute.return}};
     {% endif %}
 }
 
