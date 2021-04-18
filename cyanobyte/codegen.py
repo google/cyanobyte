@@ -30,7 +30,12 @@ except ImportError:
     from yaml import Loader
 from jinja2 import Environment, FileSystemLoader
 
-from cyanobyte import __version__
+try:
+    from cyanobyte import __version__
+    _VERSION = __version__
+except:
+    _VERSION = "HEAD" # Git HEAD (cutting edge)
+
 # Use the module title to import correctly in a Pip bundle
 try:
     from cyanobyte.convert_json_to_yaml import convert_json_to_yaml
@@ -46,7 +51,6 @@ except ImportError:
     import importlib_resources as pkg_resources
 
 
-_VERSION = __version__
 _DEBUG = False
 _CLEAN = False
 _TEMPLATES = dict(
