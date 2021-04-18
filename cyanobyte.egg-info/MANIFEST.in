@@ -1,2 +1,2 @@
-include templates/*.*
-include spec/cyanobyte.schema.json
+include cyanobyte-templates/*.*
+include cyanobyte-spec/cyanobyte.schema.json

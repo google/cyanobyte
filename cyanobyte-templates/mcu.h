@@ -1,6 +1,6 @@
 {% import 'macros.jinja2' as utils %}
-{% import 'clang.jinja2' as cpp %}
-{% import 'generic.jinja2' as embedded %}
+{% import 'base.c.jinja2' as cpp %}
+{% import 'mcu.jinja2' as embedded %}
 {% set template = namespace(math=false) %}
 /*
 {{ utils.pad_string('* ', utils.license(info.copyright.name, info.copyright.date, info.license.name)) -}}
