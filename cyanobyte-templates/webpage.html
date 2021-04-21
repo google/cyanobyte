@@ -111,6 +111,9 @@
                                 {% if register.signed %}
                                     <br><em>Signed value</em>
                                 {% endif %}
+                                {% if 'example' in register %}
+                                    <br><em>Example value: <code>{{ register.example.valid[0] }}</code></em>
+                                {% endif %}
                             </h3>
                         </td>
                         {% if key in template.registersToFields %}

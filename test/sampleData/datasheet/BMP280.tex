@@ -49,50 +49,86 @@
 
 \section{Register Description}
 \begin{itemize}
-\item Digital Pressure Compensation 1 - Used for Pascals conversion
-\item Digital Pressure Compensation 2 - Used for Pascals conversion
-\item Digital Pressure Compensation 3 - Used for Pascals conversion
-\item Digital Pressure Compensation 4 - Used for Pascals conversion
-\item Digital Pressure Compensation 5 - Used for Pascals conversion
-\item Digital Pressure Compensation 6 - Used for Pascals conversion
-\item Digital Pressure Compensation 7 - Used for Pascals conversion
-\item Digital Pressure Compensation 8 - Used for Pascals conversion
-\item Digital Pressure Compensation 9 - Used for Pascals conversion
-\item Digital Temperature Compensation 1 - Used for Celcius conversion
-\item Digital Temperature Compensation 2 - Used for Celcius conversion
-\item Digital Temperature Compensation 3 - Used for Celcius conversion
-\item Pressure LSB - Part 2 of Pressure
-\item Pressure MSB - Part 1 of Pressure
-\item Pressure XLSB - Part 3 of Pressure
-\item Temperature LSB - Part 2 of temperature
-\item Temperature MSB - Part 1 of temperature
-\item Temperature XLSB - Final part of temperature
+\item Digital Pressure Compensation 1 - Compensation register used for Pascals conversion.
+\item Digital Pressure Compensation 2 - Compensation register used for Pascals conversion.
+\item Digital Pressure Compensation 3 - Compensation register used for Pascals conversion.
+\item Digital Pressure Compensation 4 - Compensation register used for Pascals conversion.
+\item Digital Pressure Compensation 5 - Compensation register used for Pascals conversion.
+\item Digital Pressure Compensation 6 - Compensation register used for Pascals conversion.
+\item Digital Pressure Compensation 7 - Compensation register used for Pascals conversion.
+\item Digital Pressure Compensation 8 - Compensation register used for Pascals conversion.
+\item Digital Pressure Compensation 9 - Compensation register used for Pascals conversion.
+\item Digital Temperature Compensation 1 - Compensation register used for temperature measurement result.
+\item Digital Temperature Compensation 2 - Compensation register used for temperature measurement result.
+\item Digital Temperature Compensation 3 - Compensation register used for temperature measurement result.
+\item Pressure LSB - Middle-significant bit of pressure measurement result.
+\item Pressure MSB - Most-significant bit of pressure measurement result.
+\item Pressure XLSB - Least-significant bit of pressure measurement result.
+\item Temperature LSB - Middle-significant bit of temperature measurement result.
+\item Temperature MSB - Most-significant bit of temperature measurement result.
+\item Temperature XLSB - Least-significant bit of temperature measurement result.
 \end{itemize}
 
 \section{Technical specification}
 \centering
 \begin{tabular}{lcrr}
 \toprule
- & Register Name & Register Address & Register Length \\
+ & Register Name & Register Address & Register Length & Example \\
 \midrule
-DigP1 & Digital Pressure Compensation 1 & 142 & 16 \\
-DigP2 & Digital Pressure Compensation 2 & 144 & 16 \\
-DigP3 & Digital Pressure Compensation 3 & 146 & 16 \\
-DigP4 & Digital Pressure Compensation 4 & 148 & 16 \\
-DigP5 & Digital Pressure Compensation 5 & 150 & 16 \\
-DigP6 & Digital Pressure Compensation 6 & 152 & 16 \\
-DigP7 & Digital Pressure Compensation 7 & 154 & 16 \\
-DigP8 & Digital Pressure Compensation 8 & 156 & 16 \\
-DigP9 & Digital Pressure Compensation 9 & 158 & 16 \\
-DigT1 & Digital Temperature Compensation 1 & 136 & 16 \\
-DigT2 & Digital Temperature Compensation 2 & 138 & 16 \\
-DigT3 & Digital Temperature Compensation 3 & 140 & 16 \\
-PressureLsb & Pressure LSB & 248 & 8 \\
-PressureMsb & Pressure MSB & 247 & 8 \\
-PressureXlsb & Pressure XLSB & 249 & 8 \\
-TempLsb & Temperature LSB & 251 & 8 \\
-TempMsb & Temperature MSB & 250 & 8 \\
-TempXlsb & Temperature XLSB & 252 & 8 \\
+DigP1 & Digital Pressure Compensation 1 & 142 & 16
+& 36477 
+\\
+DigP2 & Digital Pressure Compensation 2 & 144 & 16
+& -10685 
+\\
+DigP3 & Digital Pressure Compensation 3 & 146 & 16
+& 3024 
+\\
+DigP4 & Digital Pressure Compensation 4 & 148 & 16
+& 2855 
+\\
+DigP5 & Digital Pressure Compensation 5 & 150 & 16
+& 140 
+\\
+DigP6 & Digital Pressure Compensation 6 & 152 & 16
+& -7 
+\\
+DigP7 & Digital Pressure Compensation 7 & 154 & 16
+& 15500 
+\\
+DigP8 & Digital Pressure Compensation 8 & 156 & 16
+& -14600 
+\\
+DigP9 & Digital Pressure Compensation 9 & 158 & 16
+& 6000 
+\\
+DigT1 & Digital Temperature Compensation 1 & 136 & 16
+& 27504 
+\\
+DigT2 & Digital Temperature Compensation 2 & 138 & 16
+& 26435 
+\\
+DigT3 & Digital Temperature Compensation 3 & 140 & 16
+& -1000 
+\\
+PressureLsb & Pressure LSB & 248 & 8
+& 33400 
+\\
+PressureMsb & Pressure MSB & 247 & 8
+& 15600 
+\\
+PressureXlsb & Pressure XLSB & 249 & 8
+& 15920 
+\\
+TempLsb & Temperature LSB & 251 & 8
+& 748 
+\\
+TempMsb & Temperature MSB & 250 & 8
+& 124 
+\\
+TempXlsb & Temperature XLSB & 252 & 8
+& 144 
+\\
 \bottomrule
 \end{tabular}
 
@@ -106,15 +142,15 @@ TempXlsb & Temperature XLSB & 252 & 8 \\
 \toprule
   & Description \\
 \midrule
-pressure & Reads the atmospheric pressure \\
-temperature & Reads the temperature \\
+pressure & Reads the atmospheric pressure as a raw value or in hPa. \\
+temperature & Reads the temperature as a raw value or in Celsius. \\
 \bottomrule
 \end{tabular}
 
 
 \raggedright
 \subsection{Function pressure }
-Reads the atmospheric pressure \\
+Reads the atmospheric pressure as a raw value or in hPa. \\
 
 \centering
 \begin{tabular}{lcr}
@@ -136,7 +172,7 @@ output
 
 \raggedright
 \subsection{Function temperature }
-Reads the temperature \\
+Reads the temperature as a raw value or in Celsius. \\
 
 \centering
 \begin{tabular}{lcr}
