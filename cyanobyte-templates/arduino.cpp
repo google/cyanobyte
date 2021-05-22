@@ -179,7 +179,7 @@ int {{info.title}}::write{{key}}({% if length > 0 %}{{cpp.numtype(length)}} data
 {{cpp.registerSize(registers, field.register[12:])}} {{info.title}}::get{{key}}() {
     // Read register data
     // '#/registers/{{field.register[12:]}}' > '{{field.register[12:]}}'
-    uint8_t val = read{{field.register[12:]}}();
+    {{cpp.registerSize(registers, field.register[12:])}} val = read{{field.register[12:]}}();
     // Mask register value
     val = val & {{utils.mask(field.bitStart, field.bitEnd)}};
     {% if field.bitEnd %}
@@ -200,7 +200,7 @@ int {{info.title}}::set{{key}}(uint8_t data) {
     {% endif %}
     // Read current register data
     // '#/registers/{{field.register[12:]}}' > '{{field.register[12:]}}'
-    uint8_t register_data = read{{field.register[12:]}}();
+    {{cpp.registerSize(registers, field.register[12:])}} register_data = read{{field.register[12:]}}();
     register_data = register_data | data;
     return write{{field.register[12:]}}(register_data);
 }
