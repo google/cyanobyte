@@ -57,6 +57,9 @@ description: >
 {% if register.signed %}
 * Signed value
 {% endif %}
+{% if 'example' in register %}
+* Example value: `{{ register.example.valid[0] }}`
+{% endif %}
 
 {{ register.description }}
 {% endfor %}

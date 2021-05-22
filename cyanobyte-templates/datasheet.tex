@@ -67,12 +67,18 @@
 
 \section{Technical specification}
 \centering
-\begin{tabular}{lcrr}
+\begin{tabular}{lcrrr}
 \toprule
- & Register Name & Register Address & Register Length \\
+ & Register Name & Register Address & Register Length & Example \\
 \midrule
 {% for key,register in registers|dictsort %}
-{{key | regex_replace('_', '\_')}} & {{register.title}} & {{register.address}} & {{register.length}} \\
+{{key | regex_replace('_', '\_')}} & {{register.title}} & {{register.address}} & {{register.length}}
+{%- if 'example' in register -%}
+& {{ register.example.valid[0] }} 
+{%- else -%}
+&
+{%- endif -%}
+\\
 {% endfor %}
 \bottomrule
 \end{tabular}

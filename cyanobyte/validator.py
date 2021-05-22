@@ -7,6 +7,8 @@ document meets the specification.
 import sys
 import json
 import click
+import os
+import os.path as path
 import yaml
 from yaml.constructor import ConstructorError
 try:
@@ -73,17 +75,64 @@ def cyanobyte_validate(input_files):
         print(e.err)
 
 
+def unittest(input_files):
+    # Load the python-unittest template file
+    template = "cyanobyte-templates/python-unittest.py"
+    try:
+        import pkg_resources
+        template = pkg_resources.resource_filename('cyanobyte-templates', 'python-unittest.py')
+    except:pass
+
+    if _DEBUG:
+        print('cyanobyte-codegen \
+            -c \
+            -o ./tmp/ \
+            -t ' + template + ' ' + ' \
+            '.join(input_files))
+    os.system('cyanobyte-codegen \
+        -c \
+        -o ./tmp/ \
+        -t ' + template + ' ' + ' \
+        '.join(input_files))
+    for i in input_files:
+        # Now execute each unittest
+        file = i.replace('.yaml', '.py')
+        file = path.basename(file)
+        # NOTE: Won't work for different package names
+        if _DEBUG:
+            print('python3 -m unittest tmp/com/cyanobyte/' + file)
+        os.system('python3 -m unittest tmp/com/cyanobyte/' + file)
+
 @click.command()
+@click.option("-d", "--debug", "debug", default=False)
+@click.option("--validate-schema", "flag_schema", is_flag=True)
+@click.option("--unit-test", "flag_unittest", is_flag=True)
 @click.argument("input_files", type=click.Path(exists=True), nargs=-1)
-def click_validate(input_files):
+def click_validate(input_files, flag_schema, flag_unittest, debug=False):
     """
     Main command line entrypoint
 
     Args:
         input_files: A list of CyanoByte documents to validate.
     """
-    cyanobyte_validate(input_files)
+    #pylint: disable=global-statement
+    global _DEBUG
+    _DEBUG = debug
 
+    run_schema = True
+    run_unittest = True
+    # Default all modes to true unless there's a flag
+    if flag_schema or flag_unittest:
+        # Then we only allow a few modes
+        if not flag_schema:
+            run_schema = False
+        if not flag_unittest:
+            run_unittest = False
+
+    if run_schema:
+        cyanobyte_validate(input_files)
+    if run_unittest:
+        unittest(input_files)
 
 if __name__ == "__main__":
     click_validate(sys.argv[1:])
