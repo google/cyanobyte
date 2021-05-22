@@ -35,7 +35,7 @@ steps:
     - '-t'
     - 'cyanobyte-templates/arduino.h'
     - '-t'
-    - 'templates/kubos.c'
+    - 'cyanobyte-templates/kubos.c'
     - '-t'
     - 'cyanobyte-templates/cmsis.svg'
     - '-t'
