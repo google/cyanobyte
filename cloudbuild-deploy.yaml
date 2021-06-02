@@ -8,7 +8,7 @@ steps:
 
 - name: node:10.15.1
   entrypoint: npm
-  args: ['install', 'autoprefixer', 'postcss-cli']
+  args: ['install', 'autoprefixer', 'postcss-cli', 'postcss']
   id: Install PostCSS for final CSS assets
 
 - name: gcr.io/cloud-builders/wget
