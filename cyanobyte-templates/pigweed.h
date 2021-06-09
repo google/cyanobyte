@@ -12,10 +12,13 @@
 
 #pragma once
 
+#include <cmath>
+
 #include "pw_bytes/byte_builder.h"
 #include "pw_chrono/system_clock.h"
 #include "pw_i2c/address.h"
 #include "pw_i2c/device.h"
+#include "pw_i2c/register_device.h"
 #include "pw_i2c/initiator.h"
 #include "pw_result/result.h"
 #include "pw_status/status.h"
@@ -48,13 +51,13 @@ enum deviceAddress {
 typedef enum deviceAddress deviceAddress_t;
 {% endif %}
 
-class {{info.title}} : RegisterDevice {
+class {{info.title}} : pw::i2c::RegisterDevice {
     public:
         {% if i2c.address is iterable and i2c.address is not string %}
-        {{info.title}}(Initiator& initiator, deviceAddress_t address);
+        {{info.title}}(pw::i2c::Initiator& initiator, deviceAddress_t address);
         deviceAddress_t DEVICE_ADDRESS;
         {% else %}
-        {{info.title}}(Initiator& initiator);
+        {{info.title}}(pw::i2c::Initiator& initiator);
         {% endif %}
 
         {% for key,register in registers|dictsort -%}
@@ -63,14 +66,14 @@ class {{info.title}} : RegisterDevice {
         /**
 {{utils.pad_string("         * ", register.description)}}
          */
-        Result<{{cpp.numtype(register.length)}}> read{{key}}();
+        pw::Result<{{cpp.numtype(register.length)}}> read{{key}}();
         {% endif %}
 
         {% if (not 'readWrite' in register) or ('readWrite' in register and 'W' is in(register.readWrite)) %}
         /**
 {{utils.pad_string("         * ", register.description)}}
          */
-        Status write{{key}}({% if length > 0 %}{{cpp.numtype(length)}} data{% endif %});{% endif %}
+        pw::Status write{{key}}({% if length > 0 %}{{cpp.numtype(length)}} data{% endif %});{% endif %}
 
         {% endfor %}
         {% if fields %}
@@ -79,13 +82,13 @@ class {{info.title}} : RegisterDevice {
         /**
 {{utils.pad_string("         * ", field.description)}}
          */
-        Result<{{cpp.registerSize(registers, field.register[12:])}}> get{{key}}();
+        pw::Result<{{cpp.registerSize(registers, field.register[12:])}}> get{{key}}();
         {% endif %}
         {% if 'W' is in(field.readWrite) %}
         /**
 {{utils.pad_string("         * ", field.description)}}
          */
-        Status set{{key}}(uint8_t data);
+        pw::Status set{{key}}(uint8_t data);
         {% endif %}
         {% endfor %}
         {% endif %}
