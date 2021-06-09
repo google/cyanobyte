@@ -26,7 +26,7 @@ steps:
   args:
     - 'cyanobyte/codegen.py'
     - '-t'
-    - 'doc.md'
+    - 'doc'
     - '-o'
     - './docs/content/docs/Reference/Peripheral Docs'
     - 'peripherals/ADS1015.yaml'
