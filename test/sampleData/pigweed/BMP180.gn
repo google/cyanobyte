@@ -1,0 +1,45 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may not
+# use this file except in compliance with the License. You may obtain a copy of
+# the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations under
+# the License.
+
+import("//build_overrides/pigweed.gni")
+
+import("$dir_pw_build/target_types.gni")
+import("$dir_pw_chrono/backend.gni")
+import("$dir_pw_docgen/docs.gni")
+import("$dir_pw_unit_test/test.gni")
+
+pw_source_set("BMP180") {
+  public = [ "BMP180.h" ]
+  sources = [ "BMP180.cc" ]
+  deps = [
+    "$dir_pw_bytes",
+    "$dir_pw_chrono:system_clock",
+    "$dir_pw_i2c:address",
+    "$dir_pw_i2c:device",
+    "$dir_pw_i2c:initiator",
+    "$dir_pw_result",
+    "$dir_pw_status",
+  ]
+}
+
+pw_test_group("tests") {
+  tests = [
+    ":BMP180_test",
+  ]
+}
+
+pw_test("BMP180_test") {
+  sources = [ "BMP180_test.cc" ]
+  deps = [ ":BMP180" ]
+}

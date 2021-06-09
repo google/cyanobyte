@@ -22,100 +22,103 @@
 
 #pragma once
 
+#include <cmath>
+
 #include "pw_bytes/byte_builder.h"
 #include "pw_chrono/system_clock.h"
 #include "pw_i2c/address.h"
 #include "pw_i2c/device.h"
+#include "pw_i2c/register_device.h"
 #include "pw_i2c/initiator.h"
 #include "pw_result/result.h"
 #include "pw_status/status.h"
 
 
-class BMP180 : RegisterDevice {
+class BMP180 : pw::i2c::RegisterDevice {
     public:
-        BMP180(Initiator& initiator);
+        BMP180(pw::i2c::Initiator& initiator);
 
 
         /**
          * Stores the current measurement type.
 
          */
-        Status writeControl(uint8_t data);
+        pw::Status writeControl(uint8_t data);
         /**
          * Constant register for pressure measurement calibration.
 
          */
-        Result<uint16_t> readPressureCalAC1();
-
-
-        /**
-         * Constant register for pressure measurement calibration.
-
-         */
-        Result<uint16_t> readPressureCalAC2();
+        pw::Result<uint16_t> readPressureCalAC1();
 
 
         /**
          * Constant register for pressure measurement calibration.
 
          */
-        Result<uint16_t> readPressureCalVB1();
+        pw::Result<uint16_t> readPressureCalAC2();
 
 
         /**
          * Constant register for pressure measurement calibration.
 
          */
-        Result<uint16_t> readPressureCalVB2();
+        pw::Result<uint16_t> readPressureCalVB1();
+
+
+        /**
+         * Constant register for pressure measurement calibration.
+
+         */
+        pw::Result<uint16_t> readPressureCalVB2();
 
 
         /**
          * Stores the most recent measurement result.
 
          */
-        Result<uint16_t> readResult();
+        pw::Result<uint16_t> readResult();
 
 
         /**
          * Third constant register for temperature measurement calibration.
 
          */
-        Result<uint16_t> readTempCal3();
+        pw::Result<uint16_t> readTempCal3();
 
 
         /**
          * Fourth constant register for temperature measurement calibration.
 
          */
-        Result<uint16_t> readTempCal4();
+        pw::Result<uint16_t> readTempCal4();
 
 
         /**
          * Fifth constant register for temperature measurement calibration.
 
          */
-        Result<uint16_t> readTempCal5();
+        pw::Result<uint16_t> readTempCal5();
 
 
         /**
          * Sixth constant register for temperature measurement calibration.
 
          */
-        Result<uint16_t> readTempCal6();
+        pw::Result<uint16_t> readTempCal6();
 
 
         /**
          * Constant register for temperature measurement calibration.
 
          */
-        Result<uint16_t> readTempCalMC();
+        pw::Result<uint16_t> readTempCalMC();
 
 
         /**
          * Constant register for temperature measurement calibration.
 
          */
-        Result<uint16_t> readTempCalMD();
+        pw::Result<uint16_t> readTempCalMD();
 
 
 

@@ -22,10 +22,13 @@
 
 #pragma once
 
+#include <cmath>
+
 #include "pw_bytes/byte_builder.h"
 #include "pw_chrono/system_clock.h"
 #include "pw_i2c/address.h"
 #include "pw_i2c/device.h"
+#include "pw_i2c/register_device.h"
 #include "pw_i2c/initiator.h"
 #include "pw_result/result.h"
 #include "pw_status/status.h"
@@ -48,75 +51,75 @@ enum deviceAddress {
 };
 typedef enum deviceAddress deviceAddress_t;
 
-class Example : RegisterDevice {
+class Example : pw::i2c::RegisterDevice {
     public:
-        Example(Initiator& initiator, deviceAddress_t address);
+        Example(pw::i2c::Initiator& initiator, deviceAddress_t address);
         deviceAddress_t DEVICE_ADDRESS;
 
         /**
          * An 8-bit register
 
          */
-        Result<uint8_t> readRegisterA();
+        pw::Result<uint8_t> readRegisterA();
 
         /**
          * An 8-bit register
 
          */
-        Status writeRegisterA(uint8_t data);
+        pw::Status writeRegisterA(uint8_t data);
         /**
          * A 16-bit register
 
          */
-        Result<uint16_t> readRegisterB();
+        pw::Result<uint16_t> readRegisterB();
 
         /**
          * A 16-bit register
 
          */
-        Status writeRegisterB(uint16_t data);
+        pw::Status writeRegisterB(uint16_t data);
         /**
          * A 32-bit register
 
          */
-        Result<uint32_t> readRegisterC();
+        pw::Result<uint32_t> readRegisterC();
 
         /**
          * A 32-bit register
 
          */
-        Status writeRegisterC(uint32_t data);
+        pw::Status writeRegisterC(uint32_t data);
         /**
          * A dummy register that has no data
 
          */
-        Result<uint8_t> readRegisterD();
+        pw::Result<uint8_t> readRegisterD();
 
         /**
          * A dummy register that has no data
 
          */
-        Status writeRegisterD();
+        pw::Status writeRegisterD();
         /**
          * This is a few bits
 
          */
-        Result<uint8_t> getFieldA();
+        pw::Result<uint8_t> getFieldA();
         /**
          * This is fewer bits
 
          */
-        Status setFieldB(uint8_t data);
+        pw::Status setFieldB(uint8_t data);
         /**
          * A single-bit
 
          */
-        Result<uint8_t> getFieldC();
+        pw::Result<uint8_t> getFieldC();
         /**
          * A single-bit
 
          */
-        Status setFieldC(uint8_t data);
+        pw::Status setFieldC(uint8_t data);
 
         /**
          * Enables features on device
