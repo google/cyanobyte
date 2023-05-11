@@ -23,7 +23,7 @@ import subprocess
 import json
 import click
 
-from yaml import load
+from yaml import safe_load
 try:
     from yaml import CLoader as Loader
 except ImportError:
@@ -129,7 +129,7 @@ def generate_source_file(template, peripheral, opts, template_ext,
     """
     # Open peripheral file
     with open(peripheral, "r") as peripheral_file:
-        peripheral_data = load(peripheral_file, Loader=Loader)
+        peripheral_data = safe_load(peripheral_file)
         # Add additional metadata to the spec data
         peripheral_data["version"] = _VERSION
         peripheral_data["fileName"] = peripheral
@@ -139,7 +139,7 @@ def generate_source_file(template, peripheral, opts, template_ext,
                 options_file = open(opts, "r")
             except:
                 options_file = pkg_resources.open_text('cyanobyte-templates', opts)
-            options_data = load(options_file, Loader=Loader)
+            options_data = safe_load(options_file)
             peripheral_data["options"] = options_data
 
         # Load imports
