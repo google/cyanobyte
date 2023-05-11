@@ -6,9 +6,9 @@ document meets the specification.
 
 import sys
 import json
-import click
 import os
 import os.path as path
+import click
 import yaml
 from yaml.constructor import ConstructorError
 try:
@@ -31,13 +31,16 @@ def no_duplicates_constructor(loader, node, deep=False):
         key = loader.construct_object(key_node, deep=deep)
         value = loader.construct_object(value_node, deep=deep)
         if key in mapping:
-            raise ConstructorError("while constructing a mapping", node.start_mark,
-                                   "found duplicate key (%s)" % key, key_node.start_mark)
+            raise ConstructorError("while constructing a mapping",
+                                   node.start_mark,
+                                   "found duplicate key (%s)" % key,
+                                   key_node.start_mark)
         mapping[key] = value
 
     return loader.construct_mapping(node, deep)
 
-yaml.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, no_duplicates_constructor, Loader=Loader)
+yaml.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
+                     no_duplicates_constructor, Loader=Loader)
 
 def cyanobyte_validate(input_files):
     """
@@ -50,7 +53,8 @@ def cyanobyte_validate(input_files):
     path = "cyanobyte-spec/cyanobyte.schema.json"
     try:
         import pkg_resources
-        path = pkg_resources.resource_filename('cyanobyte-spec', 'cyanobyte.schema.json')
+        path = pkg_resources.resource_filename('cyanobyte-spec',
+                                               'cyanobyte.schema.json')
     except:pass
 
     with open(path, "r") as schema_json:
@@ -61,7 +65,7 @@ def cyanobyte_validate(input_files):
     for input_file in input_files:
         with open(input_file, "r") as document_yaml:
             try:
-                document_dict = yaml.load(document_yaml, Loader=Loader)
+                document_dict = yaml.safe_load(document_yaml)
                 validate(instance=document_dict, schema=schema)
                 print('✓ ' + input_file)
             except (ConstructorError, ValidationError) as err:
@@ -70,9 +74,9 @@ def cyanobyte_validate(input_files):
 
     # Dump all errors here
     print('')
-    for e in errors:
-        print(e.input_file + ':')
-        print(e.err)
+    for err in errors:
+        print(err.input_file + ':')
+        print(err.err)
 
 
 def unittest(input_files):
