@@ -67,6 +67,7 @@ _TEMPLATES = dict(
     micropython=["micropython.py"],
     raspberrypi=["raspberrypi.py"],
     webpage=["webpage.html"],
+    zephyr=["zephyr-cmakelists.txt"],
 )
 _OPTIONS = dict(
     esp32="esp32.options.yaml"
@@ -304,6 +305,7 @@ def gen(input_files, template_files=None, output_dir='./build',
     )
     env.filters['camel_to_snake'] = camel_to_snake
     env.filters['regex_replace'] = regex_replace
+    
     for template_file in template_files:
         # Check template registry
         if template_file in _TEMPLATES:
