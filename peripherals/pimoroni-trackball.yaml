@@ -1,0 +1,156 @@
+cyanobyte: 0.1.0
+info:
+    title: TrackBall
+    description: I2C TrackBall with RGBW LED illumination.
+    package: 'com.pimoroni.trackball'
+    contact:
+        name: 'Phil Howard'
+        url: 'http://www.pimoroni.com'
+        email: 'phil@pimoroni.com'
+    license:
+        name: 'Apache 2.0'
+        url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+    version: 0.1.0
+i2c:
+    addressType: '7-bit'
+    address: 0x0A
+    addressMask: 0x78
+
+registers:
+    - redLED:
+        address: 0x00
+        length: 8
+        title: Red LED
+        description: Integrated Red LED with 256 selectable brightness levels.
+    - greenLED:
+        address: 0x01
+        length: 8
+        title: Green LED
+        description: Integrated Green LED with 256 selectable brightness levels.
+    - blueLED:
+        address: 0x02
+        length: 8
+        title: Blue LED
+        description: Iintegrated Blue LED with 256 selectable brightness levels.
+    - whiteLED:
+        address: 0x03
+        length: 8
+        title: White LED
+        description: Integrated White LED with 256 selectable brightness levels.
+    - left:
+        address: 0x04
+        length: 8
+        title: Delta Left
+        description: Measurement correponding to left-wise rotation of the track ball.
+    - right:
+        address: 0x05
+        length: 8
+        title: Delta Right
+        description: Measurement correponding to right-wise rotation of the track ball.
+    - up:
+        address: 0x06
+        length: 8
+        title: Delta Up
+        description: Measurement correponding to upward rotation of the track ball.
+    - down:
+        address: 0x07
+        length: 8
+        title: Delta Down
+        description: Measurement correponding to downward rotation of the track ball.
+    - switch:
+        address: 0x08
+        length: 8
+        title: Switch State
+        description: Cycle count and current pressed state of the track ball switch.
+    - userFlash:
+        address: 0xD0
+        length: 256
+        title: 32 Byte User Flash Page
+        description: Read/Write access to the currently-selected 32 byte user flash page.
+    - interrupt:
+        address: 0xFA
+        length: 8
+        title: Interrupt Status/Control
+        description: Get/set interrupt status.
+    - chipID:
+        address: 0xFB
+        length: 16
+        title: Chip ID
+        description: TrackBall Chip ID - should be 0xBA11 :D
+    - i2cAddress:
+        address: 0xFD
+        length:  8
+        title: I2C Address Change
+        description: Change the chip I2C address in persistent flash.
+    - control:
+        address: 0xFE
+        length: 8
+        title: Control
+        description: Flash IO, Sleep and Reset
+
+functions:
+    - switchState:
+        title: Switch State
+        description: /
+            Indicates the current state of the push-button switch.
+        register: '#/registers/switch'
+        readWrite: 'R'
+        bitStart: 7
+        bitEnd: 7
+        type: 'enum'
+        enum:
+            - released:
+                title: Switch is not pressed.
+                value: 0
+            - pressed:
+                title: Switch is pressed.
+                value: 1
+    - sleep:
+        title: Low-power mode
+        description: /
+            This bit switches into low-power mode.
+        register: '#/registers/control'
+        readWrite: 'W'
+        bitStart: 1
+        bitEnd: 1
+        type: 'enum'
+        enum:
+            - normal:
+                title: Normal operation (power-up default)
+                value: 0
+            - sleep:
+                title: Sleep (low-power mode)
+                value: 1
+    - reset:
+        title: Reset TrackBall
+        description: /
+            This bit triggers a soft reset, restoring values to defaults.
+            Note - It does not revert the I2C address.
+        register: '#/registers/control'
+        readWrite: 'W'
+        bitStart: 1
+        bitEnd: 1
+        type: 'enum'
+        enum:
+            - normal:
+                title: Normal operation (power-up default)
+                value: 0
+            - reset:
+                title: Reset triggered
+                value: 1
+    - flashRead:
+        title: Read Flash
+        description: /
+            Writing 1 to this bit triggers a read of the selected page from user flash into the 32 byte flash page memory.
+        register: '#/registers/control'
+        readWrite: 'W'
+        bitStart: 2
+        bitEnd: 2
+    - flashWrite:
+        title: Write Flash
+        description: /
+            Wrting 1 to this bit triggers a write from the 32 byte flash page memory into user flash.
+        register: '#/registers/control'
+        readWrite: 'W'
+        bitStart: 2
+        bitEnd: 2
