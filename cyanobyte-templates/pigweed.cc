@@ -17,15 +17,25 @@
 {# // Check if a raw read-op #}
 {% if step[key] is mapping and 'rawRead' in step[key] %}
     {% set bytes = (step[key].rawRead / 8) | round(1, 'ceil') | int %}
+    ByteBuffer<sizeof(bytes)> byte_buffer;
+
+    // can i even call this?
+    PutRegisterAddressInByteBuffer(
+      byte_buffer, DEVICE_ADDRESS, order_, register_address_size_
+    )
+    
+    if (!byte_buffer.ok()) {
+      return pw::Status::Internal()
+    }
+
+    ByteSpan return_data;
+
+    WriteReadFor(byte_buffer.data(), byte_buffer.size(),
+      return_data.data(), return_data.size(), std::chrono::seconds(1));
+
     uint8_t _datum;
-    _wire->beginTransmission(DEVICE_ADDRESS);
-    {# // Here is where I do _not_ put `write(REGISTER_ADDR) #}
-    _wire->requestFrom(DEVICE_ADDRESS, {{bytes}});
-    {# Read a byte at a time #}
-    {% for n in range(bytes) %}
-    _datum = _wire->read();
-    {{key}} = {{key}} << 8 | _datum;
-    {% endfor %}
+    _datum = return_data.data();
+    {{key}} = _datum; // Post-process?
     {% break %}
 {% endif %}
 {# // Check if assignment is a send-op #}
@@ -38,7 +48,9 @@
     {% break %}
 {% endif %}
 {% if key == "$delay" %}
-    delay({{step[key].for}});
+    {# Blocking impl #}
+    pw::chrono::SystemClock::time_point before = pw::chrono::SystemClock::now();
+    while (pw::chrono::SystemClock::now() - before < std::chrono::milliseconds(10)) {}
 {{ logic(step[key].after, function) }}
     {% break %}
 {% endif %}
@@ -52,7 +64,8 @@
 {% endif %}
 {# // Check if assignment is register read op #}
 {% if step[key] is string and step[key][:12] == '#/registers/' %}
-    {{key}} = read{{step[key][12:]}}();
+    {# Unwrap result #}
+    {{key}} = read{{step[key][12:]}}().value();
 {% endif %}
 {# // Check if assignment is function call op #}
 {% if step[key] is string and step[key][:12] == '#/functions/' %}
@@ -90,6 +103,7 @@ static short _sign(short val, char length) {
 {% endfor %}
 
 #include "{{info.title}}.h"
+
 {% if i2c.address is number %}
 #define DEVICE_ADDRESS {{i2c.address}}
 {% endif %}
@@ -98,75 +112,37 @@ static short _sign(short val, char length) {
 #define REGISTER_{{key.upper()}} {{register.address}}
 {% endfor %}
 
-{% if i2c.address is iterable and i2c.address is not string %}
-{{info.title}}::{{info.title}}(TwoWire& wire, deviceAddress_t address) :
-    _wire(&wire),
-    DEVICE_ADDRESS ( address )
-{
-}
-{% else %}
-{{info.title}}::{{info.title}}(TwoWire& wire) :
-    _wire(&wire)
-{
-}
-{% endif %}
-
-void {{info.title}}::begin() {
-    _wire->begin();
-    {% if '_lifecycle' in functions and 'Begin' in functions._lifecycle.computed %}
-    _lifecycleBegin();
-    {% endif %}
-}
-
-{% if not options or not options.esp32 or options.esp32.end != False %}
-void {{info.title}}::end() {
-    _wire->end();
-    {% if '_lifecycle' in functions and 'End' in functions._lifecycle.computed %}
-    _lifecycleEnd();
-    {% endif %}
-}
-{% endif %}
+{{info.title}}::{{info.title}}(pw::i2c::Initiator& initiator{% if i2c.address is iterable and i2c.address is not string %}, pw::i2c::Address address{% endif %}): RegisterDevice(initiator, {% if i2c.address is iterable and i2c.address is not string %}address{% else %}pw::i2c::Address({{i2c.address}}){% endif %}),
+{% if i2c.endian == 'little' %}          std::endian::little{% else %}          std::endian::big{% endif %},
+        pw::i2c::RegisterAddressSize::k1Byte)
+    {
+        {% if i2c.address is iterable and i2c.address is not string %}
+        DEVICE_ADDRESS ( address )
+        {% endif %}
+    }
 
 {% for key,register in registers|dictsort -%}
 {% set length = register.length %}
 {% set bytes = (register.length / 8) | round(1, 'ceil') | int %}
 {% if (not 'readWrite' in register) or ('readWrite' in register and 'R' is in(register.readWrite)) %}
-{{cpp.numtype(length)}} {{info.title}}::read{{key}}() {
-    uint8_t datum;
-    {{cpp.numtype(length)}} value;
-    _wire->beginTransmission(DEVICE_ADDRESS);
-    _wire->write(REGISTER_{{key.upper()}});
-    if (_wire->endTransmission(false) != 0) {
-        return -1;
-    }
-
-    if (_wire->requestFrom(DEVICE_ADDRESS, {{bytes}}) != {{bytes}}) {
-        return 0;
-    }
-
-    {# Read a byte at a time #}
-    {% for n in range(bytes) %}
-    datum = _wire->read();
-    value = value << 8 | datum;
-    {% endfor %}
-
-    return value;
+pw::Result<{{cpp.numtype(length)}}> {{info.title}}::read{{key}}() {
+  // Hard-coded timeout of 1s.
+  {% if length == 0 %}
+  return ReadRegister8(REGISTER_{{key.upper()}}, std::chrono::seconds(1));
+  {% else %}
+  return ReadRegister{{length}}(REGISTER_{{key.upper()}}, std::chrono::seconds(1));
+  {% endif %}
 }
 {% endif %}
 
 {% if (not 'readWrite' in register) or ('readWrite' in register and 'W' is in(register.readWrite)) %}
-int {{info.title}}::write{{key}}({% if length > 0 %}{{cpp.numtype(length)}} data{% endif %}) {
-    _wire->beginTransmission(DEVICE_ADDRESS);
-    // Put our data into uint8_t buffer
-    uint8_t buffer[{{bytes + 1}}] = { (uint8_t) REGISTER_{{key.upper()}} };
-    {% for n in range(bytes) %}
-    buffer[{{n + 1}}] = (data >> {{8 * (bytes - n - 1)}}) & 0xFF;
-    {% endfor %}
-    _wire->write(buffer, {{bytes + 1}});
-    if (_wire->endTransmission() != 0) {
-        return 0;
-    }
-    return 1;
+pw::Status {{info.title}}::write{{key}}({% if length > 0 %}{{cpp.numtype(length)}} data{% endif %}) {
+  // Hard-coded timeout of 1s.
+  {% if length == 0 %}
+  return WriteRegister8(REGISTER_{{key.upper()}}, 0 /* No data */, std::chrono::seconds(1));
+  {% else %}
+  return WriteRegister{{length}}(REGISTER_{{key.upper()}}, data, std::chrono::seconds(1));
+  {% endif %}
 }
 {% endif %}
 
@@ -176,31 +152,36 @@ int {{info.title}}::write{{key}}({% if length > 0 %}{{cpp.numtype(length)}} data
 {% for key,field in fields|dictsort %}
 {% if 'R' is in(field.readWrite) %}
 {# Getter #}
-{{cpp.registerSize(registers, field.register[12:])}} {{info.title}}::get{{key}}() {
+pw::Result<{{cpp.registerSize(registers, field.register[12:])}}> {{info.title}}::get{{key}}() {
     // Read register data
     // '#/registers/{{field.register[12:]}}' > '{{field.register[12:]}}'
-    {{cpp.registerSize(registers, field.register[12:])}} val = read{{field.register[12:]}}();
+    Result<{{cpp.registerSize(registers, field.register[12:])}}> res = read{{field.register[12:]}}();
+    {# Assume it is good #}
+    {{cpp.registerSize(registers, field.register[12:])}} val = res.value();
     // Mask register value
     val = val & {{utils.mask(field.bitStart, field.bitEnd)}};
     {% if field.bitEnd %}
     // Bitshift value
     val = val >> {{field.bitEnd}};
     {% endif %}
-    return val;
+    // Rewrap in a Result
+    Result<{{cpp.registerSize(registers, field.register[12:])}}> result = new Result(val);
+    return result;
 }
 {% endif -%}
 
 {%- if 'W' is in(field.readWrite) %}
 {# Setter #}
 
-int {{info.title}}::set{{key}}(uint8_t data) {
+pw::Status {{info.title}}::set{{key}}(uint8_t data) {
     {% if field.bitEnd %}
     // Bitshift value
     data = data << {{field.bitEnd}};
     {% endif %}
     // Read current register data
     // '#/registers/{{field.register[12:]}}' > '{{field.register[12:]}}'
-    {{cpp.registerSize(registers, field.register[12:])}} register_data = read{{field.register[12:]}}();
+    Result<{{cpp.registerSize(registers, field.register[12:])}}> res = read{{field.register[12:]}}();
+    {{cpp.registerSize(registers, field.register[12:])}} register_data = res.value()
     register_data = register_data | data;
     return write{{field.register[12:]}}(register_data);
 }
